@@ -76,7 +76,8 @@ router.get("/users", userController.getAllUsers,
 router.get("/signup", memberController.getSignUpPage);
 router.post("/signup", memberController.saveUser);
     //왜 자꾸 /login했는데 저기로 가냐고 /contact
-//error가 나는데 그게 /contact로 넘억말
+//error가 나는데 그게 /contact로 넘억말 
+// ejs에서 /contact로 되어있었음.
 
 router.get("/login", memberController.getSignUpPage);
 router.post("/login", memberController.saveUser);
