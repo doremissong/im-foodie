@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('member', {
     mem_sq: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
@@ -15,6 +16,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: "uc_mem_pw"
+    },
+    name:{
+      type: DataTypes.STRING(10),
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING(100),

@@ -1,0 +1,256 @@
+/*COMMON*/
+body {
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #333;
+}
+    
+a {
+    text-decoration: none;
+}
+  
+a:link {
+    color: #333;
+}
+
+a:visited {
+    color: #333;
+}
+    
+img {
+    /* img(인라인 요소) 하단에 Baseline 공백을 제거 */
+    display: block;
+}
+
+
+/*CONTENT*/
+.content {
+    width: 1100px;
+    margin: 0 auto;
+    position: relative;
+}
+    
+    
+/*HEADER*/
+header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    background-color: #F6F5F0;
+    border-bottom: 1px solid #c8c8c8;
+}
+  
+header .content {
+    height: 130px;
+}
+    
+header .logo {
+    height: 75px;
+    position: absolute;
+    top: 35px;
+    bottom: 0;
+    left: 10px;
+    margin: auto;
+}
+  
+header .sub-category {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+}
+  
+header .sub-category ul.category {
+    display: flex;
+}
+  
+header .sub-category ul.category li::before {
+    content: "";
+    width: 1px;
+    height: 12px;
+    background-color: black;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+}
+  
+header .sub-category ul.category li:first-child::before {
+    display: none;
+}
+  
+header .sub-category ul.category li a {
+    padding: 5px 15px;
+    display: block;
+    font-size: 13;
+    color: #656565;
+}
+  
+header .sub-category ul.category li a:hover {
+    color: black;
+}
+  
+header .sub-category .search {
+    position: relative;
+    height: 33px;
+}
+
+header .sub-category .search input {
+    width: 35px;
+    height: 33px;
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
+    outline: none;
+    background-color: #fff;
+    color: #777;
+    font-size: 12px;
+    transition: width .4s;
+}
+
+header .sub-category .search input:focus {
+    width: 190px;
+    border-color: purple;
+}
+
+header .sub-category .search .material-icons {
+    height: 24px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 5px;
+    margin: auto;
+    transition: .4s;
+}
+
+header .sub-category .search.focused .material-icons {
+    opacity: 0;
+}
+  
+header .main-category {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    z-index: 1;
+    display: flex;
+}
+  
+header .main-category .item .item__name {
+    padding: 15px 48px 25px 48px;
+    font-size: 25px;
+    font-weight: bold;
+}
+  
+header .main-category .item:hover .item__name {
+    background-color: lightblue;
+    color: black;
+    font-weight: bolder;
+    border-radius: 3px 3px 0 0;
+}
+  
+header .main-category .item .item__contents {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    display: none;
+}
+
+
+/**/
+.in-text {
+    height: 40px;
+    padding: 30px 0px 0px 5px;
+    border-bottom: 1px solid #e6e6e6;
+    display: flex;
+}
+
+.in-text a {
+    margin: 2px 0px 0px 10px;
+}
+
+
+/*IN-CONTENT*/
+.in-content {
+    width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+}
+
+.in-form {
+    width: 400px;
+    padding: 30px 20px;
+}
+
+.in-form .id-login {
+    width: 150px;
+    height: 50px;
+    font-weight: bold;
+    font-size: 23px;
+    margin: 0px 0px 0px 10px;
+    border:1px solid #c8c8c8;
+    border-bottom: none;
+    display:table-cell;
+    vertical-align:middle;
+    text-align: center;
+}
+
+.signin {
+    padding-top: 20px; 
+}
+
+.in-form input[type="password"],
+.in-form input[type="text"] {
+    width: 100%;
+    padding: 20px;
+    border: none;
+    border-bottom: 1px solid #dddddd;
+    margin-top: 20px;
+    box-sizing:border-box;
+}
+
+.in-form input[name="login"] {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #535b63;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: bold;
+    color: #ffffff;
+}	
+
+.option {
+    display: flex;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.find-id {
+    margin: auto;
+}
+
+.find-pw {
+    margin: auto;
+}
+
+.go-up {
+    margin: auto;
+}
+
+
+.banner {
+    padding-top: 40px;
+    margin-left: 100px;
+}
+
+.in-banner {
+    width: 540px;
+    height: 500px;
+    border: 1px solid lightgrey;
+}

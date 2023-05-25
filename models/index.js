@@ -16,13 +16,21 @@ const initModels = require('./init-models'); //init-models.js에서 메서드 �
 const sequelize = new Sequelize(config.database, config.username, config.password,{
   host: config.host,
   dialect: config.dialect,
-  timezone: config.timezone
+  timezone: config.timezone,
+  //connection pool -https://sequelize.org/docs/v6/other-topics/connection-pool/
+  pool:{
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  }
 });
 
 // 모델과 테이블간의 관계 맺어짐.
-const models = initModels(sequelize);
+//const models = initModels(sequelize);
+const db = initModels(sequelize);
 
-module.exports = models;
+module.exports = { db, sequelize };
 
 // const db = {};// 객체
 // db.sequelize = sequelize; //객체 속성 추가

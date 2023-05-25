@@ -12,7 +12,7 @@ exports.getAllUsers = (req, res, next)=>{
     })
 }
 
-exports.getSingUpPage = (req, res)=>{   //가입 페이지 렌더링 액션 추가
+exports.getSignUpPage = (req, res)=>{   //가입 페이지 렌더링 액션 추가
     res.render("contact");
 }
 

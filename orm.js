@@ -10,4 +10,5 @@ const auto =  new SequelizeAuto(config.database, config.username, config.passwor
 
 auto.run((err)=>{
     if(err) throw err;
+    console.log("complete! - orm.js");
 })
