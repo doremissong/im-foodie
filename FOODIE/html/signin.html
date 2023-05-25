@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김밥집</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+
+    <!--Google APIs-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">  
+
+    <link rel="stylesheet" href="../css/signin.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="content">
+            <a href="../html/main.html" class="logo">
+                <img src="../images/logo.png" alt="LOGO" />
+            </a>
+            <div class="sub-category">
+                <ul class="category">
+                    <li>
+                        <a href="../html/signup.html">회원가입</a>
+                    </li>
+                    <li>
+                        <a href="../html/signin.html">로그인</a>
+                    </li>
+                </ul>
+                <div class="search">
+                    <input type="text" />
+                    <span class="material-icons">search</span>
+                </div>
+            </div>
+            <ul class="main-category">
+                <li class="item">
+                    <div class="item__name">
+                        <a href="javascript:void(0)">게시판</a>
+                    </div>
+                    <div class="item__contents"></div>
+                </li>
+                <li class="item">
+                    <div class="item__name">
+                        <a href="javascript:void(0)">레시피</a>
+                    </div>
+                    <div class="item__contents"></div>
+                </li>
+                <li class="item">
+                    <div class="item__name">
+                        <a href="javascript:void(0)">모임챗</a>
+                    </div>
+                    <div class="item__contents"></div>
+                </li>
+                <li class="item">
+                    <div class="item__name">
+                        <a href="javascript:void(0)">마이룸</a>
+                    </div>
+                    <div class="item__contents"></div>
+                </li>
+            </ul>
+        </div>  
+    </header>
+    <div class="in-content">
+        <section class="sign-in">
+            <div class="in-text">
+                <span class="material-icons">person</span>
+                <a>로그인 하기</a>
+            </div>
+            <div class="in-form">
+                <div class="id-login">Login</div>
+                <form name="signin" action="/signin" method="POST">
+                    <input type="text" name="id" placeholder="아이디" required>
+                    <input type="password" name="password" placeholder="비밀번호" required>
+                    <input type="submit" name="login" value="로그인">
+                </form>
+                <div class="option">
+                    <div class="find-id">
+                        <a href="javascript:void(0)">아이디 찾기</a>
+                    </div>
+                    <div class="find-pw">
+                        <a href="javascript:void(0)">비밀번호 찾기</a>
+                    </div>
+                    <div class="go-up">
+                        <a href="../html/signup.html">회원가입</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="banner">
+            <div class="in-banner">
+                광고배너
+            </div>
+        </section>
+    </div>
+</body>
+</html>
