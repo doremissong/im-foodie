@@ -1,4 +1,5 @@
 // 요청된 라우트를 나타내는 ejs 페이지를 사용해 응답
+const path = require('path');
 
 // 이것도 나중엔  디비에서 가져와야겠지
 var courses =[
@@ -29,4 +30,9 @@ exports.showSignUp = (req, res)=>{
 
 exports.postedContactForm = (req, res)=>{
     res.render("thanks");
+};
+
+exports.show = (req,res)=>{
+    // res.sendFile(__dirname + "../public/main.html");
+    res.sendFile(path.join(__dirname, "../public/main.html"));
 };

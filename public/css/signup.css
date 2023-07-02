@@ -191,7 +191,7 @@ header .main-category .item:hover .item__contents {
 }
 
 .t-text {
-    width: 200px;
+    width: 230px;
     padding-left: 20px;
     vertical-align: middle;
     background-color: #F6F5F0;
@@ -207,12 +207,23 @@ header .main-category .item:hover .item__contents {
     color: #777;
 }
 
+.t-text a {
+    color: #777;
+    font-size: 14px;
+    margin: 0px 5px;
+    text-decoration-line: underline;
+}
+
 .up-form input[name="id"],
 .up-form input[name="password"],
 .up-form input[name="password-check"],
 .up-form input[name="name"],
 .up-form input[name="nickname"],
-.up-form input[name="email"] {
+.up-form input[name="email"],
+.up-form input[name="tel"],
+.up-form input[name="address"], 
+.up-form input[name="birthday"], 
+.up-form input[name="profile-image"] {
     width: 250px;
     height: 40px;
     padding: 15px;
@@ -220,10 +231,10 @@ header .main-category .item:hover .item__contents {
     box-sizing:border-box;
 }
 
-.button {
-    padding: 30px;
-    display: flex;
-    justify-content: center;
+.t-box label {
+    color: #777;
+    font-size: 14px;
+    margin-right: 20px;
 }
 
 input[name="submit"] {
@@ -235,6 +246,13 @@ input[name="submit"] {
     box-sizing: border-box;
     cursor: pointer;
     font-weight: bold;   
+}
+
+
+.button {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
 }
 
 .button a {

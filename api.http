@@ -7,11 +7,11 @@ Content-Type: application/json; charset=UTF-8
 Connection: keep-alive
 
 {
-    "mem_id": "blue",
-    "password": "ilikeblue",
+    "mem_id": "white",
+    "password": "ilikeblue1",
     "name": "김파랑",
-    "email": "blue@naver.com",
-    "tel": "01088888888",
+    "email": "white@naver.com",
+    "tel": "01088888981",
     "address": "Incheon",
     "birthdate": "990808",
     "profile_image":"https://inpa.tistory.com/",

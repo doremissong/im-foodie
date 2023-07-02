@@ -15,7 +15,6 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: "uc_mem_pw"
     },
     name:{
       type: DataTypes.STRING(10),
