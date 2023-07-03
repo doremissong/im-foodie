@@ -1,15 +1,12 @@
-const passport = require("passport"); // 사용자 컨트롤러 제일 위. 371쪽
-//model - dealing with data
-// view - show ui
-// controller - interface between model, view
 const { db, sequelize } = require('../models/index');
 const member = require('../models/member');
 const Op = sequelize.Op;
 const path = require('path');
+const passport = require("passport"); // 사용자 컨트롤러 제일 위. 371쪽
 const bcrypt = require('bcryptjs');
+const passportConfig = require('../config/passport');
 // __dirname === C:\Users\zelly\Desktop\imfoodie\im-foodie\controllers
 
-// const bcrypt = require('bcrypt');
 
 // 디비 연결
 (async () => {
@@ -31,11 +28,14 @@ sequelize.sync({ force: false })
     });
 
 
-getMemberParams = (body) => {
-    const salt = bcrypt.genSaltSync(10);
+getMemberParams = async (body) => {
+    // console.log(body);
+    //잠깐 update도 여기서 하는데 그때마다 genSalt해? 그것도 나쁘지 않넹 새 pw니까 상관은 없겠다
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(body.password, salt);
     return {
         mem_id: body.mem_id,
-        password: bcrypt.hashSync(body.password, salt),
+        password: hashPassword,
         // password: body.password,
         name: body.name,
         email: body.email,  //email 양식 확인. naver.coim 이렇게 하면 안되니까
@@ -108,21 +108,19 @@ module.exports = {
 
     // 구) getSignUpPage -> 현) new
     new: (req, res) => {
-        //res.sendFile(__dirname + "/public/main.html")
         res.sendFile(path.join(__dirname, "../public/html/signup.html"));
-        // res.render('thanks');
     },
 
     create: async (req, res) => {
         //const { mem_id, password, name, email, tel, address, birthdate, profile_image, tos_flag, pip_flag, notification_flag } = req.body;
         if(req.skip) next();    // create액션 건너뛰고 바ㅗ 뷰로 되돌아감
 
-        var memberData = getMemberParams(req.body);
-        console.log(memberData.mem_id);
+        var memberData = await getMemberParams(req.body);
+        console.log(memberData);
 
         try {
            await sequelize.transaction(async t => {
-                const memberExist = await db.member.findAll({where: {mem_id:memberData.mem_id}});
+                const memberExist = await db.member.findOne({where: {mem_id:memberData.mem_id}});
                 console.log("member: ", isEmpty(memberExist));
                 if (memberData.mem_id && memberData.password && isEmpty(memberExist)) {
                     await db.member.create(memberData, { transaction: t });
@@ -145,9 +143,6 @@ module.exports = {
 
     login: (req,res)=>{
         res.sendFile(path.join(__dirname, "../public/html/login.html"));
-        
-        // if문 같으면 로그인 성공하고 세션 어쩌고
-        // else면 로그인 실패! 리디렉션
     },
 
     redirectView: (req, res, next) => {
@@ -244,25 +239,20 @@ module.exports = {
         });
     },
 
-    authenticate: (req, res) => {
-        const {mem_id, password} = req.body;
-        console.log(mem_id, password);
-
-        //빈 항목 체크
-        if(mem_id===""|| password==="")
-            return res.status(400).json({message: "Please fill all fields."});
-        
-        console.log("check value", req.body);
+    // authenticate: (req,res)=>{res.send("here is controller. and need to authenticate")},
     // passport Authentication using the "Local strategy" inside the "config" folder config/passport.js."
     // passport check the email and password and returns a function passing three arguments (err, info, user)
+    authenticate: (req, res) => {
         passport.authenticate("local", {
-            failureRedirect: "/auth/login",
+            failureRedirect: "/auth/login", //실패해서 여기로 넘어감.  req,가 넘어가지 않아.
             successRedirect: "/",
             // sessions: false,
         })//여기가 문제다
-        
-        console.log("check authenticate");
     },
 
 }
 
+
+        //빈 항목 체크
+        // if(mem_id===""|| password==="")
+        //     return res.status(400).json({message: "Please fill all fields."});
