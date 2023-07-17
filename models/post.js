@@ -36,7 +36,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     state: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.TINYINT,
       allowNull: false
     },
     create_date: {
@@ -44,10 +44,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     update_date: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    delete_date: {
       type: DataTypes.DATE,
       allowNull: false
     },

@@ -1,12 +1,10 @@
+const passport = require("passport"); // 사용자 컨트롤러 제일 위. 371쪽
 const { db, sequelize } = require('../models/index');
-const member = require('../models/member');
 const Op = sequelize.Op;
 const path = require('path');
-const passport = require("passport"); // 사용자 컨트롤러 제일 위. 371쪽
 const bcrypt = require('bcryptjs');
-const passportConfig = require('../config/passport');
+const { isEmpty } = require('../routes/middlewares');
 // __dirname === C:\Users\zelly\Desktop\imfoodie\im-foodie\controllers
-
 
 // 디비 연결
 (async () => {
@@ -36,7 +34,6 @@ getMemberParams = async (body) => {
     return {
         mem_id: body.mem_id,
         password: hashPassword,
-        // password: body.password,
         name: body.name,
         email: body.email,  //email 양식 확인. naver.coim 이렇게 하면 안되니까
         tel: body.tel,
@@ -50,13 +47,6 @@ getMemberParams = async (body) => {
     }
 }
 
-var isEmpty = function(value){
-    if( value == "" || value == null || value == undefined || ( value != null && typeof value == "object" && !Object.keys(value).length ) ){
-      return true
-    }else{
-      return false
-    }
-  };
 
 //   https://sanghaklee.tistory.com/3
 
@@ -64,7 +54,7 @@ module.exports = {
     // 통계용. 
     // app.get("/members", memberController.index, memberController.indexView);
     
-    show: async(req,res,next)=>{
+    show: async (req, res, next) => {
         try{
             console.log("loading members");
             // const allMembers = await db.member.findAll();
@@ -84,6 +74,11 @@ module.exports = {
         res.json(members);
         // res.send('all members');
     },
+    indexView: (req,res)=>{
+        const member = res.locals.members;
+        res.json(member);
+        //수정
+    },
     
     //index가 쿼리를 완료하고 res 객체에 데이터 보내면 indexView는 뷰 렌더링
     index: async (req, res, next)=>{
@@ -97,13 +92,6 @@ module.exports = {
             console.log(`Error fetching member by ID: ${err.message}`);
             next(err);
         }
-    },
-
-    // showView & indexView are totally same
-    indexView: (req,res)=>{
-        const member = res.locals.members;
-        res.json(member);
-        //수정
     },
 
     // 구) getSignUpPage -> 현) new
@@ -128,6 +116,7 @@ module.exports = {
                     res.render(path.join(__dirname,'../views/member'), { mem_id : memberData.mem_id });
                 } else {
                     // res.redirect("/auth/signup");
+                    console.log('ID is already used.');
                     res.render(path.join(__dirname, '../views/thanks'));
                     // 먼저 id, email 중복 체크
                 }
@@ -150,11 +139,16 @@ module.exports = {
         if (redirectPath) res.redirect(redirectPath);
         else next();    //그러면 없으면 에러 나는 거 아니야?
     },
-
-    logout: (req, res)=>{
-        req.logout();   // passport가 제공하는 메소드. 활성 중이 사용자 세션 삭제
-        // req.locals.redirect="/";
-        res.session.save(()=>res.redirect('/'));
+    logout: (req, res) => {
+        console.log('[Before logout]: ', req.user);
+        // req.session.save((err) => {   //save 전에 destroy(); 
+        //     res.redirect('/');      //save는 session store에 저장
+        // });
+        req.logout(function (err) {
+            if (err) { console.log(err); }
+            console.log('[After logout]');
+            res.redirect('/');
+        });
     },
 
     // 화면 변경 화면 보여주기
@@ -208,10 +202,6 @@ module.exports = {
         }
     },
 
-    checkPassword: (req, res, next)=>{
-
-    },
-
     // 이게 될까ㅛ?
     validate: (req, res, next)=>{
         req.santizeBody("email").normalizeEmail({
@@ -238,18 +228,6 @@ module.exports = {
             }
         });
     },
-
-    // authenticate: (req,res)=>{res.send("here is controller. and need to authenticate")},
-    // passport Authentication using the "Local strategy" inside the "config" folder config/passport.js."
-    // passport check the email and password and returns a function passing three arguments (err, info, user)
-    authenticate: (req, res) => {
-        passport.authenticate("local", {
-            failureRedirect: "/auth/login", //실패해서 여기로 넘어감.  req,가 넘어가지 않아.
-            successRedirect: "/",
-            // sessions: false,
-        })//여기가 문제다
-    },
-
 }
 
 

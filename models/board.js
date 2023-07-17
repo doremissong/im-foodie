@@ -20,10 +20,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false
     },
-    delete_date: {
-      type: DataTypes.DATE,
-      allowNull: false
-    }
   }, {
     sequelize,
     tableName: 'board',
