@@ -1,22 +1,17 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('member', {
-    mem_sq: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
     mem_id: {
       type: DataTypes.STRING(20),
       allowNull: false,
-      unique: "uc_mem_id"
+      primaryKey: true
     },
     password: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      unique: "uc_mem_pw"
     },
-    name:{
+    name: {
       type: DataTypes.STRING(10),
       allowNull: false
     },
@@ -36,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: "0"
     },
     birthdate: {
-      type: DataTypes.STRING(6),
+      type: DataTypes.DATEONLY,
       allowNull: false
     },
     profile_image: {
@@ -45,17 +40,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     state: {
       type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    create_datetime: {
-      type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    update_datetime: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+      defaultValue: 1
     },
     tos_flag: {
       type: DataTypes.TINYINT,
@@ -72,22 +58,14 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'member',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "mem_sq" },
-        ]
-      },
-      {
-        name: "uc_mem_seq",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "mem_sq" },
+          { name: "mem_id" },
         ]
       },
       {
@@ -96,14 +74,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "mem_id" },
-        ]
-      },
-      {
-        name: "uc_mem_pw",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "password" },
         ]
       },
       {
@@ -120,6 +90,14 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "tel" },
+        ]
+      },
+      {
+        name: "uc_mem_pw",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "password" },
         ]
       },
     ]

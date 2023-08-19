@@ -2,17 +2,17 @@
 const express = require('express');
 const router = express.Router();
 const memberController = require('../controllers/memberController');
-const { isNotLoggedIn } = require('./middlewares');
+const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
 const passport = require('passport');
 
-router.get("/signup", memberController.new);
-router.post("/signup", memberController.create);
-router.get("/login", memberController.login);
-router.post("/login", passport.authenticate("local", {
+router.get("/signup", isNotLoggedIn, memberController.new);
+router.post("/signup", isNotLoggedIn, memberController.create);
+router.get("/login", isNotLoggedIn, memberController.login);
+router.post("/login", isNotLoggedIn, passport.authenticate("local", {
     failureRedirect: "/auth/login",
     successRedirect: "/",
 }));
-router.get("/logout", memberController.logout);
+router.get("/logout", isLoggedIn, memberController.logout);
 
 
 module.exports = router;

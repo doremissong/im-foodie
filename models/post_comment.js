@@ -15,13 +15,9 @@ module.exports = function(sequelize, DataTypes) {
         key: 'post_id'
       }
     },
-    mem_sq: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'member',
-        key: 'mem_sq'
-      }
+    mem_id: {
+      type: DataTypes.STRING(20),
+      allowNull: false
     },
     content: {
       type: DataTypes.TEXT,
@@ -39,18 +35,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    create_datetime: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    update_datetime: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    delete_datetime: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
     state: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -58,7 +42,8 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'post_comment',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -87,7 +72,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_post_comment_mem_sq",
         using: "BTREE",
         fields: [
-          { name: "mem_sq" },
+          { name: "mem_id" },
         ]
       },
     ]

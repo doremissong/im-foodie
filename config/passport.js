@@ -8,10 +8,12 @@ module.exports = (passport) => {
     passport.serializeUser((member, done)=>{
         console.log('[serialize2] ', member.mem_id);
         done(null, member.mem_id);
+        //mem.sq를 전해줘야하나
     });
 
     passport.deserializeUser(async (id, done) => {
         console.log('[deserialize2] ', id);
+        // await db.member.findByPK(sq); 요로콞?
         await db.member.findOne({where: { mem_id: id}})
         .then((mem)=>{
             console.log('[check member deserialize2] ', mem.mem_id);

@@ -16,27 +16,19 @@ module.exports = function(sequelize, DataTypes) {
         key: 'post_id'
       }
     },
-    mem_sq: {
-      type: DataTypes.INTEGER,
+    mem_id: {
+      type: DataTypes.STRING(20),
       allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'member',
-        key: 'mem_sq'
-      }
+      primaryKey: true
     },
     isLiked: {
       type: DataTypes.TINYINT,
-      allowNull: false
-    },
-    register_datetime: {
-      type: DataTypes.DATE,
       allowNull: false
     }
   }, {
     sequelize,
     tableName: 'post_like',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -44,7 +36,7 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "post_id" },
-          { name: "mem_sq" },
+          { name: "mem_id" },
         ]
       },
       {
@@ -53,13 +45,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "post_like_id" },
-        ]
-      },
-      {
-        name: "fk_post_like_mem_sq",
-        using: "BTREE",
-        fields: [
-          { name: "mem_sq" },
         ]
       },
     ]

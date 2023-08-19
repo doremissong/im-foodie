@@ -15,26 +15,18 @@ module.exports = function(sequelize, DataTypes) {
         key: 'post_id'
       }
     },
-    mem_sq: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'member',
-        key: 'mem_sq'
-      }
+    mem_id: {
+      type: DataTypes.STRING(20),
+      allowNull: false
     },
     isClipped: {
       type: DataTypes.TINYINT,
-      allowNull: false
-    },
-    register_datetime: {
-      type: DataTypes.DATE,
       allowNull: false
     }
   }, {
     sequelize,
     tableName: 'post_clip',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -63,7 +55,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_post_clip_mem_sq",
         using: "BTREE",
         fields: [
-          { name: "mem_sq" },
+          { name: "mem_id" },
         ]
       },
     ]

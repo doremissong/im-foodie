@@ -4,6 +4,7 @@ let host = process.env.DB_HOST;
 let user = process.env.DB_USER;
 let password = process.env.DB_PASSWORD;
 let database = process.env.DB_DATABASE;
+let port = process.env.DB_PORT;
 
 const development = {
   "username": user,
@@ -11,7 +12,7 @@ const development = {
   "database": database,
   "host": host,
   "dialect": "mysql",
-  "port": "3306",
+  "port": port,
   "timezone": "+09:00"
 };
 
@@ -21,7 +22,7 @@ const test = {
   "database": database,
   "host": host,
   "dialect": "mysql",
-  "port": "3306",
+  "port": port,
   "timezone": "+09:00"
 };
 
@@ -31,7 +32,7 @@ const production = {
   "database": database,
   "host": host,
   "dialect": "mysql",
-  "port": "3306",
+  "port": port,
   "timezone": "+09:00"
 };
 

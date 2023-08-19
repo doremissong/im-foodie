@@ -7,9 +7,17 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    name: {
-      type: DataTypes.STRING(5),
-      allowNull: true
+    mem_id: {
+      type: DataTypes.STRING(20),
+      allowNull: false
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    create_at: {
+      type: DataTypes.DATE,
+      allowNull: false
     }
   }, {
     sequelize,

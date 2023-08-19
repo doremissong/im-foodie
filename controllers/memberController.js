@@ -59,7 +59,7 @@ module.exports = {
             console.log("loading members");
             // const allMembers = await db.member.findAll();
             // res.locals.members = allMembers; //아님 members?  아래로 한번에 하는 게 낫지 않나?
-            res.locals.members = await db.member.findAll();
+            res.locals.members = await db.member.findAll({limit:5});
             next();
         } catch (err) {
 
@@ -158,8 +158,10 @@ module.exports = {
         res.sendFile(path.join(__dirname, "../public/html/myroom/edit.html"));
     },
 
-    // 값 수정.
+    // 값 수정. 정보 다 보여주지 말고. email, 전화번호, 이름, 이런 것만 변경하게.
+    //                              시간 같은 거, 약관동의 같은 거 빼고. 그러면 뷰를 만들어야하나
     update: async (req, res, next)=>{
+        // update_date는 알아서 됨?????
         var memId = req.body.mem_id;
         var updatedMemberData = getMemberParams(req.body);
         //✅멤버 조회해서 보여줄 때, 저장해야함.
@@ -168,7 +170,8 @@ module.exports = {
         try {
             await sequelize.transaction(async t => {
                 await db.member.update(updatedMemberData, {
-                    where: {mem_id: memId}
+                    where: {mem_id: memId},
+                    transaction: t
                 })
             });
             next();

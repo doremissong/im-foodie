@@ -7,21 +7,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    board_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'board',
-        key: 'board_id'
-      }
+    board: {
+      type: DataTypes.STRING(20),
+      allowNull: false
     },
-    writer_sq: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'member',
-        key: 'mem_sq'
-      }
+    writer_id: {
+      type: DataTypes.STRING(20),
+      allowNull: false
     },
     title: {
       type: DataTypes.STRING(100),
@@ -39,14 +31,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TINYINT,
       allowNull: false
     },
-    create_date: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    update_date: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
     img_flag: {
       type: DataTypes.TINYINT,
       allowNull: false
@@ -54,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'post',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -73,17 +57,10 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "idx_post_board_id",
-        using: "BTREE",
-        fields: [
-          { name: "board_id" },
-        ]
-      },
-      {
         name: "idx_post_mem_sq",
         using: "BTREE",
         fields: [
-          { name: "writer_sq" },
+          { name: "writer_id" },
         ]
       },
     ]

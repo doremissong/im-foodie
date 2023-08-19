@@ -10,7 +10,6 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];  // .json -> .js
 
 const initModels = require('./init-models'); //init-models.js에서 메서드 가져옴.
-// const { Sequelize } = require('sequelize');
 
 // new Sequelize를 통해 MySQL 연결 객체 생성.
 const sequelize = new Sequelize(config.database, config.username, config.password,{

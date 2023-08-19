@@ -1,4 +1,4 @@
-const { db } = require('../models/index');
+const { db, sequelize } = require('../models/index');
 
 // getBoardParams = (info, modify) => {
 //     if (!modify) {   //생성
@@ -53,6 +53,7 @@ module.exports = {
         try{
             console.log("Loading");
             res.locals.boards = await db.board.findAll();
+            console.log("게시판 유저 확인 :", req.user.mem_id);
             res.json(res.locals.boards);
             // next();
         } catch (err){
