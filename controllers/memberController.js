@@ -113,11 +113,11 @@ module.exports = {
                 if (memberData.mem_id && memberData.password && isEmpty(memberExist)) {
                     await db.member.create(memberData, { transaction: t });
                     res.locals.redirect = "/";
-                    res.render(path.join(__dirname,'../views/member'), { mem_id : memberData.mem_id });
+                    // res.render(path.join(__dirname,'../views/member'), { mem_id : memberData.mem_id });
                 } else {
-                    // res.redirect("/auth/signup");
+                    res.redirect("/auth/signup");
                     console.log('ID is already used.');
-                    res.render(path.join(__dirname, '../views/thanks'));
+                    // res.render(path.join(__dirname, '../views/thanks'));
                     // 먼저 id, email 중복 체크
                 }
            })

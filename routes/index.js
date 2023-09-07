@@ -33,35 +33,11 @@ router.get("/post", boardController.showPost);
 //   res.render("selectChatRoom", {currentUser: req.user.mem_id});
 // });
 
-// 채팅 테스트
-router.get("/test_post/", (req, res)=>{
-  res.render("test");
-})
-
-router.post("/test_post/", (req,res)=>{
-  console.log(req.body.roomId);
-})
-router.get("/member/chatlist", isLoggedIn, (req, res) => {
-  // 그룹 선택.
-  res.render("chatList");
-});
-router.post("/member/chatlist", isLoggedIn, (req, res)=>{
-  console.log('hihi hungry');
-})
-router.get("/chat", (req, res)=>{
-  console.log(req.query.roomId,'는 roomId');
-  res.render("chat", {currentUser:req.user.mem_id, roomId:req.query.roomId} );//ㅆ발 post로 했는데 왜 getdmfh rksirh
-  
-})
-// 방 입장. 근데 이 방에 들어올 수 있는지. participant에 현재 모임 id랑 mem_id로 검색 결과가 있어야 권한 있는 것.
-router.get("/chat/:id", isLoggedIn, (req, res)=>{
-  // console.log(`gathering_id : ${req.params.gathering_id}`);
-  res.render("chat", {currentUser:req.user.mem_id, roomId:req.params.id} );
-})
 
 
 // 라우터 분리
 router.use("/auth/", authRoutes);
+router.use("/chat", gatheringRoutes);
 
 // error
 // router.use("/", errorRoutes);
@@ -84,12 +60,3 @@ module.exports = router;
 
 //routes 정리 예시
 // https://github.com/jaab30/passport_mysql_sequelize_boiler_plate/tree/master/routes
-
-
-// (req, res, next) => {
-//   if (req.session.user === undefined) {
-//     res.send(alertMove('/user/login', '로그인 후 이용가능합니다.'));
-//   } else {
-//     next();
-//   }
-// };
