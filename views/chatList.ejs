@@ -1,0 +1,28 @@
+<form action="/chat/room" method="post">
+    <input type="text" name="roomId" value="1" readonly>
+    1번 방 <button type="submit">입장하기</button>
+</form>
+<form action="/chat/room" method="post">
+    <input type="text" name="roomId" value="2" readonly>
+    2번 방<button type="submit">입장하기</button>
+</form>
+
+<div id="selectRoom">
+    스크립트에서 form 태그 동적 생성 
+    <form action="/chat/list" method="POST">
+        <input type="text" name ="roomId" value="2" hidden>
+        <button type="submit" class="roomId" value="2">입장하기</button>
+        roomId = 디비에서 가져온 gathering_id<br>
+        action="/chat/roomId"<br>
+        value=roomId<br>
+    </form> 
+
+    <script>
+        // const buttons = document.querySelectorAll('.roomId');
+        // buttons.forEach(button=>{
+        //     button.addEventListener('click', ()=>{
+        //         alert(`${button.value} is clicked`);
+        //     })
+        // })
+    </script>
+</div>

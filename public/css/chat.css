@@ -1,0 +1,49 @@
+.container {
+    width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+#info {
+    margin: 0 20px 0 20px;
+}
+
+#chat {
+    width: 80%;
+    height: 400px;
+    border: 1px solid #635956;
+    overflow: scroll;
+    color: #625a56;
+    margin: 0;
+    text-transform: uppercase;
+    margin: 0 20px 0 20px;
+  }
+  
+  #chat li {
+    text-decoration: none;
+    list-style: none;
+    padding: 10px;
+  }
+  
+  #chat-input {
+    font-family: "Baloo Bhaina";
+  }
+  #chat-head {
+    font-family: "Baloo Bhaina";
+    margin: 0 20px 0 20px;
+  }
+
+  #chatForm {
+    margin: 0 20px 0 20px;
+  }
+  
+  .message.current-user {
+    text-align: right;
+    font-weight: bold;
+    color:mediumpurple;
+    background-color: #fef0e68c;
+  }
+  
+  .chat-icon{
+    background-color: #000;
+  }

@@ -1,0 +1,27 @@
+/*COMMON*/
+body {
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #333;
+    background-color: #fefefe;
+}
+    
+a {
+    text-decoration: none;
+}
+  
+a:link {
+    color: #333;
+}
+
+a:visited {
+    color: #333;
+}
+    
+img {
+    /* img(인라인 요소) 하단에 Baseline 공백을 제거 */
+    display: block;
+}
+

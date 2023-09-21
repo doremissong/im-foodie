@@ -205,35 +205,61 @@ module.exports = {
         }
     },
 
-    // 이게 될까ㅛ?
-    validate: (req, res, next)=>{
-        req.santizeBody("email").normalizeEmail({
-            all_lowercase: true
-        }).trim();  // 다 소문자로, whitespace 공백 제거
-        req.check("email", "Email is invalid.").isEmail();
-        req.check("zipCode", "Zip code is invalid.")
-        .notEmpty().isInt().isLength({
-            min:5,
-            max:5
-        }).equals(req.body.zipCode);
-        // 왜 우편번호만 equals들어가?그리고 나머지는 왜 req의 ㄱ밧이랑 비교 안해?
-        req.check("password", "Password cannot be empty.").notEmpty();
-
-        // 유효성 결과 수집
-        req.getValidationResult.then((err)=>{
-            if(!err.isEmpty()){
-                let messages = err.array().map(e=>e.msg);
-                req.skip = true;
-                res.locals.redirect= "auth/signup";
-                next();
-            } else{
-                next();
-            }
-        });
+    findId: (req, res)=>{
+        res.sendFile(path.join(__dirname, "../public/html/find-id.html"));
     },
+
+    showId: async(req, res)=>{
+        // req에서 이름 + 휴대폰 번호 / 이름 + 이메일 받아서
+        var {name, email} = req.body;
+        console.log(req.body);
+        // // 어떻게 하지? input 태그 라디오 태그에 담아서 올 수 있나?
+        // // hidden으로 하면 할 수 있을 거 같은데
+        // // if(type==="tel"){
+        const foundId = await db.member.findOne({
+            attributes: ['mem_id'],
+            where: { name: name, email: email }
+        });
+        // res.send(foundId.mem_id);
+        res.render("showId", {mem_id: foundId.mem_id});
+        // }
+    },
+    findPW: (req, res)=>{
+        res.sendFile(path.join(__dirname, "../public/html/find-pw.html"));
+    },
+
+    showPW: async (req, res)=>{
+        var {mem_id, name, email} = req.body;
+        const foundPW = await db.member.findOne({
+            attributes: ['password'],
+            where: {mem_id: mem_id, name:name, email: email}
+        });
+        res.json(foundPW.password);
+    }
+    // 이게 될까ㅛ?
+    // validate: (req, res, next)=>{
+    //     req.santizeBody("email").normalizeEmail({
+    //         all_lowercase: true
+    //     }).trim();  // 다 소문자로, whitespace 공백 제거
+    //     req.check("email", "Email is invalid.").isEmail();
+    //     req.check("zipCode", "Zip code is invalid.")
+    //     .notEmpty().isInt().isLength({
+    //         min:5,
+    //         max:5
+    //     }).equals(req.body.zipCode);
+    //     // 왜 우편번호만 equals들어가?그리고 나머지는 왜 req의 ㄱ밧이랑 비교 안해?
+    //     req.check("password", "Password cannot be empty.").notEmpty();
+
+    //     // 유효성 결과 수집
+    //     req.getValidationResult.then((err)=>{
+    //         if(!err.isEmpty()){
+    //             let messages = err.array().map(e=>e.msg);
+    //             req.skip = true;
+    //             res.locals.redirect= "auth/signup";
+    //             next();
+    //         } else{
+    //             next();
+    //         }
+    //     });
+    // },
 }
-
-
-        //빈 항목 체크
-        // if(mem_id===""|| password==="")
-        //     return res.status(400).json({message: "Please fill all fields."});

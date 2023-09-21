@@ -13,6 +13,10 @@ router.post("/login", isNotLoggedIn, passport.authenticate("local", {
     successRedirect: "/",
 }));
 router.get("/logout", isLoggedIn, memberController.logout);
+router.get("/find_id", isNotLoggedIn, memberController.findId);
+router.post("/find_id", isNotLoggedIn, memberController.showId);
+router.get("/find_pw", isNotLoggedIn, memberController.findPW);
+router.post("/find_pw", isNotLoggedIn, memberController.showPW);
 
 
 module.exports = router;

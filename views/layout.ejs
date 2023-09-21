@@ -4,30 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confetti Cuisine</title>
-    <link rel="shortcut icon" type ="image/png" href="/images/gimbap.png">
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/confetti_cuisine.css">
+    <title>김밥집</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../images/favicon.png">
+
+    <!-- Style Reset -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+
+    <!-- Google APIs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+  
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link href="../css/chat.css" rel="stylesheet" type="text/css">
+
+    <!-- Script -->
+    <!-- HTML include(Jquery) -->
+    <!-- script src="//code.jquery.com/jquery-1.11.0.min.js"></script -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
-    <div id="nav">
-        <a href="/chat/list" class ="chat-icon">✉️</a>
-        <div class="col-sm nav-align">
-            <h1 id="title">Confetti Cuisine</h1>
-        </div>
-        <div class="col-sm nav-align">
-            <a href="/">
-                <span class="button">HOME</span>
-            <a href="/courses">
-                <span class="button">COURSES</span>
-            </a>
-            <a href="/contact">
-                <span class="button">Contact</span>
-            </a>
-        </div>
+    <%- include('header.ejs')%>
+    <div class="container">
+        <%- body %>
     </div>
-    <%- body %>
+    <%- include('footer.ejs')%> 
 </body>
 </html>

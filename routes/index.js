@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport'); // 이것도 config/passport로 바꿔야하나
 const authRoutes = require('./authRoutes');
 const gatheringRoutes = require('./gatheringRoutes');
+const boardRoutes = require('./boardRoutes');
 
 const path = require('path');
 // const { db } = require('../models/index');
@@ -23,7 +24,7 @@ router.get("/myroom/edit", memberController.edit);   //controller에서 update �
 router.post("/myroom/edit", memberController.update, memberController.showView);//showView
 router.get("/delete", memberController.showDelete);
 router.post("/delete", memberController.delete, memberController.show, memberController.showView);
-router.get("/board", boardController.showBoard);
+
 router.get("/post/:post_id", (req, res, next)=>{
   res.json({title: req.params.post_id});
 }); //요로코롬
@@ -37,6 +38,8 @@ router.get("/post", boardController.showPost);
 
 // 라우터 분리
 router.use("/auth/", authRoutes);
+router.use("/board", boardRoutes);
+// router.get("/board", boardController.showBoard);
 router.use("/chat", gatheringRoutes);
 
 // error
