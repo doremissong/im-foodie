@@ -1,45 +1,6 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>김밥집</title>
 
-    <!-- Favicon -->
-    <link rel="icon" href="../images/favicon.png">
-
-    <!-- Style Reset -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
-
-    <!-- Google APIs -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
-  
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/board.css">
-
-    <!-- Script -->
-    <!-- HTML include(Jquery) -->
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript">   
-    $(document).ready( function() {
-        $("#header").load("../html/header.html");  // 원하는 파일 경로를 삽입하면 된다
-        $("#footer").load("../html/footer.html");  // 추가 인클루드를 원할 경우 이런식으로 추가하면 된다
-    });
-    </script>
-    <script src="../js/data.js"></script>
-    
-</head>
 <body>
-    <!-- HEADER -->
-    <header id="header"></header>
-
+    <link rel="stylesheet" href="../css/board.css">
     <!--SECTION-->
     <section>
         <div class="board-section">
@@ -106,18 +67,46 @@
 						<p class="post-view">조회수</p>
                   	</div>
                 </li> -->
+                <% dataList.forEach((data, index)=>{ %>
+                    <li class="post">
+                        <div class="post-container">
+                            <p class="post-number"><%= pagination.startItemNo + 1 + index %></p>
+                            <p class="post-board"><%=data.category%></p>
+                            <p class="post-title"><a href="/board/postNumber<%= data.post_id%>뭐로해야할까"><%= data.title %></a></p>
+                            <p class="post-writer"><%= data.writer_id%></p>
+                            <p class="post-date"><%= data.createdAt.toISOString().slice(2,10);%></p>
+                            <p class="post-view"><%= data.count%></p>
+                        </div>
+                    </li>
+                <% }); %>
             </ul>
             <div class="pagination-container">
-                <div class="prev-button">&lt; 이전 </div>
-                <div class="number-button-wrapper"><span class="number-button"> 1 </span></div>
-                <div class="next-button"> 이후 &gt;</div>
+                <% if (pagination.curSet > 1){ %>    
+                    <div class="prev-set-button"><a href="/board?pageno=<%= pagination.startPage-1%>">&lt;&lt;&nbsp; </a></div>
+                <% } %>
+                <% if (pagination.pageNo!=1){ %>    
+                    <div class="prev-button"><a href="/board?pageno=<%= pagination.pageNo-1%>">&nbsp;이전&nbsp;</a></div>
+                <% } %>
+                <div class="number-button-wrapper">
+                    <% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
+                        <span class="number-button"> 
+							<% if (pagination.pageNo==i){ %>
+								<% console.log(i, pagination.pageNo); %>
+								<a href="/board?pageno=<%= i %>" style="font-weight: 800;"><%= i %></a>
+							<% } else{ %>
+								<a href="/board?pageno=<%= i %>"><%= i %></a>
+							<% } %>
+                        </span>
+                    <% } %>
+                </div>
+                <% if (pagination.pageNo != pagination.totalPage){ %>
+                    <div class="next-button"><a href="/board?pageno=<%= pagination.pageNo+1%>"> &nbsp;이후&nbsp;</a></div>
+                <% }%>
+				<% if (pagination.curSet < pagination.totalSet){ %>
+                    <div class="next-set-button"><a href="/board?pageno=<%= pagination.endPage+1%>">&nbsp;&gt;&gt;</a></div>
+                <% }%>
             </div>
             <script src="script.js"></script>
         </div>
     </section>
-    <script src="../js/pagination.js"></script>
-    
-    <!--FOOTER-->
-    <footer id="footer"></footer>
 </body>
-</html>

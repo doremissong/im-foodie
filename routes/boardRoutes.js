@@ -1,18 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const {db, sequelize}=require('../models/index');
 
 const boardController = require('../controllers/boardController');
-const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
+const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, setCondition } = require('./middlewares');
 
-router.get("/", boardController.showFirstPage);
 router.get("/write", isLoggedIn, (req, res)=>{
     res.sendFile(path.join(__dirname, "../public/html/board_write.html"));
 });
 router.post("/write", isLoggedIn, boardController.writePost);
 
 router.get("/:page", boardController.showBoard);
+router.get("/boast", boardController.showBoard);
+router.get("/restaurant", boardController.showBoard);
+router.get("/tip", boardController.showBoard);
+router.get("/free", boardController.showBoard);
+router.get("/notgood", boardController.showBoard);
+router.get("/promotion", boardController.showBoard);
+router.get("/share", boardController.showBoard);
+router.get("/mealfriend", boardController.showBoard);
 
+router.get("/", setDBModel(db.post), getPaginationInfo, boardController.showPage);
+//  setCondition({category:restaurant}),
 // router.get("/board", boardController.showBoard);
 
 module.exports = router;

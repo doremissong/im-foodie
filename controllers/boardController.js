@@ -1,5 +1,10 @@
+const { isUndefined } = require('util');
 const { db, sequelize } = require('../models/index');
 const path = require('path');
+const { countReset } = require('console');
+
+// paging info 빼는 함수 만들고
+// paging 할 데이터 뺀느 함수.
 
 // getBoardParams = (info, modify) => {
 //     if (!modify) {   //생성
@@ -38,65 +43,18 @@ getPostParams = (info, modify, reqMemId)=>{
 }
 
 module.exports = {
-    showFirstPage:(req, res)=>{
-        res.redirect("/board/" + 1);
-    },
-    showBoard: async (req, res) => {
-        var page_size = 20; // 페이지 당 게시물 수
-        var page_set_size = 10; // #pages
-        var post_offset = 0;    //❓limit 변수. mysql query 검색할 때 몇개까지 검색할지.
-        var totalPageCount = 0;
-        var totalPostCount = 0;
-
-        // db에서 게시판 글 가져오기 writer, 글 가져오기,
-        try {
-            totalPostCount = await db.post.count();
-        }
-        catch (err) {
-            console.log(`ERROR while checking # pages. ${err}`);
-        }
-        // 전체 게시글 수 확인
-        if (totalPostCount < 0) {
-            totalPostCount = 0;
-        }
-
-        totalPageCount = Math.ceil(totalPostCount / page_size);   // 전체 페이지수
-        const curPage = req.params.page;
-        // curPage의 값이 유효한지 체크 curPage<0 || curPage>totalPageCount이면 curPage=1로 해보려.
-        if (curPage < 0 || curPage > totalPageCount) {
-            curPage = 1;
-        }
-        var totalSet = Math.ceil(totalPageCount / page_set_size);    // 10쪽 단위로 몇개있는지. 전체 쪽수를 1~10 단위로 보여주니까.
-        var curSet = Math.ceil(curPage / page_set_size);   // 현재 페이지의 세트 번호
-        var startPage = ((curSet - 1) * 10) + 1;    // 보여질 set의 첫번째 쪽
-        var endPage = (startPage + page_set_size) - 1;
-
-        post_offset = (curPage - 1) * 10; // DB는 0부터 시작.
-        console.log("확인한다. 파라미터 값 가져오는지, 지금 페이지랑 offset: ", req.params.page, curPage, post_offset);
-        // var postList = await db.post.findAll({
-        //     // attributes: ['post_id', 'category', 'title', 'writer_id', 'createdAt', 'count'], // 게시판 종류, 제목, 글쓴이, 작성일, 조회수
-        //     order: [["createdAt", "DESC"]],
-        //     offset: post_offset, limit: page_size
-        // });
-        // console.log("보여줄 게시글 보여주기\n", postList);
-
-        // var paging_info = {
-        //     "curPage": curPage,
-        //     "page_set_size": page_set_size,
-        //     "totalPageCount": totalPageCount,
-        //     "totalSet": totalSet,
-        //     "curSet": curSet,
-        //     "startPage": startPage,
-        //     "endPage": endPage
-        // }
-
-        // res.json(paging_info);
-        // res.render("testBoard", {
-        //     data: postList,
-        //     paging: paging_info
-        // });
-        res.sendFile(path.join(__dirname, "../public/html/board.html"));
+    showPage: async(req, res)=>{
+        // 카테고리
+        const paginationInfo = res.locals.paginationInfo;
+        const dataList = res.locals.dataList;
+        console.log('확인한다. res.locals.model', res.locals.model);    // setDBModel(post); ==> post나온다. 
         
+        //success:true는 왜 한거지? 
+        console.log({paginationInfo: paginationInfo});
+        // console.log({paginationInfo: paginationInfo, postList: postList});
+        res.render('board',{pagination:paginationInfo, dataList: dataList});
+        // res.json({paginationInfo: paginationInfo, postList: postList});
+
     },
     testShowBoard: async(req, res)=>{
         //1. 게시판 종류 확인하고 보여주기 1) 전체 2)
@@ -114,10 +72,20 @@ module.exports = {
         }
     },
     showPost: async(req, res)=>{
-        // :post_id를 받아와야해.
+        const postId = req.query.postid;
+        //❤️ 조회수 카운팅
+        // 조회수 viewCount로 하고 db만 따로 설정해주고, postId는 쿼리로 받으면 된다.
+        await db.post.update({viewCount: sequelize.literal('viewCount + 1')}, {
+            where: {post_id: postId}
+        })
+        .catch((err)=>{console.log(`Error: while updating view count. ${err.message}`)});
+        
+        
         try{
             console.log("Loading");
-            post = await db.post.findAll();
+            post = await db.post.findAll({
+                where: {post_id: postId}
+            });
             // res.json(post);
             res.sendFile(path.join(__dirname, "../public/html/board.html"));
             // next();

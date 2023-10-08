@@ -4,6 +4,7 @@ const router = express.Router();
 const memberController = require('../controllers/memberController');
 const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
 const passport = require('passport');
+const member = require('../models/member');
 
 router.get("/signup", isNotLoggedIn, memberController.new);
 router.post("/signup", isNotLoggedIn, memberController.create);
@@ -15,9 +16,12 @@ router.post("/login", isNotLoggedIn, passport.authenticate("local", {
 router.get("/logout", isLoggedIn, memberController.logout);
 router.get("/find_id", isNotLoggedIn, memberController.findId);
 router.post("/find_id", isNotLoggedIn, memberController.showId);
-router.get("/find_pw", isNotLoggedIn, memberController.findPW);
-router.post("/find_pw", isNotLoggedIn, memberController.showPW);
-
+router.get("/find_pw", isNotLoggedIn, memberController.showFindPWPage);
+router.post("/find_pw", isNotLoggedIn, memberController.findPW, memberController.sendPW);
+router.get("/send", memberController.sendPW);
+router.get("/find", memberController.findPW);
+router.get("/change_pw", isLoggedIn, memberController.showChangePasswordPage);
+router.post("/change_pw", isLoggedIn, memberController.changePassword);
 
 module.exports = router;
 /*

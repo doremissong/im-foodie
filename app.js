@@ -38,7 +38,7 @@ const sessionStore = new MySQLStore(options);
 const sessionOptions = {
     secret: process.env.COOKIE_SECRET,  // 환경변수에 숨기고 저장하는 거 8부에소 볼 수 있어
     resave: false,              // 새로운 요청시 세션에 변동 사항이 없어도 다시 저장할지 설정
-    saveUninitialized: false,    // 세션에 저장할 내용이 없어도 저장할지 설정
+    saveUninitialized: true,    // 세션에 저장할 내용이 없어도 저장할지 설정
     //touchAfter: 24 * 60 * 60,
     store: sessionStore,
     cookie: {
@@ -47,6 +47,7 @@ const sessionOptions = {
         expires: Date.now() + 1000 * 60 * 60,   //1H
         maxAge: 1000 * 60 * 60//4000000
     },
+    rolling: true
 };
 const session = expressSession(sessionOptions);
 

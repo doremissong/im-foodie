@@ -1,9 +1,12 @@
 const passport = require("passport"); // 사용자 컨트롤러 제일 위. 371쪽
+require('dotenv').config();
 const { db, sequelize } = require('../models/index');
 const Op = sequelize.Op;
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const { isEmpty } = require('../routes/middlewares');
+const transporter = require('../config/email');
+
 // __dirname === C:\Users\zelly\Desktop\imfoodie\im-foodie\controllers
 
 // 디비 연결
@@ -25,15 +28,18 @@ sequelize.sync({ force: false })
         console.error(err);
     });
 
-
-getMemberParams = async (body) => {
-    // console.log(body);
-    //잠깐 update도 여기서 하는데 그때마다 genSalt해? 그것도 나쁘지 않넹 새 pw니까 상관은 없겠다
+hashPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(body.password, salt);
+    const hashedPW = await bcrypt.hash(password, salt);
+    return hashedPW;
+}
+getMemberParams = async (body) => {
+    // const salt = await bcrypt.genSalt(10);
+    // const hashPassword = await bcrypt.hash(body.password, salt);
+    const hashedPassword = await hashPassword(body.password);
     return {
         mem_id: body.mem_id,
-        password: hashPassword,
+        password: hashedPassword,
         name: body.name,
         email: body.email,  //email 양식 확인. naver.coim 이렇게 하면 안되니까
         tel: body.tel,
@@ -47,6 +53,11 @@ getMemberParams = async (body) => {
     }
 }
 
+
+generateRandomPassword = ()=>{
+    // const randomPassword = Math.random().toString(36).slice(2);
+    return Math.random().toString(36).slice(2);
+}
 
 //   https://sanghaklee.tistory.com/3
 
@@ -224,18 +235,91 @@ module.exports = {
         res.render("showId", {mem_id: foundId.mem_id});
         // }
     },
-    findPW: (req, res)=>{
+    // 이름 바꾸기 show findPWPage
+    showFindPWPage: (req, res)=>{
         res.sendFile(path.join(__dirname, "../public/html/find-pw.html"));
     },
 
-    showPW: async (req, res)=>{
+    findPW: async (req, res, next)=>{
         var {mem_id, name, email} = req.body;
-        const foundPW = await db.member.findOne({
-            attributes: ['password'],
-            where: {mem_id: mem_id, name:name, email: email}
-        });
-        res.json(foundPW.password);
-    }
+        db.member.findOne({
+            where: {mem_id: mem_id, name: name, email: email}
+        })
+        .then(async()=>{ 
+            // 비번 변경 + state를 비번 바꾸게 설정
+            const newPassword = generateRandomPassword();
+            const hashedPassword = await hashPassword(newPassword);
+            try {
+                await sequelize.transaction(async t => {
+                    db.member.update(
+                        { password: hashedPassword, state: process.env.UPDATE_REQUIRED },
+                        {
+                            where: {
+                                mem_id: mem_id
+                            },
+                            transaction: t
+                        });
+                })
+            } catch (err) {
+                console.log(`Error updating pw while find pw: ${err.message}`);
+            }
+            //💚얘네를 try 안에 넣어야할까? 여기다 둬야할까?
+            res.locals.member_info = {
+                password: newPassword,
+                email: email
+            };
+            next();
+        })
+        .catch((err)=>{
+            next(err);
+        })
+    },
+
+    sendPW: (req, res)=>{
+        const eamilOptions = {
+            from: "I'm Foodie",
+            to: res.locals.member_info.email, //locals.email,
+            subject: "[I'm Foodie] 비밀번호 찾기",
+            text: "안녕하세요 아임푸디입니다.\n 변경된 비밀번호는 다음과 같습니다.\n" 
+            + res.locals.member_info.password + "\n개인정보 보호를 위해 반드시 비밀번호를 변경해주세요 🍽️"
+        }
+
+        transporter.sendMail(eamilOptions, (err, res)=>{
+            if(err){
+                console.log(`[Error]: while sending email about pw ${err.message}`);
+            }
+        })
+        res.send('Success!');
+    },
+
+    showChangePasswordPage: (req, res)=>{
+        //❗‼변경 페이지 받기
+        res.render("changePassword");
+    },
+
+    changePassword: async(req, res)=>{
+        const oldPassword = req.body.old_password;
+        const hashedPassword = await hashPassword(req.body.new_password);
+        const result = await bcrypt.compare(oldPassword, req.user.password);
+        if (result) {
+            try {
+                await sequelize.transaction(async t => {
+                    await db.member.update(
+                        { password: hashedPassword, state: process.env.NORMAL },
+                        {
+                            where: { mem_id: req.user.mem_id },
+                            transaction: t
+                        })
+                })
+            } catch (err) {
+                console.log(`Error updating pw: ${err.message}`);
+            }
+            res.send(req.body.newPassword);
+        } else{
+            // 팝업창 띄우기 
+            res.redirect("/auth/change_pw");
+        }
+    },
     // 이게 될까ㅛ?
     // validate: (req, res, next)=>{
     //     req.santizeBody("email").normalizeEmail({
