@@ -1,24 +1,35 @@
-<div class="container">
-    <% if(currentUser) { %>
-        <h1 id="chat-head">CHAT</h1>
-        <div id="info">
-            <table>
-                <tr>
-                    <th><img src="../images/person.png" alt="현재 접속 인원: " style="margin: 3px; width: 15px;height: 15px;"></th>
-                    <th><strong id="count"></strong></th>
-                </tr>
-            </table>
+
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/board.css">
+
+<!--SECTION-->
+<section>
+    <div class="board-section">
+        <div class="board-list">
+            <div class="board-main">
+                <%= gatherName %>
+            </div>
         </div>
-        <div id="chat"></div>
-        <form id="chatForm" action = "/chat/<%= roomId %>" method = "POST">
-            <input id="chat-input" type="text" required>
-            <input id="chat-mem-id" type="hidden" value="<%= currentUser %>">
-            <input id="chat-gathering-id" type="hidden" value="<%= roomId %>">
-            <input type="submit" class="button" value="Send">
-        </form>
-        <script type="text/javascript" src="/js/testChat.js"></script>
-        <%= currentUser %><br>
-        
-        <%= roomId %>는 룸 아이디야
-    <% } %>
-</div>
+    </div>
+    <div class="container">
+        <% if(user.mem_id) { %>
+            <h1 id="chat-head">CHAT</h1>
+            <div id="info">
+                <table>
+                    <tr>
+                        <th><img src="/images/person.png" alt="현재 접속 인원: " style="margin: 3px; width: 15px;height: 15px;"></th>
+                        <th><strong id="count"></strong></th>
+                    </tr>
+                </table>
+            </div>
+            <div id="chat"></div>
+            <form id="chatForm" method = "POST">
+                <input id="chat-input" type="text" required>
+                <input id="chat-mem-id" value="<%= user.mem_id %>" hidden>
+                <input id="chat-gathering-id" value="<%= roomId %>" hidden>
+                <input type="submit" class="button" value="Send">
+            </form>
+            <script type="text/javascript" src="/js/testChat.js"></script>
+        <% } %>
+    </div>
+</section>

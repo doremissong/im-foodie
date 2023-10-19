@@ -12,6 +12,10 @@ const NOT_ENTERED = 0,
     CONNECTED = 1,
     DISCONNECTED = 2;
 
+// 연결된 클라이언트 데이터 저장할 객체
+const connectedClients ={};
+// var memI
+var roomId=0;
 module.exports = io => {
     // var chat = io.of('/chat'); // chat.socket? =io.of('/chat')
     
@@ -26,16 +30,27 @@ module.exports = io => {
     io.on('connection', (socket)=>{
         // console.log('server side socket.roomId: ', socket.roomId);
         console.log('chat connection');
-        const req = socket.handshake.session.passport;
-        const memId = req.user;
-        var roomId;
-        const url = socket.handshake.url; // /socket.io/?EIO=4&transport=polling&t=OdYhZ9b
+        //먼저 req 존재하는지 undefined아닌지 체크하고 
+        const req = socket.handshake.session.passport;  //❓지워?   
+        const memId = req.user///;                         // ❓ 지워?
+        // var roomId;                                     // ❓지워.
+        // const url = socket.handshake.url; // /socket.io/?EIO=4&transport=polling&t=OdYhZ9b
 
         socket.onAny((event)=>{
             console.log(`소켓 이벤트 : ${event}`);
         })
+
+        socket.on('setSessionId', (sessionId)=>{
+            // 연결된 클라이언트 데이터를 세션  id와 연결
+            connectedClients[sessionId.memId] = {
+                memId_s: sessionId.memId,
+                roomId_s: sessionId.roomId
+            }
+            roomId = sessionId.roomId;
+            console.log(`세션 ID ${sessionId.memId}로 연결된 클라이언트가 설정되었습니다.`);
+        })
         // participant(접속한 유저 확인 가능)에 유저 추가하기. 첫 입장이라면 안내 문구 표시. Or, chat 테이블에서 메시지 가져와 출력
-        socket.on('join room', async (roomId, done) => {
+        socket.on('join room', async (roomId, done) => {    //r거기서 room_id
             socket['roomId']=roomId;
             roomId = roomId; // 필요없나.
             socket.join(roomId);
@@ -100,7 +115,13 @@ module.exports = io => {
         // 왜 연결이 끊기는데 들어왔다고 환영인사를 하는걸까?????
         socket.on('disconnect', async (roomId) => {
             console.log('disconnect - ',socket.rooms, roomId);
-            console.log("user disconnected");     //사용자가 연결 끊는 것 확인    
+            console.log("user disconnected");     //사용자가 연결 끊는 것 확인
+            //chat -GPT  
+            const sessionId = socket.handshake.sessionId;
+            if (connectedClients[sessionId]) {
+                delete connectedClients[sessionId];
+                console.log(`세션 ID ${sessionId}로 연결된 클라이언트가 연결을 끊었습니다.`);
+            }  
         });
     })
 

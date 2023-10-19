@@ -14,14 +14,14 @@ router.post("/login", isNotLoggedIn, passport.authenticate("local", {
     successRedirect: "/",
 }));
 router.get("/logout", isLoggedIn, memberController.logout);
-router.get("/find_id", isNotLoggedIn, memberController.findId);
-router.post("/find_id", isNotLoggedIn, memberController.showId);
-router.get("/find_pw", isNotLoggedIn, memberController.showFindPWPage);
-router.post("/find_pw", isNotLoggedIn, memberController.findPW, memberController.sendPW);
-router.get("/send", memberController.sendPW);
-router.get("/find", memberController.findPW);
-router.get("/change_pw", isLoggedIn, memberController.showChangePasswordPage);
-router.post("/change_pw", isLoggedIn, memberController.changePassword);
+router.get("/findId", isNotLoggedIn, memberController.findId);
+router.post("/findId", isNotLoggedIn, memberController.showId);
+router.get("/findPw", isNotLoggedIn, memberController.showFindPWPage);
+router.post("/findPw", isNotLoggedIn, memberController.findPW, memberController.sendPW);
+// router.get("/send", memberController.sendPW);
+// router.get("/find", memberController.findPW);
+router.get("/changePw", isLoggedIn, memberController.showChangePasswordPage);
+router.post("/changePw", isLoggedIn, memberController.changePassword);
 
 module.exports = router;
 /*

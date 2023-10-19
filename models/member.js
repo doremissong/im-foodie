@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: "0"
     },
     birthdate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.STRING(6),
       allowNull: false
     },
     profile_image: {

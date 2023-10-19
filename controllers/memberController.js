@@ -107,7 +107,8 @@ module.exports = {
 
     // 구) getSignUpPage -> 현) new
     new: (req, res) => {
-        res.sendFile(path.join(__dirname, "../public/html/signup.html"));
+        res.render("signup");
+        // res.sendFile(path.join(__dirname, "../public/html/signup.html"));
     },
 
     create: async (req, res) => {
@@ -124,6 +125,7 @@ module.exports = {
                 if (memberData.mem_id && memberData.password && isEmpty(memberExist)) {
                     await db.member.create(memberData, { transaction: t });
                     res.locals.redirect = "/";
+                    res.redirect("/");
                     // res.render(path.join(__dirname,'../views/member'), { mem_id : memberData.mem_id });
                 } else {
                     res.redirect("/auth/signup");
@@ -142,7 +144,8 @@ module.exports = {
     },
 
     login: (req,res)=>{
-        res.sendFile(path.join(__dirname, "../public/html/login.html"));
+        res.render("login");
+        // res.sendFile(path.join(__dirname, "../public/html/login.html"));
     },
 
     redirectView: (req, res, next) => {
@@ -217,7 +220,8 @@ module.exports = {
     },
 
     findId: (req, res)=>{
-        res.sendFile(path.join(__dirname, "../public/html/find-id.html"));
+        res.render("findId");
+        // res.sendFile(path.join(__dirname, "../public/html/find-id.html"));
     },
 
     showId: async(req, res)=>{
@@ -237,12 +241,13 @@ module.exports = {
     },
     // 이름 바꾸기 show findPWPage
     showFindPWPage: (req, res)=>{
-        res.sendFile(path.join(__dirname, "../public/html/find-pw.html"));
+        res.render("findPw");
+        // res.sendFile(path.join(__dirname, "../public/html/find-pw.html"));
     },
 
     findPW: async (req, res, next)=>{
         var {mem_id, name, email} = req.body;
-        db.member.findOne({
+        await db.member.findOne({
             where: {mem_id: mem_id, name: name, email: email}
         })
         .then(async()=>{ 
@@ -251,7 +256,7 @@ module.exports = {
             const hashedPassword = await hashPassword(newPassword);
             try {
                 await sequelize.transaction(async t => {
-                    db.member.update(
+                    await db.member.update(
                         { password: hashedPassword, state: process.env.UPDATE_REQUIRED },
                         {
                             where: {
@@ -278,7 +283,8 @@ module.exports = {
     sendPW: (req, res)=>{
         const eamilOptions = {
             from: "I'm Foodie",
-            to: res.locals.member_info.email, //locals.email,
+            to: "zelly1020@naver.com",
+            //to: res.locals.member_info.email, //locals.email,
             subject: "[I'm Foodie] 비밀번호 찾기",
             text: "안녕하세요 아임푸디입니다.\n 변경된 비밀번호는 다음과 같습니다.\n" 
             + res.locals.member_info.password + "\n개인정보 보호를 위해 반드시 비밀번호를 변경해주세요 🍽️"
@@ -289,12 +295,14 @@ module.exports = {
                 console.log(`[Error]: while sending email about pw ${err.message}`);
             }
         })
-        res.send('Success!');
+        // res.send('Success!');
+        res.write("<script>alert('success')</script>");
+        res.redirect("/auth/changePw");
     },
 
     showChangePasswordPage: (req, res)=>{
         //❗‼변경 페이지 받기
-        res.render("changePassword");
+        res.render("changePw", {user: req.user});
     },
 
     changePassword: async(req, res)=>{
@@ -314,10 +322,11 @@ module.exports = {
             } catch (err) {
                 console.log(`Error updating pw: ${err.message}`);
             }
-            res.send(req.body.newPassword);
+            res.redirect("/");
+            // res.send(req.body.newPassword);
         } else{
             // 팝업창 띄우기 
-            res.redirect("/auth/change_pw");
+            res.redirect("/auth/changePw");
         }
     },
     // 이게 될까ㅛ?

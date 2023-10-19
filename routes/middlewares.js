@@ -6,6 +6,7 @@ exports.isLoggedIn = (req, res, next) => {
     } else {
         //res.status(403).send('로그인 필요');
         res.redirect('/auth/login');    //이전 화면으로 돌아가는 건 어떻게 할까. 메인으로 돌아가면 좀 그래.
+        next();
     }
 };
 
@@ -89,13 +90,13 @@ exports.getPaginationInfo = async (req, res, next)=>{
     // 세트 사이즈
     var setSize = req.query.setsize;
 
-    countPerPage = this.setPagingVar(countPerPage, 1);
+    countPerPage = this.setPagingVar(countPerPage, 20);
     pageNo = this.setPagingVar(pageNo, 1);
     // //❓query 스트링이 페이지 범위를 넘어가면
     if (pageNo < 0 || pageNo > totalPage) {
         pageNo = 1;
     }
-    setSize = setPagingVar(setSize, 2);
+    setSize = this.setPagingVar(setSize, 10);
 
     // 특정 게시판도 글 개수 세기
     var totalPost = await model.count({
@@ -167,14 +168,34 @@ exports.getPaginationInfo = async (req, res, next)=>{
 //     const randomPassword = Math.random().toString(36).slice(2);
 //     return randomPassword;
 // }
-var test = async (model)=>{
-    const dataList = await model.findAll();
-    return dataList;
-}
 
-var test2 = ()=>{
-    console.log('배아파');
+exports.getPostLike = async(postId)=>{
+    var count = 0;
+    try{
+        count = await db.post_like.count({
+            where: { post_id: postId }
+        })
+        return count;
+    } catch(err){
+        console.log(`Error: while get count of like ${err.message}`);
+        return err;
+    }
+    // await db.post_like.count({
+    //     where: { post_id: postId }
+    // }).then((count) => {
+    //     return count;
+    // }).catch((err)=>{
+    //     console.log(`Error: while get count of like ${err.message}`);
+    //     return err;
+    // })
+};
+
+exports.getPostComment = async(postId)=>{
+    await db.post_comment.findAll({
+        where:{post_id: postId}
+    }).then((comments) => {
+        return comments;
+    }).catch((err)=>{
+        console.log(`Error: while get comment of post ${err.message}`);
+    })
 }
-test2();
-// test(db.member).then(info=>console.log(info));
-console.log(this.setDBModel(db.member));

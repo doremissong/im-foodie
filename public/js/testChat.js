@@ -5,16 +5,16 @@ $(document).ready(() => {
     // var roomId = window.location.pathname.split('/')[2];;
     
     // roomId 값 저장받아
-    room_id=$("#chat-gathering-id").val;
-    console.log(room_id);
-    roomId=1;
-    socket.emit('join room', roomId, (roomId)=>{
+    const room_id=$("#chat-gathering-id").val();
+    console.log('testChat:야야야야', room_id);
+    roomId=100;
+    socket.emit('join room', room_id, (roomId)=>{
         console.log(`roomId from server: ${roomId}`);
     });
 
     $(window).bind('unload', ()=>{
         // roomId = window.location.pathname.split('/')[2];
-        socket.emit('leave room', roomId);
+        socket.emit('leave room', room_id);
         return '나갈거야?';
     });
 
@@ -23,38 +23,48 @@ $(document).ready(() => {
     });
 
     socket.on('undefined user', ()=>{
-        socket.disconnect(roomId);
+        socket.disconnect(room_id);
     });
 
+    const sessionID = { 
+        memId: $("#chat-mem-id").val(),
+        room_id: $("#chat-gathering-id").val()
+    }
+    socket.emit('setSessionId', sessionID);
+
+    //자체를 지워야하지 않을까?
     $('.roomId').on('click', (e)=>{ //addEventListenr로
         console.log(e.target.value);
-        socket['roomId']=e.target.value;
+        socket['roomId']=e.target.value;    //지워
         window.name=e.target.value;
-        roomId = e.target.value;
-        socket.emit('join room', roomId, (roomId)=>{
+        roomId = e.target.value;            //지워
+        socket.emit('join room', room_id, (roomId)=>{
             console.log(`roomId from server: ${roomId}`);
         });
-        alert(`${roomId} room is clicked`);
+        alert(`${room_id} room is clicked`);
     })
     
     // welcome은 채팅방 첫 입장 시에만.
     socket.on('welcome', (memId)=>{
-        console.log(memId, " comes in room no.", roomId," first time. - welcome client");
-        displayMessage({ mem_id:"imfoodie", content: memId+" comes in :)" });
+        console.log(memId, " comes in room no.", room_id," first time. - welcome client");
+        displayMessage({ memId:"imfoodie", content: memId+" comes in :)" });
     });
 
     $("#chatForm").submit((e) => {             // 폼 전달할 때, 이벤트 뿌리기
         e.preventDefault();
         $(window).unbind('unload');
-        let text = $("#chat-input").val();
-        let mem_id = $("#chat-mem-id").val();
-        console.log(`socket.'roomid': ${socket[roomId]}`);
+        let text = $("#chat-input").val();  // 건네짐
+        let mem_id = $("#chat-mem-id").val();       //건네짐
+        let room_id=$("#chat-gathering-id").val();
+        console.log(`testChat파일 - 서버에서 건네받은.'roomid': ${room_id}`);
+        console.log(`testChat파일 - socket.'roomid': ${socket[roomId]}`);
         // console.log(`text: ${text}\nmem_id: ${mem_id}`);s'
         // let gathering_id = $("#chat-gathering-id").val();   // res.render 할 때 하는 게 나을까. 아님 url에서 긁을까?
         socket.emit('message', {
             content: text,
             mem_id: mem_id,
-            roomId: socket[roomId]
+            roomId: room_id,
+            // roomId: socket[roomId]
         });
         $("#chat-input").val("");
         return false; //야는 왜 있는 것인가...
@@ -88,15 +98,16 @@ $(document).ready(() => {
 
     // 메시지 출력
     let displayMessage = (message) => {
-        if (message.mem_id === 'imfoodie') {
+        // message.mem_id였는데 memId로 수정함. 이후에 오류 있나 확인
+        if (message.memId === 'imfoodie') {
             $("#chat").append(
                 $("<li>").html(`${message.content}`));
         }
         else {
             $("#chat").append(
                 $("<li>").html(`
-            <strong class="message ${getCurrentUserClass(message.mem_id)}">
-            ${message.mem_id}
+            <strong class="message ${getCurrentUserClass(message.memId)}">
+            ${message.memId}
             </strong>: ${message.content}
             `));    // 채팅박스에 서버로부터 받은 메시지 출력
         }

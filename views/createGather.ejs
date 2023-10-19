@@ -1,0 +1,100 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/signup.css">
+
+<!-- SECTION -->
+<section class="sign-up">
+    <div class="content">
+        <div class="up-text">
+            <span class="material-icons">badge</span>
+            <a>밥모임 만들어요 🍴</a>
+        </div>
+            <form name="createGather" action="/gather/createGather" method="POST">
+                <table class="up-form">
+                    <tbody>
+                        <tr class="row">
+                            <td class="t-text">이름</td>
+                            <td class="t-box">
+                                <input type="text" name="name" placeholder="밥모임 이름을 알려주세요 :)" maxlength='16' value="" required>
+                                <div class="t-box-text">20자 이내로 작성 가능합니다.</div>
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="t-text">모집 마감일</td>
+                            <td class="t-box">
+                                <input type="date" name="deadline" id="7daysfromnow" required>
+                                <div class="t-box-text">마감일을 알려주세요 :) 기본 마감일은 일주일 후 입니다.</div>
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="t-text">지역</td>
+                            <td class="t-box">
+                                <input type="text" name="region" placeholder="ex) 서울시 노원구 공릉동" value="" required>
+                                <div class="t-box-text">콤보박스 지역값을 가져오는 방법은 없을까?</div>
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="t-text">탐방할 맛집</td>
+                            <td class="t-box">
+                                <input type="text" name="place" placeholder="ex) 왕짜장" value="" required>
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="t-text">총인원수</td>
+                            <td class="t-box">
+                                <input type="tel" name="tel" placeholder="4" pattern="[0-9]{11}" value="" required>
+                                명
+                                <div class="t-box-text">인원은 몇명으로 제한하지?음,,99?100?50?</div>
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="t-text">대표 이미지</td>
+                            https://iamiet.tistory.com/68 <--이미지 업로드
+                            <td class="t-box">
+                                <input type="file" name="image_url" accept="image/* value="" required>
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="t-text">소개글</td>
+                            <td class="t-box">
+                                <div class="board-write-content">
+                                    <textarea name="description" placeholder="맛집 모임원을 위해 설명을 적어주세요 :D" required></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button">
+                    <input type="submit" name="submit" value="등록하기">
+                    <a href="/">취소</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    // 오늘 날짜를 얻어오는 함수
+        function getToday() {
+            let today = new Date();
+
+            // 7일을 더한 날짜 계산
+            let nextWeek = new Date(today);
+            nextWeek.setDate(today.getDate() + 7);
+
+            // YYYY-MM-DD 형식으로 변환
+            let year = nextWeek.getFullYear();
+            let month = String(nextWeek.getMonth() + 1).padStart(2, '0');
+            let day = String(nextWeek.getDate()).padStart(2, '0');
+
+            // YYYY-MM-DD 형식으로 반환
+            return `${year}-${month}-${day}`;
+        }
+
+        // 기본값 설정
+        document.getElementById('7daysfromnow').value = getToday();
+    // var defaultDeadline = new Date();
+    // dafaultDeadLine.setDate(defaultDeadline.getDate()+7);
+    // console.log(defaultDeadline);
+    // // $("#7daysfromnow").val(new Date().toISOString.substring(0,10));
+    // document.getElementById('7daysfromnow').value = dafaultDeadLine.toISOString().substring(0, 10);
+</script>

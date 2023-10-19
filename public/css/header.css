@@ -9,7 +9,7 @@
 /*HEADER*/
 header {
     width: 100%;
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     z-index: 9;
     background-color: #fdf8f6;
@@ -57,7 +57,7 @@ header .sub-category ul.category li:first-child::before {
     display: none;
 }
   
-header .sub-category ul.category li a {
+header .sub-category ul.category li span {
     padding: 5px 15px;
     display: block;
     font-size: 13;
@@ -132,7 +132,7 @@ header .main-category .item:hover .item-name {
   
 header .main-category .item .item-contents {
     width: 100%;
-    position: fixed;
+    /* position: fixed; */
     left: 0;
     display: none;
 }
@@ -142,7 +142,7 @@ header .main-category .item .item-contents {
 header .main-category .item .item-contents {
     background-color: #ffc3ac;
     width: 100%;
-    position: fixed;
+    position: absolute;
     left: 0;
     display: none;
 }

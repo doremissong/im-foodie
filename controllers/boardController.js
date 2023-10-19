@@ -1,7 +1,8 @@
-const { isUndefined } = require('util');
+// const { isUndefined } = require('util');
 const { db, sequelize } = require('../models/index');
 const path = require('path');
-const { countReset } = require('console');
+// const { countReset } = require('console');
+const { getPostLike, getPostComment } = require("../routes/middlewares");
 
 // paging info 빼는 함수 만들고
 // paging 할 데이터 뺀느 함수.
@@ -9,7 +10,7 @@ const { countReset } = require('console');
 // getBoardParams = (info, modify) => {
 //     if (!modify) {   //생성
 //         return {
-//             name = info.name,
+    
 //             create_date = Date.now(),   //첫번째면 이거고, 수정이면 가만히 둬야하는데,,, 매개변수 하나 둬서 0이면 초기. update는 1할까/ 근데 이걸 따로 
 //             update_date = Date.now()
 //         }
@@ -31,7 +32,7 @@ getPostParams = (info, modify, reqMemId)=>{
             writer_id: reqMemId,
             title: info.title,
             content: info.content,
-            count: 0,
+            viewCount: 0,
             state: 0, //생성
             img_flag: 0
         }
@@ -47,12 +48,11 @@ module.exports = {
         // 카테고리
         const paginationInfo = res.locals.paginationInfo;
         const dataList = res.locals.dataList;
-        console.log('확인한다. res.locals.model', res.locals.model);    // setDBModel(post); ==> post나온다. 
+        console.log('[boardController] 확인:  res.locals.model', res.locals.model);    // setDBModel(post); ==> post나온다. 
         
         //success:true는 왜 한거지? 
-        console.log({paginationInfo: paginationInfo});
-        // console.log({paginationInfo: paginationInfo, postList: postList});
-        res.render('board',{pagination:paginationInfo, dataList: dataList});
+        // console.log({paginationInfo: paginationInfo});
+        res.render('board',{user: req.user, pagination:paginationInfo, dataList: dataList});
         // res.json({paginationInfo: paginationInfo, postList: postList});
 
     },
@@ -72,27 +72,40 @@ module.exports = {
         }
     },
     showPost: async(req, res)=>{
-        const postId = req.query.postid;
-        //❤️ 조회수 카운팅
+        
+        const postId = req.query.no;
+        //❤️ 조회수 카운팅 TRANSACTION!!!!!!!
         // 조회수 viewCount로 하고 db만 따로 설정해주고, postId는 쿼리로 받으면 된다.
-        await db.post.update({viewCount: sequelize.literal('viewCount + 1')}, {
-            where: {post_id: postId}
-        })
-        .catch((err)=>{console.log(`Error: while updating view count. ${err.message}`)});
-        
-        
-        try{
-            console.log("Loading");
-            post = await db.post.findAll({
-                where: {post_id: postId}
+
+        try {
+            await sequelize.transaction(async t =>{
+                await db.post.update(
+                    {viewCount: sequelize.literal('viewCount + 1')},
+                    {
+                        where: { post_id: postId },
+                        transaction: t
+                    })
             });
-            // res.json(post);
-            res.sendFile(path.join(__dirname, "../public/html/board.html"));
-            // next();
-        } catch (err){
+        } catch(err){
+            console.log(`Error: while updating view count. ${err.message}`)
+        };
+        
+
+        var temp ={id:1, title: '공릉 맛집'};
+        var data = {};
+        try{ 
+            data = await db.post.findOne({
+            where:{post_id: postId}
+        })} catch(err){
             console.log(`Error fetching post by ID: ${err.message}`);
             // next(err);
         }
+        data.likeCount = await getPostLike(postId);
+        // data.comment = await getPostComment(postId);
+        res.render("boardPost", { user: req.user, post: data });
+            // res.sendFile(path.join(__dirname, "../public/html/board.html"));
+            // next();\
+
     },
     writePost: async(req, res)=>{
         var postData = getPostParams(req.body, 0, req.user.mem_id);
@@ -110,6 +123,9 @@ module.exports = {
             res.redirect("/board");
         }
     },
+    showBoard: (req,res)=>{
+        res.send('board다');
+    },
 
     update:()=>{
 
@@ -119,6 +135,7 @@ module.exports = {
     delete:()=>{
 
     },
+
 // CRUD 끝날 때마다 res.status(200).send(user);
     
 

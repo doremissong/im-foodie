@@ -16,7 +16,8 @@ const { isLoggedIn } = require('./middlewares');
 router.get("/", (req, res) => {
   console.log("main - [req.session]: ", req.session);
   // console.log("main - [req.user]: ", req.user);
-  res.sendFile(path.join(__dirname, "../public/html/main.html"));
+  res.render("index", {user: req.user});
+  // res.sendFile(path.join(__dirname, "../public/html/main.html"));
 });
 
 router.get("/members", memberController.show, memberController.showView);
@@ -40,7 +41,8 @@ router.get("/post", boardController.showPost);
 router.use("/auth/", authRoutes);
 router.use("/board", boardRoutes);
 // router.get("/board", boardController.showBoard);
-router.use("/chat", gatheringRoutes);
+router.use("/gather",gatheringRoutes);
+// router.use("/chat", gatheringsRoutes);
 
 // error
 // router.use("/", errorRoutes);

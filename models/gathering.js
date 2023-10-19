@@ -18,7 +18,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     region: {
       type: DataTypes.STRING(20),
-      allowNull: false
+      allowNull: false,
+      defaultValue: "미정"
     },
     place: {
       type: DataTypes.STRING(50),
@@ -28,6 +29,11 @@ module.exports = function(sequelize, DataTypes) {
     description: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    state: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
     },
     maximumHeadCount: {
       type: DataTypes.INTEGER,
@@ -41,6 +47,11 @@ module.exports = function(sequelize, DataTypes) {
     image_url: {
       type: DataTypes.BLOB,
       allowNull: true
+    },
+    deadline: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,

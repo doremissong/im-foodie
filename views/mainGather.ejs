@@ -6,20 +6,44 @@
     <div class="board-section">
         <div class="board-list">
             <div class="board-main">
-                나의 밥모임 채팅
+                <a href="/gather">전체 밥모임</a>
             </div>
+			<div class="board-sub">
+				<ul class="board-sub-list">
+					<li class="board-sub-name">
+							<a href="/gather/recruiting">모집중</a>
+					</li>
+					<li class="board-sub-name">
+						<a href="/gather/completed">모집완료</a>
+					</li>
+					<li class="board-sub-name">
+						<a href="/gather/joined">가입한 밥모임</a>
+					</li>
+					<li class="board-sub-name">
+						<a href="/gather/imade">내가 만든 밥모임</a>
+					</li>
+				</ul>
+			</div>
         </div>
+		<div class="write-box">
+			<a href="/gather/create">
+				<button class="write-button">
+					밥모임 만들기
+				</button>
+			</a>
+		</div>
 		<ul class="post-index">
 			<li>
 				<div class="post-standard">
 					<p class="post-number">번호</p>
 					<p class="post-title">밥모임이름</p>
-					<p class="post-writer"></p>
-					<p class="post-date"></p>
+					<p class="post-writer">방장</p>
+					<p class="post-date">마감일</p>
+					<p class="post-view">현재 상태</p>
+					<p class="post-date"> </p>
 				</div>
 			</li>
 		</ul>
-
         <ul class="post-list">
 			<% if(typeof msg != "undefined"){ %>
 				<%= msg %>
@@ -34,34 +58,29 @@
 					<p class="post-view">조회수</p>
               	</div>
             </li> -->
-            <% if (typeof dataList != "undefined") { %>
             <% dataList.forEach((data, index)=>{ %>
                 <li class="post">
                     <div class="post-container">
 						<!-- 페이지네이션수정 -->
                         <p class="post-number"><%= data.gathering_id %></p>
                         <p class="post-title"><a href="/gather/details?id=<%= data.gathering_id %>"><%= data.name %></a></p>
-                        <p class="post-writer">
-                            <table>
-                                <tr>
-                                    <th><img src="/images/person.png" alt="인원: " style="margin: 3px; width: 15px;height: 15px;"></th>
-                                    <th><strong id="count">
-                                            <%= data.currentHeadCount%>
-                                        </strong></th>
-                                </tr>
-                            </table>
-                        </p>
-                        <p class="post-writer">
-                            <form action="/gather/chat/room" method="get">
-                                <input type="text" name="roomId" value="<%= data.gathering_id %>" hidden>
-                                <input type="text" name="name" value="<%= data.name %>"hidden>
-                                <button type="submit">입장하기</button>
-                            </form>
-                        </p>
+                        <p class="post-writer"><%= data.leader_id%></p>
+                        <p class="post-date"><%= data.deadline.toISOString().slice(0,10) %></p>
+						<% if(data.state==0){ %>
+							<p class="post-date">모집중</p>
+						<% } else if(data.state==1) { %>
+							<p class="post-date">모집마감 (2)수정</p>
+						<% } %>
+						<p class="post-date">
+							<a href="/gather/apply?id=<%= data.gathering_id %>">
+								<button class="write-button">
+									같이먹기
+								</button>
+							</a>
+						</p>
                     </div>
                 </li>
             <% }); %>
-            <% } %>
         </ul>
     </div>
 </section>

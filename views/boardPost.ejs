@@ -1,0 +1,202 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/boardPost.css">
+
+<!-- SECTION -->
+<section>
+    <div class="board-post-section">
+        <div class="post-section">
+            <div class="post-category-box">
+                <ul class="post-category">
+                    <li>
+                        <span>
+                            <a href="/board">게시판</a>
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <!-- 글 정보 받아서 해당 글 카테고리 목록으로 이동 -->
+                            <a href="javascript:void(0)">카테고리<%= post.category %> </a>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="post-title">
+                <!-- 글 제목 불러오기 -->
+                <%= post.title %>
+            </div>
+            <div class="post-info-box">
+                <ul class="post-info-first">
+                    <li class="writer-name">
+                        <!-- 작성자 이름 불러오기 -->
+                        작성자
+                        <%= post.writer_id %>
+                    </li>
+                    <li class="write-date">
+                        <!-- 작성일 불러오기 -->
+                        <%= post.createdAt.toISOString().split('T')[0] %>
+                        <%= post.createdAt.toISOString().split('T')[1].slice(0,5) %>
+                    </li>
+                </ul>
+                <ul class="post-info-second">
+                    <li class="post-views">
+                        조회
+                        <span>
+                            <!-- 조회수 불러오기 -->
+                            <%= post.viewCount %>
+                        </span>
+                    </li>
+                    <li class="post-ups">
+                        추천 
+                        <span>
+                            <!-- 추천수 불러오기 -->
+                            <%= post.likeCount %>
+                        </span>
+                    </li>
+                    <li class="post-com-num">
+                        댓글
+                        <!-- 숫자 클릭 시 댓글 창 부분으로 이동 -->
+                        <a href="#comment">
+                            <span>
+                                <!-- 댓글수 불러오기 -->
+                                3
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="post-content">
+                <!-- 글 내용 불러오기 -->
+                <%= post.content %>
+            </div>
+            
+            <!-- 추천, 스크랩하기 -->
+            <% if(typeof user != "undefined"){ %>
+                <!-- 로그인 상태일 시 -->
+                <div class="upscrap-box">
+                    <button class="up-bt" onclick="alert('추천되었습니다')">
+                        👍<br>
+                        추천
+                    </button>
+                    <button class="scrap-bt" onclick="alert('스크랩되었습니다')">
+                        ⭐<br>
+                        스크랩
+                    </button>
+                </div>
+            <% } else{ %>
+                <!-- 비로그인 -->
+                <div class="upscrap-box">
+                    <button class="up-bt" onclick="alert('로그인 후 추천 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
+                        👍<br>
+                        추천
+                    </button>
+                    <button class="scrap-bt" onclick="alert('로그인 후 스크랩 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
+                        ⭐<br>
+                        스크랩
+                    </button>
+                </div>
+            <% } %>
+        </div>
+        <!-- 댓글 -->
+        <div class="comment-section">
+            <a name="comment">
+                <div class="comment-view">
+                    <div class="comment-title">
+                        <!-- 괄호 안에 댓글수 표시 -->
+                        🗨️댓글(3)
+                        </div>
+                    <div class="comment-page">
+                        <!-- 댓글 페이지, 댓글이 20개 이상일 때 1,2... 페이지 나타나기. 아래는 예시 -->
+                        &lt; 1 2 3 4 &gt;
+                    </div>
+                </div>
+
+                <!-- 댓글 하나 화면 -->
+                <div class="comment-list">
+                    <div class="com-namentime">
+                        <div class="com-name">
+                            <!-- 댓글 작성자 이름 -->
+                            초코케이크
+                        </div>
+                        <div class="com-time">
+                            <!-- 댓글이 작성된 시간 -->
+                            (2023-10-18 19:23)
+                        </div>
+                    </div>
+                    <div class="com-text">
+                        <!-- 댓글 내용 -->
+                        타임지가 선정한 10대 수퍼푸드 중 하나인 블루베리가 듬뿍 들어 간 초코케이크에요. 
+                        대부분 몸에 좋은 음식들은 입에 쓰다고들 하는데 블루베리는 맛까지 슈퍼하답니다. 
+                        달콤한 초코케이크에 콕콕 박힌 블루베리가 풍미를 더해줘요~
+                        [네이버 지식백과] 초코 블루베리 케이크 만드는 법 (이마트 MENU)
+                    </div>
+                </div>
+                <!-- 댓글 하나 화면 -->
+                <div class="comment-list">
+                    <div class="com-namentime">
+                        <div class="com-name">
+                            <!-- 댓글 작성자 이름 -->
+                            고구마케이크
+                        </div>
+                        <div class="com-time">
+                            <!-- 댓글이 작성된 시간 -->
+                            (2023-10-18 19:23)
+                        </div>
+                    </div>
+                    <div class="com-text">
+                        <!-- 댓글 내용 -->
+                        부드럽고 달콤한 고구마와 담백한 생크림이 어우러진 포근한 생크림 케이크입니다!
+                    </div>
+                </div>
+                <!-- 댓글 하나 화면 -->
+                <div class="comment-list">
+                    <div class="com-namentime">
+                        <div class="com-name">
+                            <!-- 댓글 작성자 이름 -->
+                            치즈케이크
+                        </div>
+                        <div class="com-time">
+                            <!-- 댓글이 작성된 시간 -->
+                            (2023-10-18 19:23)
+                        </div>
+                    </div>
+                    <div class="com-text">
+                        <!-- 댓글 내용 -->
+                        뉴욕 스타일의 치즈케이크는 크림 치즈 특유의 살짝 톡 쏘는 진한 풍미와 달콤함을 지니고 있으며, 
+                        기호에 따라 바닐라나 레몬 조각을 곁들이기도 한다.
+                    </div>
+                </div>
+
+                <!-- 댓글 달기 -->
+                <% if(typeof user != "undefined"){ %>
+                    <!-- 로그인 상태일 시 -->
+                    <div class="comment-write">
+                        <form class="comment-write-form" method="post">
+                            <div class="commenter">
+                                <!-- 유저 닉네임 -->
+                                <%= user.name %>
+                            </div>
+                            <div class="comment-write-section">
+                                <div class="write-comment">
+                                    <textarea name="content" placeholder="고운말 댓글 달기" required></textarea>
+                                </div>
+                                <div class="submit-button">
+                                    <button type="submit" name="submit">등록</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                <% } else{ %>
+                    <!-- 비로그인 -->
+                    <div class="non-user-comment">
+                        <textarea onclick="confirm('여기서 확인 누르면 로그인 페이지로 갈 수 있게 하고시퍼ㅜㅜㅜ\n한시간 넘게 해도 안되는거 실화??');" placeholder="로그인하고 댓글을 달아보세요!" required></textarea>
+                    </div>
+                <% } %>
+
+                <!-- 하단 -->
+                <div class="box">
+                    <button onclick="location.href='/board'">글목록</button>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>

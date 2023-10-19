@@ -1,35 +1,18 @@
 <!-- HEADER -->
 <header>
     <div class="content">
+        <a href="/chat/list" class="chat-icon">✉️</a>
         <a href="/" class="logo">
-            <img src="/images/logo.png" alt="LOGO" />
+            <img src="../images/logo.png" alt="LOGO" />
         </a>
         <div class="sub-category">
             <ul class="category">
-                <% if(typeof user != "undefined"){ %>
-                    <li>
-                        <span>
-                            <a href="/gather/chat/list" class="chat-icon">✉️</a>
-                            <%= user.name %> 님 
-                        </span>
-                    </li>
-                    <li>
-                        <span>
-                            <a href="/auth/logout">로그아웃</a>
-                        </span>
-                    </li>
-                <% } else{ %>
-                    <li>
-                        <span>
-                            <a href="/auth/signup">회원가입</a>
-                        </span>
-                    </li>
-                    <li>
-                        <span>
-                            <a href="/auth/login">로그인</a>
-                        </span>
-                    </li>
-                <% } %>
+                <li>
+                    <a href="/auth/signup">회원가입</a>
+                </li>
+                <li>
+                    <a href="/auth/login">로그인</a>
+                </li>
             </ul>
             <div class="search">
                 <input type="text" />
@@ -80,7 +63,7 @@
                 </li>
                 <li class="item">
                     <div class="item-name">
-                        <a href="javascript:void(0)">레시피</a>
+                        <a href="/recipe">레시피</a>
                     </div>
                     <div class="item-contents">
                         <div class="inner">
@@ -111,7 +94,7 @@
                 </li>
                 <li class="item">
                     <div class="item-name">
-                        <a href="/gather">밥모임</a>
+                        <a href="javascript:void(0)">모임챗</a>
                     </div>
                     <div class="item-contents"></div>
                 </li>

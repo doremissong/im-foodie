@@ -1,4 +1,5 @@
 var DataTypes = require("sequelize").DataTypes;
+var _appl_record = require("./appl_record");
 var _chat = require("./chat");
 var _gathering = require("./gathering");
 var _member = require("./member");
@@ -13,6 +14,7 @@ var _sessions = require("./sessions");
 var _temp = require("./temp");
 
 function initModels(sequelize) {
+  var appl_record = _appl_record(sequelize, DataTypes);
   var chat = _chat(sequelize, DataTypes);
   var gathering = _gathering(sequelize, DataTypes);
   var member = _member(sequelize, DataTypes);
@@ -46,6 +48,7 @@ function initModels(sequelize) {
   post.hasMany(post_like, { as: "post_likes", foreignKey: "post_id"});
 
   return {
+    appl_record,
     chat,
     gathering,
     member,

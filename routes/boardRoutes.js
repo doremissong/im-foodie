@@ -6,11 +6,13 @@ const {db, sequelize}=require('../models/index');
 const boardController = require('../controllers/boardController');
 const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, setCondition } = require('./middlewares');
 
+router.get("/", setDBModel(db.post), getPaginationInfo, boardController.showPage);
 router.get("/write", isLoggedIn, (req, res)=>{
-    res.sendFile(path.join(__dirname, "../public/html/board_write.html"));
+    res.render("boardWrite", {user: req.user});
+    // res.sendFile(path.join(__dirname, "../public/html/board_write.html"));
 });
+router.get("/post", boardController.showPost);
 router.post("/write", isLoggedIn, boardController.writePost);
-
 router.get("/:page", boardController.showBoard);
 router.get("/boast", boardController.showBoard);
 router.get("/restaurant", boardController.showBoard);
@@ -21,7 +23,7 @@ router.get("/promotion", boardController.showBoard);
 router.get("/share", boardController.showBoard);
 router.get("/mealfriend", boardController.showBoard);
 
-router.get("/", setDBModel(db.post), getPaginationInfo, boardController.showPage);
+
 //  setCondition({category:restaurant}),
 // router.get("/board", boardController.showBoard);
 

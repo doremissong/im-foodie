@@ -77,39 +77,48 @@
 .post-standard .post-number {
 	font-size: 18px;
 	font-weight: bold;
-	padding: 5px;
-	width: 50px;
+	padding: 15px 5px;
+	width: 55px;
 	text-align: center;
 }
 
 .post-standard .post-board {
 	font-size: 18px;
 	font-weight: bold;
-	padding: 5px;
-	width: 50px;
+	padding: 15px 5px;
+	width: 65px;
 	text-align: center;
 }
 
 .post-standard .post-title {
 	font-size: 20px;
 	font-weight: bold;
-	padding: 10px 15px;
-	width: 620px;
+	padding: 15px;
+	width: 570px;
 }
 
 .post-standard .post-writer {
+	width: 100px;
 	font-size: 18px;
 	font-weight: bold;
+	padding: 15px;
 }
 
 .post-standard .post-date {
+	width: 100px;
 	font-size: 18px;
 	font-weight: bold;
+	padding: 15px 10px;
+	text-align: center;
 }
 
 .post-standard .post-view {
+	width: 60px;
 	font-size: 18px;
 	font-weight: bold;
+	padding: 15px;
+	width: 60px;
+	text-align: center;
 }
 
 
@@ -129,7 +138,7 @@
 .post-number {
     font-size: 15px;
     padding: 15px;
-	width: 30px;
+	width: 35px;
 	text-align: center;
 	/* background-color: rgb(205, 241, 132); */
 }
@@ -137,7 +146,7 @@
 .post-board {
 	font-size: 16px;
 	padding: 10px 5px;
-	width: 50px;
+	width: 65px;
 	text-align: center;
 	/* background-color: rgb(255, 255, 155); */
 }
@@ -145,7 +154,7 @@
 .post-title {
     font-size: 18px;
 	padding: 13px 15px;
-	width: 620px;
+	width: 570px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -170,7 +179,7 @@
 .post-date {
 	font-size: 15px;
 	padding: 10px;
-	width: 80px;
+	width: 100px;
 	text-align: center;
 	/* background-color: rgb(255, 233, 255); */
 }
@@ -178,7 +187,7 @@
 .post-view {
 	font-size: 15px;
 	padding: 15px;
-	width: 50px;
+	width: 60px;
 	text-align: center;
 	/* background-color: rgb(255, 255, 214); */
 }
@@ -195,6 +204,7 @@
 .number-button:hover {
     font-weight: 800;
     color: rgb(119, 0, 255);
+	cursor: pointer;
 }
   
 .pagination-container {
@@ -203,6 +213,8 @@
   
 .selected {
     font-weight: 800;
+	text-align: center;
+	margin: 2px;
     border: 2px solid whitesmoke;
     color: dodgerblue;
 }
