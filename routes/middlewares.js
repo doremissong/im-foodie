@@ -1,4 +1,5 @@
 const { db, sequelize } = require('../models/index');
+const post_comment = require('../models/post_comment');
 
 exports.isLoggedIn = (req, res, next) => {
     if(req.isAuthenticated()) {
@@ -54,10 +55,27 @@ exports.setPagingVar=(variables, defaultValue) =>{
 };
 // exports.setPagingVar;
 
-exports.setDBModel = (modelType)=>{
-    return (req, res, next)=>{
-        // if(mod)
+exports.setDBModel = (modelType) => {
+    return (req, res, next) => {
         res.locals.model = modelType;
+        console.log('디비 확인-미들웨어:', modelType);
+        res.locals.condition = {};
+        if (res.locals.category) { // post의 경우, 게시판 목록 페이지네이션
+            res.locals.condition.category = res.locals.category;
+            // console.log('[setDBModel]',res.locals.condition.category, '게시판 카테고리 값 확인');
+        }
+        if (req.query.no) {   //해당 글의 id - 댓글 페이지네이션용
+            res.locals.condition.post_id = req.query.no;
+        }
+
+        // 최신순, 조회순(viewCount)
+        // order: [["createdAt", "DESC"]],
+
+        // const dataList = await modelType.findAll({
+        //     where: res.locals.condition,
+        //     order: [["createdAt", "DESC"]],
+        // });
+        // console.log('데이터베이스 :', dataList);
         next();
     }
     // console.log(modelType, "'s model type is", typeof modelType);
@@ -65,22 +83,19 @@ exports.setDBModel = (modelType)=>{
     // ⚠️에러 처리는
 }
 
-exports.setCondition = (condition) =>{
-    return (req, res, next)=>{
-        res.locals.condition = condition;
-        next();
-    }
-    // condition은 {"category":"restaurant"} 형식.
-}
 // exports.getModel();// 무슨 모델인지 가져와야함.
 
 // 1) 어떤 디비 가져올지랑
 // 2) 어떤 게시판 볼지 확인해야함.
 exports.getPaginationInfo = async (req, res, next)=>{
     // ❤️ condition을 req.query로 받아도 되지 않을까? 라우터가 넘 번잡해
+
+    // res.locals에 model, condition이 저장되지 않았으면 에러 페이지 이동하게 해야함.
     const model = res.locals.model;
+    if(this.isEmpty(model)){
+        res.send('페이지네이션 모델이 없다. 홈으로 돌아가!!!!');
+    }
     const condition = res.locals.condition;
-    const selectedCategory = req.body.category;
 
     //res.redirect("/board/" + 1);
     // 한페이지에 보여질 포스트 개수
@@ -89,9 +104,11 @@ exports.getPaginationInfo = async (req, res, next)=>{
     var pageNo = req.query.pageno;
     // 세트 사이즈
     var setSize = req.query.setsize;
-
+    
+// pageNo는 현재페이지. setPagingVar는 값이 안정해졌을 때, 임의로 정하는 것임.
+    // 여기서 한 페이지당 글 개수, 페이지, 1,10까지 보여준는 거.
     countPerPage = this.setPagingVar(countPerPage, 20);
-    pageNo = this.setPagingVar(pageNo, 1);
+    pageNo = this.setPagingVar(pageNo, 1);  
     // //❓query 스트링이 페이지 범위를 넘어가면
     if (pageNo < 0 || pageNo > totalPage) {
         pageNo = 1;
@@ -101,10 +118,9 @@ exports.getPaginationInfo = async (req, res, next)=>{
     // 특정 게시판도 글 개수 세기
     var totalPost = await model.count({
         where: condition,
-    })
-        .catch(() => {
-            console.log(`ERROR: while counting post. ${err.message}`);
-        })
+    }).catch((err) => {
+        console.log(`ERROR: while counting post. ${err.message}`);
+    });
     if (totalPost < 0) {
         totalPost = 0;
     }
@@ -120,7 +136,7 @@ exports.getPaginationInfo = async (req, res, next)=>{
     var previousPage = 0, nextPage = 0;    // 이거는 ejs에서 js 코드 써야겠다.
     // 글 번호. 페이징할 때
     var startItemNo = (pageNo - 1) * countPerPage;    // itemOffset이 낫겠어
-    console.log(startItemNo);
+    // console.log(startItemNo, '해당 페이지의 글 번호');
     var endItemNo = Math.min(startItemNo + countPerPage - 1, totalPost);   // 수정좀 if로 따로 하는게 낫나?
     if (curSet == 1) {
         previousPage = 0;// < 표시 안해
@@ -135,12 +151,20 @@ exports.getPaginationInfo = async (req, res, next)=>{
         nextPage = endPage + 1;
     }
 
-    const dataList = await model.findAll({
-        where: condition,
-        order: [["createdAt", "DESC"]],
-        limit: countPerPage,
-        offset: startItemNo
-    });
+    //위에 카운트에서도 되던게 여기선 안되는매직
+    try {
+        const dataList = await model.findAll({
+            where: condition,
+            order: [["createdAt", "DESC"]],
+            limit: countPerPage,
+            offset: startItemNo
+        });
+        res.locals.dataList = dataList;
+        // console.log('middleware - pagination - dataList 값 확인:', dataList, typeof dataList);
+    } catch (err) {
+        console.log('[Error]: while getting data from DB -mw', err.message);
+    }
+    // 빈 값은 [] == ''
 
     paginationInfo = {};
     paginationInfo.pageNo = pageNo; // 현재 페이지 볼드 표시
@@ -157,8 +181,10 @@ exports.getPaginationInfo = async (req, res, next)=>{
     paginationInfo.startItemNo = startItemNo; // 글 번호 표기할 때 필요. // 이거하면 좋겠는데.
     paginationInfo.endItemNo = endItemNo;
 
+    // console.log('middleware - paginationinfo 값 확인:', paginationInfo);    //, typeof paginationInfo
     res.locals.paginationInfo = paginationInfo;
-    res.locals.dataList = dataList;
+    // console.log('middleware - paginationinfo 값 확인:', res.locals.paginationInfo); 
+    // console.log('middleware - datalist chck ', res.locals.dataList);
     return next();
 }
 // module.exports = { isLoggedIn, isNotLoggedIn };
@@ -168,34 +194,3 @@ exports.getPaginationInfo = async (req, res, next)=>{
 //     const randomPassword = Math.random().toString(36).slice(2);
 //     return randomPassword;
 // }
-
-exports.getPostLike = async(postId)=>{
-    var count = 0;
-    try{
-        count = await db.post_like.count({
-            where: { post_id: postId }
-        })
-        return count;
-    } catch(err){
-        console.log(`Error: while get count of like ${err.message}`);
-        return err;
-    }
-    // await db.post_like.count({
-    //     where: { post_id: postId }
-    // }).then((count) => {
-    //     return count;
-    // }).catch((err)=>{
-    //     console.log(`Error: while get count of like ${err.message}`);
-    //     return err;
-    // })
-};
-
-exports.getPostComment = async(postId)=>{
-    await db.post_comment.findAll({
-        where:{post_id: postId}
-    }).then((comments) => {
-        return comments;
-    }).catch((err)=>{
-        console.log(`Error: while get comment of post ${err.message}`);
-    })
-}

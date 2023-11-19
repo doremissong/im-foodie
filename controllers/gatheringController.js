@@ -1,4 +1,9 @@
-const {db, sequelize} = require('../models/index');
+const gathering = require('../models/gathering');
+const {db, sequelize,} = require('../models/index');
+const { Op, Sequelize } = require('sequelize');
+const participant = require('../models/participant');
+// const { getPaginationInfo } = require('./middlewares');
+
 
 // 기본값 == undefined. 그러면 내가 해줄 필요없어.
 async function searchGathering (state, gatherId, leaderId) { // gathering_id, 
@@ -41,237 +46,6 @@ async function searchParticipant(columns, memId, state) {
 // 얘네 호출 전에는 isLoggedIn 확인
 module.exports={
     
-    showRecruitingPage: async (req, res) => {
-        //searchGathering (state, gatherId, leaderId)
-        const list = await searchGathering(state = 0);
-        console.log('모집중인 그룹리스트 ', list);
-        if(list==""){
-            res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?"});
-            // res.send("아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?");
-        } else{
-            // res.json(list);
-            res.render("mainGather", {user: req.user, dataList: list});
-        }
-    },
-    showCompletedPage: async (req, res) => {
-        // searchGathering (state, gatherId, leaderId)
-        const list = await searchGathering(state = 1);
-        console.log('모집완료된 그룹리스트 ', list);
-        if(list==""){
-            // res.send("아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?");
-            res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?"});
-        } else{
-            // res.json(list);
-            res.render("mainGather", {user: req.user, dataList: list});
-        }
-        // console.log('빈 데이터베이스 서칭 결과는 null일까? undefined일까/', typeof list);
-        
-    },
-    // 💚
-    showJoinedPage: async (req, res) => {
-        //participant ==>
-        const memId = req.user.mem_id;
-        // function searchParticipant(columns, id, state)
-        const list = await searchParticipant(['gathering_id'], memId, undefined);
-        var info = [];
-        var temp;
-        // list.foreach(async (data)=>{
-        //     temp = await db.gathering.findOne({
-        //         where:{
-        //             gathering_id: data.gathering_id
-        //         }
-        //     })
-        //     info.push(temp);
-        // });
-        console.log('배고파, 이렇게 일일이 넣어야하나요? 왜안되나요 타입이 뭔뎅?',typeof list);
-        // var info = await db.gathering.findAll({
-        //     where: list
-        // });
-        // console.log(info);
-        console.log('지원/가입한 그룹리스트 ', list.gathering_id);
-        res.json(list);
-    },
-    showIMadePage: async (req, res) => {
-        const memId = req.user.mem_id;
-        // searchGathering (state, gatherId, leaderId)
-        const list = await searchGathering(undefined, undefined, memId);
-        if(list == ""){
-            res.render("mainGather", {user: req.user, dataList: list, msg: "직접 만든 밥모임이 아직 없네요? 방장이 되어보세요!"});
-            // res.send("직접 만든 밥모임이 아직 없네요? 방장이 되어보세요!");
-        } else{
-            console.log('내가 만든 그룹리스트 ', list);
-            // res.json(list);
-            res.render("iMadeGather", {user: req.user, dataList: list});
-        }
-
-    },
-
-    // 채팅 목록 보여주기
-    showChatList: async(req, res) => {
-        //필요한 값 - 일단은 다 가져오자. 내가 가입한 그룹
-        const list = await searchGathering();
-        // 1. user가 속한 그룹 검색하고 가져오기.
-        /*
-        await db.participant.findAll({
-            where: {mem_id: req.user.mem_id}
-        }).then((gatherings)=>{
-            그룹id로 gathering 검색해.
-            검색한 데이터를 chatList에 전달.(joinedGatherings: gathering.name, gathering.id(roomId가 될아이), leader.id 전달.)
-        })
-        .catch((err)=>{
-
-        })
-        */
-        // 2. gathering_id ==> roomId / gathering_name 을 보여주고, chatList.ejs에서 input태그의 value를 roomId(gathering_id)로 하기
-
-        // DATA가 DB에서 검색하고 없으면 NON -CHAT LIST 띄위ㅓ.
-        res.render("chatList", {user: req.user, dataList: list});
-    },
-
-    // 3. 그룹선택
-    selectRoom: (req, res)=>{
-        
-        console.log('DELETE: userID ',req.user.mem_id);
-        res.locals.roomId = req.query.roomId; //res // 선택한 그룹채팅방 id 가져오기.
-        console.log('DELETE: RoomId ',res.locals.roomId, '가 GET방식으로 전달 받은 값이다.- gController-selectRoom');
-        res.locals.name = req.query.name;
-        console.log('DELETE: name ',res.locals.name, '가 GET방식으로 전달 받은 값이다.- gController-selectRoom');
-        // ❓❤️❤️❤️ user 넘기지 말고 이름만 넘겨?  id랑?귀찮다..
-        res.render("chat", {user: req.user, roomId: res.locals.roomId, gatherName: res.locals.name});
-        // res.redirect("/chat/room");
-        // roomId값을 어케 전달하누
-    },
-    checkMember: async(req, res, next)=>{
-        res.locals.roomId = req.body.roomId;
-        console.log('roomId: ', res.locals.roomId, 'mem_id: ', req.user.mem_id);
-        isMember = await db.participant.findOne({
-            where:{ gathering_id: res.locals.roomId, mem_id: req.user.mem_id}
-        });
-        console.log(isMember);
-        if (!isMember) { res.redirect('/chat/list'); }
-        next();
-    },
-
-
-    //✏️관리자용아님/ 접속회원용 / 그룹 목록 보여주고 선택하는 거잖아. 쿼리 하나로 둘다 할 수 잇어.
-    // 1)state로 모집중인거 2) {mem_id: mem_id}만 where 조건 주면됨.
-    // 근데 그냥 gathering 보여주면 되는 거 아니야? 굳이 participatn에서 뽑아낼 이유가 잇어?
-    showGatheringList: async(req, res)=>{
-        // query 있으면 현재 모집중인 그룹.
-        const gatheringIdList = await db.gathering.findAll(
-            // {where:{}}
-            );
-        res.locals.gatheringId = gatheringIdList;
-        // res.json(gatheringIdList);
-        res.render("mainGather", {user: req.user, dataList: gatheringIdList});
-    },
-
-    // // 접속회원용
-    // showMyGatheringList: async(req, res)=>{     //참가자 목록에서 찾아서 목록을 찾는 거지.
-    //     // 흠,, 전체 말고 특정 회원 알고싶으면.
-    //     const gatheringIDList = await db.participant.findAll({
-    //         where: {mem_id: req.user.mem_id} //id 멤버가 가입된 모임 아이디 찾아
-    //     });
-    //     res.json(gatheringIDList);
-    // },
-
-    // 팀장이 볼 때, 조원 어떻게 있는지 확인
-    showMemberOfGathering: async(req, res)=>{
-        // 💚 query로 받음.
-        const gatheringId = req.query.gatheringId;
-        await db.participant.findAll({
-            where: {
-                gathering_id: gatheringId
-            }
-        })
-        .then((members)=>{
-            res.json(members);
-        })
-        .catch((err)=>{console.log(err, 'gatheringController-showMemberOfGathering')});
-
-    },
-
-    showGatherApplyPage: async (req, res)=>{
-        
-        const gatheringId = req.query.id;
-        const data = await db.participant.findOne({
-            where:{
-                gathering_id: gatheringId,
-            }
-        });
-        res.json(data);
-        // res.render("showGatherApply", {user:req.user, data: data});
-    },
-
-    applyForGathering: async(req, res)=>{
-        // 이미 가입 신청했는지 확인.
-        const gatheringId = req.query.id;
-        const applied = await db.participant.findOne({
-            where:{
-                gathering_id: gatheringId,
-                mem_id: req.user.mem_id
-            }
-        })
-        
-        if(!applied){
-            try{
-                await sequelize.transaction(async t => {
-                    await db.participant.create({
-                        gathering_id: 1,
-                        mem_id: req.user.mem_id,
-                        message: '공릉동 맛집 뽀시고 싶어요!!'
-                    }, { transaction: t});
-                });
-                const test = await db.participant.findAll();
-                res.send(test);
-                // res.redirect("/gather");
-            } catch(err){
-                console.log(`Error applying for Gathering ${err.message}`);
-                res.send(err.message);
-                // res.redirect("/gather")
-            }
-        } else{
-            console.log("이미 신청완료되었습니다.");
-            res.redirect("/gather/create");
-        }
-
-        
-    },
-    //자세히
-    showGatheringDetail: async(req, res)=>{
-        // 가져오기 정보.
-        const gatheringId = req.query.id;
-        const data = await db.gathering.findOne({
-            where:{
-                gathering_id: gatheringId,
-            }
-        });
-
-        res.render("showGatherDetail", {user:req.user, data: data});
-
-    },
-    // // getGatheringInformation(이건 방장용?)이랑 겹쳐... 이건 일반 멤버용?
-    // // getRooms
-    // showGatheringList: async (req, res) => {
-    //     try {
-    //         const gatheringList = await db.gathering.findOne({
-    //             where: {     // 모든 모임 보여주는 것 + 특정 모임 보여주는 것 어케하지?
-    //                 gathering_id: req.body.gathering_id? req.body.gathering_id : 1=1    //1=1이거 sql이랑 같이 되나?
-    //             }
-    //         });
-    //         res.json(gatheringList);
-    //     }
-    //     catch (err) {
-    //         console.log(`Error loading gatheringList: ${err}`);
-    //     }
-    // },
-
-    showMainGatherPage: (req, res)=>{
-        res.send()
-    },
-    showCreatePage: (req, res)=>{
-        res.render("createGather", {user: req.user});
-    }
     // ❤️ 모임 생성하기
     // createGather: async(req,res, next)=>{
         // 전달 받을 것 : name=모임이름, leader_id = req.user, region= , place=, description:, headCount, image_url,
@@ -405,9 +179,6 @@ module.exports={
     //     }
     // },
 
-
-    
-
     // 방장 나갔을 때,,,,
     // 1) participant에서 방장 삭제.
     //participant에 gatheringId로 findOne(attributes: mem_id) 그사람을 방장으로 바꾸자.
@@ -430,5 +201,346 @@ module.exports={
     //         console.log(`Error enrolling new leader of gathering: ${err}`);
     //     }
     // }
+    searchGather: (req, res)=>{
+        
+    },
 
+    showMainPage: (req, res)=>{
+
+    },
+    // show GatherMainPage: async(req, res)=>{
+    //     showRecruitingPage,
+    //     showCompletedPage, 호출
+    // }
+    getRecruitingList: async (req, res, next) => {
+        //searchGathering (state, gatherId, leaderId)
+        const list = await searchGathering(state = 0);
+        console.log('모집중인 그룹리스트 ', list);
+        if(list==""){
+            res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?"});
+            // res.send("아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?");
+        } else{
+            // res.json(list);
+            res.render("mainGather", {user: req.user, dataList: list});
+        }
+    },
+    getCompletedList: async (req, res) => {
+        // searchGathering (state, gatherId, leaderId)
+        const list = await searchGathering(state = 1);
+        console.log('모집완료된 그룹리스트 ', list);
+        if(list==""){
+            // res.send("아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?");
+            res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?"});
+        } else{
+            // res.json(list);
+            res.render("mainGather", {user: req.user, dataList: list});
+        }
+        // console.log('빈 데이터베이스 서칭 결과는 null일까? undefined일까/', typeof list);
+        
+    },
+    // 💚가입한 목록
+    showJoinedPage: async (req, res) => {
+        //participant ==>
+        const memId = req.user.mem_id;
+        // function searchParticipant(columns, id, state)
+        console.time('쿼리 따로 따로');
+        try{
+            var partList = await db.participant.findAll({
+                attributes: ['gathering_id'],
+                where: {
+                    mem_id: memId
+                }
+            });
+            partList = partList.map(i=>i.dataValues); // 그러면 key 값이 없이 그냥 1,2만 나옴
+
+            var gatherList = await db.gathering.findAll({
+                // attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
+                where: {[Op.or]: partList}
+            });
+            // gatherList = list.map(i => i.dataValues);
+            console.log(gatherList);
+            // res.send(gatherList);
+            
+            res.render("iMadeGather", {user: req.user, dataList: gatherList});
+            console.timeEnd('쿼리 따로 따로');
+        } catch(err){
+            console.log(err);
+        }
+    },
+
+    showIMadePage: async (req, res) => {
+        const memId = req.user.mem_id;
+        // searchGathering (state, gatherId, leaderId)
+        const list = await searchGathering(undefined, undefined, memId);
+        if(list == ""){
+            res.render("mainGather", {user: req.user, dataList: list, msg: "직접 만든 밥모임이 아직 없네요? 방장이 되어보세요!"});
+            // res.send("직접 만든 밥모임이 아직 없네요? 방장이 되어보세요!");
+        } else{
+            console.log('내가 만든 그룹리스트 ', list);
+            // res.json(list);
+            res.render("iMadeGather", {user: req.user, dataList: list});
+        }
+
+    },
+
+    //✏️관리자용아님/ 접속회원용 / 그룹 목록 보여주고 선택하는 거잖아. 쿼리 하나로 둘다 할 수 잇어.
+    // 1)state로 모집중인거 2) {mem_id: mem_id}만 where 조건 주면됨.
+    // 근데 그냥 gathering 보여주면 되는 거 아니야? 굳이 participatn에서 뽑아낼 이유가 잇어?
+    showGatheringList: async(req, res)=>{
+        // query 있으면 현재 모집중인 그룹.
+        if (res.locals.paginationInfo && res.locals.dataList) {
+            const paginationInfo = res.locals.paginationInfo;
+            const dataList = res.locals.dataList;
+            // const gatheringIdList = await db.gathering.findAll(  
+            //     // {where:{}}
+            // );
+            // res.locals.gatheringId = gatheringIdList;
+            res.render("mainGather", { user: req.user, dataList: dataList, pagination:paginationInfo });
+
+        }
+        // res.json(gatheringIdList);
+       },
+
+    // 팀장이 볼 때, 조원 어떻게 있는지 확인
+    showMemberOfGathering: async(req, res)=>{
+        // 💚 query로 받음.
+        const gatheringId = req.query.gatheringId;
+        await db.participant.findAll({
+            where: {
+                gathering_id: gatheringId
+            }
+        })
+        .then((members)=>{
+            res.json(members);
+        })
+        .catch((err)=>{console.log(err, 'gatheringController-showMemberOfGathering')});
+
+    },
+
+    // 모임 신청 버튼
+    // showGatherApplyPage: async (req, res)=>{
+        
+    //     const gatheringId = req.query.id;
+    //     const data = await db.participant.findOne({
+    //         where:{
+    //             gathering_id: gatheringId,
+    //         }
+    //     });
+    //     res.json(data);
+    //     // res.render("showGatherApply", {user:req.user, data: data});
+    // },
+    // 모임 
+    applyForGathering: async(req, res)=>{
+        // 이미 가입 신청했는지 확인.
+        const gatheringId = req.query.id;
+        const applied = await db.participant.findOne({
+            where:{
+                gathering_id: gatheringId,
+                mem_id: req.user.mem_id
+            }
+        })
+        
+        if(!applied){
+            try{
+                await sequelize.transaction(async t => {
+                    await db.participant.create({
+                        gathering_id: 1,
+                        mem_id: req.user.mem_id,
+                        message: '공릉동 맛집 뽀시고 싶어요!!'
+                    }, { transaction: t});
+                });
+                const test = await db.participant.findAll();
+                res.send(test);
+                // res.redirect("/gather");
+            } catch(err){
+                console.log(`Error applying for Gathering ${err.message}`);
+                res.send(err.message);
+                // res.redirect("/gather")
+            }
+        } else{
+            console.log("이미 신청완료되었습니다.");
+            res.redirect("/gather/create");
+        }
+
+        
+    },
+    // /gather/details?id=gathering_id 화면
+    showGatheringDetail: async(req, res)=>{
+        // 가져오기 정보.
+        const gatheringId = req.query.id;
+        const data = await db.gathering.findOne({
+            where:{
+                gathering_id: gatheringId,
+            }
+        });
+        // first, send all info about gathering, gathering members(accepted), and if user is leader, then show buttons[edit] in the top 
+        // and next to the member, there's also button [delete/]
+        res.render("showGatherDetail", {user:req.user, data: data});
+
+    },
+
+    // 채팅 목록 보여주기
+    showChatList: async(req, res) => {
+        // 1. user가 속한 그룹 검색하고 가져오기.
+        //필요한 값 - 일단은 다 가져오자. 내가 가입한 그룹
+        const memId = req.user.mem_id;
+        try{
+            var partList = await db.participant.findAll({
+                attributes: ['gathering_id'],
+                where: {
+                    mem_id: memId
+                }
+            });
+            partList = partList.map(i=>i.dataValues); // 그러면 key 값이 없이 그냥 1,2만 나옴
+
+            var gatherList = await db.gathering.findAll({
+                // attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
+                where: {[Op.or]: partList}
+            });
+            // gatherList = list.map(i => i.dataValues);
+            console.log(gatherList);
+            // res.send(gatherList);
+            
+            // DATA가 DB에서 검색하고 없으면 NON -CHAT LIST 띄위ㅓ.
+            res.render("chatList", {user: req.user, dataList: gatherList, msg: '가입한 밥모임이 없어요'});
+
+        } catch(err){
+            console.log(err);
+        }
+
+        // 2. gathering_id ==> roomId / gathering_name 을 보여주고, chatList.ejs에서 input태그의 value를 roomId(gathering_id)로 하기
+
+    },
+
+    // 3. 그룹선택
+    selectRoom: (req, res)=>{
+        
+        console.log('DELETE: userID ',req.user.mem_id);
+        res.locals.roomId = req.query.roomId; //res // 선택한 그룹채팅방 id 가져오기.
+        console.log('DELETE: RoomId ',res.locals.roomId, '가 GET방식으로 전달 받은 값이다.- gController-selectRoom');
+        res.locals.name = req.query.name;
+        console.log('DELETE: name ',res.locals.name, '가 GET방식으로 전달 받은 값이다.- gController-selectRoom');
+        // ❓❤️❤️❤️ user 넘기지 말고 이름만 넘겨?  id랑?귀찮다..
+        res.render("chat", {user: req.user, roomId: res.locals.roomId, gatherName: res.locals.name});
+        // res.redirect("/chat/room");
+        // roomId값을 어케 전달하누
+    },
+    checkMember: async(req, res, next)=>{
+        res.locals.roomId = req.body.roomId;
+        console.log('roomId: ', res.locals.roomId, 'mem_id: ', req.user.mem_id);
+        isMember = await db.participant.findOne({
+            where:{ gathering_id: res.locals.roomId, mem_id: req.user.mem_id}
+        });
+        console.log(isMember);
+        if (!isMember) { res.redirect('/chat/list'); }
+        next();
+    },
+
+    test: async (req, res)=>{
+        console.time('쿼리 한번에 하는 거');
+        const user = req.query.user;
+        // include 이용해서 조인 테스트
+        try{
+            const list = await db.gathering.findAll({
+                attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
+                include: [{
+                    model: db.participant,
+                    attributes: ['gathering_id', 'mem_id'], // participants 테이블의 열을 선택
+                    as: 'participants',
+                    where: {
+                        mem_id: user
+                    },
+                    required: true,
+                    raw: true,  // dataValues만 보인다는데 효과x
+                }]
+            });
+            gatherList = list.map(i => i.dataValues);
+            console.log(gatherList);
+            var partList = [];
+            
+            // 확인이 안됨. list.participants로는 
+            for (child of gatherList){
+                partList.push(child.participants.map(i=>i.dataValues));
+            }
+            console.log('참여자 확인: ', partList);
+            // console.log('list: ', list);
+            // console.log('join test: ', list[0].gathering_id);
+            // const arr = list.map(i => i.gathering_id);
+            // console.log(arr);
+            res.send(list);
+            console.timeEnd('쿼리 한번에 하는 거');
+        } catch(err){
+            console.log(err);
+        }
+
+    },
+    test2: async(req, res)=>{
+        console.time('쿼리 따로 따로');
+        const user = req.query.user;
+        try{
+            var partList = await db.participant.findAll({
+                attributes: ['gathering_id'],
+                where: {
+                    mem_id: user
+                }
+            });
+            partList = partList.map(i=>i.dataValues); // 그러면 key 값이 없이 그냥 1,2만 나옴
+
+            console.log('타입; ', partList);
+
+            var gatherList = await db.gathering.findAll({
+                attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
+                where: {[Op.or]: partList}
+            });
+            // gatherList = list.map(i => i.dataValues);
+            console.log(gatherList);
+            res.send(gatherList);
+            console.timeEnd('쿼리 따로 따로');
+        } catch(err){
+            console.log(err);
+        }
+
+
+        // const posts = await db.post.findAll({
+        //     // where,
+        //     limit: 10,
+        //     include: [{
+        //       model: db.post_image, // 게시글의 이미지
+        //       as: 'post_images'
+        //     }, {
+        //       model: db.post_comment, // 게시글의 댓글
+        //     //   include: [{
+        //     //     model: db.member, //댓글을 쓴 사람
+        //     //     attributes: ['mem_id', 'name'],
+                
+        //     //   }],
+        //       as: 'post_comments',
+        //     }, {
+        //       model: db.post_like, // 좋아요 누른 사람
+        //       as: 'post_likes',
+        //       attributes: ['mem_id'],
+        //     }],
+        //     order: [
+        //       ['createdAt', 'DESC'],
+        //       ['post_comments', 'createdAt', 'DESC']
+        //     ],
+        //   });
+        //   const dataList = posts.map(i=>i.dataValues);
+        //   var nestedList =[];
+        //   for (child of dataList){
+        //     nestedList = child.post_comments.map(i=>i.dataValues);            
+        //   }
+        //   console.log(nestedList);
+
+        //   console.log(dataList);
+        //   res.send(dataList);
+    },
+
+    showMainGatherPage: (req, res)=>{
+        res.send()
+    },
+    showCreatePage: (req, res)=>{
+        res.render("createGather", {user: req.user});
+        // res.render("gatherCreate", {user: req.user});
+    }
 }

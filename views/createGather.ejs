@@ -21,7 +21,7 @@
                         <tr class="row">
                             <td class="t-text">모집 마감일</td>
                             <td class="t-box">
-                                <input type="date" name="deadline" id="7daysfromnow" required>
+                                <input type="date" name="deadline" id="7daysfromnow"  required>
                                 <div class="t-box-text">마감일을 알려주세요 :) 기본 마감일은 일주일 후 입니다.</div>
                             </td>
                         </tr>
@@ -73,8 +73,7 @@
 </section>
 
 <script>
-    // 오늘 날짜를 얻어오는 함수
-        function getToday() {
+        function getDateAfter7() {
             let today = new Date();
 
             // 7일을 더한 날짜 계산
@@ -90,11 +89,11 @@
             return `${year}-${month}-${day}`;
         }
 
+
         // 기본값 설정
-        document.getElementById('7daysfromnow').value = getToday();
-    // var defaultDeadline = new Date();
-    // dafaultDeadLine.setDate(defaultDeadline.getDate()+7);
-    // console.log(defaultDeadline);
-    // // $("#7daysfromnow").val(new Date().toISOString.substring(0,10));
-    // document.getElementById('7daysfromnow').value = dafaultDeadLine.toISOString().substring(0, 10);
+        var dateForm = document.getElementById('7daysfromnow');
+        dateForm.value = getDateAfter7();
+        dateForm.setAttribute("min", new Date().toISOString().split("T")[0]);
+        // dateForm.setAttribute("max", );
+
 </script>

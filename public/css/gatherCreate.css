@@ -1,0 +1,321 @@
+/*form*/
+.title-box {
+    height: 70px;
+    padding: 40px 0px 0px 10px;
+    border-bottom: 1px solid #e6e6e6;
+    display: flex;
+
+    border-bottom: 1px solid black;
+}
+
+.title-box a {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.form-box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    /* background-color: aliceblue; */
+}
+
+.form-table {
+    margin: 20px 0 0 0;
+    /* border: 1px solid black; */
+}
+
+
+
+/* input 클릭 테두리 */
+input:focus {
+    outline: none;
+}
+
+
+/* 텍스트 박스 */
+.t-box-title {
+    padding: 5px 0px 0px 5px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #777;
+}
+
+.t-box-text {
+    padding: 5px 0px 0px 2px;
+    font-size: 13px;
+    color: #777;
+}
+
+
+/* 밥모임 이름 */
+.g-name {
+    width: 600px;
+    height: 100px;
+
+    border-right: 1px dashed rosybrown;
+    border-bottom: 1px dashed rosybrown;
+}
+
+.form-table input[name="name"] {
+    width: 580px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    box-sizing:border-box;
+}
+
+
+/* 대표 이미지 */
+.g-image {
+    width: 290px;
+    height: 200px;
+    padding-left: 10px;
+
+    /* border: 1px solid black; */
+    border-bottom: 1px dashed rosybrown;
+}
+
+.image-box {
+    display: block;
+
+    width: 128px;
+    height: 128px;
+    
+    border: 1px dashed black;
+}
+
+
+/* 지역 */
+.g-region {
+    width: 300px;
+    height: 100px;
+
+    border-right: 1px dashed rosybrown;
+    border-bottom: 1px dashed rosybrown;
+}
+
+.form-table input[name="region"] {
+    width: 250px;
+    height: 40px;
+    padding: 15px;
+    border: 1px solid #dddddd;
+    box-sizing:border-box;
+}
+
+select {
+    width: 90px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    background: url('/images/arrow.jpg') no-repeat 105% 50%;
+    background-color: white;
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    font-size: 13px;
+    color: #6c6c6c;
+}
+
+select:focus {
+    outline: none;
+}
+
+
+/* 인원수 */
+.g-number {
+    width: 290px;
+    height: 100px;
+    padding-left: 10px;
+
+    border-right: 1px dashed rosybrown;
+    border-bottom: 1px dashed rosybrown;
+}
+
+.form-table input[name="number"] {
+    width: 100px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    box-sizing:border-box;
+}
+
+
+
+/* 맛집 */
+.g-restaurant {
+    width: 900px;
+    height: 100px;
+    border-bottom: 1px dashed rosybrown;
+}
+
+.form-table input[name="place"] {
+    width: 280px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    box-sizing:border-box;
+}
+
+
+/* 마감일 */
+.g-deadline {
+    width: 900px;
+    height: 100px;
+    border-bottom: 1px dashed rosybrown;
+}
+
+
+/* 소개 */
+.g-description {
+    width: 900px;
+    height: 150px;
+    border-bottom: 1px dashed rosybrown;
+}
+
+.form-table textarea[name="description"] {
+    width: 900px;
+    height: 100px;
+    padding: 15px;
+    resize: none;
+    border: 1px solid #dddddd;
+    box-sizing:border-box;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+
+
+
+
+/* 버튼박스 */
+.button-box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+
+    /* border: 1px solid black; */
+}
+
+input[name="submit"] {
+    width: 100px;
+    padding: 15px;
+    margin: 0px 20px;
+    background-color: #dddddd;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: bold;   
+}
+
+
+.button {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.button-box a {
+    width: 100px;
+    padding: 15px;
+    margin: 0px 20px;
+    background-color: #535b63;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+}
+
+
+
+/* .up-form {
+    width: 100%;
+    padding-top: 20px;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+.row {
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.t-text {
+    width: 230px;
+    padding-left: 20px;
+    vertical-align: middle;
+    background-color: #F6F5F0;
+}
+
+.t-box {
+    padding: 10px;
+}
+
+.t-box-text {
+    padding: 10px 0px 0px 2px;
+    font-size: 13px;
+    color: #777;
+}
+
+.t-text a {
+    color: #777;
+    font-size: 14px;
+    margin: 0px 5px;
+    text-decoration-line: underline;
+}
+
+.up-form input[name="mem_id"],
+.up-form input[name="password"],
+.up-form input[name="name"],
+.up-form input[name="nickname"],
+.up-form input[name="email"],
+.up-form input[name="tel"],
+.up-form input[name="address"], 
+.up-form input[name="birthdate"], 
+.up-form input[name="profile_image"] {
+    width: 250px;
+    height: 40px;
+    padding: 15px;
+    border: 1px solid #dddddd;
+    box-sizing:border-box;
+}
+
+.t-box label {
+    color: #777;
+    font-size: 14px;
+    margin-right: 20px;
+}
+
+input[name="submit"] {
+    width: 100px;
+    padding: 15px;
+    margin: 0px 20px;
+    background-color: #dddddd;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: bold;   
+}
+
+
+.button {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.button a {
+    width: 100px;
+    padding: 15px;
+    margin: 0px 20px;
+    background-color: #535b63;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+} */

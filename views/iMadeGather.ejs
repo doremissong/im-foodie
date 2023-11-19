@@ -70,11 +70,19 @@
 						<% } %>
 						<p class="post-date">
 							<!-- /gather/edit?id=<%= data.gathering_id %>-->
-							<a href="">
-								<button class="write-button">
-									관리
-								</button>
-							</a>
+							<% if (data.leader_id == user.mem_id){ %>
+								<a href="">
+									<button class="write-button">
+										관리
+									</button>
+								</a>
+							<% } else{ %>
+								<a href="">
+									<button class="write-button">
+										어떤 버튼으로 할까
+									</button>
+								</a>
+							<% } %>
 						</p>
                     </div>
                 </li>

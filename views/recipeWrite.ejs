@@ -1,0 +1,61 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/boardWrite.css">
+
+<!-- SECTION -->
+<section>
+    <div class="board-write-section">
+        <div class="board-write-wrap">
+            <div class="board-write-main">
+                공지사항 작성
+            </div>
+            <form name="board-write-form" action="/recipe/write" method="post">
+                <div class="board-form-box">
+                    <div class="board-write-box">
+                        <div class="board-write-category">
+                            <select name="category" required>
+                                <option value="" selected disabled>카테고리 선택</option>
+                                <option value="0" selected>한식</option>
+                                <option value="1">중식</option>
+                                <option value="2">양식</option>
+                                <option value="3">일식</option>
+                                <option value="4">간식</option>
+                                <option value="5">베트남</option>
+                                <option value="6">기타</option>
+                            </select>
+                        </div>
+                        <div class="board-write-title">
+                            <input type="text" name="title" placeholder="제목" value="" required />
+                        </div>
+                    </div>
+                    <div class="board-write-content">
+                        <textarea name="content" placeholder="본문 내용을 입력하세요." required>
+                            입력란 동적으로 추가하면서.
+                        </textarea>
+                    </div>
+                    <div>
+                        menu 음식 이름; 된장찌개 등등 <br>
+                        title은 '오늘의 메뉴 된장찌개!!'' 이런느김<br>
+                        cooktime 조리시간<br>
+                        level 음식 난이도 ⭐⭐⭐⭐⭐로 표시<br>
+                        이미지 첨부<br>
+                    </div>
+                    <div class="button">
+                        <!-- <script>
+                            function btn(){
+                                if(window.confirm('등록하시겠습니까?')){
+                                    document.forms['board-write-form'].submit();
+                                }
+                                else{
+                                    
+                                }
+                            }
+                            </script> -->
+
+                        <button type="submit" name="submit">등록하기</button>
+                        <!-- <button onclick="javascript:btn()">등록하기</button> -->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

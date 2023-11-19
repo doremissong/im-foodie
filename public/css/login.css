@@ -13,7 +13,7 @@
 
 /*IN-CONTENT*/
 .in-content {
-    width: 1100px;
+    width: 950px;
     margin: 0 auto;
     position: relative;
     display: flex;
@@ -83,12 +83,12 @@
 
 
 .banner {
-    padding-top: 40px;
-    margin-left: 100px;
+    padding: 40px 0px;
+    margin-left: 50px;
 }
 
 .in-banner {
-    width: 540px;
-    height: 500px;
+    width: 460px;
+    height: 460px;
     border: 1px solid lightgrey;
 }

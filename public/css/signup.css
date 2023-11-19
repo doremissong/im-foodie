@@ -44,14 +44,14 @@
     text-decoration-line: underline;
 }
 
-.up-form input[name="id"],
+.up-form input[name="mem_id"],
 .up-form input[name="password"],
 .up-form input[name="name"],
 .up-form input[name="nickname"],
 .up-form input[name="email"],
 .up-form input[name="tel"],
 .up-form input[name="address"], 
-.up-form input[name="birthday"], 
+.up-form input[name="birthdate"], 
 .up-form input[name="profile_image"] {
     width: 250px;
     height: 40px;

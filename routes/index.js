@@ -4,6 +4,11 @@ const passport = require('passport'); // 이것도 config/passport로 바꿔야�
 const authRoutes = require('./authRoutes');
 const gatheringRoutes = require('./gatheringRoutes');
 const boardRoutes = require('./boardRoutes');
+const recipeRoutes = require('./recipeRoutes');
+// const myroomRoutes = require('./myroomRoutes');
+// const manageRoutes = require('./manageRoutes');
+const noticeRoutes = require('./noticeRoutes');
+// FAQ & QNA 컨트롤러
 
 const path = require('path');
 // const { db } = require('../models/index');
@@ -11,13 +16,16 @@ const memberController = require('../controllers/memberController');
 const boardController = require('../controllers/boardController');
 const errorController = require('../controllers/errorController');
 const chatController = require('../controllers/chatController');
+// const recipeController = require("../controllers/recipeController");
+// const myroomController = require("../controllers/myroomController");
+// const manageController = require("../controllers/manageController");
+// const noticeController = require("../controllers/noticeController");
+// FAQ | QNA 컨트롤러
 const { isLoggedIn } = require('./middlewares');
 
 router.get("/", (req, res) => {
-  console.log("main - [req.session]: ", req.session);
-  // console.log("main - [req.user]: ", req.user);
+  console.log("지울것index.js - main - [req.session]: ", req.session);
   res.render("index", {user: req.user});
-  // res.sendFile(path.join(__dirname, "../public/html/main.html"));
 });
 
 router.get("/members", memberController.show, memberController.showView);
@@ -26,26 +34,20 @@ router.post("/myroom/edit", memberController.update, memberController.showView);
 router.get("/delete", memberController.showDelete);
 router.post("/delete", memberController.delete, memberController.show, memberController.showView);
 
-router.get("/post/:post_id", (req, res, next)=>{
-  res.json({title: req.params.post_id});
-}); //요로코롬
-
-router.get("/post", boardController.showPost);
-// router.get("/chat/select", isLoggedIn, (req, res)=>{
-//   res.render("selectChatRoom", {currentUser: req.user.mem_id});
-// });
-
-
 
 // 라우터 분리
 router.use("/auth/", authRoutes);
 router.use("/board", boardRoutes);
-// router.get("/board", boardController.showBoard);
 router.use("/gather",gatheringRoutes);
-// router.use("/chat", gatheringsRoutes);
+router.use("/recipe", recipeRoutes);         // 레시피 열람, 작성, 
+// router.use("/myroom", myroomRoutes);         // 마이룸 - 냉장고, 활동내역(댓글, 좋아요, 모임 등), 개인정보 수정, 탈퇴
+// router.use("/manage", manageRoutes);         // 관리자 페이지 - 글(버튼; 게시판, 레시피, 모임, 공지사항, 질의응답) 삭제,
+router.use("/notice", noticeRoutes);        // 공지사항
+// router.use("/qna아니면faq");              //자주묻는질문? 질의응답?
 
-// error
+// ERROR
 // router.use("/", errorRoutes);
+// router.use("/")
 router.use(errorController.pageNotFoundError);
 router.use(errorController.internalServerError);
 

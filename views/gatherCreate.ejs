@@ -1,0 +1,142 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/gatherCreate.css">
+
+<!-- SECTION -->
+<section class="create-gather">
+    <div class="content">
+        <div class="title-box">
+            <a>🍴 밥모임 만들어요 </a>
+        </div>
+
+        <!-- form box -->
+        <div class="form-box">
+            <form name="createGather" action="/gather/createGather" method="POST">
+                <!-- 밥모임 이름 -->
+                <table class="form-table">
+                    <tr>
+                        <td colspan="2" class="g-name">
+                            <div class="group-name">
+                                <div class="t-box-title">모임 이름</div>
+                                <input type="text" name="name" placeholder="밥모임 이름을 알려주세요 :)" maxlength='16' value="" required>
+                                <div class="t-box-text">20자 이내로 작성 가능합니다.</div>
+                            </div>
+                        </td>
+                        <td rowspan="2" class="g-image">
+                            <div class="t-box-title">대표 이미지 128x128 픽셀</div>
+                            <img class="image-box" id="preview" />
+                            <input type="file" name="image_url" accept="image/*" value="" onchange="readURL(this);" required> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="g-region">
+                            <div class="t-box-title">지역</div>
+                            <div class="gather-region">
+                                <div class="region_box">
+                                  <select name="" id="" onchange="categoryChange(this)">
+                                    <option value>시/도</option>
+                                    <option value="general01">강원</option>
+                                    <option value="general02">경기</option>
+                                    <option value="general03">경남</option>
+                                    <option value="general04">경북</option>
+                                    <option value="general05">광주</option>
+                                    <option value="general06">대구</option>
+                                    <option value="general07">대전</option>
+                                    <option value="general08">부산</option>
+                                    <option value="general09">서울</option>
+                                    <option value="general10">울산</option>
+                                    <option value="general11">인천</option>
+                                    <option value="general12">전남</option>
+                                    <option value="general13">전북</option>
+                                    <option value="general14">제주</option>
+                                    <option value="general15">충남</option>
+                                    <option value="general16">충북</option>
+                                  </select>
+                                  <select name="" id="state">
+                                    <option>군/구</option>
+                                  </select>
+                                  <select name="" id="">
+                                    <option>읍/면/동</option>
+                                  </select>
+                                </div>
+                            </div>
+                            <div class="t-box-text">동 나중에 추가해야징</div>
+                        </td>
+                        <td class="g-number">
+                            <div class="t-box-title">모임 인원수</div>
+                            <input type="number" name="number" placeholder="인원수" min="2" max="9" value="" required>
+                                명
+                            <div class="t-box-text">인원은 최소 2명, 최대 9명 제한입니당</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="g-restaurant">
+                            <div class="t-box-title">맛집 이름</div>
+                            <input type="text" name="place" placeholder="ex) 왕짜장" value="" required>
+                            <div class="t-box-text">맛있는 맛집~</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="g-deadline">
+                            <div class="t-box-title">모집 마감일</div>
+                            <input type="date" name="deadline" id="basicdeadline">
+                            <div class="t-box-text">마감일을 알려주세요 :) 기본 마감일은 일주일 후 입니다.</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="g-description">
+                            <div class="t-box-title">소개글</div>
+                            <div class="board-write-content">
+                                <textarea name="description" placeholder="맛집 모임원을 위해 설명을 적어주세요 :D" required></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="button-box">
+                    <input type="submit" name="submit" value="만들기">
+                    <a href="/">취소</a>
+                </div>
+            </form>     
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- <script>
+    const basicdate = document.querySelector('#basicdeadline');
+
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate() +7 ;
+
+    basic_deadline_value = year + "-" + month + "-" + day;
+
+    basicdate.value = basic_deadline_value;
+</script> -->
+
+<!-- <script>
+        function getDateAfter7() {
+            let today = new Date();
+
+            // 7일을 더한 날짜 계산
+            let nextWeek = new Date(today);
+            nextWeek.setDate(today.getDate() + 7);
+
+            // YYYY-MM-DD 형식으로 변환
+            let year = nextWeek.getFullYear();
+            let month = String(nextWeek.getMonth() + 1).padStart(2, '0');
+            let day = String(nextWeek.getDate()).padStart(2, '0');
+
+            // YYYY-MM-DD 형식으로 반환
+            return `${year}-${month}-${day}`;
+        }
+
+        // 기본값 설정
+        var dateForm = document.getElementById('7daysfromnow');
+        dateForm.value = getDateAfter7();
+        dateForm.setAttribute("min", new Date().toISOString().split("T")[0]);
+        // dateForm.setAttribute("max", );
+</script> -->

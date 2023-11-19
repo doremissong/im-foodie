@@ -1,0 +1,54 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/boardPost.css">
+
+<!-- 어떻게 boardPost.js로 따로 빼야하나봐 -->
+<script>
+    // function comPageClick(page){
+    //     // fetch 함수에 현재 페이지 값 전송
+    //     fetchCommentData(page);
+    // }
+</script>
+
+<!-- SECTION -->
+<section>
+    <div class="board-post-section">
+        <div class="post-section">
+            <div class="post-title">
+                <!-- 글 제목 불러오기 -->
+                <%= dataList.title %>
+            </div>
+            <div class="post-info-box">
+                <ul class="post-info-first">
+                    <li class="writer-name">
+                        <!-- 작성자 이름 불러오기 -->
+                        작성자
+                        관리자
+                        <!--  operator_id -->
+                    </li>
+                    <li class="write-date">
+                        <!-- 작성일 불러오기 -->
+                        <%= dataList.createdAt.toISOString().split('T')[0] %>
+                        <%= dataList.createdAt.toISOString().split('T')[1].slice(0,5) %>
+                    </li>
+                </ul>
+                <ul class="post-info-second">
+                    <li class="post-views">
+                        조회
+                        <span>
+                            <!-- 조회수 불러오기 -->
+                            <%= dataList.viewCount %>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="post-content">
+                <!-- 글 내용 불러오기 -->
+                <%= dataList.content %>
+            </div>
+        </div>
+        <!-- 하단 -->
+        <div class="box">
+            <button onclick="location.href='/notice'">글목록</button>
+        </div>
+    </div>
+</section>

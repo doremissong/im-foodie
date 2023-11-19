@@ -214,7 +214,7 @@ module.exports = {
                 next();
             })
         } catch (err) {
-            console.log(`Error deleting member: $(err.message)`);
+            console.log(`Error deleting member: ${err.message}`);
             next(err);
         }
     },

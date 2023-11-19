@@ -30,6 +30,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
+    deadline: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    },
     state: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -48,10 +53,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BLOB,
       allowNull: true
     },
-    deadline: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    viewCount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     }
   }, {
     sequelize,

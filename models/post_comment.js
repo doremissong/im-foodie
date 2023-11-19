@@ -9,11 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     post_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'post',
-        key: 'post_id'
-      }
+      allowNull: false
     },
     mem_id: {
       type: DataTypes.STRING(20),
@@ -25,25 +21,28 @@ module.exports = function(sequelize, DataTypes) {
     },
     depth: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 0
     },
     group_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 0
     },
     group_no: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 0
     },
     state: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 1
     }
   }, {
     sequelize,
     tableName: 'post_comment',
     timestamps: true,
-    paranoid: true,
     indexes: [
       {
         name: "PRIMARY",
@@ -59,13 +58,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "post_comment_id" },
-        ]
-      },
-      {
-        name: "fk_post_comment_post_id",
-        using: "BTREE",
-        fields: [
-          { name: "post_id" },
         ]
       },
       {

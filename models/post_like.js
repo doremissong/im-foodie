@@ -47,6 +47,15 @@ module.exports = function(sequelize, DataTypes) {
           { name: "post_like_id" },
         ]
       },
+      {
+        name: "uc_postId_memId",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "post_id" },
+          { name: "mem_id" },
+        ]
+      },
     ]
   });
 };

@@ -56,7 +56,7 @@ app.use(session);  // cookie-parser 사용 위해 express-session에 설정?
 app.use(passport.initialize()); //passport 사용 및 초기화. 
 app.use(passport.session());    //passport session 연동. express세션을 내부적으로 사용. req.session에 passport 관련 정보 저장.
                                 //passport에게 session을 사용하도록 함 // persistent login session
-
+// app.use(cors());
 app.use("/", router);//라우터 객체를 app객체에 등록
 
 //app.listen(app.get("port"), () => {

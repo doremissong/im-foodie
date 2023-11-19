@@ -1,14 +1,14 @@
 /* SECTION */
 .board-section {
-    width: 1100px;
+    width: 950px;
     margin: auto;
     position: relative;
     /* background-color: rgb(224, 246, 255); */
 }
 
 .board-list {
-	width: 1080px;
-	padding: 20px 0px 15px 10px;
+	width: 930px;
+	padding: 40px 0px 15px 10px;
 	/* background-color: azure; */
 }
 
@@ -66,7 +66,7 @@
 }
 
 .post-standard {
-	width: 1080px;
+	width: 930px;
     display: flex;
     align-items: center;
     border-radius: 2px;
@@ -127,7 +127,7 @@
 }
 
 .post-container {
-	width: 1080px;
+	width: 930px;
     display: flex;
     align-items: center;
     border-radius: 2px;
@@ -147,7 +147,7 @@
 	font-size: 16px;
 	padding: 10px 5px;
 	width: 65px;
-	text-align: center;
+	/* text-align: center; */
 	/* background-color: rgb(255, 255, 155); */
 }
 

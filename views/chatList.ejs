@@ -21,7 +21,7 @@
 		</ul>
 
         <ul class="post-list">
-			<% if(typeof msg != "undefined"){ %>
+			<% if((typeof dataList == "undefined"|| dataList =="") && typeof msg != "undefined"){ %>
 				<%= msg %>
 			<% } %>
             <!-- <li class="post">
@@ -34,7 +34,7 @@
 					<p class="post-view">조회수</p>
               	</div>
             </li> -->
-            <% if (typeof dataList != "undefined") { %>
+            <% if (typeof dataList != "undefined" && dataList != "") { %>
             <% dataList.forEach((data, index)=>{ %>
                 <li class="post">
                     <div class="post-container">

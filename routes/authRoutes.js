@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const memberController = require('../controllers/memberController');
+const errorController = require('../controllers/errorController');
 const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
 const passport = require('passport');
 const member = require('../models/member');
@@ -22,6 +23,9 @@ router.post("/findPw", isNotLoggedIn, memberController.findPW, memberController.
 // router.get("/find", memberController.findPW);
 router.get("/changePw", isLoggedIn, memberController.showChangePasswordPage);
 router.post("/changePw", isLoggedIn, memberController.changePassword);
+
+router.use(errorController.pageNotFoundError);
+router.use(errorController.internalServerError);
 
 module.exports = router;
 /*

@@ -1,0 +1,87 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/board.css">
+
+<!--SECTION-->
+<section>
+    <div class="board-section">
+		<div class="board-list">
+			<div class="write-box">
+				<a href="/notice/write">
+					<button class="write-button">
+						글쓰기
+					</button>
+				</a>
+				<!-- <% if(typeof operator != "undefined"){ %> -->
+					<!-- 로그인 상태일 시 -->
+				<!-- <% } %> -->
+			</div>
+		</div>
+		<ul class="post-index">
+			<li>
+				<div class="post-standard">
+					<p class="post-number">번호</p>
+					<p class="post-board">게시판</p>
+					<p class="post-title">제목</p>
+					<p class="post-writer">글쓴이</p>
+					<p class="post-date">등록일</p>
+					<p class="post-view">조회수</p>
+				</div>
+			</li>
+		</ul>
+		<% if (dataList == ''){ %>
+			<!-- <ul class="post-list"> -->
+			<%= dataList.category %> 아직 공지사항이 없어요 :D
+			<!-- </ul> -->
+		<% } else { %>
+			<ul class="post-list">
+				<% dataList.forEach((data, index)=>{ %>
+					<li class="post">
+						<div class="post-container">
+							<p class="post-number"><%= pagination.startItemNo + 1 + index %></p>
+							<p class="post-board">
+								<% if (data.priority==0) { %>
+									[일반] 
+								<% } else if (data.priority==1) { %>
+									[중요]
+								<% } else { %>
+									[긴급]
+								<% } %>
+							</p>
+							<p class="post-title"><a href="/notice/view?ntc_no=<%= data.notice_id %>"><%= data.title %></a></p>
+							<p class="post-writer">관리자 data.operator_id</p>
+							<p class="post-date"><%= data.createdAt.toISOString().slice(2,10);%></p>
+							<p class="post-view"><%= data.viewCount%></p>
+						</div>
+					</li>
+				<% }); %>
+			</ul>
+			<!-- ⚠️ 아무글도 없으면? -->
+			<div class="pagination-container">
+				<% if (pagination.curSet > 1){ %>    
+					<div class="prev-set-button"><a href="/notice?pageno=<%= pagination.startPage-1%>">&lt;&lt;&nbsp; </a></div>
+				<% } %>
+				<% if (pagination.pageNo!=1){ %>    
+					<div class="prev-button"><a href="/notice?pageno=<%= pagination.pageNo-1%>">&nbsp;이전&nbsp;</a></div>
+				<% } %>
+				<div class="number-button-wrapper">
+					<% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
+						<span class="number-button"> 
+							<% if (pagination.pageNo==i){ %>
+								<% console.log(i, pagination.pageNo); %>
+								<a href="/notice?pageno=<%= i %>" style="font-weight: 800;"><%= i %></a>
+							<% } else{ %>
+								<a href="/notice?pageno=<%= i %>"><%= i %></a>
+							<% } %>
+						</span>
+					<% } %>
+				</div>
+				<% if (pagination.pageNo != pagination.totalPage){ %>
+					<div class="next-button"><a href="/notice?pageno=<%= pagination.pageNo+1%>"> &nbsp;이후&nbsp;</a></div>
+				<% }%>
+				<% if (pagination.curSet < pagination.totalSet){ %>
+					<div class="next-set-button"><a href="/notice?pageno=<%= pagination.endPage+1%>">&nbsp;&gt;&gt;</a></div>
+				<% }%>
+			</div>
+		<% } %>
+    </div>
+</section>
