@@ -5,21 +5,19 @@ const gatheringController = require('../controllers/gatheringController');
 const chatController = require('../controllers/chatController');
 const errorController = require('../controllers/errorController');
 const { isNotLoggedIn, isLoggedIn, setDBModel, getPaginationInfo } = require('./middlewares');
+const { get } = require('../config/email');
 
 // 1) 밥모임 메인
-router.get("/", setDBModel(db.gathering), getPaginationInfo, gatheringController.showGatheringList);
+router.get("/", gatheringController.showGatheringMainPage);
 
-
+// countperpage=9. state=0 모집중, state=1 모집 완료
+router.get("/completed", setDBModel(db.post), getPaginationInfo, gatheringController.getCompletedList);
+router.get("/recruiting", setDBModel(db.post), getPaginationInfo, gatheringController.getRecruitingList);
 // //test
 router.get("/test", (req, res)=>{
     res.render("gatherMain");
 })
-router.get("/completed", (req, res)=>{
-    res.render("gatherCompleted");
-});
-router.get("/recruiting", (req,res)=>{
-    res.render("gatherRecruiting");
-})
+
 router.get("/test2", gatheringController.test2);
 
 // 2) 모집중 목록

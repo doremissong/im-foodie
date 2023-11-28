@@ -3,7 +3,8 @@ const {db, sequelize,} = require('../models/index');
 const { Op, Sequelize } = require('sequelize');
 const participant = require('../models/participant');
 // const { getPaginationInfo } = require('./middlewares');
-
+const RECRUITING = 0;
+const COMPLETED = 1;
 
 // 기본값 == undefined. 그러면 내가 해줄 필요없어.
 async function searchGathering (state, gatherId, leaderId) { // gathering_id, 
@@ -205,37 +206,84 @@ module.exports={
         
     },
 
-    showMainPage: (req, res)=>{
+    showGatheringMainPage: async (req, res)=>{
+        const limit = 6;
+        const obj = {};
+        if(req.user){
+            obj.user = req.user;
+        }
+        const recruitingList = await db.post.findAll({
+            where:{state: RECRUITING},
+            order:[['createdAt', 'DESC']],
+            limit: limit,
+        });
 
+        const completedList = await db.post.findAll({
+            where:{state: COMPLETED},
+            order:[['createdAt', 'DESC']],
+            limit: limit,
+        });
+        console.log(completedList =="");
+
+        obj.recruitingList = recruitingList;
+        obj.completedList = recruitingList;
+        // obj.completedList = completedList;
+        // res.json(obj);
+        res.render("gatherMain", obj);
     },
     // show GatherMainPage: async(req, res)=>{
     //     showRecruitingPage,
     //     showCompletedPage, 호출
     // }
     getRecruitingList: async (req, res, next) => {
-        //searchGathering (state, gatherId, leaderId)
-        const list = await searchGathering(state = 0);
-        console.log('모집중인 그룹리스트 ', list);
-        if(list==""){
-            res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?"});
-            // res.send("아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?");
-        } else{
-            // res.json(list);
-            res.render("mainGather", {user: req.user, dataList: list});
+        // //searchGathering (state, gatherId, leaderId)
+        // const list = await searchGathering(state = 0);
+        // console.log('모집중인 그룹리스트 ', list);
+        // if(list==""){
+        //     res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?"});
+        //     // res.send("아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?");
+        // } else{
+        //     // res.json(list);
+        //     res.render("mainGather", {user: req.user, dataList: list});
+        // }
+
+        const obj = {};
+        if(req.user){
+            obj.user=req.user;
         }
+        if(!res.locals.paginationInfo || !res.locals.dataList){
+            console.log('[ERROR] check pagination data.');
+            // res.redirect(res.locals.history);
+            res.redirect('/gather');
+        }
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        res.render("gatherRecruiting", obj);
     },
     getCompletedList: async (req, res) => {
-        // searchGathering (state, gatherId, leaderId)
-        const list = await searchGathering(state = 1);
-        console.log('모집완료된 그룹리스트 ', list);
-        if(list==""){
-            // res.send("아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?");
-            res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?"});
-        } else{
-            // res.json(list);
-            res.render("mainGather", {user: req.user, dataList: list});
+        const obj = {};
+        if(req.user){
+            obj.user=req.user;
         }
-        // console.log('빈 데이터베이스 서칭 결과는 null일까? undefined일까/', typeof list);
+        if(!res.locals.paginationInfo || !res.locals.dataList){
+            console.log('[ERROR] check pagination data.');
+            // res.redirect(res.locals.history);
+            res.redirect('/gather');
+        }
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        res.render("gatherCompleted", obj);
+        // searchGathering (state, gatherId, leaderId)
+        // const list = await searchGathering(state = 1);
+        // console.log('모집완료된 그룹리스트 ', list);
+        // if(list==""){
+        //     // res.send("아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?");
+        //     res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?"});
+        // } else{
+        //     // res.json(list);
+        //     res.render("mainGather", {user: req.user, dataList: list});
+        // }
+        // // console.log('빈 데이터베이스 서칭 결과는 null일까? undefined일까/', typeof list);
         
     },
     // 💚가입한 목록
@@ -327,7 +375,7 @@ module.exports={
     //         }
     //     });
     //     res.json(data);
-    //     // res.render("showGatherApply", {user:req.user, data: data});
+    //     // res.render("gatherShowApply", {user:req.user, data: data});
     // },
     // 모임 
     applyForGathering: async(req, res)=>{
@@ -375,7 +423,7 @@ module.exports={
         });
         // first, send all info about gathering, gathering members(accepted), and if user is leader, then show buttons[edit] in the top 
         // and next to the member, there's also button [delete/]
-        res.render("showGatherDetail", {user:req.user, data: data});
+        res.render("gatherShowDetail", {user:req.user, data: data});
 
     },
 

@@ -19,8 +19,8 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(30),
       allowNull: false
     },
-    content: {
-      type: DataTypes.TEXT,
+    ingredients: {
+      type: DataTypes.STRING(100),
       allowNull: false
     },
     cookTime: {

@@ -1,4 +1,5 @@
 const { db, sequelize } = require('../models/index');
+const { Op } = require('sequelize');
 const post_comment = require('../models/post_comment');
 
 exports.isLoggedIn = (req, res, next) => {
@@ -60,6 +61,32 @@ exports.setDBModel = (modelType) => {
         res.locals.model = modelType;
         console.log('디비 확인-미들웨어:', modelType);
         res.locals.condition = {};
+
+        if (req.query.search) {
+            //https://chat.openai.com/c/0a8f8a3e-4fd7-4696-b557-72feb171eb1c
+            const term = req.query.search;
+            res.locals.condition = {
+                [Op.or]: [
+                    {
+                        title: {
+                            [Op.like]: `%${term}%`
+                        },
+                    },
+                    {
+                        content: {
+                            [Op.like]: `%${term}%`
+                        }
+                    },
+                    {
+                        // 다 mem_id로 바꿔버려?
+                        writer_id: {
+                            [Op.like]: `%${term}%`
+                        }
+                    }
+                ]
+            }
+        }
+
         if (res.locals.category) { // post의 경우, 게시판 목록 페이지네이션
             res.locals.condition.category = res.locals.category;
             // console.log('[setDBModel]',res.locals.condition.category, '게시판 카테고리 값 확인');
@@ -67,9 +94,17 @@ exports.setDBModel = (modelType) => {
         if (req.query.no) {   //해당 글의 id - 댓글 페이지네이션용
             res.locals.condition.post_id = req.query.no;
         }
-
-        // 최신순, 조회순(viewCount)
-        // order: [["createdAt", "DESC"]],
+        if (req.query.sort) {
+            const sort = req.query.sort;
+            // 최신순 = [["createdAt", "DESC"]],
+            // 조회수순 = [["viewCount", "DESC"]],
+            // 좋아요 순 = 이건 나중에 - 레시피, 게시판, 모임별 다 따로 
+            if (sort == "viewCount") {
+                res.locals.sort = [["viewCount", "DESC"]]
+            }
+            // else if(sort=="like"){
+            // }
+        }
 
         // const dataList = await modelType.findAll({
         //     where: res.locals.condition,
@@ -82,6 +117,7 @@ exports.setDBModel = (modelType) => {
     // modelType.findOne({where:{mem_id:'mint'}}).then((member_id)=>console.log('모델 타입 파라미터로 주고 동작하는지 확인.',member_id));
     // ⚠️에러 처리는
 }
+
 
 // exports.getModel();// 무슨 모델인지 가져와야함.
 
@@ -155,7 +191,7 @@ exports.getPaginationInfo = async (req, res, next)=>{
     try {
         const dataList = await model.findAll({
             where: condition,
-            order: [["createdAt", "DESC"]],
+            order: res.locals.sort? res.locals.sort: [["createdAt", "DESC"]],
             limit: countPerPage,
             offset: startItemNo
         });

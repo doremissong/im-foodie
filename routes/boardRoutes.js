@@ -34,6 +34,58 @@ router.post("/write", isLoggedIn, boardController.writePost);
 // 게시판 종류별 라우팅
 router.get("/:category", boardController.checkBoard, setDBModel(db.post), getPaginationInfo, boardController.showPage);
 
+// 삭제
+router.get("/delete", isLoggedIn, async(req, res)=>{
+    //
+    if (!req.user) {
+        // 로그인 상태 아니면
+        // res.redirect(res.locals.history);
+        console.log('로그인 상태 확인');
+        res.redirect('/board');
+        // res.redirect(res.locals.history);
+    }
+    const memId = req.user.mem_id;
+    // query no있는지 체크
+    if (!res.query.no) {
+        console.log("There's no number of post to delete");
+        res.redirect('/board');
+        // res.redirect(res.locals.history);
+    }
+    const postNo = req.query.no;
+    //작성자가 맞는지 체크
+    try {
+        const recipeWriter = await db.post.findOne({
+            attributes: ['writer_id'],
+            where: {
+                post_id: postNo,
+            }
+        })
+        // recipeWriter.writer_id 제대로 동작할까?
+        if (memId == postWriter.writer_id) {
+            console.log('로그인한 사용자:', memId, '글의 작성자: ', postWriter.writer_id);
+            next();
+        }
+    } catch (err) {
+        console.log('[ERROR]: while checking if user is the writer of the post', err);
+        res.redirect('/board');
+        // res.redirect(res.locals.history);
+    }
+
+    // 글 삭제
+    try {
+        await sequelize.transaction(async t => {
+            await db.post.destroy({
+                where: { post_no: postNo },
+                transaction: t,
+            })
+        })
+    } catch (err) {
+        console.log('[ERROR] While deleting a post.', err);
+        res.redirect('/board');
+        // res.redirect(res.locals.history);
+    }
+});
+
 router.use(errorController.pageNotFoundError);
 router.use(errorController.internalServerError);
 //  setCondition({category:restaurant}),

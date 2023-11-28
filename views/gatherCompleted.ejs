@@ -11,11 +11,11 @@
 			<div class="gather-sub">
 				<ul class="gather-sub-list">
 					<li class="gather-sub-name">
-						<a href="/gather/recruiting">모집중</a>
+						<a href="/gather/recruiting?countperpage=9">모집중</a>
 					</li>
 					<li class="gather-sub-name">
                         <span class="font-bold">
-						    <a href="/gather/completed">모집완료</a>
+						    <a href="/gather/completed?countperpage=9">모집완료</a>
                         </span>
 					</li>
 					<li class="gather-sub-name">
@@ -26,31 +26,56 @@
         </div>
 
 		<div class="gather-list-box">
-			<% for(var i = 0; i < 9; i++) { %>
+			<% dataList.forEach((data, index)=>{ %>
 				<div class="gather-content-box">
 					<div class="group-image">
 						<img src="/images/candy-blue.png">
 					</div>
 					<div class="group-name">
 						밥모임 이름 모여라
+						<%= data.name %>
 					</div>
 					<div class="group-region">
 						<span>서울시 노원구 공릉동</span>
+						<%= data.region %>
 					</div>
 					<div class="numberndeadline">
 						<div class="group-number">
-							<div>2/9 명</div>
+							<div>2/9 <%= data.currentHeadCount %>/<%= data.maximumHeadCount %> 명</div>
 						</div>
 						<div class="group-deadline">
-							<div>11월 30일 모집 마감</div>
+							<div>11월 30일 <%= data.deadline %> 모집 마감</div>
 						</div>
 					</div>
 				</div>
-			<% } %>
+			<% }) %>
         </div>
 		
 		<div class="pagination-container">
-			123
+			<% if (pagination.curSet > 1){ %>    
+				<div class="prev-set-button"><a href="/notice?pageno=<%= pagination.startPage-1%>&countperpage=9">&lt;&lt;&nbsp; </a></div>
+			<% } %>
+			<% if (pagination.pageNo!=1){ %>    
+				<div class="prev-button"><a href="/notice?pageno=<%= pagination.pageNo-1%>&countperpage=9">&nbsp;이전&nbsp;</a></div>
+			<% } %>
+			<div class="number-button-wrapper">
+				<% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
+					<span class="number-button"> 
+						<% if (pagination.pageNo==i){ %>
+							<% console.log(i, pagination.pageNo); %>
+							<a href="/notice?pageno=<%= i %>&countperpage=9" style="font-weight: 800;"><%= i %></a>
+						<% } else{ %>
+							<a href="/notice?pageno=<%= i %>&countperpage=9"><%= i %></a>
+						<% } %>
+					</span>
+				<% } %>
+			</div>
+			<% if (pagination.pageNo != pagination.totalPage){ %>
+				<div class="next-button"><a href="/notice?pageno=<%= pagination.pageNo+1%>&countperpage=9"> &nbsp;이후&nbsp;</a></div>
+			<% }%>
+			<% if (pagination.curSet < pagination.totalSet){ %>
+				<div class="next-set-button"><a href="/notice?pageno=<%= pagination.endPage+1%>&countperpage=9">&nbsp;&gt;&gt;</a></div>
+			<% }%>
 		</div>
 		
     </div>

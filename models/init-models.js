@@ -12,6 +12,9 @@ var _post_comment = require("./post_comment");
 var _post_image = require("./post_image");
 var _post_like = require("./post_like");
 var _recipe = require("./recipe");
+var _recipe_ingredients = require("./recipe_ingredients");
+var _recipe_like = require("./recipe_like");
+var _recipe_step = require("./recipe_step");
 var _recipe_tag = require("./recipe_tag");
 var _sessions = require("./sessions");
 var _tag = require("./tag");
@@ -31,6 +34,9 @@ function initModels(sequelize) {
   var post_image = _post_image(sequelize, DataTypes);
   var post_like = _post_like(sequelize, DataTypes);
   var recipe = _recipe(sequelize, DataTypes);
+  var recipe_ingredients = _recipe_ingredients(sequelize, DataTypes);
+  var recipe_like = _recipe_like(sequelize, DataTypes);
+  var recipe_step = _recipe_step(sequelize, DataTypes);
   var recipe_tag = _recipe_tag(sequelize, DataTypes);
   var sessions = _sessions(sequelize, DataTypes);
   var tag = _tag(sequelize, DataTypes);
@@ -48,12 +54,16 @@ function initModels(sequelize) {
   member.hasMany(chat, { as: "chats", foreignKey: "mem_id"});
   participant.belongsTo(member, { as: "mem", foreignKey: "mem_id"});
   member.hasMany(participant, { as: "participants", foreignKey: "mem_id"});
+  recipe_like.belongsTo(member, { as: "mem", foreignKey: "mem_id"});
+  member.hasMany(recipe_like, { as: "recipe_likes", foreignKey: "mem_id"});
   post_clip.belongsTo(post, { as: "post", foreignKey: "post_id"});
   post.hasMany(post_clip, { as: "post_clips", foreignKey: "post_id"});
   post_image.belongsTo(post, { as: "post", foreignKey: "post_id"});
   post.hasMany(post_image, { as: "post_images", foreignKey: "post_id"});
   post_like.belongsTo(post, { as: "post", foreignKey: "post_id"});
   post.hasMany(post_like, { as: "post_likes", foreignKey: "post_id"});
+  recipe_like.belongsTo(recipe, { as: "recipe", foreignKey: "recipe_id"});
+  recipe.hasMany(recipe_like, { as: "recipe_likes", foreignKey: "recipe_id"});
   recipe_tag.belongsTo(recipe, { as: "recipe", foreignKey: "recipe_id"});
   recipe.hasMany(recipe_tag, { as: "recipe_tags", foreignKey: "recipe_id"});
   recipe_tag.belongsTo(tag, { as: "tag", foreignKey: "tag_id"});
@@ -73,6 +83,9 @@ function initModels(sequelize) {
     post_image,
     post_like,
     recipe,
+    recipe_ingredients,
+    recipe_like,
+    recipe_step,
     recipe_tag,
     sessions,
     tag,

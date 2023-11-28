@@ -209,7 +209,8 @@ module.exports = {
         try{
             sequelize.transaction(async t => {
                 await db.member.destroy({
-                    where : {mem_id:memId}
+                    where : {mem_id:memId},
+                    transaction: t,
                 });
                 next();
             })

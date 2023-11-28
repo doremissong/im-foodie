@@ -11,7 +11,7 @@ module.exports={
     showRecipeListPage: async(req, res)=>{
         // 시간순, 조회수순, 좋아요순, 💚해시태💚순으로 검색할 수 있게 
         // 미들웨어에 setDBModel에 설정해두기
-
+        // recipe만 불러와도 됨.
         try {
             const obj = {};
             obj.pagination = res.locals.paginationInfo;
@@ -38,7 +38,9 @@ module.exports={
     },
 
     showUpdatePage: async(req, res)=>{
-        //title, menu, content, cooktime, level, image_url (6) 수정 가능
+        // recipe - title, menu,  cooktime, level, image_url (6) 수정 가능
+        // recipe_ingredient - 재료들 몽땅 수정
+        // recipe_step
         if (req.query.recipe_no) {
             const obj = {};
             var temp = {};
@@ -67,6 +69,10 @@ module.exports={
     },
 
     showRecipe: async (req, res)=>{
+        // 불러올 것. recipe_id로
+        // recipe
+        // recipe_ingredient 
+        // recipe_step
         if (req.query.recipe_no) {
             const recipeId = req.query.recipe_no;
             const obj = {};
@@ -107,12 +113,23 @@ module.exports={
 
     // # 해시태그로 검색은??❓
     searchRecipe: (req, res)=>{
+        
+        // 불러올 것. recipe_id로
+        // recipe
+        // recipe_ingredient 
+        // recipe_step
+
         // 이것도 "검색어"가 있다는 거 빼곤 showRecipeListPage랑 같음.
         // 아직 몰라
     },
     
     createRecipe: async (req, res)=>{
         // post로 받음. //title, menu, content, cooktime, level, image_url  입력스, 이외는 자동
+        
+        // 저장할 것. 
+        // recipe - recipe_id 로 아래 테이블에 데이터 추가하기
+        // recipe_ingredient 
+        // recipe_step
         if (!req.body) {
             console.log(`[ERROR] Req.params are not sent. - createRecipe`);
             res.redirect('/recipe');
@@ -144,7 +161,12 @@ module.exports={
     },
 
     updateRecipe: async (req, res)=>{
-        // post로 받음. //title, menu, content, cooktime, level, image_url (6) 수정
+        
+        // 불러오고 수정하기. recipe_id로
+        // recipe -  post로 받음. //title, menu, content, cooktime, level, image_url (6) 수정
+        // recipe_ingredient 
+        // recipe_step
+
         console.log('업데이트 시도 시작?');
         if(req.query.recipe_no && req.params){
             // 값 전달 잘 되면
@@ -180,6 +202,12 @@ module.exports={
 
     deleteRecipe: async(req, res)=>{
         // query에 글 id있어
+        
+        // 불러올 것. recipe_id로
+        // recipe
+        // recipe_ingredient 
+        // recipe_step
+        // ⚠️delete cascade 설정하기
         const recipeId = req.query.recipe_no;
         try{
             await sequelize.transaction(async t=>{
