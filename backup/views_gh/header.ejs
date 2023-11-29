@@ -1,0 +1,139 @@
+<!-- HEADER -->
+<header>
+    <div class="content">
+        <a href="/" class="logo">
+            <img src="/static/images/logo.png" alt="LOGO" />
+        </a>
+        <div class="sub-category">
+            <ul class="category">
+                <li>
+                    <a href="/signup">회원가입</a>
+                </li>
+                <% if(user){ %>
+                    <li>
+                        <%= user.name %> 님 
+                    </li>
+                    <li>
+                        <a href="/logout">로그아웃</a>
+                    </li>
+                <% } else{ %>
+                    <li>
+                        <a href="/login">로그인</a>
+                    </li>
+                <% } %>
+            </ul>
+            <div class="search">
+                <input type="text" />
+                <span class="material-icons">search</span>
+            </div>
+        </div>
+        <nav>
+            <ul class="main-category">
+                <li class="item">
+                    <div class="item-name">
+                        <a href="/board">게시판</a>
+                    </div>
+                    <div class="item-contents">
+                        <div class="inner">
+                            <ul class="inner-contents">
+                                <li>
+                                    <a href="javascript:void(0)">맛집게시판</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">자랑게시판</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">꿀팁게시판</a>
+                                </li>
+                            </ul>
+                            <ul class="inner-contents">
+                                <li>
+                                    <a href="javascript:void(0)">자유게시판</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">비추게시판</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">홍보게시판</a>
+                                </li>
+                            </ul>
+                            <ul class="inner-contents">
+                                <li>
+                                    <a href="javascript:void(0)">나눔게시판</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">밥친구게시판</a>
+                                </li>
+                                <li class="none">none</li>
+                            </ul>
+                        </div>
+                    </div> 
+                </li>
+                <li class="item">
+                    <div class="item-name">
+                        <a href="javascript:void(0)">레시피</a>
+                    </div>
+                    <div class="item-contents">
+                        <div class="inner">
+                            <ul class="inner-contents">
+                                <li>
+                                    <a href="javascript:void(0)">레시피1</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">레시피2</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">레시피3</a>
+                                </li>
+                            </ul>
+                            <ul class="inner-contents">
+                                <li>
+                                    <a href="javascript:void(0)">레시피4</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">레시피5</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">레시피6</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-name">
+                        <a href="javascript:void(0)">모임챗</a>
+                    </div>
+                    <div class="item-contents"></div>
+                </li>
+                <li class="item">
+                    <div class="item-name">
+                        <a href="javascript:void(0)">마이룸</a>
+                    </div>
+                    <div class="item-contents"></div>
+                </li>
+            </ul>
+        </nav>
+    </div>  
+</header>
+
+<script>
+    /* 검색창 제어 */
+    // 검색창 요소(.search) 찾기.
+    const searchEl = document.querySelector('.search');
+    const searchInputEl = searchEl.querySelector('input');
+    // 검색창 요소를 클릭하면 실행.
+    searchEl.addEventListener('click', function () {
+    searchInputEl.focus();
+    });
+    // 검색창 요소 내부 실제 input 요소에 포커스되면 실행.
+    searchInputEl.addEventListener('focus', function () {
+    searchEl.classList.add('focused');
+    searchInputEl.setAttribute('placeholder', '통합검색');
+    });
+    // 검색창 요소 내부 실제 input 요소에서 포커스가 해제(블러)되면 실행.
+    searchInputEl.addEventListener('blur', function () {
+    searchEl.classList.remove('focused');
+    searchInputEl.setAttribute('placeholder', '');
+    });
+</script>

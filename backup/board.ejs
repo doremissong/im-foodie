@@ -1,0 +1,112 @@
+
+<body>
+    <link rel="stylesheet" href="/static/css/board.css">
+    <!--SECTION-->
+    <section>
+        <div class="board-section">
+            <div class="board-list">
+              	<div class="board-main">
+                	<a href="/static/html/board.html">전체게시판</a>
+              	</div>
+				<div class="board-sub">
+					<ul class="board-sub-list">
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">맛집게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">자랑게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">꿀팁게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">자유게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">비추게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">홍보게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">나눔게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">밥친구게시판</a>
+						</li>
+					</ul>
+				</div>
+            </div>
+			<div class="write-box">
+				<a href="/board/write">
+					<button class="write-button">
+						글쓰기
+					</button>
+				</a>
+			</div>
+			<ul class="post-index">
+				<li>
+					<div class="post-standard">
+						<p class="post-number">번호</p>
+						<p class="post-board">게시판</p>
+						<p class="post-title">제목</p>
+						<p class="post-writer">글쓴이</p>
+						<p class="post-date">작성일</p>
+						<p class="post-view">조회수</p>
+					</div>
+				</li>
+			</ul>
+            <ul class="post-list">
+                <!-- <li class="post">
+                  	<div class="post-container">
+                    	<p class="post-number">번호</p>
+						<p class="post-board">게시판</p>
+						<p class="post-title">제목</p>
+						<p class="post-writer">글쓴이</p>
+						<p class="post-date">작성일</p>
+						<p class="post-view">조회수</p>
+                  	</div>
+                </li> -->
+                <% dataList.forEach((data, index)=>{ %>
+                    <li class="post">
+                        <div class="post-container">
+                            <p class="post-number"><%= pagination.startItemNo + 1 + index %></p>
+                            <p class="post-board"><%=data.category%></p>
+                            <p class="post-title"><a href="/board/postNumber<%= data.post_id%>뭐로해야할까"><%= data.title %></a></p>
+                            <p class="post-writer"><%= data.writer_id%></p>
+                            <p class="post-date"><%= data.createdAt.toISOString().slice(2,10);%></p>
+                            <p class="post-view"><%= data.count%></p>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+            <div class="pagination-container">
+                <% if (pagination.curSet > 1){ %>    
+                    <div class="prev-set-button"><a href="/board?pageno=<%= pagination.startPage-1%>">&lt;&lt;&nbsp; </a></div>
+                <% } %>
+                <% if (pagination.pageNo!=1){ %>    
+                    <div class="prev-button"><a href="/board?pageno=<%= pagination.pageNo-1%>">&nbsp;이전&nbsp;</a></div>
+                <% } %>
+                <div class="number-button-wrapper">
+                    <% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
+                        <span class="number-button"> 
+							<% if (pagination.pageNo==i){ %>
+								<% console.log(i, pagination.pageNo); %>
+								<a href="/board?pageno=<%= i %>" style="font-weight: 800;"><%= i %></a>
+							<% } else{ %>
+								<a href="/board?pageno=<%= i %>"><%= i %></a>
+							<% } %>
+                        </span>
+                    <% } %>
+                </div>
+                <% if (pagination.pageNo != pagination.totalPage){ %>
+                    <div class="next-button"><a href="/board?pageno=<%= pagination.pageNo+1%>"> &nbsp;이후&nbsp;</a></div>
+                <% }%>
+				<% if (pagination.curSet < pagination.totalSet){ %>
+                    <div class="next-set-button"><a href="/board?pageno=<%= pagination.endPage+1%>">&nbsp;&gt;&gt;</a></div>
+                <% }%>
+            </div>
+            <script src="script.js"></script>
+        </div>
+    </section>
+</body>

@@ -1,0 +1,92 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/boardPost.css">
+
+<!-- SECTION -->
+<section>
+    <div class="board-post-section">
+        <div class="post-section">
+            <div class="post-category-box">
+                <ul class="post-category">
+                    <li>
+                        <span>
+                            <a href="/gather">밥모임</a>
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <!-- 글 정보 받아서 해당 글 카테고리 목록으로 이동 -->
+                            <a href="javascript:void(0)">카테고리</a>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="post-title">
+                <!-- 글 제목 불러오기 -->
+                <%= data.name %>
+            </div>
+            <div class="post-info-box">
+                <ul class="post-info-first">
+                    <li class="writer-name">
+                        <!-- 작성자 이름 불러오기 -->
+                        작성자
+                        <%= data.leader_id %>
+                    </li>
+                    <li class="write-date">
+                        게시일
+                        <!-- 작성일 불러오기 -->
+                        <%= data.createdAt.toISOString().slice(0,10) %>
+                    </li>
+                    <li class="write-date">
+                        마감일
+                        <!-- deadline 또는 due date -->
+                        <!-- 작성일 불러오기 -->
+                        <%= data.deadline.toISOString().slice(0,10) %>
+                    </li>
+                </ul>
+                <ul class="post-info-second">
+                    <li class="post-views">
+                        조회
+                        <span>
+                            <!-- 조회수 column만들기 -->
+                            data.viewCount %>
+                        </span>
+                    </li>
+                    <li class="post-views">
+                        총인원수
+                        <span>
+                            <!-- 조회수 column만들기 -->
+                            <%= data.maximumHeadCount %>
+                        </span>
+                    </li>
+                    <li class="post-views">
+                        현재인원수
+                        <span>
+                            <!-- 조회수 column만들기 -->
+                            <%= data.currentHeadCount %>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="post-content">
+                1) 총인원<br>2) 현재인원<br> 3) 지역<br>4) 탐방할 맛집<br>
+                <!-- 글 내용 불러오기 -->
+                <%= data.description %>
+            </div>
+            <!-- 추천, 스크랩하기 -->
+            <div class="upscrap-box">
+                <button class="up-bt">
+                    👍<br>
+                    같이먹어요
+                    <!-- 로그인 상태일 때 버튼 누르면 추천, 
+                         비 로그인 상태면 로그인 어쩌구 창 띄우기 -->
+                </button>
+                <button class="scrap-bt">
+                    ⭐<br>
+                    목록
+                    <!-- 로그인 상태일 때 버튼 누르면 스크랩, 
+                         비 로그인 상태면 로그인 어쩌구 창 띄우기 -->
+                </button>
+            </div>
+        </div>
+    </div>
+</section>

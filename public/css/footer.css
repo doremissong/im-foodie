@@ -1,0 +1,26 @@
+/*FOOTER*/
+footer {
+    border-top: 1px solid #fef0e699;
+    background-color: #fdf8f6;
+}
+
+footer .content {
+    height: 100px;
+}
+
+.go-notice {
+    padding: 18px 0px 15px 10px;
+    font-size: 14px;
+}
+
+.go-notice a {
+    width: 300px;
+    padding-right: 5px;
+}
+
+
+.footer-text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-left: 10px;
+    font-size: 12px;
+}

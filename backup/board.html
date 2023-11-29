@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김밥집</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../images/favicon.png">
+
+    <!-- Style Reset -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+
+    <!-- Google APIs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+  
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../public/css/common.css">
+    <link rel="stylesheet" href="../public/css/header.css">
+    <link rel="stylesheet" href="../public/css/footer.css">
+    <link rel="stylesheet" href="../public/css/board.css">
+
+    <!-- Script -->
+    <!-- HTML include(Jquery) -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">   
+    $(document).ready( function() {
+        $("#header").load("../backup/header.html");  // 원하는 파일 경로를 삽입하면 된다
+        $("#footer").load("../backup/footer.html");  // 추가 인클루드를 원할 경우 이런식으로 추가하면 된다
+    });
+    </script>
+    <script src="../js/data.js"></script>
+    
+</head>
+<body>
+    <!-- HEADER -->
+    <header id="header"></header>
+
+    <!-- SECTION -->
+	<!-- 
+		DB에서 등록된 게시판의 게시글을 최신순으로 게시글번호 가져와서 배열에 처음부터 담기(배열1번=제일최신글)
+		-> 20개 단위로 끊어서 1페이지부터 나열,  
+		-> 게시글은 게시글번호를 담은 a링크로 연결
+
+		가져온 글 총 개수 a, 현재 글 배열번호 i(0시작) (최신순), if문 l=0 l<20 l++ i=px20-20 i++
+		a 나누기 20 해서 몫+1 = 페이지수
+		현재페이지=p
+		1~20 1페이지 1x20-20 
+		21~40 2페이지 현재 페이지(2)x20-20=i 
+		41~60 3페이지
+		61~80 4페이지 ... 
+
+		자바스크립트로 if 문 이용해서 html 출력
+	-->
+    <section>
+        <div class="board-section">
+            <div class="board-list">
+              	<div class="board-main">
+                	<a href="../html/board.html">전체게시판</a>
+              	</div>
+				<div class="board-sub">
+					<ul class="board-sub-list">
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">맛집게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">자랑게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">꿀팁게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">자유게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">비추게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">홍보게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">나눔게시판</a>
+						</li>
+						<li class="board-sub-name">
+							<a href="javascript:void(0)">밥친구게시판</a>
+						</li>
+					</ul>
+				</div>
+            </div>
+			<div class="write-box">
+				<a href="../static/html/board-write.html">
+					<button class="write-button">
+						글쓰기
+					</button>
+				</a>
+			</div>
+			<ul class="post-index">
+				<li>
+					<div class="post-standard">
+						<p class="post-number">번호</p>
+						<p class="post-board">게시판</p>
+						<p class="post-title">제목</p>
+						<p class="post-writer">글쓴이</p>
+						<p class="post-date">작성일</p>
+						<p class="post-view">조회수</p>
+					</div>
+				</li>
+			</ul>
+            <ul class="post-list">
+                <!-- <li class="post">
+                  	<div class="post-container">
+                    	<p class="post-number">번호</p>
+						<p class="post-board">게시판</p>
+						<p class="post-title">제목</p>
+						<p class="post-writer">글쓴이</p>
+						<p class="post-date">작성일</p>
+						<p class="post-view">조회수</p>
+                  	</div>
+                </li> -->
+            </ul>
+            <div class="pagination-container">
+                <div class="prev-button">&lt; 이전 </div>
+                <div class="number-button-wrapper"><span class="number-button"> 1 </span></div>
+                <div class="next-button"> 이후 &gt;</div>
+            </div>
+            <script src="script.js"></script>
+        </div>
+    </section>
+    <script src="../static/js/pagination.js"></script>
+    
+    <!--FOOTER-->
+    <footer id="footer"></footer>
+</body>
+</html>

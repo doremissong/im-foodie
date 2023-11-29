@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김밥집</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/static/images/favicon.png">
+
+    <!-- Style Reset -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+
+    <!-- Google APIs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">  
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/signup.css">
+
+    <!-- Script -->
+    <!-- HTML iclude(Jquery) -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">   
+    $(document).ready( function() {
+        $("#header").load("/views/header.ejs");  // 원하는 파일 경로를 삽입하면 된다
+        $("#footer").load("/static/html/footer.html");  // 추가 인클루드를 원할 경우 이런식으로 추가하면 된다
+    });
+    </script>
+
+</head>
+<body>
+    <!-- HEADER -->
+    <header id="header"></header>
+
+    <!-- SECTION -->
+    <section class="sign-up">
+        <div class="content">
+            <div class="up-text">
+                <span class="material-icons">badge</span>
+                <a>회원가입 정보 입력하기</a>
+            </div>
+                <form name="signup" action="/auth/signup" method="POST">
+                    <table class="up-form">
+                        <tbody>
+                            <tr class="row">
+                                <td class="t-text">아이디</td>
+                                <td class="t-box">
+                                    <input type="text" name="mem_id" placeholder="아이디" maxlength='16' value="" required>
+                                    <div class="t-box-text">아이디: 4~16자 사이의 영문, 숫자만 사용 가능합니다.</div>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="t-text">비밀번호</td>
+                                <td class="t-box">
+                                    <input type="password" name="password" placeholder="비밀번호" maxlength='20' value="" required>
+                                    <div class="t-box-text">비밀번호: 6~20자 사이의 영문과 숫자만 사용 가능합니다.</div>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="t-text">이름</td>
+                                <td class="t-box">
+                                    <input type="text" name="name" placeholder="이름" value="" required>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="t-text">이메일</td>
+                                <td class="t-box">
+                                    <input type="email" name="email" placeholder="이메일" value="" required>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="t-text">연락처</td>
+                                <td class="t-box">
+                                    <input type="tel" name="tel" placeholder="연락처" pattern="[0-9]{11}" value="" required>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="t-text">주소</td>
+                                <td class="t-box">
+                                    <input type="text" name="address" placeholder="주소" value="" required>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="t-text">생년월일</td>
+                                <td class="t-box">
+                                    <input type="text" name="birthdate" placeholder="생년월일" pattern="[0-9]{6}" value="" required>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="t-text">프로필 이미지</td>
+                                <td class="t-box">
+                                    <input type="url" name="profile_image" placeholder="프로필 이미지 주소" value="" required>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="t-text">이용약관 동의 <a href="javascript:void(0)">보기</a></td>
+                                <td class="t-box">
+                                    <label><input type="radio" name="tos_flag" value="1">동의</label>
+                                    <label><input type="radio" name="tos_flag" value="0">비동의</label>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="t-text">개인정보 처리방침 동의 <a href="javascript:void(0)">보기</a></td>
+                                <td class="t-box">
+                                    <label><input type="radio" name="pip_flag" value="1">동의</label>
+                                    <label><input type="radio" name="pip_flag" value="0">비동의</label>
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <td class="t-text">이메일 수신 동의</td>
+                                <td class="t-box">
+                                    <label><input type="radio" name="notification_flag" value="1">동의</label>
+                                    <label><input type="radio" name="notification_flag" value="0">비동의</label>
+                                    <div class="t-box-text">이메일로 정보 알림을 받으실 수 있습니다.</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="button">
+                        <input type="submit" name="submit" value="가입하기">
+                        <a href="/">취소</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!--FOOTER-->
+    <footer id="footer"></footer>
+</body>
+</html>

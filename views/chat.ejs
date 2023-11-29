@@ -1,0 +1,34 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/board.css">
+
+<!-- SECTION -->
+<section>
+    <div class="board-section">
+        <div class="board-list">
+            <div class="board-main">
+                모임이름
+            </div>
+        </div>
+    </div>
+    <div class="container">
+
+            <h1 id="chat-head">CHAT</h1>
+            <div id="info">
+                <table>
+                    <tr>
+                        <th><img src="/images/person.png" alt="현재 접속 인원: " style="margin: 3px; width: 15px;height: 15px;"></th>
+                        <th><strong id="count"></strong></th>
+                    </tr>
+                </table>
+            </div>
+            <div id="chat"></div>
+            <form id="chatForm" method = "POST">
+                <input id="chat-input" type="text" required>
+                <input id="chat-mem-id" value="user.mem_id" hidden>
+                <input id="chat-gathering-id" value="roomId" hidden>
+                <input type="submit" class="button" value="Send">
+            </form>
+            <script type="text/javascript" src="/js/testChat.js"></script>
+
+    </div>
+</section>

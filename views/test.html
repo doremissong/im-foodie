@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        input[type='date']::before {
+  content: attr(data-placeholder);
+  width: 100%;
+}
+
+input[type='date']:focus::before,
+input[type='date']:valid::before {
+  display: none;
+}
+    </style>
+</head>
+<body>
+    <input
+  type="date"
+  data-placeholder="날짜 선택"
+  required
+  aria-required="true"
+  value={startDateValue}
+  className={styles.selectDay}
+  onChange={StartDateValueHandler}
+></input>
+</body>
+</html>

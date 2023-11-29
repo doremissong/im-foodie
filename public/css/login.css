@@ -1,0 +1,94 @@
+/**/
+.in-text {
+    height: 40px;
+    padding: 30px 0px 0px 5px;
+    border-bottom: 1px solid #e6e6e6;
+    display: flex;
+}
+
+.in-text a {
+    margin: 2px 0px 0px 10px;
+}
+
+
+/*IN-CONTENT*/
+.in-content {
+    width: 950px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+}
+
+.in-form {
+    width: 400px;
+    padding: 30px 20px;
+}
+
+.in-form .id-login {
+    width: 150px;
+    height: 50px;
+    font-weight: bold;
+    font-size: 23px;
+    margin: 0px 0px 0px 10px;
+    border:1px solid #c8c8c8;
+    border-bottom: none;
+    display:table-cell;
+    vertical-align:middle;
+    text-align: center;
+}
+
+.signin {
+    padding-top: 20px; 
+}
+
+.in-form input[type="password"],
+.in-form input[type="text"] {
+    width: 100%;
+    padding: 20px;
+    border: none;
+    border-bottom: 1px solid #dddddd;
+    margin-top: 20px;
+    box-sizing:border-box;
+}
+
+.in-form input[name="login"] {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #535b63;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: bold;
+    color: #ffffff;
+}	
+
+.option {
+    display: flex;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.find-id {
+    margin: auto;
+}
+
+.find-pw {
+    margin: auto;
+}
+
+.go-up {
+    margin: auto;
+}
+
+
+.banner {
+    padding: 40px 0px;
+    margin-left: 50px;
+}
+
+.in-banner {
+    width: 460px;
+    height: 460px;
+    border: 1px solid lightgrey;
+}

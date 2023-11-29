@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김밥집</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/static/images/favicon.png">
+
+    <!-- Style Reset -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+
+    <!-- Google APIs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+  
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/board-write.css">
+
+    <!-- Script -->
+    <!-- HTML include(Jquery) -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">   
+    $(document).ready( function() {
+        $("#header").load("/views/header.ejs");  // 원하는 파일 경로를 삽입하면 된다
+        $("#footer").load("/static/html/footer.html");  // 추가 인클루드를 원할 경우 이런식으로 추가하면 된다
+    });
+    </script>
+
+<script>
+    function ok() {
+        alert('등록되었습니다.')
+    }
+</script>
+    
+</head>
+<body>
+    <!-- HEADER -->
+    <header id="header"></header>
+
+    <!-- SECTION -->
+    <!-- 
+        게시글 작성->등록버튼 클릭->"등록하시겠습니까?"
+        -> 확인 -> 제목, 내용, 작성자, 등록시간 DB에 넘기기 -> DB에 등록 -> DB에 등록된 게시글번호 가져오기 -> 게시글번호 board-post.html로 넘기기
+        -> borad-post.html에서 받은 게시글번호 정보로 제목, 내용, 작성자, 등록시간 등 가져오기
+
+        -> 확인 -> 글목록으로
+
+        -> 취소
+     -->
+    <section>
+        <div class="board-write-section">
+            <div class="board-write-wrap">
+                <div class="board-write-main">
+                    게시판 글쓰기
+                </div>
+                <form name="board-write-form" method="post">
+                    <div class="board-form-box">
+                        <div class="board-write-box">
+                            <div class="board-write-category">
+                                <select name="category" required>
+                                    <option value="">카테고리 선택</option>
+                                    <option value="맛집">맛집</option>
+                                    <option value="자랑">자랑</option>
+                                    <option value="꿀팁">꿀팁</option>
+                                    <option value="자유">자유</option>
+                                    <option value="비추">비추</option>
+                                    <option value="홍보">홍보</option>
+                                    <option value="나눔">나눔</option>
+                                    <option value="밥친구">밥친구</option>
+                                </select>
+                            </div>
+                            <div class="board-write-title">
+                                <input type="text" name="title" placeholder="제목" value="" required />
+                            </div>
+                        </div>
+                        <div class="board-write-content">
+                            <textarea name="content" placeholder="본문 내용을 입력하세요." required></textarea>
+                        </div>
+                        <div class="button">
+                            <!-- <script>
+                                function btn(){
+                                    if(window.confirm('등록하시겠습니까?')){
+                                        document.forms['board-write-form'].submit();
+                                    }
+                                    else{
+                                        
+                                    }
+                                }
+                                </script> -->
+    
+                            <button type="submit" name="submit">등록하기</button>
+                            <!-- <button onclick="javascript:btn()">등록하기</button> -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!--FOOTER-->
+    <footer id="footer"></footer>
+</body>
+</html>
