@@ -62,7 +62,7 @@ app.get('/changePw', (req, res) => {
 })
 
 
-
+// board
 app.get('/board', (req, res) => {
   res.render('board');
 })
@@ -71,8 +71,8 @@ app.get('/board/write', (req, res) => {
   res.render('boardWrite');
 })
 
-app.get('/board/write/edit', (req, res) => {
-  res.render('boardEdit');
+app.get('/board/update', (req, res) => {
+  res.render('boardUpdate');
 })
 
 app.get('/board/post', (req, res) => {
@@ -82,19 +82,11 @@ app.get('/board/post', (req, res) => {
 
 // gather
 app.get('/gather', (req, res) => {
-  res.render('gatherMain');
+  res.render('gather');
 })
 
 app.get('/gather/recruiting', (req, res) => {
   res.render('gatherRecruiting');
-})
-
-app.get('/chat', (req, res) => {
-  res.render('chat');
-})
-
-app.get('/chat/list', (req, res) => {
-  res.render('chatList');
 })
 
 app.get('/gather/recruiting', (req, res) => {
@@ -109,10 +101,24 @@ app.get('/gather/create', (req, res) => {
   res.render('gatherCreate');
 })
 
+app.get('/gather/mine', (req, res) => {
+  res.render('gatherMine');
+})
+
+// gather chat
+app.get('/gather/chat/list', (req, res) => {
+  res.render('chatList');
+})
+
+
+app.get('/gather/chat/room', (req, res) => {
+  res.render('chat');
+})
+
 
 // notice
 app.get('/notice', (req, res) => {
-  res.render('noticeList');
+  res.render('notice');
 })
 
 app.get('/notice/update', (req, res) => {
@@ -125,4 +131,14 @@ app.get('/notice/view', (req, res) => {
 
 app.get('/notice/write', (req, res) => {
   res.render('noticeWrite');
+})
+
+
+// recipe
+app.get('/recipe', (req, res) => {
+  res.render('recipe');
+})
+
+app.get('/recipe/list', (req, res) => {
+  res.render('recipeList');
 })
