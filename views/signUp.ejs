@@ -12,71 +12,78 @@
                 <table class="up-form">
                     <tbody>
                         <tr class="row">
-                            <td class="t-text">아이디</td>
+                            <td class="t-text">아이디*</td>
                             <td class="t-box">
                                 <input type="text" name="mem_id" placeholder="아이디" maxlength='16' value="" required>
                                 <div class="t-box-text">아이디: 4~16자 사이의 영문, 숫자만 사용 가능합니다.</div>
                             </td>
                         </tr>
                         <tr class="row">
-                            <td class="t-text">비밀번호</td>
+                            <td class="t-text">비밀번호*</td>
                             <td class="t-box">
                                 <input type="password" name="password" placeholder="비밀번호" maxlength='20' value="" required>
                                 <div class="t-box-text">비밀번호: 6~20자 사이의 영문과 숫자만 사용 가능합니다.</div>
                             </td>
                         </tr>
                         <tr class="row">
-                            <td class="t-text">이름</td>
+                            <td class="t-text">이름*</td>
                             <td class="t-box">
                                 <input type="text" name="name" placeholder="이름" value="" required>
                             </td>
                         </tr>
                         <tr class="row">
-                            <td class="t-text">이메일</td>
+                            <td class="t-text">이메일*</td>
                             <td class="t-box">
                                 <input type="email" name="email" placeholder="이메일" value="" required>
                             </td>
                         </tr>
                         <tr class="row">
-                            <td class="t-text">연락처</td>
+                            <td class="t-text">연락처*</td>
                             <td class="t-box">
                                 <input type="tel" name="tel" placeholder="연락처" pattern="[0-9]{11}" value="" required>
                             </td>
                         </tr>
                         <tr class="row">
-                            <td class="t-text">주소</td>
+                            <td class="t-text">주소*</td>
                             <td class="t-box">
-                                <input type="text" name="address" placeholder="주소" value="" required>
+                                <div class="gather-region">
+                                    <div class="region_box">
+                                        <select name="city" id="city1"></select>
+                                        <select name="district" id="district1"></select>
+                                        <select name="neighborhood" id="neighborhood1"></select>
+                                    </div>
+                                </div>
+                                <div class="t-box-text">ㅎㅎ 노가다... </div>
                             </td>
                         </tr>
                         <tr class="row">
-                            <td class="t-text">생년월일</td>
+                            <td class="t-text">생년월일*</td>
                             <td class="t-box">
-                                <input type="text" name="birthdate" placeholder="생년월일" pattern="[0-9]{6}" value="" required>
+                                <input type="text" name="birthdate" placeholder="'-'없이 YYMMDD" pattern="[0-9]{6}" value="" required>
                             </td>
                         </tr>
                         <tr class="row">
                             <td class="t-text">프로필 이미지</td>
                             <td class="t-box">
-                                <input type="url" name="profile_image" placeholder="프로필 이미지 주소" value="" required>
+                                <input type="url" name="profile_image" placeholder="프로필 이미지 주소" value="">
                             </td>
                         </tr>
                         <tr class="row">
-                            <td class="t-text">이용약관 동의 <a href="javascript:void(0)">보기</a></td>
+                            <td class="t-text">이용약관 동의* <a href="javascript:void(0)">보기</a></td>
                             <td class="t-box">
                                 <label><input type="radio" name="tos_flag" value="1">동의</label>
                                 <label><input type="radio" name="tos_flag" value="0">비동의</label>
                             </td>
                         </tr>
                         <tr class="row">
-                            <td class="t-text">개인정보 처리방침 동의 <a href="javascript:void(0)">보기</a></td>
+                            <td class="t-text">개인정보 처리방침 동의* <a href="javascript:void(0)">보기</a></td>
                             <td class="t-box">
                                 <label><input type="radio" name="pip_flag" value="1">동의</label>
                                 <label><input type="radio" name="pip_flag" value="0">비동의</label>
                             </td>
                         </tr>
                         <tr class="row">
-                            <td class="t-text">이메일 수신 동의</td>
+                            <td class="t-text">이메일 수신 동의*</td>
                             <td class="t-box">
                                 <label><input type="radio" name="notification_flag" value="1">동의</label>
                                 <label><input type="radio" name="notification_flag" value="0">비동의</label>

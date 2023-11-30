@@ -1,0 +1,23 @@
+/* SECTION */
+.recipeList-section {
+    width: 950px;
+    margin: auto;
+    position: relative;
+
+    border: 1px solid black;
+}
+
+.recipeList-list {
+	width: 930px;
+	padding: 40px 0px 15px 10px;
+	/* background-color: azure; */
+}
+
+.recipeList-main {
+  	font-size: 20pt;
+	padding: 0px 0px 10px 20px;
+  	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-color: #e3d7cf;
+	/* background-color: skyblue; */
+}
