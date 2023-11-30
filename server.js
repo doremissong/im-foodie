@@ -48,7 +48,7 @@ app.get('/findId', (req, res) => {
 })
 
 app.get('/showId', (req, res) => {
-  res.render('showId');
+  res.render('showId(n)');
 })
 
 
@@ -64,7 +64,7 @@ app.get('/changePw', (req, res) => {
 
 // board
 app.get('/board', (req, res) => {
-  res.render('board');
+  res.render('board(n)');
 })
 
 app.get('/board/write', (req, res) => {
@@ -76,7 +76,7 @@ app.get('/board/update', (req, res) => {
 })
 
 app.get('/board/post', (req, res) => {
-  res.render('boardPost');
+  res.render('boardPost(n)');
 })
 
 
@@ -112,13 +112,13 @@ app.get('/gather/chat/list', (req, res) => {
 
 
 app.get('/gather/chat/room', (req, res) => {
-  res.render('chat');
+  res.render('chat(n)');
 })
 
 
 // notice
 app.get('/notice', (req, res) => {
-  res.render('notice');
+  res.render('notice(n)');
 })
 
 app.get('/notice/update', (req, res) => {
@@ -126,7 +126,7 @@ app.get('/notice/update', (req, res) => {
 })
 
 app.get('/notice/view', (req, res) => {
-  res.render('noticeView');
+  res.render('noticeView(n)');
 })
 
 app.get('/notice/write', (req, res) => {

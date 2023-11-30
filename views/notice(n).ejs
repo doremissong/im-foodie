@@ -1,0 +1,68 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/notice.css">
+
+<!--SECTION-->
+<section>
+    <div class="board-section">
+		<div class="board-list">
+
+			<!-- 글작성 버튼 관리자만 보이게 하기  -->
+			<div class="write-box">
+				<a href="/notice/write">
+					<button class="write-button">
+						글쓰기
+					</button>
+				</a>
+				<!-- <% if(typeof operator != "undefined"){ %> -->
+					<!-- 로그인 상태일 시 -->
+				<!-- <% } %> -->
+			</div>
+		</div>
+		<ul class="post-index">
+			<li>
+				<div class="post-standard">
+					<p class="post-number">번호</p>
+					<p class="post-board">분류</p>
+					<p class="post-title">제목</p>
+					<p class="post-writer">관리자</p>
+					<p class="post-date">등록일</p>
+					<p class="post-view">조회수</p>
+				</div>
+			</li>
+		</ul>
+
+			<!-- <ul class="post-list"> -->
+			<div class="non-notice">
+				<div class="non-notice-content">
+					아직 작성된 공지사항이 없어요 :D
+				</div>
+			</div>
+			<!-- </ul> -->
+
+			<ul class="post-list">
+
+					<li class="post">
+						<div class="post-container">
+							<p class="post-number">1</p>
+							<p class="post-board">
+
+									[일반] 
+
+									[중요]
+
+									[긴급]
+
+							</p>
+							<p class="post-title"><a href="/notice/view">title</a></p>
+							<p class="post-writer">관리자</p>
+							<p class="post-date">date</p>
+							<p class="post-view">count</p>
+						</div>
+					</li>
+
+			</ul>
+			<!-- ⚠️ 아무글도 없으면? -->
+			
+
+    </div>
+</section>

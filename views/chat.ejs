@@ -1,17 +1,18 @@
+
 <!-- STYLESHEET -->
 <link rel="stylesheet" href="/css/board.css">
 
-<!-- SECTION -->
+<!--SECTION-->
 <section>
     <div class="board-section">
         <div class="board-list">
             <div class="board-main">
-                모임이름
+                <%= gatherName %>
             </div>
         </div>
     </div>
     <div class="container">
-
+        <% if(user.mem_id) { %>
             <h1 id="chat-head">CHAT</h1>
             <div id="info">
                 <table>
@@ -24,11 +25,11 @@
             <div id="chat"></div>
             <form id="chatForm" method = "POST">
                 <input id="chat-input" type="text" required>
-                <input id="chat-mem-id" value="user.mem_id" hidden>
-                <input id="chat-gathering-id" value="roomId" hidden>
+                <input id="chat-mem-id" value="<%= user.mem_id %>" hidden>
+                <input id="chat-gathering-id" value="<%= roomId %>" hidden>
                 <input type="submit" class="button" value="Send">
             </form>
             <script type="text/javascript" src="/js/testChat.js"></script>
-
+        <% } %>
     </div>
 </section>

@@ -1,310 +1,414 @@
 <!-- STYLESHEET -->
 <link rel="stylesheet" href="/css/boardPost.css">
 
-<!-- JAVASCRIPT
-<script src="/js/boardPost.js"></script> -->
+<!-- 어떻게 boardPost.js로 따로 빼야하나봐 -->
+<script>
+    // function comPageClick(page){
+    //     // fetch 함수에 현재 페이지 값 전송
+    //     fetchCommentData(page);
+    // }
+</script>
 
 <!-- SECTION -->
 <section>
-    
     <div class="section-box">
-    <!-- 왼쪽 사이드바 -->
-    <div class="sidebar-section">
-        <div class="sidebar-box-left">
-            <a>▲</a>
-            <a>▼</a>
-            <a>🗨️</a>
+        <!-- 왼쪽 사이드바 -->
+        <div class="sidebar-section">
+            <div class="sidebar-box-left">
+                <a>▲</a>
+                <a>▼</a>
+                <a>🗨️</a>
+            </div>
         </div>
-    </div>
 
-    <div class="board-post-section">
-        <div class="post-section">
-            <div class="post-category-box">
-                <ul class="post-category">
-                    <li>
-                        <span>
-                            <a href="/board">게시판</a>
-                        </span>
-                    </li>
-                    <li>
-                        <span>
-                            <!-- 글 정보 받아서 해당 글 카테고리 목록으로 이동 -->
-                            <a href="javascript:void(0)">카테고리</a>
-                        </span>
-                    </li>
-                </ul>
-            </div>
-            <div class="post-title">
-                <!-- 글 제목 불러오기 -->
-                글 제목~~ 글자 수 제한은?
-            </div>
-            <div class="post-info-box">
-                <ul class="post-info-first">
-                    <li class="writer-name">
-                        <!-- 작성자 이름 불러오기 -->
-                        작성자
-                    </li>
-                    <li class="write-date">
-                        <!-- 작성일 불러오기 -->
-                        2023-01-23 20:23
-                    </li>
-                </ul>
-                <ul class="post-info-second">
-                    <li class="post-views">
-                        조회
-                        <span>
-                            <!-- 조회수 불러오기 -->
-                            123
-                        </span>
-                    </li>
-                    <li class="post-ups">
-                        추천 
-                        <span>
-                            <!-- 추천수 불러오기 -->
-                            23
-                        </span>
-                    </li>
-                    <li class="post-com-num">
-                        댓글
-                        <!-- 숫자 클릭 시 댓글 창 부분으로 이동 -->
-                        <a href="#comment">
-                            <span>
-                                <!-- 댓글수 불러오기 -->
-                                10
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="post-content">
-                <!-- 글 내용 불러오기 -->
-                성실하고 예민한 청년 시절<br>
-                고흐는 1853년, 네덜란드 북쪽에 있는 작은 마을인 준데르트에서 태어났어. 아버지는 목사였는데, 가정 형편이 넉넉하지 못해 15세에 학교를 그만두고 구필화랑 헤이그 지점에서 일을 하게 됐어. 처음에 고흐는 아주 성실한 청년으로 인정받았어. 하지만 런던과 파리 지점에서 일할 때에는 일에 소홀하고 손님들과 시비가 붙는 등 그의 강하고 예민한 성격 때문에 사회생활이 평탄하지 않았어.
-                <br>
-                방황 끝에 걷게 된 화가의 길<br>
-                직장에서 쫓겨난 고흐는 아버지처럼 목회자4)가 되기로 결심하고 목회자 자격 시험 공부를 했어. 하지만 1년이 지나도 큰 성과가 없었어. 그는 공부를 그만두고 전도사 훈련을 받으러 벨기에의 탄광촌 마을 보리나주로 갔지. 그곳에서 가난하고 비참한 생활을 몸소 체험하며 열심히 전도하지만 교회에서 나온 감찰관은 초라한 행색의 고흐를 해고했어. 고흐는 좌절했지. 그때 동생 테오5)의 권유로 그림을 그리기 시작했어. 고흐는 어렸을 때부터 그림을 곧잘 그렸거든. 고흐 역시 다른 일을 할 때보다 그림을 그릴 때 마음이 편안했지. 그렇게 27세의 늦은 나이에 화가의 길을 걷게 된 거야.
-                <br>
-                파리에서의 생활과 그림들<br>
-                화랑 판매원 시절, 밀레의 그림에 감동한 고흐는 <감자 먹는 사람들> 같이 서민들의 가난한 삶을 어두운 색조로 그리기 시작했어. 이후 인상주의6) 화가들의 그림을 접하면서 차츰 그림색도 밝아지고, 대담한 색과 가는 선, 점 모양의 특징을 지닌 붓놀림을 많이 이용해 그렸지. 또한 일본에서 유행한 서민의 생활 모습을 목판화로 나타낸 우키요에에 큰 관심을 갖고 사 모으거나 이를 유화 작품으로 옮겨 그리기도 했어.
-                <br>
-                아를에서의 생활과 그림들<br>
-                복잡하고 어려운 도시 생활에 지친 고흐는 남쪽 지방인 아를로 이사했어. 새로 이사한 집이 마음에 들었던 고흐는 방의 모습을 그림으로 그렸는데, 바로 <고흐의 방>이야. 아를에서 고흐는 시골 풍경이 주는 자연의 색깔에 매료되어 밤새도록 그림을 그렸다고 해. 이때 우리가 잘 아는 고흐만의 그림 스타일인 강렬한 색채의 대비와 거친 붓놀림의 조화를 완성했지. 고흐는 그가 머물렀던 노란 집에 예술가들과 함께 작업하는 공동체를 만들길 꿈꿨어. 고흐의 초대에 고갱만이 와서 함께 지냈는데, 둘은 예술에 대한 생각이 많이 달랐지. 갈등이 점점 심해지던 어느 날, 고흐가 자신의 귀를 자르고 말았어. 이 사건으로 고갱은 떠나 버리고 동네 사람들은 그를 ‘빨강머리 미치광이’라며 피했어.
-                <br>
-                비극적인 짧은 생을 마치고 인정받은 화가<br>
-                고흐는 스스로 목숨을 끊으며 37년이라는 짧은 생을 마감했어. 늦은 나이에 그림을 시작했지만 10년간 800여 점의 유화와 1,000여 점이 넘는 스케치를 그린 열정적인 화가였지. 안타깝게도 살아있는 동안에는 단 한 점의 그림만 팔렸어. 고흐는 세상을 떠난 뒤에 유명한 화가가 되었단다. 고흐가 세상을 떠난 지 11년 뒤인 1901년에 파리에서 열린 전시회에서 고흐의 그림이 큰 인기를 끌었어. 그리고 1914년, 테오의 부인이 고흐와 테오가 15년간 주고받은 편지를 책으로 내면서 세상에 더욱 알려지게 되었지. 그의 작품은 현재까지 세상에서 가장 비싼 그림들 사이에 순위가 매겨지고 있어. 그의 강렬한 그림들은 야수파, 초기 추상화, 표현주의에 큰 영향을 끼쳤단다.
-                <br>
-                [네이버 지식백과] 고흐 (만화로 보는 교과서 인물, 황시원, 김덕영, 이서윤)
-            </div>
-        
-            <!-- 추천, 스크랩하기 -->
-            <% if(typeof user != "undefined"){ %>
-                <!-- 로그인 상태일 시 -->
-                <div class="upscrap-box">
-                    <button class="up-bt" onclick="alert('추천되었습니다')">
-                        👍<br>
-                        추천
-                    </button>
-                    <button class="scrap-bt" onclick="alert('스크랩되었습니다')">
-                        ⭐<br>
-                        스크랩
-                    </button>
-                </div>
-            <% } else{ %>
-                <!-- 비로그인 -->
-                <div class="upscrap-box">
-                    <button class="up-bt" onclick="alert('로그인 후 추천 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
-                        👍<br>
-                        추천
-                    </button>
-                    <button class="scrap-bt" onclick="alert('로그인 후 스크랩 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
-                        ⭐<br>
-                        스크랩
-                    </button>
-                </div>
-            <% } %>
-
-
-            <!-- <div class="upscrap-box">
-                <button class="up-bt">
-                    👍<br>
-                    추천
-                </button>
-                <button class="scrap-bt">
-                    ⭐<br>
-                    스크랩
-                    </button>
-                </div> -->
-
-            <!-- 글 하단 -->
-            <div class="bottom-nav">
-                <div class="goback">
-                    <a href="/board">🔙 목록으로</a>
-                </div>
-
-                <!-- 로그인한 유저가 글 작성자일때 보이기 -->
-                <div class="editbox">
-                    <ul>
+        <div class="board-post-section">
+            <div class="post-section">
+                <div class="post-category-box">
+                    <ul class="post-category">
                         <li>
                             <span>
-                                <a href="/board/update">수정</a>
+                                <a href="/board">게시판</a>
                             </span>
                         </li>
                         <li>
                             <span>
-                                <a>삭제</a>
+                                <!-- 글 정보 받아서 해당 글 카테고리 목록으로 이동 -->
+                                <a href="javascript:void(0)">카테고리<%= post.category %> </a>
                             </span>
                         </li>
                     </ul>
                 </div>
+                <div class="post-title">
+                    <!-- 글 제목 불러오기 -->
+                    <%= post.title %>
+                </div>
+                <div class="post-info-box">
+                    <ul class="post-info-first">
+                        <li class="writer-name">
+                            <!-- 작성자 이름 불러오기 -->
+                            작성자
+                            <%= post.writer_id %>
+                        </li>
+                        <li class="write-date">
+                            <!-- 작성일 불러오기 -->
+                            <%= post.createdAt.toISOString().split('T')[0] %>
+                            <%= post.createdAt.toISOString().split('T')[1].slice(0,5) %>
+                        </li>
+                    </ul>
+                    <ul class="post-info-second">
+                        <li class="post-views">
+                            조회
+                            <span>
+                                <!-- 조회수 불러오기 -->
+                                <%= post.viewCount %>
+                            </span>
+                        </li>
+                        <li class="post-ups">
+                            추천 
+                            <span id="like">
+                                <!-- 위에 아이디 삭제 ⚠️⚠️⚠️추천수 불러오기 -->
+                                <%= likeInfo.likeCount %>
+                            </span>
+                        </li>
+                        <li class="post-com-num">
+                            댓글
+                            <!-- 숫자 클릭 시 댓글 창 부분으로 이동 -->
+                            <a href="#comment">
+                                <span>
+                                    <!-- 댓글수 불러오기 -->
+                                    <%= commentInfo.count %>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="post-content">
+                    <!-- 글 내용 불러오기 -->
+                    <%= post.content %>
+                </div>
                 
-            </div>
-
-        </div>
-
-        <!-- 댓글 -->
-        <div class="comment-section">
-            <a name="comment">
-                <div class="comment-view">
-                    <div class="comment-title">
-                        <!-- 괄호 안에 댓글수 표시 -->
-                        🗨️댓글(3)
-                        </div>
-                    <div class="comment-page">
-                        <!-- 댓글 페이지, 댓글이 20개 이상일 때 1,2... 페이지 나타나기. 아래는 예시 -->
-                        &lt; 1 2 3 4 &gt;
-                    </div>
-                </div>
-
-                <!-- 댓글 하나 화면 -->
-                <div class="comment-list">
-                    <div class="com-namentime">
-                        <div class="com-name">
-                            <!-- 댓글 작성자 이름 -->
-                            초코케이크
-                        </div>
-                        <div class="com-time">
-                            <!-- 댓글이 작성된 시간 -->
-                            (2023-10-18 19:23)
-                        </div>
-
-                        <!-- 글 열람 유저 = 댓글 작성자이면 보이기 -->
-                        <div class="com-editbox">
-                            <span>수정</span>
-                            <span>삭제</span>
-                        </div>
-
-                    </div>
-                    <div class="com-text">
-                        <!-- 댓글 내용 -->
-                        타임지가 선정한 10대 수퍼푸드 중 하나인 블루베리가 듬뿍 들어 간 초코케이크에요. 
-                        대부분 몸에 좋은 음식들은 입에 쓰다고들 하는데 블루베리는 맛까지 슈퍼하답니다. 
-                        달콤한 초코케이크에 콕콕 박힌 블루베리가 풍미를 더해줘요~
-                        [네이버 지식백과] 초코 블루베리 케이크 만드는 법 (이마트 MENU)
-                    </div>
-                </div>
-                <!-- 댓글 하나 화면 -->
-                <div class="comment-list">
-                    <div class="com-namentime">
-                        <div class="com-name">
-                            <!-- 댓글 작성자 이름 -->
-                            고구마케이크
-                        </div>
-                        <div class="com-time">
-                            <!-- 댓글이 작성된 시간 -->
-                            (2023-10-18 19:23)
-                        </div>
-
-                        <!-- 글 열람 유저 = 댓글 작성자이면 보이기 -->
-                        <div class="com-editbox">
-                            <span>수정</span>
-                            <span>삭제</span>
-                        </div>
-                    </div>
-                    <div class="com-text">
-                        <!-- 댓글 내용 -->
-                        부드럽고 달콤한 고구마와 담백한 생크림이 어우러진 포근한 생크림 케이크입니다!
-                    </div>
-                </div>
-                <!-- 댓글 하나 화면 -->
-                <div class="comment-list">
-                    <div class="com-namentime">
-                        <div class="com-name">
-                            <!-- 댓글 작성자 이름 -->
-                            치즈케이크
-                        </div>
-                        <div class="com-time">
-                            <!-- 댓글이 작성된 시간 -->
-                            (2023-10-18 19:23)
-                        </div>
-                    </div>
-                    <div class="com-text">
-                        <!-- 댓글 내용 -->
-                        뉴욕 스타일의 치즈케이크는 크림 치즈 특유의 살짝 톡 쏘는 진한 풍미와 달콤함을 지니고 있으며, 
-                        기호에 따라 바닐라나 레몬 조각을 곁들이기도 한다.
-                    </div>
-
-                    <div class="com-namentime">
-                        <div class="com-name">
-                            <!-- 댓글 작성자 이름 -->
-                            치즈케이크
-                        </div>
-                        <div class="com-time">
-                            <!-- 댓글이 작성된 시간 -->
-                            (2023-10-18 19:23)
-                        </div>
-                    </div>
-                    <div class="com-text">
-                        <!-- 댓글 내용 -->
-                        뉴욕 스타일의 치즈케이크는 크림 치즈 특유의 살짝 톡 쏘는 진한 풍미와 달콤함을 지니고 있으며, 
-                        기호에 따라 바닐라나 레몬 조각을 곁들이기도 한다.
-                    </div>
-                </div>
-
-                <!-- 댓글 달기 -->
+                <!-- 추천, 스크랩하기 -->
                 <% if(typeof user != "undefined"){ %>
                     <!-- 로그인 상태일 시 -->
-                    <div class="comment-write">
-                        <form class="comment-write-form" method="post">
-                            <div class="commenter">
-                                <!-- 유저 닉네임 -->
-                                <%= user.name %>
-                            </div>
-                            <div class="comment-write-section">
-                                <div class="write-comment">
-                                    <textarea name="content" placeholder="고운말 댓글 달기" required></textarea>
-                                </div>
-                                <div class="submit-button">
-                                    <button type="submit" name="submit">등록</button>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="upscrap-box">
+                        <button class="up-bt" onclick="alert('추천되었습니다')">
+                            👍<br>
+                            추천
+                        </button>
+                        <button class="scrap-bt" onclick="alert('스크랩되었습니다')">
+                            ⭐<br>
+                            스크랩
+                        </button>
+                        <button id="likeButton" name="login" value="좋아요" onClick="handleLikeButtonClick();">♡좋아요</button>
+                        <p id="likeState"> <%= likeInfo.isLiked %> </p>
                     </div>
                 <% } else{ %>
                     <!-- 비로그인 -->
-                    <div class="non-user-comment">
-                        <textarea onclick="confirm('여기서 확인 누르면 로그인 페이지로 갈 수 있게 하고시퍼ㅜㅜㅜ\n한시간 넘게 해도 안되는거 실화??');" placeholder="로그인하고 댓글을 달아보세요!" required></textarea>
+                    <div class="upscrap-box">
+                        <button class="up-bt" onclick="alert('로그인 후 추천 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
+                            👍<br>
+                            추천
+                        </button>
+                        <button class="scrap-bt" onclick="alert('로그인 후 스크랩 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
+                            ⭐<br>
+                            스크랩
+                        </button>
+                        <button name="login"  onClick="handleLikeButtonClick();">♡좋아요</button>
                     </div>
                 <% } %>
-
-                <!-- 하단 -->
-                <div class="box">
-                    <button onclick="location.href='/board'">글목록</button>
+    
+                <!-- 글 하단 -->
+                <div class="bottom-nav">
+                    <div class="goback">
+                        <a href="/board">🔙 목록으로</a>
+                    </div>
+    
+                    <!-- 로그인한 유저가 글 작성자일때 보이기 -->
+                    <div class="editbox">
+                        <ul>
+                            <li>
+                                <span>
+                                    <a>수정</a>
+                                </span>
+                            </li>
+                            <li>
+                                <span>
+                                    <a>삭제</a>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    
                 </div>
-            </a>
+            </div>
+            <!-- 댓글 -->
+            <div class="comment-section">
+                <a name="comment">
+                    <% if (commentInfo.dataList == ''){ %>
+                        <div class="comment-view">
+                            <div class="comment-title">
+                                <!-- 괄호 안에 댓글수 표시 -->
+                                🗨️댓글(<%= commentInfo.count %>)
+                                </div>
+                        </div>
+                        <div class="comment-list">
+                            <div class="comment-list">
+                                <div class class="com-namentime">
+                                    아직 댓글이 없어요!! 
+                                </div>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="comment-view">
+                            <div class="comment-title">
+                                <!-- 괄호 안에 댓글수 표시 -->
+                                🗨️댓글(<%= commentInfo.count %>)
+                                </div>
+                            <div class="comment-page">
+                                <!-- 댓글 페이지, 댓글이 20개 이상일 때 1,2... 페이지 나타나기. 아래는 예시 -->
+                                <% if(commentInfo.pagination.pageNo!=1){ %>
+                                    <a id="prev-a" href="javascript:void(0);" data-page="<%= commentInfo.pagination.pageNo-1 %>" onclick="comPageClick(this.dataset.page)" >&nbsp;&lt;&nbsp;</a>
+                                <% } %>
+                                <% for (var i = commentInfo.pagination.startPage; i < commentInfo.pagination.endPage + 1; i++){ %>
+                                        <% if (commentInfo.pagination.pageNo == i){ %> 
+                                            <a href="javascript:void(0);"class="number-button" data-page="<%= i %>" style="font-weight: 800;" onclick="comPageClick(this.dataset.page)">&nbsp;<%= i %>&nbsp;</a>
+                                        <% } else { %>
+                                            <a href="javascript:void(0);"class="number-button" data-page="<%= i %>" onclick="comPageClick(this.dataset.page)">&nbsp;<%= i %>&nbsp;</a>
+                                        <% } %>
+                                <% } %>
+                                <% if (commentInfo.pagination.pageNo != commentInfo.pagination.totalPage){ %>
+                                    <a id="next-a" href="javascript:void(0);" data-page="<%= commentInfo.pagination.startPage-1 %>" onclick="comPageClick(this.dataset.page)">&nbsp;&gt;&nbsp;</a>
+                                <% } %>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-list">
+                            <% commentInfo.dataList.reverse().forEach((data, index)=>{ %>
+                                <div class="com-namentime">
+                                    <div class="com-name">
+                                        <!-- 댓글 작성자 이름 -->
+                                        <%= data.mem_id %>
+                                    </div>
+                                    <div class="com-time">
+                                        <!-- 댓글이 작성된 시간 -->
+                                        (<%= data.createdAt.toISOString().split('T')[0] %>
+                                        <%= data.createdAt.toISOString().split('T')[1].slice(0,5) %>)
+                                    </div>
+
+                                    <!-- 글 열람 유저 = 댓글 작성자이면 보이기 -->
+                                    <div class="com-editbox">
+                                        <span>수정</span>
+                                        <span>삭제</span>
+                                    </div>
+                                    
+                                </div>
+                                <div class="com-text">
+                                    <!-- 댓글 내용 -->
+                                    <%= data.content %>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } %>
+                    <!-- 댓글 달기 -->
+                    <% if(typeof user != "undefined"){ %>
+                        <!-- 로그인 상태일 시 -->
+                        <div class="comment-write">
+                            <div class="comment-write-form">    
+                                <!--  ⚠️⚠️ 폼 태그 바꿈. 231109 -->
+                                <div class="commenter">
+                                    <!-- 유저 닉네임 -->
+                                    <%= user.mem_id %>
+                                </div>
+                                <form id="commentForm">
+                                    <div class="comment-write-section">
+                                        <div class="write-comment">
+                                            <textarea id="comment-textarea" name="content" placeholder="고운말 댓글 달기" required></textarea>
+                                        </div>
+                                        <div class="submit-button">
+                                            <button type="submit" name="submit">등록</button>
+                                        </div>
+                                    </div>
+                                </form> 
+                            </div>
+                        </div>
+                    <% } else{ %>
+                        <!-- 비로그인 -->
+                        <div class="non-user-comment">
+                            <textarea onclick="confirm('여기서 확인 누르면 로그인 페이지로 갈 수 있게 하고시퍼ㅜㅜㅜ\n한시간 넘게 해도 안되는거 실화??');" placeholder="로그인하고 댓글을 달아보세요!" required></textarea>
+                        </div>
+                    <% } %>
+    
+                    <!-- 하단 -->
+                    <div class="box">
+                        <button onclick="location.href='/board'">글목록</button>
+                    </div>
+                </a>
+            </div>
         </div>
-    </div>
 
         <!-- 오른쪽 사이드바 -->
-    <div class="sidebar-section">
-        <div class="sidebar-box-right">
-            <a href="#up-scroll">▲</a>
-            <a href="#down-scroll">▼</a>
-            <a href="#comment">🗨️</a>
+        <div class="sidebar-section">
+            <div class="sidebar-box-right">
+                <a href="#up-scroll">▲</a>
+                <a href="#down-scroll">▼</a>
+                <a href="#comment">🗨️</a>
+            </div>
         </div>
-    </div>
-        
 
     </div>
+</section>
+
+<script>
+    const postId = JSON.parse('<%= post.post_id %>');
+    if ('<%=likeInfo.isLiked%>'){
+        var isLiked = JSON.parse('<%= likeInfo.isLiked%>');
+    }
+    // const prevBtn = document.getElementsByClassName("prev-button")[0];
+    // const nextBtn = document.getElementsByClassName("next-button")[0];
+    const numberWrapper = document.getElementsByClassName('number-button-wrapper')[0];
+    // numberBtn.firstChild.remove();
+    // prevBtn.remove();
+
+    // prevSetBtn.innerText="이게 될깡dd?"
+    
+    function handleLikeButtonClick() {
+        // console.log('좋아요 버튼 클릭');
+        if(isLiked){
+            isLiked--;
+        } else{
+            isLiked++;
+        }
+        console.log(isLiked, '좋아요 누름 상태');   
+        // //AJAX 요청
+        // const likeButton = document.getElementById("likeButton").a
+        fetch(`/board/like`, {   //`/board/post?no=${postId}`
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({postId: postId, isLiked: isLiked}) // postid를 서버로 전송
+        })
+        .then(response => response.json())
+        .then(data=>{
+            console.log('서버 응답-유저 좋아요 상태: ', data.isLiked);
+            console.log('서버 응답-좋아요 수 : ', data.likeCount);
+            document.getElementById('like').innerHTML=data.likeCount;
+            document.getElementById('likeState').innerHTML = data.isLiked;
+            // data.
+            
+            //서버에서 받은 응답에 따라 클라이언트 측 처ㅣㄹ
+            if(data.success){
+                // 좋아요 반영 성공 => 이미지 변경
+                console.log('좋아요 success..!');
+            } else {
+                //실패
+                console.log('failed..!');
+            }
+
+        })
+        .catch((error)=>{
+            console.error('에러발생: ', error.message);
+        });
+    }
+
+    document.getElementById("commentForm").addEventListener("submit", function (event) {
+        // 
+        event.preventDefault(); // a, submit 태그 클릭 시, 창 이동, 새로고침 실행됨. 그 동작 방지.
+        const formData = new FormData(event.target);
+        const content = formData.get("content");
+        // console.log('[post.ejs] postId랑 content', postId, content);
+        
+        fetch(`/board/newComment?no=<%= post.post_id %>`, {   //`/board/post?no=${postId}`
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({postId: postId, content: content}) // postid를 서버로 전송
+        })
+        .then(response=> response.json())
+        .then(data=>{
+            // 뭘 받을거냐면, paginationInfo랑, 댓글데이터 받을거야
+            document.getElementById("comment-textarea").value ="";
+            // ⚠️fetchData 호출하기. 댓글 업데이트하는
+            // console.log('[서버 응답]: ',data);
+        })
+        .catch(error=>{
+            console.log('[Error]: While fetching newComment', error);
+            document.getElementById("comment-textarea").value ="";
+        })
+    })
 
     
-</section>
+        // getElementsByClassName("")[index]. 로 각 페이지 버튼 접근하자
+    // 하하, 이걸 참 어떻게 해야할지. 댓글 작성하고 댓글 페이지네이션 업데이트하면 좀 중복이잖아 대가리 미치겠네
+    async function fetchCommentData(page){
+        // test 페이지네이션이랑 데이터 목록 변경 확인
+        try{
+            //⚠️ 수정하기 countperpage
+            const response = await fetch(`/board/getComment?no=${postId}&pageno=${page}&countperpage=2`);
+            const data = await response.json();
+            const pagination = data.commentInfo.pagination;
+            const dataList = data.commentInfo.dataList;
+            const comPageDiv = document.getElementsByClassName("comment-page")[0];
+            const comListDiv = document.getElementsByClassName("comment-list")[0];
+            var contentPage = '';
+            var contentComment = '';
+            //💚 <  > 표시 확인.
+            
+            if(pagination.pageNo>1){  // 1페이지 제외 < 표시
+                contentPage += `<a id="prev-a" href="javascript:void(0);" data-page="${pagination.pageNo-1}" onclick="comPageClick(this.dataset.page)" >&nbsp;&lt;&nbsp;</a>`;
+            }
+            for (var i= pagination.startPage; i<pagination.endPage + 1; i++){
+                if (pagination.pageNo == i){
+                    contentPage += `<a href="javascript:void(0);"class="number-button" data-page="${i}" style="font-weight: 800;" onclick="comPageClick(this.dataset.page)">&nbsp;${i}&nbsp;</a>`;
+                } else{
+                    contentPage += `<a href="javascript:void(0);"class="number-button" data-page="${i}" onclick="comPageClick(this.dataset.page)">&nbsp;${i}&nbsp;</a>`;
+                }
+            }
+            if(pagination.pageNo<pagination.totalPage){
+                contentPage += `<a id="next-a" href="javascript:void(0);" data-page="${pagination.pageNo+1}" onclick="comPageClick(this.dataset.page)">&nbsp;&gt;&nbsp;</a>`;
+            }
+            comPageDiv.innerHTML = contentPage;
+
+            // 🗨️ 댓글 표시
+            try{
+                    comListDiv.innerText="";    //이거 순서랑 시간 날짜 때문에 안됐었다ㅏㅏ앙 시간 날짜 땜에 댓글이 아이디만 표시됨
+            // div.comment-list>div.com-namentime>div.com-name + div.com-time
+            //                  div.com-content
+                dataList.reverse().forEach((data, index)=>{
+                    // contentComment = 
+                    let nameNTimeDiv = document.createElement('div');
+                    nameNTimeDiv.setAttribute("class", "com-namentime");
+
+                    let nameDiv = document.createElement('div');
+                    nameDiv.setAttribute("class", "com-name");
+                    let timeDiv = document.createElement('div');
+                    timeDiv.setAttribute("class", "com-time");
+
+                    let textDiv = document.createElement('div');
+                    textDiv.setAttribute("class", "com-text");
+
+                    // div 합체!!!
+                    nameNTimeDiv.append(nameDiv, timeDiv);
+                    comListDiv.append(nameNTimeDiv, textDiv);
+
+                    nameDiv.innerText = data.mem_id;
+                    timeDiv.innerText = '('+data.createdAt.slice(0,10) + ' ' + data.createdAt.slice(11,16)+')';//'(' + data.createdAt.toISOString().split('T')[0] + data.createdAt.toISOString().split('T')[1].slice(0,5) + ')';
+                    textDiv.innerText = data.content;
+                    // comListDiv.appendChild
+            })
+        } catch(err){
+            console.log('Error: while updating comments list', err.message);
+        }
+
+        } catch (err){
+            console.log('[Error]: boardPost.ejs-fetchData and Pagination', err);
+        }
+    }
+
+    function comPageClick(page){
+        // fetch 함수에 현재 페이지 값 전송
+        fetchCommentData(page);
+    }
+
+</script>
