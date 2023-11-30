@@ -39,13 +39,10 @@
 
     <!-- Slick Slide Script -->
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src="/js/slide.js"></script>
-
-
-    <!-- Functional Script -->
-    <script src="/js/imgpreview.js"></script>
-    <script src="/js/selectRegion.js"></script>
-    <!-- <script src="/js/date.js"></script> -->
+    <!-- 슬릭 슬라이드(gather 모집중)에 사용 -->
+    <script src="/js/slideRecruiting.js"></script>
+    <!-- 슬릭 슬라이드(gather 모집완료)에 사용 -->
+    <script src="/js/slideCompleted.js"></script>
 
 </head>
 <body>
@@ -53,6 +50,14 @@
     <div class="container">
         <%- body %>
     </div>
-    <%- include('footer.ejs')%> 
+    <%- include('footer.ejs') %> 
+
+    <!-- Functional Script -->
+    <!-- 이미지 프리뷰(gatherCreate)에 사용 -->
+    <script src="/js/imgpreview.js"></script>
+    <!-- 지역 셀렉트(signUp, gatherCreate)에 사용 -->
+    <script src="/js/selectRegion.js"></script>
+    <!-- 데드라인(gatherCreate)에 사용 -->
+    <script src="/js/deadline.js"></script>
 </body>
 </html>

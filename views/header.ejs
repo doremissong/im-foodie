@@ -1,6 +1,6 @@
 <!-- HEADER -->
 <header>
-    <div class="sub-content">
+    <div class="sub-content" id="up-scroll">
         <div class="sub-category">
             <ul class="category">
                 <% if(typeof user != "undefined"){ %>
@@ -84,19 +84,7 @@
                         <div class="inner">
                             <ul class="inner-contents">
                                 <li>
-                                    <a href="javascript:void(0)">레시피1</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">레시피2</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">레시피3</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">레시피4</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">레시피5</a>
+                                    <a href="/recipe/list">전체레시피</a>
                                 </li>
                             </ul>
                         </div>
@@ -107,17 +95,19 @@
                         <a href="/gather">밥모임</a>
                     </div>
                     <div class="item-contents">
-                        <ul class="inner-contents">
-                            <li>
-                                <a href="/gather/recruiting">모집중</a>
-                            </li>
-                            <li>
-                                <a href="/gather/completed">모집완료</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">나의밥모임</a>
-                            </li>
-                        </ul>
+                        <div class="inner">
+                            <ul class="inner-contents">
+                                <li>
+                                    <a href="/gather/recruiting?countperpage=9">모집중</a>
+                                </li>
+                                <li>
+                                    <a href="/gather/completed?countperpage=9">모집완료</a>
+                                </li>
+                                <li>
+                                    <a href="/gather/mine">나의밥모임</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </li>
                 <li class="item">

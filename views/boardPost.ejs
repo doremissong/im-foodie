@@ -1,18 +1,13 @@
 <!-- STYLESHEET -->
 <link rel="stylesheet" href="/css/boardPost.css">
 
-<!-- 어떻게 boardPost.js로 따로 빼야하나봐 -->
-<script>
-    // function comPageClick(page){
-    //     // fetch 함수에 현재 페이지 값 전송
-    //     fetchCommentData(page);
-    // }
-</script>
-
 <!-- SECTION -->
 <section>
+
+    <!-- 전체 틀 -->
     <div class="section-box">
-        <!-- 왼쪽 사이드바 -->
+
+        <!-- 왼쪽 사이드바, 사실상 쓸모x -->
         <div class="sidebar-section">
             <div class="sidebar-box-left">
                 <a>▲</a>
@@ -21,8 +16,13 @@
             </div>
         </div>
 
+        <!-- 글 보여지는 가운데 화면 div -->
         <div class="board-post-section">
+
+            <!-- 글 부분 -->
             <div class="post-section">
+
+                <!-- 게시판|카테고리 부분 -->
                 <div class="post-category-box">
                     <ul class="post-category">
                         <li>
@@ -32,21 +32,26 @@
                         </li>
                         <li>
                             <span>
-                                <!-- 글 정보 받아서 해당 글 카테고리 목록으로 이동 -->
-                                <a href="javascript:void(0)">카테고리<%= post.category %> </a>
+                                <!-- 해당 글 카테고리 목록으로 이동 ex) 자유게시판이면 자유 클릭시 자유게시판 목록으로 이동 -->
+                                <a href="/board/<%= post.category %>"><%= post.category %>게시판</a>
                             </span>
                         </li>
                     </ul>
                 </div>
+
+                <!-- 글 제목 부분 -->
                 <div class="post-title">
                     <!-- 글 제목 불러오기 -->
                     <%= post.title %>
                 </div>
+
+                <!-- 작성자 ~ 댓글 부분 -->
                 <div class="post-info-box">
+
+                    <!-- 작성자 이름과 날짜 -->
                     <ul class="post-info-first">
                         <li class="writer-name">
                             <!-- 작성자 이름 불러오기 -->
-                            작성자
                             <%= post.writer_id %>
                         </li>
                         <li class="write-date">
@@ -55,6 +60,8 @@
                             <%= post.createdAt.toISOString().split('T')[1].slice(0,5) %>
                         </li>
                     </ul>
+
+                    <!-- 조회수, 추천, 댓글 -->
                     <ul class="post-info-second">
                         <li class="post-views">
                             조회
@@ -82,6 +89,8 @@
                         </li>
                     </ul>
                 </div>
+
+                <!-- 글 내용 부분 -->
                 <div class="post-content">
                     <!-- 글 내용 불러오기 -->
                     <%= post.content %>
@@ -91,10 +100,12 @@
                 <% if(typeof user != "undefined"){ %>
                     <!-- 로그인 상태일 시 -->
                     <div class="upscrap-box">
+                        <!-- 추천 -->
                         <button class="up-bt" onclick="alert('추천되었습니다')">
                             👍<br>
                             추천
                         </button>
+                        <!-- 스크랩 -->
                         <button class="scrap-bt" onclick="alert('스크랩되었습니다')">
                             ⭐<br>
                             스크랩
@@ -105,10 +116,12 @@
                 <% } else{ %>
                     <!-- 비로그인 -->
                     <div class="upscrap-box">
+                        <!-- 추천 -->
                         <button class="up-bt" onclick="alert('로그인 후 추천 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
                             👍<br>
                             추천
                         </button>
+                        <!-- 스크랩 -->
                         <button class="scrap-bt" onclick="alert('로그인 후 스크랩 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
                             ⭐<br>
                             스크랩
@@ -116,25 +129,29 @@
                         <button name="login"  onClick="handleLikeButtonClick();">♡좋아요</button>
                     </div>
                 <% } %>
-            
+    
                 <!-- 글 하단 -->
                 <div class="bottom-nav">
                     <div class="goback">
                         <a href="/board">🔙 목록으로</a>
                     </div>
-
+    
                     <!-- 로그인한 유저가 글 작성자일때 보이기 -->
                     <% if(typeof user != 'undefined' && user.mem_id == post.writer_id){ %>
                         <div class="editbox">
                             <ul>
                                 <li>
                                     <span>
-                                        <a>수정</a>
+                                        <!-- 글 작성자이면 게시글 수정 페이지로 이동 -->
+                                        <a href="/board/update">수정</a>
+                                        <!-- 아마 /board/update?no=post.post_id-->
                                     </span>
                                 </li>
                                 <li>
                                     <span>
+                                        <!-- 글 작성자이면 게시글 삭제 -->
                                         <a>삭제</a>
+                                        <!-- 정말 삭제하시겠습니까 창. yes=> 아마 /post/delete?no=post.post_id-->
                                     </span>
                                 </li>
                             </ul>
@@ -142,16 +159,20 @@
                     <% } %>
                 </div>       
             </div>
-            <!-- 댓글 -->
+
+            <!-- 댓글 부분 -->
             <div class="comment-section">
                 <a name="comment">
-                    <% if (commentInfo.dataList == ''){ %>
-                        <div class="comment-view">
-                            <div class="comment-title">
-                                <!-- 괄호 안에 댓글수 표시 -->
-                                🗨️댓글(<%= commentInfo.count %>)
-                                </div>
+                    <!-- ⚠️확인 필요⚠️ 
+                        if (commentInfo.dataList == '') 안에 있던거 위로 빼옴-->
+                    <div class="comment-view">
+                        <div class="comment-title">
+                            <!-- 괄호 안에 댓글수 표시 -->
+                            🗨️댓글(<%= commentInfo.count %>)
                         </div>
+                    </div>
+                    <!-- 작성된 댓글이 없을 경우 -->
+                    <% if (commentInfo.dataList == ''){ %>
                         <div class="comment-list">
                             <div class="comment-list">
                                 <div class class="com-namentime">
@@ -161,10 +182,12 @@
                         </div>
                     <% } else { %>
                         <div class="comment-view">
-                            <div class="comment-title">
+                            <!-- ⚠️확인 필요⚠️ 
+                                댓글수 표시 부분을 맨 위에 통합  -->
+                            <!-- <div class="comment-title"> -->
                                 <!-- 괄호 안에 댓글수 표시 -->
-                                🗨️댓글(<%= commentInfo.count %>)
-                                </div>
+                                <!-- 🗨️댓글(<%= commentInfo.count %>) -->
+                            <!-- </div> -->
                             <div class="comment-page">
                                 <!-- 댓글 페이지, 댓글이 20개 이상일 때 1,2... 페이지 나타나기. 아래는 예시 -->
                                 <% if(commentInfo.pagination.pageNo!=1){ %>
@@ -195,6 +218,13 @@
                                         (<%= data.createdAt.toISOString().split('T')[0] %>
                                         <%= data.createdAt.toISOString().split('T')[1].slice(0,5) %>)
                                     </div>
+
+                                    <!-- 글 열람 유저 = 댓글 작성자이면 보이기 -->
+                                    <div class="com-editbox">
+                                        <span>수정</span>
+                                        <span>삭제</span>
+                                    </div>
+                                    
                                 </div>
                                 <div class="com-text">
                                     <!-- 댓글 내용 -->
@@ -203,7 +233,7 @@
                             <% }); %>
                         </div>
                     <% } %>
-                    
+
                     <!-- 댓글 달기 -->
                     <% if(typeof user != "undefined"){ %>
                         <!-- 로그인 상태일 시 -->
@@ -229,10 +259,10 @@
                     <% } else{ %>
                         <!-- 비로그인 -->
                         <div class="non-user-comment">
-                            <textarea onclick="confirm('여기서 확인 누르면 로그인 페이지로 갈 수 있게 하고시퍼ㅜㅜㅜ\n한시간 넘게 해도 안되는거 실화??');" placeholder="로그인하고 댓글을 달아보세요!" required></textarea>
+                            <textarea onclick="confirm('로그인 후 이용 가능합니다!');" placeholder="로그인하고 댓글을 달아보세요!" required></textarea>
                         </div>
                     <% } %>
-
+    
                     <!-- 하단 -->
                     <div class="box">
                         <button onclick="location.href='/board'">글목록</button>
@@ -240,15 +270,19 @@
                 </a>
             </div>
         </div>
-        
+
         <!-- 오른쪽 사이드바 -->
         <div class="sidebar-section">
             <div class="sidebar-box-right">
+                <!-- header로 -->
                 <a href="#up-scroll">▲</a>
+                <!-- footer로 -->
                 <a href="#down-scroll">▼</a>
+                <!-- 댓글로 -->
                 <a href="#comment">🗨️</a>
             </div>
         </div>
+
     </div>
 </section>
 

@@ -70,8 +70,9 @@ module.exports={
         obj.recruitingList = recruitingList;
         obj.completedList = recruitingList;
         // obj.completedList = completedList;
-        // res.json(obj);
-        res.render("gatherMain", obj);
+        
+        // res.render("gatherMain", obj);
+        res.render("gather", obj);
     },
 
     showCreatePage: (req, res)=>{
@@ -79,7 +80,7 @@ module.exports={
         if(req.user){
             obj.user = req.user;
         }
-        // res.render("createGather", {user: req.user});
+        // res.render("createGather", obj);
         res.render("gatherCreate", obj);
     },
 

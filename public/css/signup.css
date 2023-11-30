@@ -1,13 +1,18 @@
 /*form*/
 .up-text {
     height: 40px;
-    padding: 30px 0px 0px 5px;
+    padding: 40px 0px 0px 5px;
     border-bottom: 1px solid #e6e6e6;
     display: flex;
 }
 
 .up-text a {
     margin: 2px 0px 0px 10px;
+}
+
+.up-texttext {
+    margin: 10px;
+    font-size: 13px;
 }
 
 .up-form {
@@ -93,4 +98,25 @@ input[name="submit"] {
     font-weight: bold;
     color: #ffffff;
     text-align: center;
+}
+
+/* 지역 */
+.up-region select {
+    width: 90px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    background: url('/images/arrow.jpg') no-repeat 105% 50%;
+    background-color: white;
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    font-size: 13px;
+    color: #6c6c6c;
+}
+
+select:focus {
+    outline: none;
 }

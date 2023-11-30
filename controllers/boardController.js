@@ -196,6 +196,7 @@ module.exports = {
     },
 
     showUpdatePage: async(req, res)=>{
+        res.send('hi working?');
         // update. 1)유저아이디, 2)기존 데이터 검색
         // const obj ={};
         // if(req.user){
@@ -277,6 +278,44 @@ module.exports = {
             console.log('[ERROR] While deleting a post.', err);
             res.redirect('/board');
             // res.redirect(res.locals.history);
+        }
+    },
+
+    // 작성자가 아니면 /board로 리디렉션
+    checkWriter: async(req, res, next)=>{
+        // 얘네 미들웨어.js로 빼서 쓸까?
+        if(!req.user){
+            console.log('[Wrong Access] This user is not logged in.');
+            res.redirect('/board');
+        }
+        if(!req.query.no){
+            console.log('[Wrong Access] This user is approaching in the wrong way. There is no post number');
+        }
+        const memId = req.user.mem_id;
+        const postId = req.query.no;
+        console.log('[checkWriter] check data. memId: ', memId, 'postId: ', postId);
+        try{
+            // console.time('select more than 2');
+            const check = await db.post.findOne({
+                attributes: ['post_id', 'writer_id'],
+                where: {
+                    post_id: postId,
+                    writer_id: memId
+                }
+            });
+            // console.log('[checkWriter] check result. isWriter: ',check.dataValues);//,isWriter&& memId == isWriter.post.writer_id );
+            if(check&& memId == check.dataValues.writer_id ){
+                // console.log('results: ', check&& memId == check.dataValues.writer_id );
+                next();
+            } else{
+                console.log('checkwriter 문제 ');
+                res.redirect('/board');
+            }
+            // console.timeEnd('select more than 2');
+        } catch(err){
+            console.log("[Wrong Access] This user isn't the writer", err);
+            res.send(err);
+            // res.redirect("/board");
         }
     },
 
@@ -384,8 +423,8 @@ module.exports = {
         
     },
     getCommentInfo: async (req, res, next)=>{
-        console.log('겟코멘트인포 도착');
-        console.log('겟코멘ㅌ트 데이터리스트화긴', res.locals.dataList);
+        // console.log('[getCommentInfo] 도착');
+        console.log('[getCommentInfo] Checking data list -[getComment]', res.locals.dataList);
         if (res.locals.paginationInfo && res.locals.dataList) {
             res.locals.commentInfo={};
             res.locals.commentInfo.pagination = res.locals.paginationInfo;
@@ -399,8 +438,8 @@ module.exports = {
         }
     },
     createComment: async (req, res, next) => {
-        console.log('크리에잍코멘트 도착');
-        console.log('[newComment] postId랑 contnet', req.body.postId, req.body.content);
+        // console.log('[createComment] 도착');
+        console.log('[createComment] postId랑 content - /[newComment]', req.body.postId, req.body.content);
         // if문으로 postId, content 잇을때 조건 걸어야할까?
         try{
             await sequelize.transaction(async t => {
@@ -417,7 +456,7 @@ module.exports = {
         }
     },
     showComment: async(req, res)=>{
-        console.log('쇼테스트:', req.body.content, '댓글 개수', res.locals.commentInfo.count);
+        console.log('[showComment] test data(content):', req.body.content, '#comment: ', res.locals.commentInfo.count);
         const obj ={};
         obj.success =true;
         obj.page = res.locals.commentInfo.pagination.totalPage;

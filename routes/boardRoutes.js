@@ -10,13 +10,20 @@ const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, setCondition }
 
 router.get("/", setDBModel(db.post), getPaginationInfo, boardController.showBoardPage);
 
+// router.get("/test", boardController.checkWriter);
+
 router.get("/post", setDBModel(db.post_comment), getPaginationInfo, boardController.getCommentInfo, boardController.showPost);
 // router.post("/post", isLoggedIn, boardController.setLike);//test 좋아요 누르면 해당 처리 페이지로 갔다가 이전 페이지로 리디렉션
 //⚠️
 router.get("/write", isLoggedIn, boardController.showWritePage);
 router.post("/write", isLoggedIn, boardController.writePost);
 
-router.get("/update", isLoggedIn, boardController.showUpdatePage)
+// 작성자 체크
+// router.get("/update", isLoggedIn, boardController.showUpdatePage);
+router.get("/update", isLoggedIn, boardController.checkWriter, boardController.showUpdatePage);
+router.post("/update", isLoggedIn, boardController.checkWriter, boardController.updatePost);
+// 작성자 체크
+router.get("/delete", isLoggedIn, boardController.checkWriter, boardController.deletePost);
 
 router.post("/like", isLoggedIn, boardController.setLike);
 // router.post("/newComment", isLoggedIn, boardController.getCommentInfo, );
