@@ -82,7 +82,7 @@ app.get('/board/post', (req, res) => {
 
 // gather
 app.get('/gather', (req, res) => {
-  res.render('gather');
+  res.render('gatherMain');
 })
 
 app.get('/gather/recruiting', (req, res) => {
