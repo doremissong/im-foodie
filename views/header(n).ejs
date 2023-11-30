@@ -6,7 +6,7 @@
                 <% if(typeof user != "undefined"){ %>
                     <li>
                         <span>
-                            <a href="/gather/chat/list" class="chat-icon">✉️</a>
+                            <a href="/chat/list" class="chat-icon">✉️</a>
                             <%= user.name %> 님 
                         </span>
                     </li>
@@ -18,12 +18,12 @@
                 <% } else{ %>
                     <li>
                         <span>
-                            <a href="/auth/signup">회원가입</a>
+                            <a href="/signup">회원가입</a>
                         </span>
                     </li>
                     <li>
                         <span>
-                            <a href="/auth/login">로그인</a>
+                            <a href="/login">로그인</a>
                         </span>
                     </li>
                 <% } %>
@@ -97,10 +97,10 @@
                         <div class="inner">
                             <ul class="inner-contents">
                                 <li>
-                                    <a href="/gather/recruiting?countperpage=9">모집중</a>
+                                    <a href="/gather/recruiting">모집중</a>
                                 </li>
                                 <li>
-                                    <a href="/gather/completed?countperpage=9">모집완료</a>
+                                    <a href="/gather/completed">모집완료</a>
                                 </li>
                                 <li>
                                     <a href="/gather/mine">나의밥모임</a>
