@@ -42,7 +42,7 @@ select {
     height: 55px;
     padding: 18px;
     border: none;
-    background: url('../images/arrow.jpg') no-repeat 95% 50%;
+    background: url('/images/arrow.jpg') no-repeat 95% 50%;
     background-color: white;
     border-radius: 0px;
     -webkit-appearance: none;

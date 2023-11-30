@@ -118,7 +118,7 @@ getPostComment = async(postId)=>{
 }
 
 module.exports = {
-    showPage: async(req, res)=>{
+    showBoardPage: async(req, res)=>{
         // const category = req.query.category;
         // 카테고리
         if (res.locals.paginationInfo && res.locals.dataList) {
@@ -190,6 +190,23 @@ module.exports = {
         }
     },
 
+    showWritePage: (req, res)=>{
+        res.render("boardWrite", {user: req.user});
+        // res.sendFile(path.join(__dirname, "../public/html/board_write.html"));
+    },
+
+    showUpdatePage: async(req, res)=>{
+        // update. 1)유저아이디, 2)기존 데이터 검색
+        // const obj ={};
+        // if(req.user){
+        //     obj.user = req.user;
+        // }
+
+        // async 
+
+        // res.render("boardUpdate", obj);
+    },
+
     writePost: async(req, res)=>{
         var postData = getPostParams(req.body, 0, req.user.mem_id);
         console.log('test', postData);
@@ -206,6 +223,63 @@ module.exports = {
             res.redirect("/board");
         }
     },
+
+    //게시글 수정
+    updatePost: async(req, res) => {
+        
+    },
+
+    deletePost: async(req, res)=>{
+        //
+        if (!req.user) {
+            // 로그인 상태 아니면
+            // res.redirect(res.locals.history);
+            console.log('로그인 상태 확인');
+            res.redirect('/board');
+            // res.redirect(res.locals.history);
+        }
+        const memId = req.user.mem_id;
+        // query no있는지 체크
+        if (!res.query.no) {
+            console.log("There's no number of post to delete");
+            res.redirect('/board');
+            // res.redirect(res.locals.history);
+        }
+        const postNo = req.query.no;
+        //작성자가 맞는지 체크
+        try {
+            const postWriter = await db.post.findOne({
+                attributes: ['writer_id'],
+                where: {
+                    post_id: postNo,
+                }
+            })
+            // recipeWriter.writer_id 제대로 동작할까?
+            if (memId == postWriter.writer_id) {
+                console.log('로그인한 사용자:', memId, '글의 작성자: ', postWriter.writer_id);
+                next();
+            }
+        } catch (err) {
+            console.log('[ERROR]: while checking if user is the writer of the post', err);
+            res.redirect('/board');
+            // res.redirect(res.locals.history);
+        }
+    
+        // 글 삭제
+        try {
+            await sequelize.transaction(async t => {
+                await db.post.destroy({
+                    where: { post_no: postNo },
+                    transaction: t,
+                })
+            })
+        } catch (err) {
+            console.log('[ERROR] While deleting a post.', err);
+            res.redirect('/board');
+            // res.redirect(res.locals.history);
+        }
+    },
+
     // req.params 값이 category 내의 값인지.
     checkBoard: (req,res,next)=>{
         const boards = {
@@ -216,34 +290,24 @@ module.exports = {
             'share': '나눔',
             'mealfriend': '밥친구'
         };
-        if(req.params.category && req.params.category in boards){
-            // params 가 있고 카테고리 안에 있으면!
-            res.locals.category = boards[req.params.category];
-            // res.locals.additionalPath = req.parms.category;
-            // res.send(`category's VAlue: ${category}`);
-            next();
-        }
-        else{
-            // res.send('wrong access..!\n Go back to home');
-            // next로 메시지 넘기는 것도 되나?
+        try{
+            if (req.params.category && req.params.category in boards) {
+                // params 가 있고 카테고리 안에 있으면!
+                res.locals.category = boards[req.params.category];
+                // res.locals.additionalPath = req.parms.category;
+                // res.send(`category's VAlue: ${category}`);
+                next();
+            }
+            else {
+                // res.send('wrong access..!\n Go back to home');
+                // next로 메시지 넘기는 것도 되나?
+                res.redirect('/board');
+            }
+        } catch(err){
             next(err);
         }
     },
-    //ㅌ특정 게시판 보여줄 화면 --> showPage랑 합치려고함. 
-    showBoard: (req,res)=>{
-        console.log('req값이 next 이후에도 이어지는지 확인:', req.params.category);
-        res.send('board다');
-    },
 
-    //게시글 수정
-    updatePost:()=>{
-
-    },
-    // updateView
-    // 삭제 try{post.destroy({where:{post_id: }})} catch(){}
-    deletePost:()=>{
-
-    },
     // 어떻게 해야하지? setLike를 미들웨어로 두는게 나을까? 
     // like가 가능한 기능은 2가지: 1) 게시판 2) 레시피 (이후에 3) 밥모임)
     setLike: async(req, res, next)=>{

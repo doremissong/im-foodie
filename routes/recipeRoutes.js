@@ -93,58 +93,8 @@ router.get("/update", isLoggedIn, /*작성자 체크*/ recipeController.showUpda
 router.post("/update", isLoggedIn, /*작성차 체크*/recipeController.updateRecipe);
 
 // ✅7) delete
-// router.get("/delete", isLoggedIn, /*작성자 체크*/recipeController.deleteRecipe);
+router.get("/delete", isLoggedIn, /*작성자 체크*/recipeController.deleteRecipe);
 // query ?(recipe)no = & 
-router.get("/delete", isLoggedIn, async (req, res) => {
-    //
-    if (!req.user) {
-        // 로그인 상태 아니면
-        // res.redirect(res.locals.history);
-        console.log('로그인 상태 확인');
-        res.redirect('/recipe');
-        // res.redirect(res.locals.history);
-    }
-    const memId = req.user.mem_id;
-    // query no있는지 체크
-    if(!res.query.no){
-        console.log("There's no number of recipe to delete");
-        res.redirect('/recipe');
-        // res.redirect(res.locals.history);
-    }
-    const recipeNo = req.query.no;
-    //작성자가 맞는지 체크
-    try {
-        const recipeWriter = await db.recipe.findOne({
-            attributes: ['writer_id'],
-            where: {
-                recipe_id: recipeNo,
-            }
-        })
-        // recipeWriter.writer_id 제대로 동작할까?
-        if (memId == recipeWriter.writer_id) {
-            console.log('로그인한 사용자:', memId, '글의 작성자: ', recipeWriter.writer_id);
-            next();
-        }
-    } catch(err){
-        console.log('[ERROR]: while checking if user is the writer of the recipe', err);
-        res.redirect('/recipe');
-        // res.redirect(res.locals.history);
-    }
-
-    // 글 삭제
-    try{
-        await sequelize.transaction(async t=>{
-            await db.recipe.destroy({
-                where:{recipe_no: recipeNo},
-                transaction: t,
-            })
-        })
-    } catch(err){
-        console.log('[ERROR] While deleting recipe.', err);
-        res.redirect('/recipe');
-        // res.redirect(res.locals.history);
-    }
-});
 
 router.use(errorController.pageNotFoundError);
 router.use(errorController.internalServerError);

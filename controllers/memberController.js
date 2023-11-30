@@ -105,13 +105,12 @@ module.exports = {
         }
     },
 
-    // 구) getSignUpPage -> 현) new
-    new: (req, res) => {
-        res.render("signup");
+    showSignupPage: (req, res) => {
+        res.render("signUp");
         // res.sendFile(path.join(__dirname, "../public/html/signup.html"));
     },
 
-    create: async (req, res) => {
+    createMember: async (req, res) => {
         //const { mem_id, password, name, email, tel, address, birthdate, profile_image, tos_flag, pip_flag, notification_flag } = req.body;
         if(req.skip) next();    // create액션 건너뛰고 바ㅗ 뷰로 되돌아감
 
@@ -220,12 +219,12 @@ module.exports = {
         }
     },
 
-    findId: (req, res)=>{
+    showFindIdPage: (req, res)=>{
         res.render("findId");
         // res.sendFile(path.join(__dirname, "../public/html/find-id.html"));
     },
 
-    showId: async(req, res)=>{
+    showFoundId: async(req, res)=>{
         // req에서 이름 + 휴대폰 번호 / 이름 + 이메일 받아서
         var {name, email} = req.body;
         console.log(req.body);
@@ -240,13 +239,13 @@ module.exports = {
         res.render("showId", {mem_id: foundId.mem_id});
         // }
     },
-    // 이름 바꾸기 show findPWPage
-    showFindPWPage: (req, res)=>{
+
+    showFindPwPage: (req, res)=>{
         res.render("findPw");
         // res.sendFile(path.join(__dirname, "../public/html/find-pw.html"));
     },
 
-    findPW: async (req, res, next)=>{
+    findPw: async (req, res, next)=>{
         var {mem_id, name, email} = req.body;
         await db.member.findOne({
             where: {mem_id: mem_id, name: name, email: email}
@@ -281,7 +280,7 @@ module.exports = {
         })
     },
 
-    sendPW: (req, res)=>{
+    sendPw: (req, res)=>{
         const eamilOptions = {
             from: "I'm Foodie",
             to: "zelly1020@naver.com",
@@ -301,12 +300,12 @@ module.exports = {
         res.redirect("/auth/changePw");
     },
 
-    showChangePasswordPage: (req, res)=>{
+    showChangePwPage: (req, res)=>{
         //❗‼변경 페이지 받기
         res.render("changePw", {user: req.user});
     },
 
-    changePassword: async(req, res)=>{
+    changePw: async(req, res)=>{
         const oldPassword = req.body.old_password;
         const hashedPassword = await hashPassword(req.body.new_password);
         const result = await bcrypt.compare(oldPassword, req.user.password);
@@ -324,6 +323,7 @@ module.exports = {
                 console.log(`Error updating pw: ${err.message}`);
             }
             res.redirect("/");
+            //res.redirect(res.locals.history);
             // res.send(req.body.newPassword);
         } else{
             // 팝업창 띄우기 

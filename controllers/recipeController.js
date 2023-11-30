@@ -39,8 +39,8 @@ module.exports={
 
     showUpdatePage: async(req, res)=>{
         // recipe - title, menu,  cooktime, level, image_url (6) 수정 가능
-        // recipe_ingredient - 재료들 몽땅 수정
-        // recipe_step
+        // ⚠️recipe_ingredient - 재료들 몽땅 수정
+        // ⚠️recipe_step
         if (req.query.recipe_no) {
             const obj = {};
             var temp = {};
@@ -71,8 +71,8 @@ module.exports={
     showRecipe: async (req, res)=>{
         // 불러올 것. recipe_id로
         // recipe
-        // recipe_ingredient 
-        // recipe_step
+        // ⚠️recipe_ingredient 
+        // ⚠️recipe_step
         if (req.query.recipe_no) {
             const recipeId = req.query.recipe_no;
             const obj = {};
@@ -128,8 +128,8 @@ module.exports={
         
         // 저장할 것. 
         // recipe - recipe_id 로 아래 테이블에 데이터 추가하기
-        // recipe_ingredient 
-        // recipe_step
+        // ⚠️recipe_ingredient 
+        // ⚠️recipe_step
         if (!req.body) {
             console.log(`[ERROR] Req.params are not sent. - createRecipe`);
             res.redirect('/recipe');
@@ -164,8 +164,8 @@ module.exports={
         
         // 불러오고 수정하기. recipe_id로
         // recipe -  post로 받음. //title, menu, content, cooktime, level, image_url (6) 수정
-        // recipe_ingredient 
-        // recipe_step
+        // ⚠️recipe_ingredient 
+        // ⚠️recipe_step
 
         console.log('업데이트 시도 시작?');
         if(req.query.recipe_no && req.params){
@@ -200,24 +200,54 @@ module.exports={
         }
     },
 
-    deleteRecipe: async(req, res)=>{
-        // query에 글 id있어
-        
-        // 불러올 것. recipe_id로
-        // recipe
-        // recipe_ingredient 
-        // recipe_step
-        // ⚠️delete cascade 설정하기
-        const recipeId = req.query.recipe_no;
-        try{
-            await sequelize.transaction(async t=>{
+    deleteRecipe: async (req, res) => {
+        // cascade ⚠️ step, ingredients, 
+        if (!req.user) {
+            // 로그인 상태 아니면
+            // res.redirect(res.locals.history);
+            console.log('로그인 상태 확인');
+            res.redirect('/recipe');
+            // res.redirect(res.locals.history);
+        }
+        const memId = req.user.mem_id;
+        // query no있는지 체크
+        if (!res.query.no) {
+            console.log("There's no number of recipe to delete");
+            res.redirect('/recipe');
+            // res.redirect(res.locals.history);
+        }
+        const recipeNo = req.query.no;
+        //작성자가 맞는지 체크
+        try {
+            const recipeWriter = await db.recipe.findOne({
+                attributes: ['writer_id'],
+                where: {
+                    recipe_id: recipeNo,
+                }
+            })
+            // recipeWriter.writer_id 제대로 동작할까?
+            if (memId == recipeWriter.writer_id) {
+                console.log('로그인한 사용자:', memId, '글의 작성자: ', recipeWriter.writer_id);
+                next();
+            }
+        } catch (err) {
+            console.log('[ERROR]: while checking if user is the writer of the recipe', err);
+            res.redirect('/recipe');
+            // res.redirect(res.locals.history);
+        }
+
+        // 글 삭제
+        try {
+            await sequelize.transaction(async t => {
                 await db.recipe.destroy({
-                    where: {recipe_id: recipeId}
-                });
-            });
-            res.redirect("/recipe");
-        } catch (err){
-            console.log(`[ERROR] Deleting recipe: - recipe`, err);
+                    where: { recipe_no: recipeNo },
+                    transaction: t,
+                })
+            })
+        } catch (err) {
+            console.log('[ERROR] While deleting recipe.', err);
+            res.redirect('/recipe');
+            // res.redirect(res.locals.history);
         }
     },
     

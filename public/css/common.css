@@ -25,3 +25,9 @@ img {
     display: block;
 }
 
+/* CONTENT */
+.content {
+    width: 950px;
+    margin: 0 auto;
+    position: relative;
+}

@@ -1,5 +1,5 @@
 <!-- STYLESHEET -->
-<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/noticeList.css">
 
 <!--SECTION-->
 <section>
@@ -30,7 +30,13 @@
 		</ul>
 		<% if (dataList == ''){ %>
 			<!-- <ul class="post-list"> -->
-			<%= dataList.category %> 아직 공지사항이 없어요 :D
+			<%= dataList.category %> 
+			<div class="non-notice">
+				<div class="non-notice-content">
+					아직 작성된 공지사항이 없어요 :D
+				</div>
+			</div>
+			
 			<!-- </ul> -->
 		<% } else { %>
 			<ul class="post-list">

@@ -22,12 +22,15 @@ const setPageButtons = () => {
 	numberButtonWrapper.innerHTML = '';
 
 	for (let i = 1; i <= getTotalPageCount(); i++) {
-    numberButtonWrapper.innerHTML += `<span class="number-button"> ${i} </span`;
+    numberButtonWrapper.innerHTML += `<span class="number-button"> ${i} </span>`;
+	numberButtonWrapper.innerHTML += `&nbsp;`;
 	}
 
 	numberButtonWrapper.firstChild.classList.add('selected');
 	pageNumberButtons = document.querySelectorAll('.number-button');
 };
+
+
 
 /**
  * 페이지에 해당하는 게시물 ul에 넣어주기
@@ -58,7 +61,7 @@ const setPageOf = (pageNumber) => {
     	// 글 제목
     	const postTitle = document.createElement('a');
     	postTitle.className = 'post-title';
-
+		// postTitle.innerHTML += `<a href="../html/> ${i} </a>`;'
 
 		// 글쓴이
     	const postWriter = document.createElement('p');

@@ -7,22 +7,22 @@ const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
 const passport = require('passport');
 const member = require('../models/member');
 
-router.get("/signup", isNotLoggedIn, memberController.new);
-router.post("/signup", isNotLoggedIn, memberController.create);
+router.get("/signup", isNotLoggedIn, memberController.showSignupPage);
+router.post("/signup", isNotLoggedIn, memberController.createMember);
 router.get("/login", isNotLoggedIn, memberController.login);
 router.post("/login", isNotLoggedIn, passport.authenticate("local", {
     failureRedirect: "/auth/login",
     successRedirect: "/",
 }));
 router.get("/logout", isLoggedIn, memberController.logout);
-router.get("/findId", isNotLoggedIn, memberController.findId);
-router.post("/findId", isNotLoggedIn, memberController.showId);
-router.get("/findPw", isNotLoggedIn, memberController.showFindPWPage);
-router.post("/findPw", isNotLoggedIn, memberController.findPW, memberController.sendPW);
+router.get("/findId", isNotLoggedIn, memberController.showFindIdPage);
+router.post("/findId", isNotLoggedIn, memberController.showFoundId);
+router.get("/findPw", isNotLoggedIn, memberController.showFindPwPage);
+router.post("/findPw", isNotLoggedIn, memberController.findPw, memberController.sendPw);
 // router.get("/send", memberController.sendPW);
 // router.get("/find", memberController.findPW);
-router.get("/changePw", isLoggedIn, memberController.showChangePasswordPage);
-router.post("/changePw", isLoggedIn, memberController.changePassword);
+router.get("/changePw", isLoggedIn, memberController.showChangePwPage);
+router.post("/changePw", isLoggedIn, memberController.changePw);
 
 router.use(errorController.pageNotFoundError);
 router.use(errorController.internalServerError);
