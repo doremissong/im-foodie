@@ -420,9 +420,9 @@ module.exports = {
         console.log('쇼테스트:', req.body.content, '댓글 개수', res.locals.commentInfo.count);
         const obj ={};
         obj.success =true;
-        obj.commentInfo = res.locals.commentInfo;
-        console.log(obj.commentInfo);
-        res.json({success:true, content: req.body.content});
+        obj.page = res.locals.commentInfo.pagination.totalPage;
+        console.log(obj.page);
+        res.json(obj);
     },
     sendComment: (req, res)=>{
         //if문

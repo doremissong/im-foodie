@@ -184,7 +184,7 @@
                         </div>
                         
                         <div class="comment-list">
-                            <% commentInfo.dataList.reverse().forEach((data, index)=>{ %>
+                            <% commentInfo.dataList.forEach((data, index)=>{ %>
                                 <div class="com-namentime">
                                     <div class="com-name">
                                         <!-- 댓글 작성자 이름 -->
@@ -214,7 +214,7 @@
                                     <!-- 유저 닉네임 -->
                                     <%= user.mem_id %>
                                 </div>
-                                <form id="commentForm" action="">
+                                <form id="commentForm">
                                     <div class="comment-write-section">
                                         <div class="write-comment">
                                             <textarea id="comment-textarea" name="content" placeholder="고운말 댓글 달기" required></textarea>
@@ -306,13 +306,12 @@
     }
 
     document.getElementById("commentForm").addEventListener("submit", function (event) {
-        // 
         event.preventDefault(); // a, submit 태그 클릭 시, 창 이동, 새로고침 실행됨. 그 동작 방지.
         const formData = new FormData(event.target);
         const content = formData.get("content");
         // console.log('[post.ejs] postId랑 content', postId, content);
         
-        fetch(`/board/newComment?no=<%= post.post_id %>`, {   //`/board/post?no=${postId}`
+        fetch(`/board/newComment?no=<%= post.post_id %>&sort=earliest`, {   //`/board/post?no=${postId}`
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -321,9 +320,9 @@
         })
         .then(response=> response.json())
         .then(data=>{
-            // 뭘 받을거냐면, paginationInfo랑, 댓글데이터 받을거야
             document.getElementById("comment-textarea").value ="";
-            // ⚠️fetchData 호출하기. 댓글 업데이트하는
+            // fetchData 호출하기
+            fetchCommentData(data.page);    ///댓글 마지막 페이지만 가져와서 전달
             // console.log('[서버 응답]: ',data);
         })
         .catch(error=>{
@@ -334,12 +333,11 @@
 
     
         // getElementsByClassName("")[index]. 로 각 페이지 버튼 접근하자
-    // 하하, 이걸 참 어떻게 해야할지. 댓글 작성하고 댓글 페이지네이션 업데이트하면 좀 중복이잖아 대가리 미치겠네
+    // 하하, 이걸 참 어떻게 해야할지. 댓글 작성하고 댓글 페이지네이션 업데이트하면 좀 중복이잖아
     async function fetchCommentData(page){
         // test 페이지네이션이랑 데이터 목록 변경 확인
         try{
-            //⚠️ 수정하기 countperpage
-            const response = await fetch(`/board/getComment?no=${postId}&pageno=${page}&countperpage=2`);
+            const response = await fetch(`/board/getComment?no=${postId}&pageno=${page}&sort=earliest`);
             const data = await response.json();
             const pagination = data.commentInfo.pagination;
             const dataList = data.commentInfo.dataList;
@@ -369,7 +367,7 @@
                     comListDiv.innerText="";    //이거 순서랑 시간 날짜 때문에 안됐었다ㅏㅏ앙 시간 날짜 땜에 댓글이 아이디만 표시됨
             // div.comment-list>div.com-namentime>div.com-name + div.com-time
             //                  div.com-content
-                dataList.reverse().forEach((data, index)=>{
+                dataList.forEach((data, index)=>{
                     // contentComment = 
                     let nameNTimeDiv = document.createElement('div');
                     nameNTimeDiv.setAttribute("class", "com-namentime");

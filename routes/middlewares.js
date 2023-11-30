@@ -96,11 +96,14 @@ exports.setDBModel = (modelType) => {
         }
         if (req.query.sort) {
             const sort = req.query.sort;
-            // 최신순 = [["createdAt", "DESC"]],
+            // 최신순latest = [["createdAt", "DESC"]],
             // 조회수순 = [["viewCount", "DESC"]],
             // 좋아요 순 = 이건 나중에 - 레시피, 게시판, 모임별 다 따로 
             if (sort == "viewCount") {
                 res.locals.sort = [["viewCount", "DESC"]]
+            }
+            else if(sort == "earliest"){
+                res.locals.sort = [["createdAt", "ASC"]]
             }
             // else if(sort=="like"){
             // }
@@ -143,7 +146,7 @@ exports.getPaginationInfo = async (req, res, next)=>{
     
 // pageNo는 현재페이지. setPagingVar는 값이 안정해졌을 때, 임의로 정하는 것임.
     // 여기서 한 페이지당 글 개수, 페이지, 1,10까지 보여준는 거.
-    countPerPage = this.setPagingVar(countPerPage, 20);
+    countPerPage = this.setPagingVar(countPerPage, 10);
     pageNo = this.setPagingVar(pageNo, 1);  
     // //❓query 스트링이 페이지 범위를 넘어가면
     if (pageNo < 0 || pageNo > totalPage) {
