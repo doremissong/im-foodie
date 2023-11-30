@@ -13,7 +13,8 @@ const development = {
   "host": host,
   "dialect": "mysql",
   "port": port,
-  "timezone": "+09:00"
+  "timezone": "+00:00"
+  // "timezone": "+09:00"
 };
 
 const test = {
@@ -23,7 +24,8 @@ const test = {
   "host": host,
   "dialect": "mysql",
   "port": port,
-  "timezone": "+09:00"
+  "timezone": "+00:00"
+  // "timezone": "+09:00"
 };
 
 const production = {
@@ -33,7 +35,8 @@ const production = {
   "host": host,
   "dialect": "mysql",
   "port": port,
-  "timezone": "+09:00"
+  "timezone": "+00:00"
+  // "timezone": "+09:00"
 };
 
 
