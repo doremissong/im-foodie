@@ -118,15 +118,7 @@ input:focus {
     border-bottom: 1px dashed rosybrown;
 }
 
-.form-table input[name="region"] {
-    width: 250px;
-    height: 40px;
-    padding: 15px;
-    border: 1px solid #dddddd;
-    box-sizing:border-box;
-}
-
-select {
+.g-region select {
     width: 90px;
     height: 40px;
     padding: 10px;

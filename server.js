@@ -38,7 +38,7 @@ app.get('/signup', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login(n)');
 })
 
 
@@ -82,7 +82,7 @@ app.get('/board/post', (req, res) => {
 
 // gather
 app.get('/gather', (req, res) => {
-  res.render('gatherMain');
+  res.render('gather(n)');
 })
 
 app.get('/gather/recruiting', (req, res) => {
