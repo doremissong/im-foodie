@@ -278,7 +278,7 @@ module.exports={
             // gathering_id: 
             name: req.body.name,
             leader_id: req.user.mem_id, //⚠️
-            region: req.body.district + ' ' + req.body.city + ' ' + req.body.neighborhood,
+            region: req.body.city + ' ' + req.body.district + ' ' + req.body.neighborhood,
             place: req.body.place,
             description: req.body.description,  ///⚠️
             deadline: req.body.deadline,

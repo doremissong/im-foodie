@@ -56,33 +56,37 @@
 			<% }) %>
         </div>
 		
-		
-		<div class="pagination-container">
-			<% if (pagination.curSet > 1){ %>    
-				<div class="prev-set-button"><a href="/gather/recruiting?pageno=<%= pagination.startPage-1%>&countperpage=9&gsort=0">&lt;&lt;&nbsp; </a></div>
-			<% } %>
-			<% if (pagination.pageNo!=1){ %>    
-				<div class="prev-button"><a href="/gather/recruiting?pageno=<%= pagination.pageNo-1%>&countperpage=9&gsort=0">&nbsp;이전&nbsp;</a></div>
-			<% } %>
-			<div class="number-button-wrapper">
-				<% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
-					<span class="number-button"> 
-						<% if (pagination.pageNo==i){ %>
-							<% console.log(i, pagination.pageNo); %>
-							<a href="/gather/recruiting?pageno=<%= i %>&countperpage=9&gsort=0" style="font-weight: 800;"><%= i %></a>
-						<% } else{ %>
-							<a href="/gather/recruiting?pageno=<%= i %>&countperpage=9&gsort=0"><%= i %></a>
-						<% } %>
-					</span>
+		<% if (dataList == ''){ %>
+			<!-- <ul class="post-list"> -->
+			<%= dataList.category %> 모집 중인 밥모임이 없어요. 한번 만들어보세요 :D
+			<!-- </ul> -->
+		<% } else { %>
+			<div class="pagination-container">
+				<% if (pagination.curSet > 1){ %>    
+					<div class="prev-set-button"><a href="/gather/recruiting?pageno=<%= pagination.startPage-1%>&countperpage=9&gsort=0">&lt;&lt;&nbsp; </a></div>
 				<% } %>
+				<% if (pagination.pageNo!=1){ %>    
+					<div class="prev-button"><a href="/gather/recruiting?pageno=<%= pagination.pageNo-1%>&countperpage=9&gsort=0">&nbsp;이전&nbsp;</a></div>
+				<% } %>
+				<div class="number-button-wrapper">
+					<% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
+						<span class="number-button"> 
+							<% if (pagination.pageNo==i){ %>
+								<% console.log(i, pagination.pageNo); %>
+								<a href="/gather/recruiting?pageno=<%= i %>&countperpage=9&gsort=0" style="font-weight: 800;"><%= i %></a>
+							<% } else{ %>
+								<a href="/gather/recruiting?pageno=<%= i %>&countperpage=9&gsort=0"><%= i %></a>
+							<% } %>
+						</span>
+					<% } %>
+				</div>
+				<% if (pagination.pageNo != pagination.totalPage){ %>
+					<div class="next-button"><a href="/gather/recruiting?pageno=<%= pagination.pageNo+1%>&countperpage=9&gsort=0"> &nbsp;이후&nbsp;</a></div>
+				<% }%>
+				<% if (pagination.curSet < pagination.totalSet){ %>
+					<div class="next-set-button"><a href="/gather/recruiting?pageno=<%= pagination.endPage+1%>&countperpage=9&gsort=0">&nbsp;&gt;&gt;</a></div>
+				<% }%>
 			</div>
-			<% if (pagination.pageNo != pagination.totalPage){ %>
-				<div class="next-button"><a href="/gather/recruiting?pageno=<%= pagination.pageNo+1%>&countperpage=9&gsort=0"> &nbsp;이후&nbsp;</a></div>
-			<% }%>
-			<% if (pagination.curSet < pagination.totalSet){ %>
-				<div class="next-set-button"><a href="/gather/recruiting?pageno=<%= pagination.endPage+1%>&countperpage=9&gsort=0">&nbsp;&gt;&gt;</a></div>
-			<% }%>
-		</div>
-		
+		<% } %>
     </div>
 </section>
