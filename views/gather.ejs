@@ -38,26 +38,31 @@
 				</span>
 			</div>
 
-			<!-- 슬라이드 -->
-			<div class="gathering-slide">
-
-				<div class="prevArrow-box">
-					<button class="prevArrow-recruiting">
-						<i class="las la-chevron-left"></i>
-					</button>
+			<!-- 모집중인 모임이 없을 경우만 출력 -->
+			<% if (recruitingList == ""){ %>
+				<div class="no-gather">
+					현재 모집중인 모임이 없어요! 모임을 직접 만들어 보세요 :)
 				</div>
 
-				<!-- 슬라이드 갯수 최대 6개 -->
-				<div class="slider-wrap-recruiting">
+			<!-- 모집중인 모임이 있을 경우만 -->
+			<% } else{ %>
 
-					<% if (recruitingList == ""){ %>
-					<!-- if 모집중인 모임이 없을 경우 출력 -->
-					<div class="no-gather">
-						현재 모집중인 모임이 없어요! 모임을 직접 만들어 보세요 :)
+				<!-- 슬라이더 박스 -->
+				<div class="gathering-slide">
+
+					<!-- 이전 화살표(모집중) -->
+					<div class="prevArrow-box">
+						<button class="prevArrow-recruiting">
+							<i class="las la-chevron-left"></i>
+						</button>
 					</div>
-					<% } else{ %>
-						<!-- if 모집중인 모임 최신순으로 최대 5개 출력 -->
+
+					<!-- 슬라이더(모집중 slideRecruiting.js) -->
+					<div class="slider-wrap-recruiting">
+					
+						<!-- 모집중인 모임 최신순으로 최대 5개 출력 -->
 						<% recruitingList.forEach((data, index)=>{ %>
+							<!-- 슬라이드 하나 -->
 							<div class="slide-item">
 								<span class="gather-name">
 									<!-- 모임 이름 -->
@@ -82,7 +87,8 @@
 								</div>
 							</div>
 						<% }) %>
-						<!-- if 모집중인 모임이 6개 이상일 경우 추가로 출력 -->
+						
+						<!-- 모집중인 모임이 6개 이상일 경우에만 추가로 출력 -->
 						<div>
 							<a href="/gather/recruiting?countperpage=9">
 								<div class="slide-item">
@@ -90,14 +96,20 @@
 								</div>
 							</a>
 						</div>
-					<% } %>
+
+					</div>
+
+					<!-- 다음 화살표(모집중) -->
+					<div class="nextArrow-box">
+						<button class="nextArrow-recruiting">
+							<i class="las la-chevron-right"></i>
+						</button>
+					</div>	
+					
 				</div>
-				<div class="nextArrow-box">
-					<button class="nextArrow-recruiting">
-						<i class="las la-chevron-right"></i>
-					</button>
-				</div>		  
-			</div>
+
+			<% } %>
+
 		</div>
 
 		<!-- 모집 완료 부분 -->
@@ -111,25 +123,31 @@
 				</span>
 			</div>
 
-			<!-- 슬라이드 -->
-			<div class="gathering-slide">
-				<!-- 이전 버튼 -->
-				<div class="prevArrow-box">
-					<button class="prevArrow-completed">
-						<i class="las la-chevron-left"></i>
-					</button>
+			<!-- 모집완료 모임이 없을 경우만 출력 -->
+			<% if (completedList == ""){ %>
+				<div class="no-gather">
+					아직 모집이 완료된 모임이 없어요!
 				</div>
 
-				<!-- 슬라이드 갯수 최대 6개 -->
-				<div class="slider-wrap-completed">
-					<% if (completedList == ""){ %>
-						<!-- if 모집 완료된 모임이 없을 경우 출력 -->
-						<div class="no-gather">
-							아직 모집이 완료된 모임이 없어요!
-						</div>
-					<% } else { %>
-						<!-- if 모집 완료된 모임 최신순으로 최대 5개 출력 -->
+			<!-- 모집완료 모임이 있을 경우만 -->
+			<% } else { %>
+
+				<!-- 슬라이더 박스 -->
+				<div class="gathering-slide">
+				
+					<!-- 이전 화살표(모집완료) -->
+					<div class="prevArrow-box">
+						<button class="prevArrow-completed">
+							<i class="las la-chevron-left"></i>
+						</button>
+					</div>
+
+					<!-- 슬라이더(모집완료 slideCompleted.js) -->
+					<div class="slider-wrap-completed">
+					
+						<!-- 모집 완료된 모임 최신순으로 최대 5개 출력 -->
 						<% completedList.forEach((data, index)=>{ %>
+							<!-- 슬라이드 하나 -->
 							<div class="slide-item">
 								<span class="gather-name">
 									<!-- 모임이름 -->
@@ -155,7 +173,8 @@
 								</div>
 							</div>
 						<% }) %>
-						<!-- if 모집완료 모임이 6개 이상일 경우 추가로 출력 -->
+
+						<!-- 모집완료 모임이 6개 이상일 경우만 추가로 출력 -->
 						<div>
 							<a href="/gather/completed?countperpage=9">
 								<div class="slide-item">
@@ -163,15 +182,22 @@
 								</div>
 							</a>
 						</div>
-					<% } %>
+
+					</div>
+
+					<!-- 다음 화살표(모집완료) -->
+					<div class="nextArrow-box">
+						<button class="nextArrow-completed">
+							<i class="las la-chevron-right"></i>
+						</button>
+					</div>	
 
 				</div>
-				<div class="nextArrow-box">
-					<button class="nextArrow-completed">
-						<i class="las la-chevron-right"></i>
-					</button>
-				</div>		  
-			</div>
+
+			<% } %>
+
 		</div>
+
     </div>
+	
 </section>
