@@ -1,61 +1,101 @@
 <!-- STYLESHEET -->
-<link rel="stylesheet" href="/css/boardWrite.css">
+<link rel="stylesheet" href="/css/recipeWrite.css">
 
 <!-- SECTION -->
 <section>
-    <div class="board-write-section">
-        <div class="board-write-wrap">
-            <div class="board-write-main">
-                공지사항 작성
+
+    <!-- 전체 틀 -->
+    <div class="recipe-write-section">
+
+        <!-- 글 작성 틀 -->
+        <div class="recipe-write-wrap">
+
+            <!-- 레시피 작성하기와 밑줄 -->
+            <div class="recipe-write-main">
+                레시피 작성하기
             </div>
-            <form name="board-write-form" action="/recipe/write" method="post">
-                <div class="board-form-box">
-                    <div class="board-write-box">
-                        <div class="board-write-category">
-                            <select name="category" required>
-                                <option value="" selected disabled>카테고리 선택</option>
-                                <option value="0" selected>한식</option>
-                                <option value="1">중식</option>
-                                <option value="2">양식</option>
-                                <option value="3">일식</option>
-                                <option value="4">간식</option>
-                                <option value="5">베트남</option>
-                                <option value="6">기타</option>
-                            </select>
-                        </div>
-                        <div class="board-write-title">
+
+            <!-- 레시피 작성 폼 -->
+            <form name="recipe-write-form" method="post">
+
+                <!-- 레시피 작성 div -->
+                <div class="recipe-form-box">
+
+                    <!-- 제목과 태그 박스 -->
+                    <div class="recipe-write-box">
+
+                        <!-- 제목 박스 -->
+                        <div class="recipe-write-title">
                             <input type="text" name="title" placeholder="제목" value="" required />
                         </div>
-                    </div>
-                    <div class="board-write-content">
-                        <textarea name="content" placeholder="본문 내용을 입력하세요." required>
-                            입력란 동적으로 추가하면서.
-                        </textarea>
-                    </div>
-                    <div>
-                        menu 음식 이름; 된장찌개 등등 <br>
-                        title은 '오늘의 메뉴 된장찌개!!'' 이런느김<br>
-                        cooktime 조리시간<br>
-                        level 음식 난이도 ⭐⭐⭐⭐⭐로 표시<br>
-                        이미지 첨부<br>
-                    </div>
-                    <div class="button">
-                        <!-- <script>
-                            function btn(){
-                                if(window.confirm('등록하시겠습니까?')){
-                                    document.forms['board-write-form'].submit();
-                                }
-                                else{
-                                    
-                                }
-                            }
-                            </script> -->
 
-                        <button type="submit" name="submit">등록하기</button>
-                        <!-- <button onclick="javascript:btn()">등록하기</button> -->
+                        <!-- 태그 선택 checkbox 박스 -->
+                        <div class="recipe-write-tag">
+
+                            <!-- 태그 -->
+                            <div class="tag-title">
+                                태그
+                            </div>
+
+                            <!-- 태그 종류 -->
+                            <div class="tag-category">
+                                <!-- required 어카지... 최소 하나 선택하게끔 -->
+                                <input type="checkbox" id="easy" name="tag" value="01">
+                                <label for="easy">#초보자</label>
+                                <input type="checkbox" id="simple" name="tag" value="02">
+                                <label for="simple">#간단</label>
+                                <input type="checkbox" id="night" name="tag" value="03">
+                                <label for="night">#야식</label>
+                                <input type="checkbox" id="lunchbox" name="tag" value="04">
+                                <label for="lunchbox">#도시락</label>
+                                <input type="checkbox" id="party" name="tag" value="05">
+                                <label for="party">#홈파티</label>
+                                <input type="checkbox" id="health" name="tag" value="06">
+                                <label for="health">#건강식</label>
+                                <input type="checkbox" id="alcohol" name="tag" value="07">
+                                <label for="alcohol">#안주</label>
+                                <input type="checkbox" id="dessert" name="tag" value="08">
+                                <label for="dessert">#디저트</label>
+                            </div>
+
+                        </div>
+
                     </div>
+
+                    <!-- 썸네일과 간략 소개글 -->
+                    <div class="thumbnintro-box">
+                        <!-- 썸네일(레시피 전체리스트에 보여지는 대표이미지) 업로드 -->
+                        <div class="thumbnail-box">
+                            썸네일 업로드 영역
+                        </div>
+
+                        <!-- 간략 소개글 적기 -->
+                        <div class="intro-box">
+                            <textarea name="intro" placeholder="소개글을 적어주세요." required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- 필요 재료 적는 칸 -->
+                    <div class="ingredients">
+                        <textarea name="ingredients" placeholder="필요한 재료들을 적어주세요." required></textarea>
+                    </div>
+
+                    <!-- 글 작성하기 -->
+                    <div class="board-write-content">
+                        <textarea name="content" placeholder="본문 내용을 입력하세요." required></textarea>
+                    </div>
+                    
                 </div>
+
+                <!-- 폼 등록 버튼 -->
+                <div class="button">
+                    <button type="submit" name="submit">등록하기</button>
+                </div>
+
             </form>
+
         </div>
+
     </div>
+
 </section>

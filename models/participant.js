@@ -25,10 +25,14 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: "밥모임 가입하고 싶어요"
     },
     state: {
-      type: DataTypes.TINYINT,
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
     },
+    // ISLEADER = 0,
+    // ISMEMBER = 1,
+    // 신청함
+    // 
     isConnected: {
       type: DataTypes.TINYINT,
       allowNull: false,

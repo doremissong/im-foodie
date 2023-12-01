@@ -2,6 +2,14 @@ const { db, sequelize } = require('../models/index');
 const { Op } = require('sequelize');
 const post_comment = require('../models/post_comment');
 
+const RECRUITING = 0;
+const COMPLETED = 1;
+const ISLEADER = 0;
+// ISMEMBER = 1,
+// ISAPPLYING 
+// ISACCEPTED
+// ISREFUSED
+
 exports.isLoggedIn = (req, res, next) => {
     if(req.isAuthenticated()) {
         return next();
@@ -61,6 +69,17 @@ exports.setDBModel = (modelType) => {
         res.locals.model = modelType;
         console.log('디비 확인-미들웨어:', modelType);
         res.locals.condition = {};
+
+        // gathering
+        if(req.query.gsort){
+            if(req.query.gsort == RECRUITING){
+                res.locals.condition.state = RECRUITING;
+            } else if(req.query.gsort == COMPLETED){
+                res.locals.condition.state = COMPLETED;
+            } else{
+                res.redirect('/gather');
+            }
+        }
 
         if (req.query.search) {
             //https://chat.openai.com/c/0a8f8a3e-4fd7-4696-b557-72feb171eb1c

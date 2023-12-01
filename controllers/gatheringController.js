@@ -5,6 +5,11 @@ const participant = require('../models/participant');
 // const { getPaginationInfo } = require('./middlewares');
 const RECRUITING = 0;
 const COMPLETED = 1;
+const ISLEADER = 0;
+// ISMEMBER = 1,
+// ISAPPLYING 
+// ISACCEPTED
+// ISREFUSED
 
 // 기본값 == undefined. 그러면 내가 해줄 필요없어.
 async function searchGathering (state, gatherId, leaderId) { // gathering_id, 
@@ -54,13 +59,13 @@ module.exports={
         if(req.user){
             obj.user = req.user;
         }
-        const recruitingList = await db.post.findAll({
+        const recruitingList = await db.gathering.findAll({
             where:{state: RECRUITING},
             order:[['createdAt', 'DESC']],
             limit: limit,
         });
 
-        const completedList = await db.post.findAll({
+        const completedList = await db.gathering.findAll({
             where:{state: COMPLETED},
             order:[['createdAt', 'DESC']],
             limit: limit,
@@ -68,8 +73,7 @@ module.exports={
         console.log(completedList =="");
 
         obj.recruitingList = recruitingList;
-        obj.completedList = recruitingList;
-        // obj.completedList = completedList;
+        obj.completedList = completedList;
         
         // res.render("gatherMain", obj);
         res.render("gather", obj);
@@ -105,6 +109,59 @@ module.exports={
         // and next to the member, there's also button [delete/]
         res.render("gatherShowDetail", {user:req.user, data: data});
 
+    },
+
+    
+    showRecruitingList: async (req, res, next) => {
+        // //searchGathering (state, gatherId, leaderId)
+        // const list = await searchGathering(state = 0);
+        // console.log('모집중인 그룹리스트 ', list);
+        // if(list==""){
+        //     res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?"});
+        //     // res.send("아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?");
+        // } else{
+        //     // res.json(list);
+        //     res.render("mainGather", {user: req.user, dataList: list});
+        // }
+
+        const obj = {};
+        if(req.user){
+            obj.user=req.user;
+        }
+        if(!res.locals.paginationInfo || !res.locals.dataList){
+            console.log('[ERROR] check pagination data.');
+            // res.redirect(res.locals.history);
+            res.redirect('/gather');
+        }
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        res.render("gatherRecruiting", obj);
+    },
+    showCompletedList: async (req, res) => {
+        const obj = {};
+        if(req.user){
+            obj.user=req.user;
+        }
+        if(!res.locals.paginationInfo || !res.locals.dataList){
+            console.log('[ERROR] check pagination data.');
+            // res.redirect(res.locals.history);
+            res.redirect('/gather');
+        }
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        res.render("gatherCompleted", obj);
+        // searchGathering (state, gatherId, leaderId)
+        // const list = await searchGathering(state = 1);
+        // console.log('모집완료된 그룹리스트 ', list);
+        // if(list==""){
+        //     // res.send("아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?");
+        //     res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?"});
+        // } else{
+        //     // res.json(list);
+        //     res.render("mainGather", {user: req.user, dataList: list});
+        // }
+        // // console.log('빈 데이터베이스 서칭 결과는 null일까? undefined일까/', typeof list);
+        
     },
     showMyGatherList: async(req, res)=>{
         
@@ -209,24 +266,67 @@ module.exports={
     },
 
     // ❤️ 모임 생성하기
-    createGather: async(req,res, next)=>{
+    createGather: async(req,res)=>{
         //gather.ejs 확인
+        //1) gathering 생성
+        // 2) participant 추가
+        if(!req.body){
+            res.redirect("/gather/create");
+        }
+        // 왜 gatherData로 하면 안된느겨,,
+        const gatherData = {
+            // gathering_id: 
+            name: req.body.name,
+            leader_id: req.user.mem_id, //⚠️
+            region: req.body.district + ' ' + req.body.city + ' ' + req.body.neighborhood,
+            place: req.body.place,
+            description: req.body.description,  ///⚠️
+            deadline: req.body.deadline,
+            state: RECRUITING,
+            maximumHeadCount: req.body.number,//⚠️
+            // image_url: 
+            viewCount: 0,
+        }
+        console.log('[createGather] 전달받은 값 확인: ', req.body, 'gatherData 확인: ', gatherData);
+        // var result = null;
 
-        // 전달 받을 것 : name=모임이름, leader_id = req.user, region= , place=, description:, headCount, image_url,
-        // 얘네는 내가 할 수 있음 create_date, update_date
-    //     try{
-    //         await sequelize.transaction(async t =>{
-    //             await db.gathering.create({ //전달받은 거
-    //                 name:'모임이름', leader_id : req.body.leader_id, region:req.body.region+'어딘기' ,
-    //                 place:req.body.place+'미정', description:req.body.description+'와 맛있겠다', headCount:req.body.headCount, image_url:req.body.image_url
-    //                 //create_date = , update_date 어딘ㄷ가 알서,,,
-    //             })
-    //         })
-    //         next();
-    //     } catch(err){
-    //         console.log(`Error creating gathering: ${err}`);
-    //         next(err);
-    //     }
+        // // 모임 데이터 생성
+        try{
+            await sequelize.transaction(async t =>{
+                result = await db.gathering.create({
+                    // gathering_id: 
+                    name: req.body.name,
+                    leader_id: req.user.mem_id, //⚠️
+                    region: req.body.district + ' ' + req.body.city + ' ' + req.body.neighborhood,
+                    place: req.body.place,
+                    description: req.body.description,  ///⚠️
+                    deadline: req.body.deadline,
+                    state: RECRUITING,
+                    maximumHeadCount: req.body.number,//⚠️
+                    // image_url: 
+                    viewCount: 0,
+                });
+            })
+            await sequelize.transaction(async t=>{
+                await db.participant.create({
+                    gathering_id: result.dataValues.gathering_id,
+                    mem_id: req.user.mem_id,
+                    message: '',
+                    state: ISLEADER,
+                    isConnected: 0,
+                })
+            })
+            // res.redirect(`/gather/view?no=${result.dataValues.gathering_id}`);
+            res.redirect('/gather');
+        } catch(err){
+            console.log(`Error creating gathering, participant:`, err);
+            res.redirect("/gather/create");
+        }
+        // PARTICIPANT 참가자 데이터 생성
+        try{
+        } catch(err){
+            // res.redirect("/gather/create");
+        }
     },
 
     updateGather: async(req, res, next)=>{
@@ -298,60 +398,7 @@ module.exports={
     //     }
 
     },
-    // //멤버, 그룹에 신청하는건? 요청 어케 보내. 요청 또 담아야하는거얀???////////////ㄹㄹㄹㄹ
-
-    getRecruitingList: async (req, res, next) => {
-        // //searchGathering (state, gatherId, leaderId)
-        // const list = await searchGathering(state = 0);
-        // console.log('모집중인 그룹리스트 ', list);
-        // if(list==""){
-        //     res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?"});
-        //     // res.send("아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?");
-        // } else{
-        //     // res.json(list);
-        //     res.render("mainGather", {user: req.user, dataList: list});
-        // }
-
-        const obj = {};
-        if(req.user){
-            obj.user=req.user;
-        }
-        if(!res.locals.paginationInfo || !res.locals.dataList){
-            console.log('[ERROR] check pagination data.');
-            // res.redirect(res.locals.history);
-            res.redirect('/gather');
-        }
-        obj.pagination = res.locals.paginationInfo;
-        obj.dataList = res.locals.dataList;
-        res.render("gatherRecruiting", obj);
-    },
-    getCompletedList: async (req, res) => {
-        const obj = {};
-        if(req.user){
-            obj.user=req.user;
-        }
-        if(!res.locals.paginationInfo || !res.locals.dataList){
-            console.log('[ERROR] check pagination data.');
-            // res.redirect(res.locals.history);
-            res.redirect('/gather');
-        }
-        obj.pagination = res.locals.paginationInfo;
-        obj.dataList = res.locals.dataList;
-        res.render("gatherCompleted", obj);
-        // searchGathering (state, gatherId, leaderId)
-        // const list = await searchGathering(state = 1);
-        // console.log('모집완료된 그룹리스트 ', list);
-        // if(list==""){
-        //     // res.send("아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?");
-        //     res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?"});
-        // } else{
-        //     // res.json(list);
-        //     res.render("mainGather", {user: req.user, dataList: list});
-        // }
-        // // console.log('빈 데이터베이스 서칭 결과는 null일까? undefined일까/', typeof list);
-        
-    },
-
+    // //멤버, 그룹에 신청하는건? 요청 어케 보내. 요청 또 담아야하는거얀???////////////ㄹㄹㄹ
 
     // 모임 
     applyForGather: async(req, res)=>{

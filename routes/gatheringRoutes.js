@@ -12,9 +12,9 @@ router.get("/", gatheringController.showMainGatherPage);
 
 // countperpage=9. state=0 모집중, state=1 모집 완료
 // 2) 모집중 목록
-router.get("/completed", storeUrl, setDBModel(db.post), getPaginationInfo, gatheringController.getCompletedList);
+router.get("/completed", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCompletedList);
 // 3) 모집완료 목록
-router.get("/recruiting", storeUrl, setDBModel(db.post), getPaginationInfo, gatheringController.getRecruitingList);
+router.get("/recruiting", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showRecruitingList);
 
 // //test
 router.get("/test", gatheringController.checkMember);

@@ -34,7 +34,7 @@
 .board-sub-name {
     display: inline-block;
     font-size: 17px;
-	margin-right: 15px;
+	margin-right: 18px;
 	/* background-color: yellowgreen; */
 }
 
@@ -50,14 +50,15 @@
 	color: rgb(26, 67, 109);
 	font-family: 'Gowun Dodum', sans-serif;
 	font-size: 18px;
-	font-weight: bold;
-	border: 1px solid lightblue;
-	border-radius: 2px;
-	background-color: aliceblue;
+	/* font-weight: bold; */
+	border: 1px solid rgb(230, 195, 173);
+	border-radius: 5px;
+	background-color: rgb(255, 245, 240);
 }
 
 .write-button:hover {
 	cursor: pointer;
+	background-color: rgb(244, 232, 226);
 }
 
 /* 페이지네이션 */

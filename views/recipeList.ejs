@@ -1,88 +1,134 @@
 <!-- STYLESHEET -->
-<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/recipeList.css">
 
 <!--SECTION-->
 <section>
-    <div class="board-section">
-		<div class="board-list">
-			<div class="write-box">
+
+    <!-- 전체틀 -->
+    <div class="recipeList-section">
+
+        <!-- 타이틀과 밑줄 -->
+        <div class="recipeList-list">
+
+            <!-- 타이틀 --><!-- 밑줄달린 div -->
+            <div class="recipeList-main">
+                <a href="/recipe/list">레시피 전체리스트</a>
+            </div>
+
+            <!-- 태그 카테고리 -->
+            <div class="recipeList-sub">
+				<ul class="recipeList-sub-list">
+					<li class="recipeList-sub-name">
+						<a href="javascript:void(0)">#태그1</a>
+					</li>
+					<li class="recipeList-sub-name">
+						<a href="javascript:void(0)">#태그2</a>
+					</li>
+					<li class="recipeList-sub-name">
+						<a href="javascript:void(0)">#태그3</a>
+					</li>
+					<li class="recipeList-sub-name">
+						<a href="javascript:void(0)">#태그4</a>
+					</li>
+					<li class="recipeList-sub-name">
+						<a href="javascript:void(0)">#태그5</a>
+					</li>
+				</ul>
+			</div>
+
+        </div>
+
+        <!-- 레시피 작성 버튼 -->
+        <div class="write-box">
+			<% if(typeof user != "undefined"){ %>
+				<!-- 로그인 상태일 시 -->
 				<a href="/recipe/write">
 					<button class="write-button">
-						글쓰기
+						레시피 작성하기
 					</button>
 				</a>
-				<!-- <% if(typeof operator != "undefined"){ %> -->
-					<!-- 로그인 상태일 시 -->
-				<!-- <% } %> -->
-			</div>
+			<% } else{ %>
+				<!-- 비로그인 -->
+				<button class="write-button" onclick="alert('로그인 후 이용 가능')">
+					레시피 작성하기
+				</button>
+			<% } %>
 		</div>
-		<ul class="post-index">
-			<li>
-				<div class="post-standard">
-					<p class="post-number">번호</p>
-					<p class="post-board">게시판--what</p>
-					<p class="post-title">제목</p>
-					<p class="post-writer">글쓴이</p>
-					<p class="post-date">등록일</p>
-					<p class="post-view">조회수</p>
-				</div>
-			</li>
-		</ul>
-		<% if (dataList == ''){ %>
-			<!-- <ul class="post-list"> -->
-			<%= dataList.category %> 아직 레시피가 없어요 :D
-			<!-- </ul> -->
-		<% } else { %>
-			<ul class="post-list">
-				<% dataList.forEach((data, index)=>{ %>
-					<li class="post">
-						<div class="post-container">
-							<p class="post-number"><%= pagination.startItemNo + 1 + index %></p>
-							<p class="post-board">
-                                한식 중식? 이부분 수정하기
-								<% if (data.menu==0) { %>
-									[일반] 
-								<% } else if (data.priority==1) { %>
-									[중요]
-								<% } else { %>
-									[긴급]
-								<% } %>
-							</p>
-							<p class="post-title"><a href="/recipe/view?ntc_no=<%= data.recipe_id %>"><%= data.title %></a></p>
-							<p class="post-writer">관리자 data.mem_id</p>
-							<p class="post-date"><%= data.createdAt.toISOString().slice(2,10);%></p>
-							<p class="post-view"><%= data.viewCount%></p>
-						</div>
-					</li>
-				<% }); %>
-			</ul>
-			<!-- ⚠️ 아무글도 없으면? -->
-			<div class="pagination-container">
-				<% if (pagination.curSet > 1){ %>    
-					<div class="prev-set-button"><a href="/recipe?pageno=<%= pagination.startPage-1%>">&lt;&lt;&nbsp; </a></div>
-				<% } %>
-				<% if (pagination.pageNo!=1){ %>    
-					<div class="prev-button"><a href="/recipe?pageno=<%= pagination.pageNo-1%>">&nbsp;이전&nbsp;</a></div>
-				<% } %>
-				<div class="number-button-wrapper">
-					<% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
-						<span class="number-button"> 
-							<% if (pagination.pageNo==i){ %>
-								<% console.log(i, pagination.pageNo); %>
-								<a href="/recipe?pageno=<%= i %>" style="font-weight: 800;"><%= i %></a>
-							<% } else{ %>
-								<a href="/recipe?pageno=<%= i %>"><%= i %></a>
-							<% } %>
-						</span>
-					<% } %>
-				</div>
-				<% if (pagination.pageNo != pagination.totalPage){ %>
-					<div class="next-button"><a href="/recipe?pageno=<%= pagination.pageNo+1%>"> &nbsp;이후&nbsp;</a></div>
-				<% }%>
-				<% if (pagination.curSet < pagination.totalSet){ %>
-					<div class="next-set-button"><a href="/recipe?pageno=<%= pagination.endPage+1%>">&nbsp;&gt;&gt;</a></div>
-				<% }%>
-			</div>
-		<% } %>
+
+        <!-- 레시피 담는 div -->
+        <div class="recipeList-content">
+            
+            <!-- 레시피 하나, 3번 반복하기 -->
+            <% for(var i = 0; i < 3; i++) { %>
+                <div class="recipe-box">
+
+                    <!-- 이미지와 태그 박스 -->
+                    <div class="recipe-imgntag">
+
+                        <!-- 대표이미지 박스 -->
+                        <div class="recipe-img-box">
+                            <!-- 대표이미지 불러오기 -->
+                            <img src="/images/recipeDefault.png">
+                        </div>
+
+                        <!-- 태그 박스 -->
+                        <div class="recipe-tag-box">
+                            <!-- 태그 불러오기 -->
+                            <!-- checkbox 값 전부 불러오기 -->
+                            <span>
+                                #집밥
+                            </span> 
+                            <span>
+                                #초보자
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <!-- 글 박스 -->
+                    <div class="recipe-con-box">
+
+                        <!-- 제목과 날짜 박스 -->
+                        <div class="recipe-titlendate">
+
+                            <!-- 제목 박스 -->
+                            <div class="recipe-title-box">
+                                <!-- 제목 불러오기 -->
+                                맛있는 닭볶음탕 만들기~!
+                            </div>
+
+                            <!-- 날짜 박스 -->
+                            <div class="recipe-date-box">
+                                <!-- 날짜 불러오기 -->
+                                2023년 11월 30일
+                            </div>
+
+                        </div>
+
+                        <!-- 소개글 박스 -->
+                        <div class="recipe-intro-box">
+                            <!-- 소개글 불러오기 -->
+                            초보자도 만들 수 있는 닭볶음탕~!
+                            치킨 말고 닭볶음탕 해 드세용
+                        </div>
+
+                        <!-- 자세히보기 박스 -->
+                        <div class="recipe-details-box">
+                            <a href="recipe/view">자세히 보기 ></a>
+                        </div>
+
+                    </div>
+
+                </div>
+            <% } %>
+
+
+            <!-- 페이지네이션 -->
+            <div class="recipe-page-box">
+                1 2 3
+            </div>
+        </div>
+
     </div>
+
 </section>

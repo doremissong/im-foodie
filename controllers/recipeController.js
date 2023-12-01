@@ -2,16 +2,37 @@
 const { db, sequelize } = require("../models/index");
 
 module.exports={
-    showMainPage: (req, res)=>{
-// 1) 메인 레시피, 5위까지 + 추천
-        // res.send('hi showMAinPage');
+    // 사용자 좋아요 테이블에서 recipe_tag나 작성한 레시피 recipe_tag 가져와서 
+    // recipe_tag 의 notice_id 찾아서 ==> recipe 테이블에서 검색한 거 
+    // 일부 보여주기. 
+    // 함수로 만들어야하나? limit: 주고
+    showMainPage: async (req, res)=>{
+    // 1) 메인 레시피, 5위까지 + 추천
+    // try{
+    //     const data = await db.post.findAll({
+    //         // attributes: ['recipe_id'],
+    //         // where:
+    //         order: [["viewCount", "DESC"]], 
+    //         limit: 5,
+    //     })
+    //     res.json(data);
+    // } catch(err){
+    //     console.log('[ERROR]: while showing top 5 recipes', err);
+    //     res.json(err);
+    // }
+
         res.render("recipeMain");
     },
 
     showRecipeListPage: async(req, res)=>{
         // 시간순, 조회수순, 좋아요순, 💚해시태💚순으로 검색할 수 있게 
-        // 미들웨어에 setDBModel에 설정해두기
-        // recipe만 불러와도 됨.
+        // recipe만 불러와도 됨.// 테이블 정보만 들어있음. + tag, ingredient, step은 없음.
+        // getPaginationInfo 정보 존재확인
+        if(!res.locals.paginationInfo || !res.locals.dataList){
+            console.log("[ERROR] There's no pagination information or data list.");
+            res.redirect("/recipe/list");
+        }
+        
         try {
             const obj = {};
             obj.pagination = res.locals.paginationInfo;

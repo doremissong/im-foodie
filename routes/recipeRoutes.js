@@ -8,48 +8,10 @@ const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, storeUrl } = r
 
 // ⚠️1) 메인 레시피, 5위까지 + 추천
 // router.get("/", recipeController.showMainPage);
-router.get("/", storeUrl, async (req, res)=>{
-    try{
-        const data = await db.post.findAll({
-            // attributes: ['recipe_id'],
-            // where:
-            order: [["viewCount", "DESC"]], 
-            limit: 5,
-        })
-        res.json(data);
-    } catch(err){
-        console.log('[ERROR]: while showing top 5 recipes', err);
-        res.json(err);
-    }
-    // 사용자 좋아요 테이블에서 recipe_tag나 작성한 레시피 recipe_tag 가져와서 
-    // recipe_tag 의 notice_id 찾아서 ==> recipe 테이블에서 검색한 거 
-    // 일부 보여주기. 
-    // 함수로 만들어야하나? limit: 주고
-})
+router.get("/", storeUrl, recipeController.showMainPage)
 
 // ⚠️2) 전체 레시피 목록 - ✅최신순, ✅조회수순, 좋아요순, + 페이지네이션
-// router.get("/list", setDBModel(db.recipe), getPaginationInfo, recipeController.showRecipeListPage);
-router.get("/list", storeUrl, setDBModel(db.recipe), getPaginationInfo, (req, res)=>{
-    // 테이블 정보만 들어있음. + tag, ingredient, step은 없음.
-    // getPaginationInfo 정보 존재확인
-    if(!res.locals.paginationInfo || !res.locals.dataList){
-        console.log("[ERROR] There's no pagination information or data list.");
-        res.redirect("/list");
-    }
-    
-    try{
-        const obj = {};
-        obj.pagination = res.locals.paginationInfo;
-        obj.dataList = res.locals.dataList;
-
-        // res.render('recipeList', obj);
-        res.json(obj);
-    } catch (err) {
-        console.log("[ERROR] While rendering recipe List", err);
-        res.redirect("/list");
-    }
-})
-
+router.get("/list", storeUrl, setDBModel(db.recipe), getPaginationInfo, recipeController.showRecipeListPage);
     // 좋아요 순을 여기에 넣어야할까/
 // ⚠️3) 특정 상황별 레시피 목록 ; 상황(category)별 전체, 시간, 인기순, + 페이지네이션
 
