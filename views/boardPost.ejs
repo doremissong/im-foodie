@@ -143,15 +143,14 @@
                                 <li>
                                     <span>
                                         <!-- 글 작성자이면 게시글 수정 페이지로 이동 -->
-                                        <a href="/board/update">수정</a>
-                                        <!-- 아마 /board/update?no=post.post_id-->
+                                        <a href="/board/update?no=<%= post.post_id%>">수정</a>
                                     </span>
                                 </li>
                                 <li>
                                     <span>
                                         <!-- 글 작성자이면 게시글 삭제 -->
                                         <a>삭제</a>
-                                        <!-- 정말 삭제하시겠습니까 창. yes=> 아마 /post/delete?no=post.post_id-->
+                                        <!-- 정말 삭제하시겠습니까 창. yes=> /post/delete?no=<%=post.post_id%>-->
                                     </span>
                                 </li>
                             </ul>
@@ -163,8 +162,6 @@
             <!-- 댓글 부분 -->
             <div class="comment-section">
                 <a name="comment">
-                    <!-- ⚠️확인 필요⚠️ 
-                        if (commentInfo.dataList == '') 안에 있던거 위로 빼옴-->
                     <div class="comment-view">
                         <div class="comment-title">
                             <!-- 괄호 안에 댓글수 표시 -->
@@ -182,12 +179,6 @@
                         </div>
                     <% } else { %>
                         <div class="comment-view">
-                            <!-- ⚠️확인 필요⚠️ 
-                                댓글수 표시 부분을 맨 위에 통합  -->
-                            <!-- <div class="comment-title"> -->
-                                <!-- 괄호 안에 댓글수 표시 -->
-                                <!-- 🗨️댓글(<%= commentInfo.count %>) -->
-                            <!-- </div> -->
                             <div class="comment-page">
                                 <!-- 댓글 페이지, 댓글이 20개 이상일 때 1,2... 페이지 나타나기. 아래는 예시 -->
                                 <% if(commentInfo.pagination.pageNo!=1){ %>

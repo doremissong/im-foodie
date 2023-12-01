@@ -6,13 +6,19 @@ const { Op } = require('sequelize');
 
 const boardController = require('../controllers/boardController');
 const errorController = require('../controllers/errorController');
-const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, setCondition } = require('./middlewares');
+const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, setCondition, storeUrl } = require('./middlewares');
 
-router.get("/", setDBModel(db.post), getPaginationInfo, boardController.showBoardPage);
+// try문 제대로 동작시, 
+    // storeUrl
+// error 시 ==>
+    // const previousUrl = req.session.previousUrl || '/';
+    // res.redirect(previousUrl);
 
-// router.get("/test", boardController.checkWriter);
+router.get("/",storeUrl, setDBModel(db.post), getPaginationInfo, boardController.showBoardPage); //, storeUrl,);
 
-router.get("/post", setDBModel(db.post_comment), getPaginationInfo, boardController.getCommentInfo, boardController.showPost);
+router.get("/test", boardController.checkWriter);
+
+router.get("/post", storeUrl, setDBModel(db.post_comment), getPaginationInfo, boardController.getCommentInfo, boardController.showPost);
 // router.post("/post", isLoggedIn, boardController.setLike);//test 좋아요 누르면 해당 처리 페이지로 갔다가 이전 페이지로 리디렉션
 //⚠️
 router.get("/write", isLoggedIn, boardController.showWritePage);
@@ -40,7 +46,7 @@ router.get("/getComment", setDBModel(db.post_comment), getPaginationInfo, boardC
 router.get("/delete", isLoggedIn, );
 
 // 게시판 종류별 라우팅
-router.get("/:category", boardController.checkBoard, setDBModel(db.post), getPaginationInfo, boardController.showBoardPage);
+router.get("/:category", storeUrl, boardController.checkBoard, setDBModel(db.post), getPaginationInfo, boardController.showBoardPage);
 
 router.use(errorController.pageNotFoundError);
 router.use(errorController.internalServerError);

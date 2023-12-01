@@ -4,7 +4,7 @@ const { db, sequelize } = require("../models/index");
 const gatheringController = require('../controllers/gatheringController');
 const chatController = require('../controllers/chatController');
 const errorController = require('../controllers/errorController');
-const { isNotLoggedIn, isLoggedIn, setDBModel, getPaginationInfo } = require('./middlewares');
+const { isNotLoggedIn, isLoggedIn, setDBModel, getPaginationInfo, storeUrl } = require('./middlewares');
 const { get } = require('../config/email');
 
 // 1) 밥모임 메인
@@ -12,9 +12,9 @@ router.get("/", gatheringController.showMainGatherPage);
 
 // countperpage=9. state=0 모집중, state=1 모집 완료
 // 2) 모집중 목록
-router.get("/completed", setDBModel(db.post), getPaginationInfo, gatheringController.getCompletedList);
+router.get("/completed", storeUrl, setDBModel(db.post), getPaginationInfo, gatheringController.getCompletedList);
 // 3) 모집완료 목록
-router.get("/recruiting", setDBModel(db.post), getPaginationInfo, gatheringController.getRecruitingList);
+router.get("/recruiting", storeUrl, setDBModel(db.post), getPaginationInfo, gatheringController.getRecruitingList);
 
 // //test
 router.get("/test", gatheringController.checkMember);
@@ -22,7 +22,7 @@ router.get("/test", gatheringController.checkMember);
 router.get("/test2", gatheringController.test2);
 
 // 4) 나의 밥모임 목록
-router.get("/mine", isLoggedIn, gatheringController.showMyGatherList);
+router.get("/mine", storeUrl, isLoggedIn, gatheringController.showMyGatherList);
 // router.get("/joined", isLoggedIn, gatheringController.showJoinedPage);
 // router.get("/imade", isLoggedIn, gatheringController.showIMadePage);
 
@@ -40,7 +40,7 @@ router.post("/delete", isLoggedIn, gatheringController.deleteGather);
 router.post("/apply", isLoggedIn, gatheringController.applyForGather);
 
 // 7) 밥모임 상세 페이지
-router.get("/view", gatheringController.showGatheringDetail);
+router.get("/view", storeUrl, gatheringController.showGatheringDetail);
 
 // 8) 방장의 멤버 목록  ⚠️멤버 목록을 멤버도 볼 수 있어야해. 그 컨트롤러 함수를 만들어서 여기저기 이용하는게 나을 듯
 // router.get("/memberlist", (req,res)=>{res.send(req.query.gatheringId)});

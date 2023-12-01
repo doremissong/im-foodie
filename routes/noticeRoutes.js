@@ -4,14 +4,14 @@ const { db, sequelize } = require('../models/index');
 
 const noticeController = require('../controllers/noticeController');
 const errorController = require('../controllers/errorController');
-const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel } = require('./middlewares');
+const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, storeUrl } = require('./middlewares');
 
 // 1) 공지사항 메인 화면
-router.get("/", setDBModel(db.notice), getPaginationInfo, noticeController.showMainPage);
+router.get("/", storeUrl, setDBModel(db.notice), getPaginationInfo, noticeController.showMainPage);
 // 공지사항 데이터 보여주고 , 페이지네이션
 
 // 2. 글 열람 /view?ntc_no=
-router.get("/view", noticeController.showNotice);
+router.get("/view", storeUrl, noticeController.showNotice);
 
 // 3. 글 작성
 router.get("/write", /*관리자 로그인확인*/ noticeController.showWritePage);

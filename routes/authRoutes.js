@@ -10,10 +10,49 @@ const member = require('../models/member');
 router.get("/signup", isNotLoggedIn, memberController.showSignupPage);
 router.post("/signup", isNotLoggedIn, memberController.createMember);
 router.get("/login", isNotLoggedIn, memberController.login);
-router.post("/login", isNotLoggedIn, passport.authenticate("local", {
+//로그인 리디렉션 실패 231201
+router.post("/login", isNotLoggedIn, (
+  passport.authenticate("local", {
     failureRedirect: "/auth/login",
-    successRedirect: "/",
-}));
+    successRedirect: "/"//req.session.previousUrl || "/",
+  })
+));
+// router.post('/login', passport.authenticate('local', {
+//     failureRedirect: "/auth/login",
+//     successRedirect: (req, res) => {
+//       const redirectTo = req.session.previousUrl || '/';
+//       delete req.session.previousUrl; //clear the url
+//       res.redirect(redirectTo);
+//     }
+//   })
+//   );
+
+// router.post("/login", isNotLoggedIn, (req, res) => {
+//   passport.authenticate("local", (err, user, info) => {
+//       if (err) {
+//           return next(err);
+//       }
+//       if (!user) {
+//           // Authentication failed
+//           return res.redirect("/auth/login");
+//       }
+
+//       // Authentication succeeded
+//       req.logIn(user, (loginErr) => {
+//           if (loginErr) {
+//               return res.redirect("/auth/login");
+//           }
+
+//           // Redirect to the previous URL or the default "/"
+//           return res.redirect(req.session.previousUrl || "/");
+//       });
+//   })(req, res);
+// });
+
+// router.post("/login", isNotLoggedIn, passport.authenticate("local", {
+//   failureRedirect: "/auth/login",
+//   successRedirect: req.session.previousUrl || "/",
+// }));
 router.get("/logout", isLoggedIn, memberController.logout);
 router.get("/findId", isNotLoggedIn, memberController.showFindIdPage);
 router.post("/findId", isNotLoggedIn, memberController.showFoundId);

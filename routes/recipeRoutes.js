@@ -4,11 +4,11 @@ const { db, sequelize } = require('../models/index');
 
 const recipeController = require('../controllers/recipeController');
 const errorController = require('../controllers/errorController');
-const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel } = require('./middlewares');
+const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, storeUrl } = require('./middlewares');
 
 // ⚠️1) 메인 레시피, 5위까지 + 추천
 // router.get("/", recipeController.showMainPage);
-router.get("/", async (req, res)=>{
+router.get("/", storeUrl, async (req, res)=>{
     try{
         const data = await db.post.findAll({
             // attributes: ['recipe_id'],
@@ -29,7 +29,7 @@ router.get("/", async (req, res)=>{
 
 // ⚠️2) 전체 레시피 목록 - ✅최신순, ✅조회수순, 좋아요순, + 페이지네이션
 // router.get("/list", setDBModel(db.recipe), getPaginationInfo, recipeController.showRecipeListPage);
-router.get("/list", setDBModel(db.recipe), getPaginationInfo, (req, res)=>{
+router.get("/list", storeUrl, setDBModel(db.recipe), getPaginationInfo, (req, res)=>{
     // 테이블 정보만 들어있음. + tag, ingredient, step은 없음.
     // getPaginationInfo 정보 존재확인
     if(!res.locals.paginationInfo || !res.locals.dataList){
@@ -57,7 +57,7 @@ router.get("/list", setDBModel(db.recipe), getPaginationInfo, (req, res)=>{
 // 레시피 보여주기
 // router.get("/view", recipeController.showRecipe);
 // showRecipe에서 ejs 파일내부에 작성자가 맞는지 확인하고, 맞으면 수정/삭제 버튼 보여줄 것.
-router.get("/view", async(req, res)=>{
+router.get("/view", storeUrl, async(req, res)=>{
 
 })
 
@@ -65,7 +65,7 @@ router.get("/view", async(req, res)=>{
 // query로 검색어랑 검색 조건 입력 받기
 // router.get("/search", recipeController.searchRecipe);
 // ?search=xxx로 하면 미들웨어 setDBModel에서 설정함.
-router.get("/search", setDBModel, getPaginationInfo, (req, res)=>{
+router.get("/search", storeUrl, setDBModel, getPaginationInfo, (req, res)=>{
     if(!res.locals.paginationInfo || !res.locals.dataList){
         console.log("[ERROR] There's no pagination information or data list. - /search");
         res.redirect("/list");

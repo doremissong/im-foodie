@@ -2,7 +2,7 @@
 const { db, sequelize } = require('../models/index');
 const { Op } = require('sequelize');
 const path = require('path');
-// const { getPaginationInfo } = require('./middlewares');
+const { storeUrl, redirect } = require('../routes/middlewares');
 
 /*
 * 게시판 관련 기능
@@ -127,85 +127,97 @@ module.exports = {
             obj.pagination = res.locals.paginationInfo;
             obj.dataList = res.locals.dataList;
             obj.pathname = req.params.category? '/'+req.params.category: '';
+            // storeUrl(req,res);
             res.render('board', obj);
         } else {
             res.send("문제: 게시판 showPage");
+            res.redirect("/board");
         }
     },
     
     showPost: async (req, res) => {
-        if (req.query.no) {
-            const obj = {};
-            const postId = req.query.no;
-            
-            // 조회수 viewCount로 하고 db만 따로 설정해주고, postId는 쿼리로 받으면 된다.
-            try {
-                await sequelize.transaction(async t => {// 조회수 카운팅
-                    await db.post.update(
-                        { viewCount: sequelize.literal('viewCount + 1') },
-                        {
-                            where: { post_id: postId },
-                            transaction: t
-                        })
-                });
-                obj.post = await db.post.findOne({
-                    where: { post_id: postId }
-                });
-
-                obj.likeInfo = {};
-                // 개수도 필요한데, 유저 정보도 필요해. 이사람이 추천, 스크랩 했는지 안했는지
-                if (req.user) {
-                    obj.user = req.user;
-                    const result = await db.post_like.findOne({ attributes: ['isLiked'], where: { post_id: postId, mem_id: req.user.mem_id }});
-                    obj.likeInfo.isLiked = result? result.isLiked:false;
-                }
-                const likeCount = await db.post_like.count({ where: { post_id: postId, isLiked: { [Op.eq]: 1 } } });
-                obj.likeInfo.likeCount = likeCount;
-
-                // 댓글 정보 불러오기
-                if(res.locals.commentInfo){
-                    // obj.commentInfo = {};
-                    obj.commentInfo = res.locals.commentInfo;
-                    console.log('obj 값 확인 : ', obj.commentInfo);
-                }
-                
-                // if (res.locals.paginationInfo && res.locals.dataList) {
-                //     obj.commentInfo.pagination = res.locals.paginationInfo;
-                //     obj.commentInfo.dataList = res.locals.dataList;
-                //     obj.commentInfo.count = Object.keys(obj.commentInfo.dataList).length;
-                //     // obj.pathname = req.params.category? '/'+req.params.category: ''; // fetch 용인데,,음,,,
-                // } else{
-                //     console.log('[Error]: While setting commentInfo');
-                //     res.redirect('/');
-                // }
-
-                res.render("boardPost", obj);// { user: req.user, post: data, likeCount: likeCount,  });
-
-            } catch (err) {
-                // res.redirect(err)
-                console.log(`Error: there're some errors in showPost. ${err.message}`)
-            };
-        } else {
-            res.send('board-showPost error 이전 페이지 연결');
+        if (!req.query.no) {
+            // res.send('board-showPost error 이전 페이지 연결');
+            res.locals.second = "/board";
+            redirect(req,res);
         }
+        const obj = {};
+        const postId = req.query.no;
+        // 조회수 viewCount로 하고 db만 따로 설정해주고, postId는 쿼리로 받으면 된다.
+        try {
+            await sequelize.transaction(async t => {// 조회수 카운팅
+                await db.post.update(    // 업데이트문 결과 확인: [ 1 ]
+                    { viewCount: sequelize.literal('viewCount + 1') },
+                    {
+                        where: { post_id: postId },
+                        transaction: t
+                    });
+            });
+            obj.post = await db.post.findOne({
+                where: { post_id: postId }
+            });
+
+            obj.likeInfo = {};
+            // 개수도 필요한데, 유저 정보도 필요해. 이사람이 추천, 스크랩 했는지 안했는지
+            if (req.user) {
+                obj.user = req.user;
+                const result = await db.post_like.findOne({ attributes: ['isLiked'], where: { post_id: postId, mem_id: req.user.mem_id } });
+                obj.likeInfo.isLiked = result ? result.isLiked : false;
+            }
+            const likeCount = await db.post_like.count({ where: { post_id: postId, isLiked: { [Op.eq]: 1 } } });
+            obj.likeInfo.likeCount = likeCount;
+
+            // 댓글 정보 불러오기
+            if (res.locals.commentInfo) {
+                // obj.commentInfo = {};
+                obj.commentInfo = res.locals.commentInfo;
+                // console.log('obj 값 확인 : ', obj.commentInfo);
+            }
+
+            // if (res.locals.paginationInfo && res.locals.dataList) {
+            //     obj.commentInfo.pagination = res.locals.paginationInfo;
+            //     obj.commentInfo.dataList = res.locals.dataList;
+            //     obj.commentInfo.count = Object.keys(obj.commentInfo.dataList).length;
+            //     // obj.pathname = req.params.category? '/'+req.params.category: ''; // fetch 용인데,,음,,,
+            // } else{
+            //     console.log('[Error]: While setting commentInfo');
+            //     res.redirect('/');
+            // }
+            // storeUrl(req,res);
+            res.render("boardPost", obj);// { user: req.user, post: data, likeCount: likeCount,  });
+
+        } catch (err) {
+            // res.redirect(err)
+            console.log(`Error: there're some errors in showPost. ${err.message}`);
+            res.redirect("/board");
+        };
     },
 
     showWritePage: (req, res)=>{
-        res.render("boardWrite", {user: req.user});
+        try{
+            // storeUrl(req,res);
+            res.render("boardWrite", { user: req.user });
+        } catch(err){
+            redirect(req,res);
+        }
         // res.sendFile(path.join(__dirname, "../public/html/board_write.html"));
     },
 
     showUpdatePage: async(req, res)=>{
+        // try{
+        //     const obj ={};
+        //     if(req.user){
+        //         obj.user = req.user;
+        //     }
+    
+        //     // async 
+    
+        //     res.render("boardUpdate", obj);
+        // } catch(err){
+        //     redirect(req,res);
+        // }
         res.send('hi working?');
         // update. 1)유저아이디, 2)기존 데이터 검색
-        // const obj ={};
-        // if(req.user){
-        //     obj.user = req.user;
-        // }
-
-        // async 
-
-        // res.render("boardUpdate", obj);
     },
 
     writePost: async(req, res)=>{
@@ -214,20 +226,40 @@ module.exports = {
         // res.json(postData);
         try {
             await sequelize.transaction(async t => {
-                    await db.post.create(postData, { transaction: t });
+                //  const data 붙임
+                    const result = await db.post.create(postData, { transaction: t });
+                    console.log('create 결과: ',result);
                     console.log('uploading post success!')
-                    res.locals.redirect = "/";
-                    res.redirect("/board");
+                    res.redirect(`/board/post?no=${result.dataValues.post_id}`);
             })
         } catch (err) {
             console.log(`Error saving post: ${err.message}`);
-            res.redirect("/board");
+            // res.redirect("/board");
+            res.locals.secondUrl = "/board";
+            redirect(req, res);
         }
     },
 
     //게시글 수정
     updatePost: async(req, res) => {
-        
+        // update 결과값도 확인하기
+        var postData = getPostParams(req.body, 0, req.user.mem_id);
+        console.log('test', postData);
+        // res.json(postData);
+        try {
+            await sequelize.transaction(async t => {
+                //  const data 붙임
+                    const result = await db.post.create(postData, { transaction: t });
+                    console.log('update 결과: ',result);
+                    console.log('uploading post success!')
+                    res.redirect(`/board/post?no=${result.dataValues.post_id}`);
+            })
+        } catch (err) {
+            console.log(`Error saving post: ${err.message}`);
+            // res.redirect("/board");
+            res.locals.secondUrl = "/board";
+            redirect(req, res);
+        }
     },
 
     deletePost: async(req, res)=>{
@@ -287,9 +319,11 @@ module.exports = {
         if(!req.user){
             console.log('[Wrong Access] This user is not logged in.');
             res.redirect('/board');
+            // res.send('req.user없음');
         }
         if(!req.query.no){
             console.log('[Wrong Access] This user is approaching in the wrong way. There is no post number');
+            //previousUrl로 이동
         }
         const memId = req.user.mem_id;
         const postId = req.query.no;
@@ -306,10 +340,15 @@ module.exports = {
             // console.log('[checkWriter] check result. isWriter: ',check.dataValues);//,isWriter&& memId == isWriter.post.writer_id );
             if(check&& memId == check.dataValues.writer_id ){
                 // console.log('results: ', check&& memId == check.dataValues.writer_id );
+                // storeUrl(req,res);
+                // console.log(req.session.previousUrl);
                 next();
+                // res.send(req.session.previousUrl);
             } else{
                 console.log('checkwriter 문제 ');
-                res.redirect('/board');
+                // res.redirect('/board');
+                redirect(req,res);
+                // res.send('뭔가잘못');
             }
             // console.timeEnd('select more than 2');
         } catch(err){
@@ -424,7 +463,7 @@ module.exports = {
     },
     getCommentInfo: async (req, res, next)=>{
         // console.log('[getCommentInfo] 도착');
-        console.log('[getCommentInfo] Checking data list -[getComment]', res.locals.dataList);
+        // console.log('[getCommentInfo] Checking data list -[getComment]', res.locals.dataList);
         if (res.locals.paginationInfo && res.locals.dataList) {
             res.locals.commentInfo={};
             res.locals.commentInfo.pagination = res.locals.paginationInfo;
@@ -439,7 +478,7 @@ module.exports = {
     },
     createComment: async (req, res, next) => {
         // console.log('[createComment] 도착');
-        console.log('[createComment] postId랑 content - /[newComment]', req.body.postId, req.body.content);
+        // console.log('[createComment] postId랑 content - /[newComment]', req.body.postId, req.body.content);
         // if문으로 postId, content 잇을때 조건 걸어야할까?
         try{
             await sequelize.transaction(async t => {
@@ -456,7 +495,7 @@ module.exports = {
         }
     },
     showComment: async(req, res)=>{
-        console.log('[showComment] test data(content):', req.body.content, '#comment: ', res.locals.commentInfo.count);
+        // console.log('[showComment] test data(content):', req.body.content, '#comment: ', res.locals.commentInfo.count);
         const obj ={};
         obj.success =true;
         obj.page = res.locals.commentInfo.pagination.totalPage;

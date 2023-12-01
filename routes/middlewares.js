@@ -8,7 +8,7 @@ exports.isLoggedIn = (req, res, next) => {
     } else {
         //res.status(403).send('로그인 필요');
         res.redirect('/auth/login');    //이전 화면으로 돌아가는 건 어떻게 할까. 메인으로 돌아가면 좀 그래.
-        next();
+        // next();
     }
 };
 
@@ -226,6 +226,22 @@ exports.getPaginationInfo = async (req, res, next)=>{
     // console.log('middleware - datalist chck ', res.locals.dataList);
     return next();
 }
+
+// create, update, delete 에는 두지 말고, / myroom은 로그인 안하면 못보고. 근데 이전페이지로 돌아가는게 로그인한 상황에서 필요할까ㅓ?
+exports.storeUrl = (req, res, next)=>{
+    req.session.previousUrl = req.originalUrl;
+    // console.log('req.url: ', req.originalUrl);
+    console.log('현재 세션 url:',  req.session);//.previousUrl);
+    next();
+}
+// ⚠️ 지워야하나.
+exports.redirect = (req, res)=>{
+    const previousUrl = req.session.previousUrl || '/';
+    res.redirect(previousUrl);
+}
+
+
+
 // module.exports = { isLoggedIn, isNotLoggedIn };
 
 // exports.generateRandomPassword = ()=>{

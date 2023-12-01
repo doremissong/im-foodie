@@ -4,7 +4,7 @@ const { db, sequelize } = require('../models/index');
 const Op = sequelize.Op;
 const path = require('path');
 const bcrypt = require('bcryptjs');
-const { isEmpty } = require('../routes/middlewares');
+const { isEmpty, redirect } = require('../routes/middlewares');
 const transporter = require('../config/email');
 
 // __dirname === C:\Users\zelly\Desktop\imfoodie\im-foodie\controllers
@@ -161,6 +161,7 @@ module.exports = {
             if (err) { console.log(err); }
             console.log('[After logout]');
             res.redirect('/');
+            // redirect(req,res);
         });
     },
 

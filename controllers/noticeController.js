@@ -11,7 +11,7 @@ module.exports = {
                 obj.dataList = res.locals.dataList;
                 // console.log(`[TEST] SHOWMAINPAGE`, obj);
                 // obj.operator = req.operator;
-                res.render('noticeList', obj);
+                res.render('notice', obj);
             // } catch (err){
             //     console.log(`[ERROR] showMainPage check getPaginationInfo ${err}`);
             //     res.redirect('/');
