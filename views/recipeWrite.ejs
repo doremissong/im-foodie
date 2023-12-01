@@ -1,0 +1,66 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/recipeWrite.css">
+
+<!-- SECTION -->
+<section>
+
+    <!-- 전체 틀 -->
+    <div class="recipe-write-section">
+
+        <!-- 글 작성 틀 -->
+        <div class="recipe-write-wrap">
+
+            <!-- 레시피 작성하기와 밑줄 -->
+            <div class="recipe-write-main">
+                레시피 작성하기
+            </div>
+
+            <!-- 레시피 작성 폼 -->
+            <form name="recipe-write-form" method="post">
+
+                <!-- 레시피 작성 div -->
+                <div class="recipe-form-box">
+
+                    <!-- 제목과 태그 박스 -->
+                    <div class="recipe-write-box">
+
+                        <!-- 제목 박스 -->
+                        <div class="recipe-write-title">
+                            <input type="text" name="title" placeholder="제목" value="" required />
+                        </div>
+
+                        <!-- 태그 선택 checkbox 박스 -->
+                        <div class="recipe-write-tag">
+                            <!-- required 어카지... 최소 하나 선택하게끔 -->
+                            <label><input type="checkbox" name="tag" value="01"> 초보자</label>
+                            <label><input type="checkbox" name="tag" value="02"> 야식</label>
+                            <label><input type="checkbox" name="tag" value="03"> 집밥</label>
+                            <label><input type="checkbox" name="tag" value="04"> 또뭐하지</label>
+                        </div>
+
+                    </div>
+
+                    <!-- 썸네일(레시피 전체리스트에 보여지는 대표이미지) 업로드 -->
+                    <div class="">
+                        
+                    </div>
+
+                    <!-- 글 작성하기 -->
+                    <div class="board-write-content">
+                        <textarea name="content" placeholder="본문 내용을 입력하세요." required></textarea>
+                    </div>
+                    
+                </div>
+
+                <!-- 폼 등록 버튼 -->
+                <div class="button">
+                    <button type="submit" name="submit">등록하기</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>

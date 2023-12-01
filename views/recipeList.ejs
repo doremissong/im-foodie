@@ -15,51 +15,118 @@
                 <a href="/recipe/list">레시피 전체리스트</a>
             </div>
 
+            <!-- 태그 카테고리 -->
+            <div class="recipeList-sub">
+				<ul class="recipeList-sub-list">
+					<li class="recipeList-sub-name">
+						<a href="javascript:void(0)">#태그1</a>
+					</li>
+					<li class="recipeList-sub-name">
+						<a href="javascript:void(0)">#태그2</a>
+					</li>
+					<li class="recipeList-sub-name">
+						<a href="javascript:void(0)">#태그3</a>
+					</li>
+					<li class="recipeList-sub-name">
+						<a href="javascript:void(0)">#태그4</a>
+					</li>
+					<li class="recipeList-sub-name">
+						<a href="javascript:void(0)">#태그5</a>
+					</li>
+				</ul>
+			</div>
+
         </div>
+
+        <!-- 레시피 작성 버튼 -->
+        <div class="write-box">
+			<% if(typeof user != "undefined"){ %>
+				<!-- 로그인 상태일 시 -->
+				<a href="/recipe/write">
+					<button class="write-button">
+						레시피 작성하기
+					</button>
+				</a>
+			<% } else{ %>
+				<!-- 비로그인 -->
+				<button class="write-button" onclick="alert('로그인 후 이용 가능')">
+					레시피 작성하기
+				</button>
+			<% } %>
+		</div>
 
         <!-- 레시피 담는 div -->
         <div class="recipeList-content">
             
-            <!-- 레시피 하나, 반복하기 -->
-            <div class="recipe-box">
+            <!-- 레시피 하나, 3번 반복하기 -->
+            <% for(var i = 0; i < 3; i++) { %>
+                <div class="recipe-box">
 
-                <!-- 대표이미지 박스 -->
-                <div class="recipe-img-box">
+                    <!-- 이미지와 태그 박스 -->
+                    <div class="recipe-imgntag">
 
-                </div>
+                        <!-- 대표이미지 박스 -->
+                        <div class="recipe-img-box">
+                            <!-- 대표이미지 불러오기 -->
+                            <img src="/images/recipeDefault.png">
+                        </div>
 
-                <!-- 글 박스 -->
-                <div class="recipe-con-box">
+                        <!-- 태그 박스 -->
+                        <div class="recipe-tag-box">
+                            <!-- 태그 불러오기 -->
+                            <!-- checkbox 값 전부 불러오기 -->
+                            <span>
+                                #집밥
+                            </span> 
+                            <span>
+                                #초보자
+                            </span>
+                        </div>
 
-                    <!-- 제목과 날짜 박스 -->
-                    <div class="recipe-titlendate">
+                    </div>
 
-                        <!-- 제목 박스 -->
-                        <div class="recipe-title-box">
+                    <!-- 글 박스 -->
+                    <div class="recipe-con-box">
+
+                        <!-- 제목과 날짜 박스 -->
+                        <div class="recipe-titlendate">
+
+                            <!-- 제목 박스 -->
+                            <div class="recipe-title-box">
+                                <!-- 제목 불러오기 -->
+                                맛있는 닭볶음탕 만들기~!
+                            </div>
+
+                            <!-- 날짜 박스 -->
+                            <div class="recipe-date-box">
+                                <!-- 날짜 불러오기 -->
+                                2023년 11월 30일
+                            </div>
 
                         </div>
 
-                        <!-- 날짜 박스 -->
-                        <div class="recipe-date-box">
+                        <!-- 소개글 박스 -->
+                        <div class="recipe-intro-box">
+                            <!-- 소개글 불러오기 -->
+                            초보자도 만들 수 있는 닭볶음탕~!
+                            치킨 말고 닭볶음탕 해 드세용
+                        </div>
 
+                        <!-- 자세히보기 박스 -->
+                        <div class="recipe-details-box">
+                            <a href="recipe/view">자세히 보기 ></a>
                         </div>
 
                     </div>
 
-                    <!-- 소개글 박스 -->
-                    <div class="recipe-intro-box">
-
-                    </div>
-
-                    <!-- 자세히보기 박스 -->
-                    <div class="recipe-details-box">
-
-                    </div>
-
                 </div>
+            <% } %>
 
+
+            <!-- 페이지네이션 -->
+            <div class="recipe-page-box">
+                1 2 3
             </div>
-
         </div>
 
     </div>

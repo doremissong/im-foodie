@@ -142,3 +142,15 @@ app.get('/recipe', (req, res) => {
 app.get('/recipe/list', (req, res) => {
   res.render('recipeList');
 })
+
+app.get('/recipe/write', (req, res) => {
+  res.render('recipeWrite');
+})
+
+app.get('/recipe/view', (req, res) => {
+  res.render('recipeView');
+})
+
+app.get('/recipe/update', (req, res) => {
+  res.render('recipeUpdate');
+})
