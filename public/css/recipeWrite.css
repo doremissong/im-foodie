@@ -28,35 +28,129 @@
 }
 
 /* 제목과 태그 박스 */
-.recipe-write-box {
+.recipe-write-titlentag {
     display: block;
-
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
+
+/* input 태그를 숨김처리 */
+/* input[type="checkbox"] { 
+    display: none;
+} */
+  
+/* 체크박스 디폴트 이미지 적용 */
+/* .checkbox_img {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('https://s.wemep.co.kr/ui/v2.8.307/dist/pc/css/spr/common.png') 0 -438px no-repeat;
+    vertical-align: top;
+} */
+  
+/* 체크되었을 때 background-position 변경 */
+/* input[id="chk"]:checked + label span {
+    background-position: -75px -438px;
+} */
 
 /* 제목 박스 */
 .recipe-write-title {
-    border: 1px solid rgb(114, 39, 114);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(114, 39, 114);
 }
 
-.recipe-write-box input[name="title"] {
-    width: 765px;
-    height: 55px;
+.recipe-write-title input[name="title"] {
+    width: 930px;
+    height: 60px;
     padding: 15px;
     border: none;
+    font-size: 22px;
     box-sizing: border-box;
     border-width: 0;
 }	
 
-.recipe-write-box input[name="title"]:focus {
+.recipe-write-title input[name="title"]:focus {
     outline: none;
 }
 
 /* 태그 박스 */
 .recipe-write-tag {
-    border: 1px solid purple;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(114, 39, 114);
+    /* border: 1px solid purple; */
 }
 
+.tag-title {
+    font-size: 20px;
+    margin: 0px;
+    padding: 10px;
+    border-right: 1px solid black;
+}
+
+.tag-category {
+    margin-left: 10px;
+}
+
+.tag-category input[type="checkbox"]{
+    display: none;
+}
+
+.tag-category input[type="checkbox"] + label {
+    font-size: 18px;
+    margin-right: 5px;
+    /* border: 1px solid black; */
+}
+
+.tag-category input[type="checkbox"]:checked + label{
+    content:'';
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.tag-category input[type="checkbox"]:hover{
+    cursor: pointer;
+}
+
+.tag-category input[type="checkbox"] + label:hover {
+    cursor: pointer;
+}
+
+
+/* 썸네일과 소개글 */
+.thumbnintro-box {
+    display: flex;
+    margin: 10px;
+    border: 1px solid black;
+}
+
+/* 썸네일 */
+.thumbnail-box {
+    width: 400px;
+    border: 1px solid black;
+}
+
+/* 소개글 */
+.intro-box {
+    border: 1px solid black;
+}
+
+.intro-box textarea {
+    width: 500px;
+    height: 100px;
+}
+
+
+/* 재료 */
+.ingredients {
+    margin: 10px;
+    border: 1px solid black;
+}
+
+.ingredients textarea {
+    width: 875px;
+    height: 100px;
+}
 
 /*  */
 .board-write-content {

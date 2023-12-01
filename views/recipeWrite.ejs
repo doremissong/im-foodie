@@ -22,7 +22,7 @@
                 <div class="recipe-form-box">
 
                     <!-- 제목과 태그 박스 -->
-                    <div class="recipe-write-box">
+                    <div class="recipe-write-titlentag">
 
                         <!-- 제목 박스 -->
                         <div class="recipe-write-title">
@@ -31,23 +31,59 @@
 
                         <!-- 태그 선택 checkbox 박스 -->
                         <div class="recipe-write-tag">
-                            <!-- required 어카지... 최소 하나 선택하게끔 -->
-                            <label><input type="checkbox" name="tag" value="01"> 초보자</label>
-                            <label><input type="checkbox" name="tag" value="02"> 야식</label>
-                            <label><input type="checkbox" name="tag" value="03"> 집밥</label>
-                            <label><input type="checkbox" name="tag" value="04"> 또뭐하지</label>
+
+                            <!-- 태그 -->
+                            <div class="tag-title">
+                                태그
+                            </div>
+
+                            <!-- 태그 종류 -->
+                            <div class="tag-category">
+                                <!-- required 어카지... 최소 하나 선택하게끔 -->
+                                <input type="checkbox" id="easy" name="tag" value="01">
+                                <label for="easy">#초보자</label>
+                                <input type="checkbox" id="simple" name="tag" value="02">
+                                <label for="simple">#간단</label>
+                                <input type="checkbox" id="night" name="tag" value="03">
+                                <label for="night">#야식</label>
+                                <input type="checkbox" id="lunchbox" name="tag" value="04">
+                                <label for="lunchbox">#도시락</label>
+                                <input type="checkbox" id="party" name="tag" value="05">
+                                <label for="party">#홈파티</label>
+                                <input type="checkbox" id="health" name="tag" value="06">
+                                <label for="health">#건강식</label>
+                                <input type="checkbox" id="alcohol" name="tag" value="07">
+                                <label for="alcohol">#안주</label>
+                                <input type="checkbox" id="dessert" name="tag" value="08">
+                                <label for="dessert">#디저트</label>
+                            </div>
+
                         </div>
 
                     </div>
 
-                    <!-- 썸네일(레시피 전체리스트에 보여지는 대표이미지) 업로드 -->
-                    <div class="">
-                        
+                    <!-- 썸네일과 간략 소개글 -->
+                    <div class="thumbnintro-box">
+                        <!-- 썸네일(레시피 전체리스트에 보여지는 대표이미지) 업로드 -->
+                        <div class="thumbnail-box">
+                            썸네일 업로드 영역
+                        </div>
+
+                        <!-- 간략 소개글 적기 -->
+                        <div class="intro-box">
+                            <textarea name="intro" placeholder="소개글을 적어주세요." required></textarea>
+                        </div>
                     </div>
 
-                    <!-- 글 작성하기 -->
+                    <!-- 필요 재료 적는 칸 -->
+                    <div class="ingredients">
+                        <textarea name="ingredients" placeholder="필요한 재료들을 적어주세요." required></textarea>
+                    </div>
+
+                    <!-- 버튼 클릭시 텍스트아리아 동적 생성, 요리 단계 추가용 -->
+                    <!-- 단계별 작성하기, 단계당 이미지 하나 업로드 가능, 거기에 맞는 요리 단계 설명글 적기 -->
                     <div class="board-write-content">
-                        <textarea name="content" placeholder="본문 내용을 입력하세요." required></textarea>
+                        흠...
                     </div>
                     
                 </div>

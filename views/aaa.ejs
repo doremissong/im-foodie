@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+
+
+<SCRIPT>
+<!--
+var count = 1; // textarea 의 name 에 사용할 카운터를 설정합니다
+var num = 1; // textarea 에 디폴트로 보여줄 텍스트 번호를 설정 합니다
+
+function addBox (x) {
+    if (document.all) {  // 인터넷 익스플로러 4.0 이상이면,
+        var Commentext = '<p><textarea NAME="Comment' + count++ + '" rows="5" cols="50" style="background-color:#F5F5F5">코멘트 '+num++ +'<\/textarea>';
+        x.insertAdjacentHTML('beforeEnd', Commentext)
+    }
+    else if (document.getElementById) {  // 넷스케이프 6.0 이상이면,
+    var newArea = document.createElement('textarea');
+    newArea.name = 'Comment' + count++;
+    newArea.rows = 5;
+    newArea.cols = 50;
+    x.appendChild(document.createElement('p'));
+    x.appendChild(newArea);
+  }
+ else if (document.layers) {  // 넷스케이프 4.0 이상이면,
+    var newLayer = new Layer (window.innerWidth);
+    var Commentext = '';
+    Commentext += '<html><body><form name="myForm">';
+    Commentext += '<textarea name="Comment" rows="5" cols="50" style="background-color:#F5F5F5">코멘트 '+num++ +'<\/textarea>';
+    Commentext += '<\/form><\/body><\/html>';
+    newLayer.document.write(Commentext);
+    newLayer.document.close();
+    newLayer.top = document.height;
+    document.height += newLayer.document.height;
+    newLayer.visibility = 'show';
+  }
+else {alert('네츠케이프와 익스플로러 4.0 이상에서만 사용할 수 있습니다')};
+}
+//-->
+</SCRIPT>
+
+
+</HEAD>
+<BODY>
+
+
+<FORM NAME="myForm" method=post action="">
+<INPUT TYPE="button" VALUE="입력영역 추가하기" onclick="addBox(this.form)">
+<INPUT TYPE="submit" value=" 전송하기 ">
+</FORM>
+
+
+</BODY>
+</HTML>

@@ -154,3 +154,8 @@ app.get('/recipe/view', (req, res) => {
 app.get('/recipe/update', (req, res) => {
   res.render('recipeUpdate');
 })
+
+
+app.get('/aaa', (req, res) => {
+  res.render('aaa');
+})
