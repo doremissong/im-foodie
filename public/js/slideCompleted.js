@@ -1,5 +1,5 @@
 $( document ).ready( function() {
-    $('.slider-wrap').slick({
+    $('.slider-wrap-completed').slick({
         slide: 'div',
         rows: 1,                    //이미지를 몇 줄로 표시할지 개수
         dots: false,                //슬라이더 아래에 도트 네비게이션 버튼 표시 여부(true or false) ▶기본값 false
@@ -21,9 +21,9 @@ $( document ).ready( function() {
         // verticalSwiping: true,      //세로 방향 스와이프 여부(true or false) ▶기본값 false
         // accessibility: true,        //접근성 여부(true or false) 기본값 false
         // appendArrows: $('#arrows'), //좌우 화살표 변경
-        prevArrow: $('.prevArrow'), //이전 화살표만 변경
+        prevArrow: $('.prevArrow-completed'), //이전 화살표만 변경
         // prevArrow: "<button type='button' class='clisk-prev'>Previous</button>",
-        nextArrow: $('.nextArrow'), //다음 화살표만 변경
+        nextArrow: $('.nextArrow-completed'), //다음 화살표만 변경
         // nextArrow: "<button type='button' class='clisk-next'>Next</button>",
         // initialSlide: 1,            //처음 보여질 슬라이드 번호 ▶기본값 0
         // centerMode: true,           //중앙에 슬라이드가 보여지는 모드 ▶기본값 false
