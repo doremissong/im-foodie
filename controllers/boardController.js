@@ -273,7 +273,7 @@ module.exports = {
         }
         const memId = req.user.mem_id;
         // query no있는지 체크
-        if (!res.query.no) {
+        if (!req.query.no) {
             console.log("There's no number of post to delete");
             res.redirect('/board');
             // res.redirect(res.locals.history);
@@ -289,8 +289,7 @@ module.exports = {
             })
             // recipeWriter.writer_id 제대로 동작할까?
             if (memId == postWriter.writer_id) {
-                console.log('로그인한 사용자:', memId, '글의 작성자: ', postWriter.writer_id);
-                next();
+                console.log('작성자임. 로그인한 사용자:', memId, '글의 작성자: ', postWriter.writer_id);
             }
         } catch (err) {
             console.log('[ERROR]: while checking if user is the writer of the post', err);
@@ -302,10 +301,12 @@ module.exports = {
         try {
             await sequelize.transaction(async t => {
                 await db.post.destroy({
-                    where: { post_no: postNo },
+                    where: { post_id: postNo },
                     transaction: t,
                 })
             })
+            console.log('게시글 삭제 완료');
+            res.redirect('/board');
         } catch (err) {
             console.log('[ERROR] While deleting a post.', err);
             res.redirect('/board');
