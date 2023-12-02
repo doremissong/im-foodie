@@ -29,10 +29,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 0
     },
-    // ISLEADER = 0,
-    // ISMEMBER = 1,
-    // 신청함
-    // 
     isConnected: {
       type: DataTypes.TINYINT,
       allowNull: false,

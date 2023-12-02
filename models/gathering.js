@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     name: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(50),
       allowNull: false,
       unique: "uc_gathering_name"
     },
@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     state: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       defaultValue: 0
     },
     maximumHeadCount: {

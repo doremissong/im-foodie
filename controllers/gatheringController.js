@@ -355,47 +355,64 @@ module.exports={
 
         // gathering, participant,apply 테이블 삭제
     deleteGather: async(req,res)=>{
+        console.log('deleteGather 도착');
+        // 역시나 req.body에 삭제할 그룹 id도 있어야함.
+        if(!req.user){
+            res.redirect('/gather');
+            console.log('[Wrong Access] This user is not logged in');
+        }
 
-    //     // 역시나 req.body에 삭제할 그룹 id도 있어야함.
-    //     // 1) 모임 삭제 = 이건 cascade로 할까. 번거로우니까.
-    //     //❤️❤️❤️❤️ 그룹 삭제될 때만 cascade??
-    //     try{
-    //         await sequelize.transaction(async t=>{
-    //             await db.gathering.destory({
-    //                 where: {
-    //                     leader_id: req.user.mem_id,
-    //                     gathering_id: req.body.gatheirng_id
-    //                 }
-    //             })
-    //         })
-    //     } catch(err){
-    //         console.log(`Error deleting gathering: ${err}`);
-    //     }
-    //     //2) participant에서 해당 그룹 삭제
-    //     try{
-    //         await sequelize.transaction(async t=>{
-    //             await db.participant.destory({
-    //                 where: {
-    //                     gathering_id: req.body.gatheirng_id
-    //                 }
-    //             })
-    //         })
-    //     } catch(err){
-    //         console.log(`Error deleting participant related gathering: ${err}`);
-    //     }
+        if(!req.query.no){
+            res.redirect('/gather');
+            console.log('[Uncertain Information] There is no gathering number');
+        }
 
-    //     // 3) 채팅 기록 삭제
-    //     try{
-    //         await sequelize.transaction(async t=>{
-    //             await db.chat.destory({
-    //                 where: {
-    //                     gathering_id: req.body.gatheirng_id
-    //                 }
-    //             })
-    //         })
-    //     } catch(err){
-    //         console.log(`Error deleting chat record related certain gathering: ${err}`);
-    //     }
+        const memId = req.user.mem_id;
+        const gatheringId = req.query.no;
+
+        // 1) 모임 삭제 = 이건 cascade로 할까. 번거로우니까.
+        //❤️❤️❤️❤️ 그룹 삭제될 때만 cascade??
+        try{
+            await sequelize.transaction(async t=>{
+                await db.gathering.destroy({
+                    where: {
+                        leader_id: memId,
+                        gathering_id: gatheringId
+                    },
+                    transaction: t
+                })
+            })
+            res.send('delete success,,!');
+        } catch(err){
+            console.log(`Error deleting gathering: ${err}`);
+            res.send('delete error');
+        }
+        // ON DELETE CASCADE로 했음!!!
+        // //2) participant에서 해당 그룹 삭제
+        // try{
+        //     await sequelize.transaction(async t=>{
+        //         await db.participant.destory({
+        //             where: {
+        //                 gathering_id: req.body.gatheirng_id
+        //             }
+        //         })
+        //     })
+        // } catch(err){
+        //     console.log(`Error deleting participant related gathering: ${err}`);
+        // }
+
+        // // 3) 채팅 기록 삭제
+        // try{
+        //     await sequelize.transaction(async t=>{
+        //         await db.chat.destory({
+        //             where: {
+        //                 gathering_id: req.body.gatheirng_id
+        //             }
+        //         })
+        //     })
+        // } catch(err){
+        //     console.log(`Error deleting chat record related certain gathering: ${err}`);
+        // }
 
     },
     // //멤버, 그룹에 신청하는건? 요청 어케 보내. 요청 또 담아야하는거얀???////////////ㄹㄹㄹ

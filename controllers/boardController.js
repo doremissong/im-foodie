@@ -279,29 +279,29 @@ module.exports = {
             // res.redirect(res.locals.history);
         }
         const postNo = req.query.no;
-        //작성자가 맞는지 체크
-        try {
-            const postWriter = await db.post.findOne({
-                attributes: ['writer_id'],
-                where: {
-                    post_id: postNo,
-                }
-            })
-            // recipeWriter.writer_id 제대로 동작할까?
-            if (memId == postWriter.writer_id) {
-                console.log('작성자임. 로그인한 사용자:', memId, '글의 작성자: ', postWriter.writer_id);
-            }
-        } catch (err) {
-            console.log('[ERROR]: while checking if user is the writer of the post', err);
-            res.redirect('/board');
-            // res.redirect(res.locals.history);
-        }
+        //작성자가 맞는지 체크 ⚠️ 굳이 체크 안해도 될 거 같은데. 세션에서 정보 가져오고.
+        // try {
+        //     const postWriter = await db.post.findOne({
+        //         attributes: ['writer_id'],
+        //         where: {
+        //             post_id: postNo,
+        //         }
+        //     })
+        //     // recipeWriter.writer_id 제대로 동작할까?
+        //     if (memId == postWriter.writer_id) {
+        //         console.log('작성자임. 로그인한 사용자:', memId, '글의 작성자: ', postWriter.writer_id);
+        //     }
+        // } catch (err) {
+        //     console.log('[ERROR]: while checking if user is the writer of the post', err);
+        //     res.redirect('/board');
+        //     // res.redirect(res.locals.history);
+        // }
     
         // 글 삭제
         try {
             await sequelize.transaction(async t => {
                 await db.post.destroy({
-                    where: { post_id: postNo },
+                    where: { post_id: postNo, writer_id: memId },// 로그인 유저로 검색하면 작성자 체크 굳이 안해도 되지
                     transaction: t,
                 })
             })

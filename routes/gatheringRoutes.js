@@ -33,7 +33,7 @@ router.post("/create", isLoggedIn, gatheringController.createGather);
 router.get("/update", isLoggedIn, gatheringController.showUpdatePage);
 router.post("/update", isLoggedIn, gatheringController.updateGather);
 
-router.post("/delete", isLoggedIn, gatheringController.deleteGather);
+router.get("/delete", isLoggedIn, gatheringController.deleteGather);
 
 // 6) 밥모임 신청하기
 // router.get("/apply", isLoggedIn, gatheringController.showGatherApplyPage);
