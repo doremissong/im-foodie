@@ -331,6 +331,38 @@ module.exports = {
             res.redirect("/auth/changePw");
         }
     },
+
+    // 테스트
+    checkMemberId: async(req, res)=>{
+        if(!req.query.memId){
+            res.json({success: false, message: '다시 시도해주세요'})
+        }
+
+        const _memId = req.query.memId;
+        console.log('[checkMemberId] memId', _memId);
+        try{
+            console.log('[checkMemberId] 도착',req.originalUrl);
+            const result = await db.member.findOne({
+                attributes: ['mem_id', 'name'],
+                where:{
+                    mem_id: _memId
+                }
+            });
+            
+            if(result && result.dataValues.mem_id == _memId){
+                // console.log('[checkMemberId] 사용중인 아이디입니다.');
+                res.json({success: false, message: '사용중인 아이디입니다.'});
+            } else{
+                // console.log('[checkMemberId] 사용 가능한 아이디입니다.')
+                res.json({success: true, message: '사용 가능한 아이디입니다.'})
+            }
+        } catch(err){
+            // res.json({success:false, message: '다시 시도해주세요'});
+            // console.log('[checkMemberId] 왜 때문에 에러?');
+            console.log('[ERROR] while checking if entered Id is already used.', err);
+            res.redirect('/');
+        }
+    }
     // 이게 될까ㅛ?
     // validate: (req, res, next)=>{
     //     req.santizeBody("email").normalizeEmail({

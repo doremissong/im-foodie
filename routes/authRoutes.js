@@ -7,6 +7,10 @@ const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
 const passport = require('passport');
 const member = require('../models/member');
 
+router.get("/test", (req, res)=>{
+  res.render("testCheckMemberId");
+})
+router.get("/duplicateCheck", memberController.checkMemberId);
 router.get("/signup", isNotLoggedIn, memberController.showSignupPage);
 router.post("/signup", isNotLoggedIn, memberController.createMember);
 router.get("/login", isNotLoggedIn, memberController.login);
