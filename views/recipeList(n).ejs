@@ -59,7 +59,7 @@
         <div class="recipeList-content">
             
             <!-- 레시피 하나, 3번 반복하기 -->
-            <% dataList.forEach((index, data)=>{ %>
+            <% for(var i = 0; i < 3; i++) { %>
                 <div class="recipe-box">
 
                     <!-- 이미지와 태그 박스 -->
@@ -75,11 +75,12 @@
                         <div class="recipe-tag-box">
                             <!-- 태그 불러오기 -->
                             <!-- checkbox 값 전부 불러오기 -->
-                            <% tags.forEach((index, tag){ %>
-                                <span>
-                                    # <%= tag.name %>
-                                </span>
-                            <% }) %>
+                            <span>
+                                #집밥
+                            </span> 
+                            <span>
+                                #초보자
+                            </span>
                         </div>
 
                     </div>
@@ -93,16 +94,13 @@
                             <!-- 제목 박스 -->
                             <div class="recipe-title-box">
                                 <!-- 제목 불러오기 -->
-                                <%= data.title %>
                                 맛있는 닭볶음탕 만들기~!
                             </div>
 
                             <!-- 날짜 박스 -->
                             <div class="recipe-date-box">
                                 <!-- 날짜 불러오기 -->
-                                <%= data.createdAt.toISOString().slice(0,4) %>년
-                                <%= data.createdAt.toISOString().slice(5,7) %>월
-                                <%= data.createdAt.toISOString().slice(8,10) %>일
+                                2023년 11월 30일
                             </div>
 
                         </div>
@@ -110,25 +108,19 @@
                         <!-- 소개글 박스 -->
                         <div class="recipe-intro-box">
                             <!-- 소개글 불러오기 -->
-                            <%= data.intro %>
                             초보자도 만들 수 있는 닭볶음탕~!
                             치킨 말고 닭볶음탕 해 드세용
                         </div>
 
-                        <div>
-                            cookTime <-- 시간 분 단위
-                            cookLevel <-- 별 5개를 버튼으로 1개면 value=1, 2개면 value =2
-                            
-                        </div>
                         <!-- 자세히보기 박스 -->
                         <div class="recipe-details-box">
-                            <a href="/recipe/view?no=<%= data.recipe_id %>">자세히 보기 ></a>
+                            <a href="/recipe/view">자세히 보기 ></a>
                         </div>
 
                     </div>
 
                 </div>
-            <% }) %>
+            <% } %>
 
 
             <!-- 페이지네이션 -->

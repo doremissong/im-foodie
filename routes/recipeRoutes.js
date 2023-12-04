@@ -19,9 +19,7 @@ router.get("/list", storeUrl, setDBModel(db.recipe), getPaginationInfo, recipeCo
 // 레시피 보여주기
 // router.get("/view", recipeController.showRecipe);
 // showRecipe에서 ejs 파일내부에 작성자가 맞는지 확인하고, 맞으면 수정/삭제 버튼 보여줄 것.
-router.get("/view", storeUrl, async(req, res)=>{
-
-})
+router.get("/view", storeUrl, recipeController.showRecipe);
 
 // 4) 검색
 // query로 검색어랑 검색 조건 입력 받기

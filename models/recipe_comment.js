@@ -1,50 +1,46 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('recipe', {
-    recipe_id: {
+  return sequelize.define('recipe_comment', {
+    recipe_comment_id: {
       autoIncrement: true,
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    writer_id: {
+    recipe_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    mem_id: {
       type: DataTypes.STRING(20),
       allowNull: false
     },
-    title: {
-      type: DataTypes.STRING(30),
+    content: {
+      type: DataTypes.TEXT,
       allowNull: false
     },
-    menu: {
-      type: DataTypes.STRING(30),
+    state: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    intro: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
-    cookTime: {
+    depth: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 30
+      defaultValue: 0
     },
-    cookLevel: {
+    group_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 3
+      defaultValue: 0
     },
-    imageURL: {
-      type: DataTypes.BLOB,
-      allowNull: true
-    },
-    viewCount: {
+    group_no: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
     }
   }, {
     sequelize,
-    tableName: 'recipe',
+    tableName: 'recipe_comment',
     timestamps: true,
     indexes: [
       {
@@ -52,7 +48,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "recipe_id" },
+          { name: "recipe_comment_id" },
         ]
       },
     ]

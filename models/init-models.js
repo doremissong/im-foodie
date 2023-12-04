@@ -12,6 +12,7 @@ var _post_comment = require("./post_comment");
 var _post_image = require("./post_image");
 var _post_like = require("./post_like");
 var _recipe = require("./recipe");
+var _recipe_comment = require("./recipe_comment");
 var _recipe_ingredients = require("./recipe_ingredients");
 var _recipe_like = require("./recipe_like");
 var _recipe_step = require("./recipe_step");
@@ -34,6 +35,7 @@ function initModels(sequelize) {
   var post_image = _post_image(sequelize, DataTypes);
   var post_like = _post_like(sequelize, DataTypes);
   var recipe = _recipe(sequelize, DataTypes);
+  var recipe_comment = _recipe_comment(sequelize, DataTypes);
   var recipe_ingredients = _recipe_ingredients(sequelize, DataTypes);
   var recipe_like = _recipe_like(sequelize, DataTypes);
   var recipe_step = _recipe_step(sequelize, DataTypes);
@@ -46,8 +48,6 @@ function initModels(sequelize) {
   member.belongsToMany(gathering, { as: 'gathering_id_gatherings', through: participant, foreignKey: "mem_id", otherKey: "gathering_id" });
   recipe.belongsToMany(tag, { as: 'tag_id_tags', through: recipe_tag, foreignKey: "recipe_id", otherKey: "tag_id" });
   tag.belongsToMany(recipe, { as: 'recipe_id_recipes', through: recipe_tag, foreignKey: "tag_id", otherKey: "recipe_id" });
-  chat.belongsTo(gathering, { as: "gathering", foreignKey: "gathering_id"});
-  gathering.hasMany(chat, { as: "chats", foreignKey: "gathering_id"});
   participant.belongsTo(gathering, { as: "gathering", foreignKey: "gathering_id"});
   gathering.hasMany(participant, { as: "participants", foreignKey: "gathering_id"});
   chat.belongsTo(member, { as: "mem", foreignKey: "mem_id"});
@@ -83,6 +83,7 @@ function initModels(sequelize) {
     post_image,
     post_like,
     recipe,
+    recipe_comment,
     recipe_ingredients,
     recipe_like,
     recipe_step,

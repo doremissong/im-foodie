@@ -1,5 +1,6 @@
 // recipe controller
 const { db, sequelize } = require("../models/index");
+const recipe = require("../models/recipe");
 
 module.exports={
     // 사용자 좋아요 테이블에서 recipe_tag나 작성한 레시피 recipe_tag 가져와서 
@@ -26,20 +27,53 @@ module.exports={
 
     showRecipeListPage: async(req, res)=>{
         // 시간순, 조회수순, 좋아요순, 💚해시태💚순으로 검색할 수 있게 
-        // recipe만 불러와도 됨.// 테이블 정보만 들어있음. + tag, ingredient, step은 없음.
+        // ⚠️recipe             --> 제목, 작성자, 메뉴, 날짜, 난이도, 시간, 이미지, 조회수 가져오기
+        // ⚠️tag                --> 이 글의 상황 태그 가져오기
         // getPaginationInfo 정보 존재확인
         if(!res.locals.paginationInfo || !res.locals.dataList){
             console.log("[ERROR] There's no pagination information or data list.");
             res.redirect("/recipe/list");
         }
         
+        if(!req.user){
+            console.log("[ERROR] This user is not logged in.");
+            res.redirect("/recipe/list");
+        }
+        const obj = {};
+        obj.user = req.user;
         try {
-            const obj = {};
+
             obj.pagination = res.locals.paginationInfo;
             obj.dataList = res.locals.dataList;
             // console.log(`[TEST] SHOWMAINPAGE`, obj);
             // obj.operator = req.operator;
-            res.render('recipeList', obj);
+            res.json(obj.dataList);
+            // console.log(obj.dataList[0]);
+
+            // dataList로 recipeId 배열 만들기
+            const recipeIds = obj.dataList.map(recipe=> recipe.dataValues.recipe_id);
+            console.log('recipeIds: ', recipeIds);
+
+            //for문으로 해서 데이터 순서대로 태그를 검색해야겠어!!!
+            await db.tag.findAll({
+                attributes:[['name', 'recipe_id']],
+                include: [
+                    {
+                    model: db.recipe_tag,
+                    where:{
+                        recipe_id: recipeIds,
+                    },
+                    as: "recipe_tags"
+                }]
+            })
+            .then(result =>{
+                console.log('조인결과:',result);
+            })
+
+            //🚩 페이지네이션 된 데이터로 tag 검색하기. 아 복잡해
+            // recipe_tag 검색하고 또  tag 검색하고
+
+            // res.render('recipeList', obj);
         } catch (err) {
             console.log(`[ERROR] showMainPage check getPaginationInfo - recipe`, err);
             res.redirect('/');
@@ -47,6 +81,13 @@ module.exports={
     },
 
     showWritePage: (req, res)=>{
+        
+        // ⚠️recipe             --> 제목, 작성자, 메뉴, 날짜, 난이도, 시간, 이미지, 조회수 가져오기
+        // ⚠️recipe_ingredient  --> 재료 가져오기
+        // ⚠️recipe_step        --> 요리 순서 가져오기
+        // ⚠️tag                --> 이 글의 상황 태그 가져오기
+        // ⚠️recipe_like --> 좋아요 수 & fetch로 좋아요 클릭
+        // ⚠️recipe_comment     --> 댓글 수, 댓글 가져오기
         try {
             const obj = {};
             obj.recipeId = req.query.recipe_no;
@@ -91,9 +132,12 @@ module.exports={
 
     showRecipe: async (req, res)=>{
         // 불러올 것. recipe_id로
-        // recipe
-        // ⚠️recipe_ingredient 
-        // ⚠️recipe_step
+        // ⚠️recipe             --> 제목, 작성자, 메뉴, 날짜, 난이도, 시간, 이미지, 조회수 가져오기
+        // ⚠️recipe_ingredient  --> 재료 가져오기
+        // ⚠️recipe_step        --> 요리 순서 가져오기
+        // ⚠️tag                --> 이 글의 상황 태그 가져오기
+        // ⚠️recipe_like --> 좋아요 수 & fetch로 좋아요 클릭
+        // ⚠️recipe_comment     --> 댓글 수, 댓글 가져오기
         if (req.query.recipe_no) {
             const recipeId = req.query.recipe_no;
             const obj = {};

@@ -9,11 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     gathering_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'gathering',
-        key: 'gathering_id'
-      }
+      allowNull: false
     },
     mem_id: {
       type: DataTypes.STRING(20),
