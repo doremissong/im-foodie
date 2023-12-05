@@ -30,54 +30,107 @@ module.exports={
         // ⚠️recipe             --> 제목, 작성자, 메뉴, 날짜, 난이도, 시간, 이미지, 조회수 가져오기
         // ⚠️tag                --> 이 글의 상황 태그 가져오기
         // getPaginationInfo 정보 존재확인
+
+        const obj = {};
+
+        // 페이지네이션 확인
         if(!res.locals.paginationInfo || !res.locals.dataList){
             console.log("[ERROR] There's no pagination information or data list.");
             res.redirect("/recipe/list");
         }
-        
-        if(!req.user){
-            console.log("[ERROR] This user is not logged in.");
-            res.redirect("/recipe/list");
+
+        // 태그 정보 확인
+        if(!res.locals.tagNameList || ! res.locals.tagIdList){
+            console.log("[ERROR] There's no tag name and id list.");
+            res.redirect("/recipe");
         }
-        const obj = {};
-        obj.user = req.user;
+
+        
+        if(req.user){
+            obj.user = req.user;
+        }
         try {
 
+            //페이지네이션
             obj.pagination = res.locals.paginationInfo;
-            obj.dataList = res.locals.dataList;
+            obj.dataList = res.locals.dataList;         //index==>0~
+            // 태그 종류 표시
+            obj.tagNameList = res.locals.tagNameList;
+            obj.tagIdList = res.locals.tagIdList;
+
             // console.log(`[TEST] SHOWMAINPAGE`, obj);
             // obj.operator = req.operator;
-            res.json(obj.dataList);
+            // res.json(obj.dataList);
             // console.log(obj.dataList[0]);
 
             // dataList로 recipeId 배열 만들기
             const recipeIds = obj.dataList.map(recipe=> recipe.dataValues.recipe_id);
             console.log('recipeIds: ', recipeIds);
 
-            //for문으로 해서 데이터 순서대로 태그를 검색해야겠어!!!
-            await db.tag.findAll({
-                attributes:[['name', 'recipe_id']],
-                include: [
-                    {
-                    model: db.recipe_tag,
-                    where:{
-                        recipe_id: recipeIds,
-                    },
-                    as: "recipe_tags"
-                }]
-            })
-            .then(result =>{
-                console.log('조인결과:',result);
-            })
+            // tag들 정리
+            // const tagList = [];
+            obj.tagList = [];
 
+            //forEach는 비동기함수 기다리지 않고, 반복문 실행
+            // 비동기함수 완료되지 않은 상태에서 res.send호출할 수 있음
+            // --> for of
+            for(const [index, id] of recipeIds.entries()){            //index 0~~
+                ;
+                obj.tagList[index]={};
+                // console.log(obj.tagList[index], '2', typeof obj.tagList[index]);
+                // obj.tagList[index].recipe_id= id;
+
+
+                const result = await db.tag.findAll({
+                    attributes: [['tag_id', 'tag_id'],['tag_name','tag_name']],
+                    include: [
+                        {
+                            model: db.recipe_tag,
+                            attributes: [['recipe_id', 'recipe_id']],
+                            where: {
+                                recipe_id: id,
+                            },
+                            as: "recipe_tags"
+                        }]
+                })
+                obj.tagList[index].tags = result.map(tag=> tag.dataValues.tag_name); 
+                // console.log(obj.tagList[index], '3', typeof obj.tagList[index]);
+
+                // 😊
+                // obj.tagList[0].tags.forEach((tag, index)=>{
+                //     console.log(index,"번재", tag);
+                // });
+                // 😊
+                // obj.tagList.forEach((tags, index)=>{
+                //     console.log('obj.tagList foreach', index, '번째:', tags.tags);
+                //     tags.tags.forEach((tag, index2)=>{
+                //         console.log('이중 forEach tag: ', tag);
+                //     })
+                // })
+
+                // obj.tagList foreach 0 번째 tags: { tags: [ '홈파티', '한식' ] }
+                // obj.tagList foreach 1 번째 tags: { tags: [ '초보자', '간단', '도시락' ] }   
+                
+
+                console.log('tagList 값 확인', obj.tagList[index]);
+                // console.log('query result check;', tagList[index].recipe_id, tagList[index].tags);
+                // console.log('tagList 값 확인', tagList[index]);
+                    // })
+            }
+            
             //🚩 페이지네이션 된 데이터로 tag 검색하기. 아 복잡해
             // recipe_tag 검색하고 또  tag 검색하고
 
-            // res.render('recipeList', obj);
         } catch (err) {
-            console.log(`[ERROR] showMainPage check getPaginationInfo - recipe`, err);
-            res.redirect('/');
+            console.log(`[ERROR] showRecipeListPage check getPaginationInfo - recipe`, err);
+            // res.redirect('/');
         }
+        
+        // res.render('recipeList(n)', obj);
+        res.render('recipeList', obj);
+        // console.log('ejs보내기전 obj 확인:', obj.tagList[0].tags);
+        // res.send('done');
+        // console.log('tagList 값 확인////', obj);
     },
 
     showWritePage: (req, res)=>{
@@ -316,6 +369,20 @@ module.exports={
         }
     },
     
+    getTagNameList: async(req, res, next)=>{
+        try {
+            const result = await db.tag.findAll({
+                attributes: [['tag_id','tag_id'], ['tag_name','tag_name']],
+            })
+
+            res.locals.tagNameList = result.map(data => data.dataValues.tag_name);
+            res.locals.tagIdList = result.map(data=> data.dataValues.tag_id);
+            next();
+        } catch (err) {
+            console.log('[ERROR] While get tagname list',err);
+            res.redirect('/recipe');
+        }
+    }
     // 태그 검색 함수
     // https://jeonst.tistory.com/35
 }
