@@ -45,10 +45,11 @@ module.exports={
             res.redirect("/recipe");
         }
 
-        
         if(req.user){
             obj.user = req.user;
         }
+
+
         try {
 
             //페이지네이션
@@ -125,11 +126,7 @@ module.exports={
             console.log(`[ERROR] showRecipeListPage check getPaginationInfo - recipe`, err);
             // res.redirect('/');
         }
-        
-        // res.render('recipeList(n)', obj);
         res.render('recipeList', obj);
-        // console.log('ejs보내기전 obj 확인:', obj.tagList[0].tags);
-        // res.send('done');
         // console.log('tagList 값 확인////', obj);
     },
 
@@ -141,8 +138,16 @@ module.exports={
         // ⚠️tag                --> 이 글의 상황 태그 가져오기
         // ⚠️recipe_like --> 좋아요 수 & fetch로 좋아요 클릭
         // ⚠️recipe_comment     --> 댓글 수, 댓글 가져오기
+        
+        const obj = {};
+        if(!res.locals.tagNameList || !res.locals.tagIdList){
+            console.log('[ERROR] There is no tag name or id list');
+            res.redirect("/recipe");
+        }
+        obj.tagNameList = res.locals.tagNameList;
+        obj.tagIdList = res.locals.tagIdList;
+
         try {
-            const obj = {};
             obj.recipeId = req.query.recipe_no;
             // obj.operator_id = req.operator.id;
             res.render('recipeWrite', obj);
@@ -152,10 +157,14 @@ module.exports={
         }
     },
 
+    // 작성한 태그도 가져오기
     showUpdatePage: async(req, res)=>{
         // recipe - title, menu,  cooktime, level, image_url (6) 수정 가능
         // ⚠️recipe_ingredient - 재료들 몽땅 수정
         // ⚠️recipe_step
+        // ⚠️tag                --> 이 글의 상황 태그 가져오기
+        // ⚠️recipe_like --> 좋아요 수 & fetch로 좋아요 클릭
+        // ⚠️recipe_comment     --> 댓글 수, 댓글 가져오기
         if (req.query.recipe_no) {
             const obj = {};
             var temp = {};
@@ -240,7 +249,6 @@ module.exports={
         // 이것도 "검색어"가 있다는 거 빼곤 showRecipeListPage랑 같음.
         // 아직 몰라
     },
-    
     createRecipe: async (req, res)=>{
         // post로 받음. //title, menu, content, cooktime, level, image_url  입력스, 이외는 자동
         
@@ -252,30 +260,121 @@ module.exports={
             console.log(`[ERROR] Req.params are not sent. - createRecipe`);
             res.redirect('/recipe');
         }
+
+        console.log(req.body);
+        console.log("태그 값이 여러개면",req.body.tag, req.body.tag);
+
         // 값 전달 잘 되면
-        const obj = {
+        const recipeObj = {
             writer_id: req.user.mem_id,
             title: req.body.title,
             menu: req.body.menu,
-            content: req.body.content,
-            cooktime: req.body.cooktime,
-            level: req.body.level,
-            imageURL: req.body.imageURL,
+            intro: req.body.intro,
+            cookTime: req.body.cooktime,
+            cookLevel: req.body.cookLevel,
+            // imageURL: req.body.imageURL,
             viewCount: 0,
         }
-        console.log(`createRecipe- obj test: ${obj.content}`);
         try {
             var data = {};
             await sequelize.transaction(async t => {
-                data = await db.recipe.create(obj, { transaction: t });
+                data = await db.recipe.create(recipeObj, { transaction: t });
             })
-            console.log(`createRecipe- data test: ${data}`);
-            res.redirect(`/recipe/view?recipe_no=${data.recipe_id}`);
+            res.locals.recipeId = data.recipe_id;
+            // console.log(`createRecipe- data test: ${data}`);
         } catch (err) {
             console.log(`[ERROR] while creating recipe - createRecipe - recipe`, err);
             res.redirect('/recipe');
         }
 
+        // recipe 생성
+        // res.locals.recipeId =0;
+
+        // tag 저장
+        const recipe_tag_data = this.setRecipeTagData(req,res);
+        // ingredients 저장
+        const ingredient_data = this.setRecipeIngredientData(req, res);
+        // step 요리 단계 저장
+        const step_data=this.setRecipeStepData(req,res);
+        // db 3개 저장
+        try{
+            await sequelize.transaction(async t=>{
+                // 태그 저장장
+                await db.recipe_tag.bulkCreate(recipe_tag_data, {transaction:t})
+                    .then(createdRows => {
+                        console.log(createdRows);
+                    })
+                    .catch(err => {
+                        console.log('[ERROR] during bulkCreate on recipe_ta', err);
+                    })
+
+                // 재료 저장
+                await db.recipe_ingredient.bulkCreate(ingredient_data)
+                    .then(createdRows => {
+                        console.log(createdRows); // 생성된 행의 정보
+                    })
+                    .catch(err => {
+                        console.error('[ERROR] during bulkCreate on recipe_ingredient', err);
+                    });
+                // 요리단계 저장
+                await db.recipe_step.bulkCreate(step_data)
+                    .then(createdRows => {
+                        console.log(createdRows);
+                    })
+                    .catch(err => {
+                        console.log('[ERROR] during bulkCreate on recipe_step', err);
+                    })
+            })
+            
+        } catch(err){
+            console.log('[ERROR] Transaction failed: ',err);
+        }
+        
+
+        
+        
+        res.redirect(`/recipe/view?recipe_no=${data.recipe_id}`);
+    },
+    setRecipeTagData:(req, res)=>{
+        const recipeId = req.locals.recipeId;
+        const tags = req.body.tag;
+        const recipe_tag_data = [];
+        for(let i =0; i<tags.length; i++){
+            const tagObj = {
+                recipe_id: recipeId,
+                tag_id: tags[i]
+            }
+            recipe_tag_data.push(tagObj);
+        };
+        return recipe_tag_data;
+    },
+    setRecipeIngredientData:(req, res)=>{
+        const recipeId = req.locals.recipeId;
+        const ingredients = req.body.ingredient;
+        const ingredient_data=[];
+        for(let i=0; i<ingredients.length; i++){
+            const ingredientObj = {
+                recipe_id: recipeId,
+                name: ingredients[i],
+            }
+            ingredient_data.push(ingredientObj);
+        };
+        return ingredient_data;
+    },
+    setRecipeStepData:(req, res)=>{
+        const recipeId = res.locals.recipeId;
+        const steps = req.body.step;
+        const step_data=[];
+        for(let i=0; i<steps.length; i++){
+            const stepObj = {
+                recipe_id: recipeId,
+                step_no: i+1,
+                content: steps[i],
+                // imageURL: 
+            }
+            step_data.push(stepObj);
+        };
+        return step_data;
     },
 
     updateRecipe: async (req, res)=>{
@@ -335,26 +434,9 @@ module.exports={
             // res.redirect(res.locals.history);
         }
         const recipeNo = req.query.no;
-        //작성자가 맞는지 체크
-        try {
-            const recipeWriter = await db.recipe.findOne({
-                attributes: ['writer_id'],
-                where: {
-                    recipe_id: recipeNo,
-                }
-            })
-            // recipeWriter.writer_id 제대로 동작할까?
-            if (memId == recipeWriter.writer_id) {
-                console.log('로그인한 사용자:', memId, '글의 작성자: ', recipeWriter.writer_id);
-                next();
-            }
-        } catch (err) {
-            console.log('[ERROR]: while checking if user is the writer of the recipe', err);
-            res.redirect('/recipe');
-            // res.redirect(res.locals.history);
-        }
 
-        // 글 삭제
+        // 글 삭제 --> recipe_tag, iingredient, step 같이 삭제.
+        // 댓글, 좋아요도 같이 삭제해야하나.
         try {
             await sequelize.transaction(async t => {
                 await db.recipe.destroy({
@@ -377,12 +459,21 @@ module.exports={
 
             res.locals.tagNameList = result.map(data => data.dataValues.tag_name);
             res.locals.tagIdList = result.map(data=> data.dataValues.tag_id);
+            // [
+            //     1, 2, 3, 4,  5,
+            //     6, 7, 8, 9, 10,
+            //    11
+            //  ]
             next();
         } catch (err) {
             console.log('[ERROR] While get tagname list',err);
             res.redirect('/recipe');
         }
     }
+
+    // 레시피 리스트 가져오는 함수, 페이지네이션 새로 해야할거 같은데
+    // 페이지네이션 함수를 또 가져오긴 그렇고, 
+    // 그전 미들웨어에서 tag, recipe_tag 조인하고 tag_name으로 recipe_id를 찾아서 그 레시피만 가져와.
     // 태그 검색 함수
     // https://jeonst.tistory.com/35
 }

@@ -40,22 +40,11 @@
                             <!-- 태그 종류 -->
                             <div class="tag-category">
                                 <!-- required 어카지... 최소 하나 선택하게끔 -->
-                                <input type="checkbox" id="easy" name="tag" value="01">
-                                <label for="easy">#초보자</label>
-                                <input type="checkbox" id="simple" name="tag" value="02">
-                                <label for="simple">#간단</label>
-                                <input type="checkbox" id="night" name="tag" value="03">
-                                <label for="night">#야식</label>
-                                <input type="checkbox" id="lunchbox" name="tag" value="04">
-                                <label for="lunchbox">#도시락</label>
-                                <input type="checkbox" id="party" name="tag" value="05">
-                                <label for="party">#홈파티</label>
-                                <input type="checkbox" id="health" name="tag" value="06">
-                                <label for="health">#건강식</label>
-                                <input type="checkbox" id="alcohol" name="tag" value="07">
-                                <label for="alcohol">#안주</label>
-                                <input type="checkbox" id="dessert" name="tag" value="08">
-                                <label for="dessert">#디저트</label>
+                                <% tagNameList.forEach((name, index)=>{ %> 
+                                    <input type="checkbox" id="<%= tagIdList[index] %>" name="tag" value="<%= tagIdList[index] %>">
+                                    <label for="<%= tagIdList[index] %>">#<%= name %></label>
+                                <% }) %>
+                                서버에선 어떻게 나오려나, value를 받으려나?
                             </div>
 
                         </div>
@@ -77,17 +66,22 @@
 
                     <!-- 필요 재료 적는 칸 -->
                     <div class="ingredients">
-                        <!-- 재료도 블로그 글에 태그 적는 것처럼 # 달고 하나씩 추가할 수 있을까?
+                        <!-- ⚠️재료도 블로그 글에 태그 적는 것처럼 # 달고 하나씩 추가할 수 있을까?
                         재료랑  -->
-                        <textarea name="ingredients" placeholder="필요한 재료들을 적어주세요." required></textarea>
+                        <textarea name="ingredient" placeholder="필요한 재료들을 적어주세요." required></textarea>
                     </div>
 
                     <!-- 글 작성하기 -->
-                    <!-- step1, step2 동적으로 생성해서 입력 받을 수 있을끼?? -->
+                    <!-- ⚠️step1, step2 동적으로 생성해서 입력 받을 수 있을끼?? -->
                     <div class="board-write-content">
-                        <textarea name="content" placeholder="본문 내용을 입력하세요." required></textarea>
+                        <div name="step">
+                            step을 동적으로 추가
+                            <textarea name="content" placeholder="본문 내용을 입력하세요." required></textarea>
+                        </div>
+                        
                     </div>
-                    
+                    cookTime,
+                    cookLevel, ⭐⭐⭐⭐⭐. value =1,2,3,4,5
                 </div>
 
                 <!-- 폼 등록 버튼 -->

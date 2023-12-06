@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('recipe_ingredients', {
+  return sequelize.define('recipe_ingredient', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -9,7 +9,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     recipe_id: {
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'recipe',
+        key: 'recipe_id'
+      }
     },
     name: {
       type: DataTypes.STRING(30),
@@ -21,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'recipe_ingredients',
+    tableName: 'recipe_ingredient',
     timestamps: true,
     indexes: [
       {
@@ -30,6 +34,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "id" },
+        ]
+      },
+      {
+        name: "FK_INGREDIENT_RECIPE_ID_idx",
+        using: "BTREE",
+        fields: [
+          { name: "recipe_id" },
         ]
       },
     ]

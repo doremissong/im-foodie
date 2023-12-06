@@ -45,7 +45,7 @@ router.get("/search", storeUrl, setDBModel, getPaginationInfo, (req, res)=>{
 })
 
 // 5) recipe writing
-router.get("/write", isLoggedIn, recipeController.showWritePage);
+router.get("/write", isLoggedIn, recipeController.getTagNameList, recipeController.showWritePage);
 router.post("/write", isLoggedIn, recipeController.createRecipe);
 
 // 6) recipe updating

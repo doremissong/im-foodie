@@ -13,7 +13,7 @@ var _post_image = require("./post_image");
 var _post_like = require("./post_like");
 var _recipe = require("./recipe");
 var _recipe_comment = require("./recipe_comment");
-var _recipe_ingredients = require("./recipe_ingredients");
+var _recipe_ingredient = require("./recipe_ingredient");
 var _recipe_like = require("./recipe_like");
 var _recipe_step = require("./recipe_step");
 var _recipe_tag = require("./recipe_tag");
@@ -36,7 +36,7 @@ function initModels(sequelize) {
   var post_like = _post_like(sequelize, DataTypes);
   var recipe = _recipe(sequelize, DataTypes);
   var recipe_comment = _recipe_comment(sequelize, DataTypes);
-  var recipe_ingredients = _recipe_ingredients(sequelize, DataTypes);
+  var recipe_ingredient = _recipe_ingredient(sequelize, DataTypes);
   var recipe_like = _recipe_like(sequelize, DataTypes);
   var recipe_step = _recipe_step(sequelize, DataTypes);
   var recipe_tag = _recipe_tag(sequelize, DataTypes);
@@ -62,8 +62,12 @@ function initModels(sequelize) {
   post.hasMany(post_image, { as: "post_images", foreignKey: "post_id"});
   post_like.belongsTo(post, { as: "post", foreignKey: "post_id"});
   post.hasMany(post_like, { as: "post_likes", foreignKey: "post_id"});
+  recipe_ingredient.belongsTo(recipe, { as: "recipe", foreignKey: "recipe_id"});
+  recipe.hasMany(recipe_ingredient, { as: "recipe_ingredients", foreignKey: "recipe_id"});
   recipe_like.belongsTo(recipe, { as: "recipe", foreignKey: "recipe_id"});
   recipe.hasMany(recipe_like, { as: "recipe_likes", foreignKey: "recipe_id"});
+  recipe_step.belongsTo(recipe, { as: "recipe", foreignKey: "recipe_id"});
+  recipe.hasMany(recipe_step, { as: "recipe_steps", foreignKey: "recipe_id"});
   recipe_tag.belongsTo(recipe, { as: "recipe", foreignKey: "recipe_id"});
   recipe.hasMany(recipe_tag, { as: "recipe_tags", foreignKey: "recipe_id"});
   recipe_tag.belongsTo(tag, { as: "tag", foreignKey: "tag_id"});
@@ -84,7 +88,7 @@ function initModels(sequelize) {
     post_like,
     recipe,
     recipe_comment,
-    recipe_ingredients,
+    recipe_ingredient,
     recipe_like,
     recipe_step,
     recipe_tag,

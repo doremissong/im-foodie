@@ -81,6 +81,7 @@ exports.setDBModel = (modelType) => {
             }
         }
 
+        //⚠️
         if (req.query.search) {
             //https://chat.openai.com/c/0a8f8a3e-4fd7-4696-b557-72feb171eb1c
             const term = req.query.search;
@@ -113,6 +114,7 @@ exports.setDBModel = (modelType) => {
         if (req.query.no) {   //해당 글의 id - 댓글 페이지네이션용
             res.locals.condition.post_id = req.query.no;
         }
+        
         if (req.query.sort) {
             const sort = req.query.sort;
             // 최신순latest = [["createdAt", "DESC"]],

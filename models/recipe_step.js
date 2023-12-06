@@ -8,8 +8,12 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     recipe_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+      references: {
+        model: 'recipe',
+        key: 'recipe_id'
+      }
     },
     step_no: {
       type: DataTypes.INTEGER,
@@ -34,6 +38,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "id" },
+        ]
+      },
+      {
+        name: "FK_STEP_RECIPE_ID_idx",
+        using: "BTREE",
+        fields: [
+          { name: "recipe_id" },
         ]
       },
     ]
