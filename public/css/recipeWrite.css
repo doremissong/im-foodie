@@ -158,8 +158,17 @@
     margin: 20px 30px 0 0;
 }
 
+.recipe-step-basic {
+    display: flex;
+}
+
+.step-image {
+    border: 1px solid black;
+    width: 300px;
+}
+
 textarea {
-    width: 100%;
+    width: 500px;
     height: 100px;
     resize: none;
     border: none;
@@ -170,7 +179,7 @@ textarea:focus {
     outline: none;
 }
 
-.recipe-step-02 {
+.recipe-step-special {
     display: none;
 }
 
