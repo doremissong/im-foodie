@@ -80,16 +80,61 @@
                         <textarea name="ingredients" placeholder="필요한 재료들을 적어주세요." required></textarea>
                     </div>
 
-                    <!-- 버튼 클릭시 텍스트아리아 동적 생성, 요리 단계 추가용 -->
+                    <!-- 버튼 클릭시 텍스트아리아 div display:none -> display:block, 요리 단계 추가용 -->
                     <!-- 단계별 작성하기, 단계당 이미지 하나 업로드 가능, 거기에 맞는 요리 단계 설명글 적기 -->
-                    <div class="board-write-content">
-                        흠...
+                    <!-- 9단계까지! -->
+                    <!-- display:none인 div에 있는 textarea required 어케 작동..? -->
+                    <div class="recipe-write-content">
+
+                        <!-- 단계 1 -->
+                        <div class="recipe-step-01">
+
+                            <!-- 텍스트아리아 -->
+                            <div class="step-area-01">
+                                <textarea name="step01" placeholder="단계 1." required></textarea>
+                            </div>
+
+                            <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
+                            <button type="button" id="addStep01">보이기</button>
+                            <button type="button" id="delStep01">감추기</button>
+
+                        </div>
+
+                        <!-- 단계 2 -->
+                        <div id="step-02" class="recipe-step-02">
+
+                            <!-- 텍스트아리아 -->
+                            <div class="step-area-02">
+                                <textarea id="stepArea02" name="step02" placeholder="단계 2." required></textarea>
+                            </div>
+
+                            <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
+                            <button type="button" id="addStep02">보이기</button>
+                            <button type="button" id="delStep02">감추기</button>
+
+                        </div>
+
+                        <!-- 단계 3 -->
+                        <div id="step-03" class="recipe-step-02">
+
+                            <!-- 텍스트아리아 -->
+                            <div class="step-area-03">
+                                <textarea id="stepArea03" name="step03" placeholder="단계 3." required></textarea>
+                            </div>
+
+                            <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
+                            <button type="button" id="addStep03">보이기</button>
+                            <button type="button" id="delStep03">감추기</button>
+                            
+                        </div>
+
+
                     </div>
                     
                 </div>
 
                 <!-- 폼 등록 버튼 -->
-                <div class="button">
+                <div class="submit-button">
                     <button type="submit" name="submit">등록하기</button>
                 </div>
 
