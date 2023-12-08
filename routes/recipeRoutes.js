@@ -8,7 +8,10 @@ const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, storeUrl } = r
 
 // ⚠️1) 메인 레시피, 5위까지 + 추천
 // router.get("/", recipeController.showMainPage);
-router.get("/", storeUrl, recipeController.showMainPage)
+router.get("/", storeUrl, recipeController.showMainPage);
+
+router.get("/test", recipeController.searchTagTable);
+// router.get("/test", recipeController.searchRecipeTable);
 
 // ⚠️2) 전체 레시피 목록 - ✅최신순, ✅조회수순, 좋아요순, + 페이지네이션
 // 🚩 pagination 함수 따로 만들고 기존 함수랑 바꾸기

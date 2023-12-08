@@ -1,6 +1,8 @@
 // recipe controller
 const { db, sequelize } = require("../models/index");
+const { Op } = require('sequelize');
 const recipe = require("../models/recipe");
+const { setPagingVar } = require("../routes/middlewares");
 
 module.exports={
     // 사용자 좋아요 테이블에서 recipe_tag나 작성한 레시피 recipe_tag 가져와서 
@@ -739,13 +741,271 @@ module.exports={
 
 
 
+
+
+    // 추후에 따로 뺄 함수들
     // 1) TAG, STEP, INGREDIENT CREATE하는 함수
 
 
 
-    // 레시피 리스트 가져오는 함수, 페이지네이션 새로 해야할거 같은데
+    // 2) 레시피 리스트 가져오는 함수, 페이지네이션 새로 해야할거 같은데
     // 페이지네이션 함수를 또 가져오긴 그렇고, 
     // 그전 미들웨어에서 tag, recipe_tag 조인하고 tag_name으로 recipe_id를 찾아서 그 레시피만 가져와.
+    searchRecipeList: async(req, res)=>{
+        // 종합
+
+        // searchTagTable의 리턴값
+        // searchStepTable의 리턴값
+        // searchIngredientTable의 리턴값
+        // searchRecipeTable의 리턴값
+
+        // 네개의 recipe_id 값을 합치기
+        // 아니면 그냥 SEQUELIZE에 맡겨버리기 WEHRE에 다 때려넣어
+
+        // RECIPE에 RECIPE_ID 검색하기
+        // 정보 OBJ에 담아 전달하기
+        // ㄱㄷ
+
+    },
+
+    searchTagTable: async(req, res)=>{
+        var temp = {};
+        try {
+            const keyword = req.query.keyword;
+            // title, menu, intro, writer_id 확인
+            temp = await db.recipe_tag.findAll({
+                attributes: ['recipe_id', 'recipe_id'],
+                include:{
+                    model: db.tag,
+                    attributes: ['tag_id', 'tag_id'],
+                    where: {
+                        tag_name : {
+                            [Op.like]: `%${keyword}%`
+                        },
+                    },
+                    as: "tag"
+                },
+                raw: true, // raw 속성을 true로 설정하면 결과를 순수한 JSON 객체로 얻을 수 있습니다.
+                // group: "recipe_id"
+            });
+        } catch (err) {
+            console.log('[ERROR] while searching recipe_tag', err);
+        }
+        if (!temp) {
+            return false;
+        } else {
+            console.log('raw: 테스트', temp);
+            const _recipeIds = temp.map(data => data.recipe_id);    //raw: 테스트 [ { recipe_id: 1 }, { recipe_id: 1 } ]
+            console.log('findAll결과:', _recipeIds);    //findAll결과: [ 1, 2 ]
+            return _recipeIds;
+        }
+    },
+    searchStepTable: async(req, res)=>{ //✅
+
+        //태그 검색어 검색
+        var temp = {};
+        try {
+            const keyword = req.query.keyword;
+            // title, menu, intro, writer_id 확인
+            temp = await db.recipe_step.findAll({
+                attributes: ['recipe_id', 'recipe_id'],
+                where: {
+                    content: {
+                        [Op.like]: `%${keyword}%`
+                    },
+                },
+                raw: true, // raw 속성을 true로 설정하면 결과를 순수한 JSON 객체로 얻을 수 있습니다.
+                group: "recipe_id"
+                // distinct: true // distinct 옵션을 사용하여 중복을 제거합니다.
+            });
+        } catch (err) {
+            console.log('[ERROR] while searching recipe_step', err);
+        }
+        if (!temp) {
+            return false;
+        } else {
+            console.log('raw: 테스트', temp);
+            const _recipeIds = temp.map(data => data.recipe_id);    //raw: 테스트 [ { recipe_id: 1 }, { recipe_id: 1 } ]
+            console.log('findAll결과:', _recipeIds);    //findAll결과: [ 1, 2 ]
+            return _recipeIds;
+        }
+    },
+    searchIngredientTable: async(req, res)=>{   //✅
+        var temp = {};
+        try {
+            const keyword = req.query.keyword;
+            // title, menu, intro, writer_id 확인
+            temp = await db.recipe_ingredient.findAll({
+                attributes: ['recipe_id', 'recipe_id'],
+                where: {
+                            name: {
+                                [Op.like]: `%${keyword}%`
+                            },
+                },
+                raw: true, // raw 속성을 true로 설정하면 결과를 순수한 JSON 객체로 얻을 수 있습니다.
+                group: "recipe_id"
+                // distinct: true // distinct 옵션을 사용하여 중복을 제거합니다.
+            });
+        } catch(err){
+            console.log('[ERROR] while searching recipe_ingredient', err);
+        }
+        if(!temp){
+            return false;
+        } else {
+            console.log('raw: 테스트', temp);
+            const _recipeIds = temp.map(data => data.recipe_id);    //raw: 테스트 [ { recipe_id: 1 }, { recipe_id: 1 } ]
+            console.log('findAll결과:', _recipeIds);    //findAll결과: [ 1, 2 ]
+            return _recipeIds;
+        }
+    },
+
+    searchRecipeTable: async(req, res)=>{   //✅
+        var temp = {};
+        try {
+            const keyword = req.query.keyword;
+            // title, menu, intro, writer_id 확인
+            temp = await db.recipe.findAll({
+                attributes: ['recipe_id', 'recipe_id'],
+                where: {
+                    [Op.or]: [
+                        {
+                            title: {
+                                [Op.like]: `%${keyword}%`
+                            },
+                        },
+                        {
+                            menu: {
+                                [Op.like]: `%${keyword}%`
+                            }
+                        },
+                        {
+                            intro: {
+                                [Op.like]: `%${keyword}%`
+                            }
+                        },
+                        {
+                            // 다 mem_id로 바꿔버려?
+                            writer_id: {
+                                [Op.like]: `%${keyword}%`
+                            }
+                        }
+                    ]
+                },
+                group: "recipe_id"
+            });
+        } catch(err){
+            console.log('[ERROR] while searching recipe_tag', err);
+        }
+        if(!temp){
+            return false;
+        } else{
+            console.log('raw: 테스트', temp);
+            const _recipeIds = temp.map(data => data.recipe_id);    //raw: 테스트 [ { recipe_id: 1 }, { recipe_id: 1 } ]
+            console.log('findAll결과:', _recipeIds);    //findAll결과: [ 1, 2 ]
+        }
+    },
+
+    
+    getPaginationInfo: async (req, res, next)=>{
+    // ❤️ condition을 req.query로 받아도 되지 않을까? 라우터가 넘 번잡해
+
+    // res.locals에 model, condition이 저장되지 않았으면 에러 페이지 이동하게 해야함.
+    const model = db.recipe;
+    const condition = res.locals.condition;
+
+    //res.redirect("/board/" + 1);
+    // 한페이지에 보여질 포스트 개수
+    var countPerPage = req.query.countperpage;
+    // 페이지 번호
+    var pageNo = req.query.pageno;
+    // 세트 사이즈
+    var setSize = req.query.setsize;
+    
+// pageNo는 현재페이지. setPagingVar는 값이 안정해졌을 때, 임의로 정하는 것임.
+    // 여기서 한 페이지당 글 개수, 페이지, 1,10까지 보여준는 거.
+    countPerPage = setPagingVar(countPerPage, 10);
+    pageNo = setPagingVar(pageNo, 1);  
+    // //❓query 스트링이 페이지 범위를 넘어가면
+    if (pageNo < 0 || pageNo > totalPage) {
+        pageNo = 1;
+    }
+    setSize = setPagingVar(setSize, 10);
+
+    // 특정 게시판도 글 개수 세기
+    var totalPost = await model.count({
+        where: condition,
+    }).catch((err) => {
+        console.log(`ERROR: while counting recipe. ${err.message}`);
+    });
+    if (totalPost < 0) {
+        totalPost = 0;
+    }
+    // // 총 페이지 수
+    var totalPage = Math.ceil(totalPost / countPerPage);
+    // // 총 세트 수
+    var totalSet = Math.ceil(totalPage / setSize) // ejs 건네줄 필욘ㄴ 없는듯
+    // 현재 세트
+    var curSet = Math.ceil(pageNo / setSize);
+    // 페이지  < 사이 값 >
+    var startPage = (curSet - 1) * setSize + 1;
+    var endPage = startPage + setSize - 1;
+    var previousPage = 0, nextPage = 0;    // 이거는 ejs에서 js 코드 써야겠다.
+    // 글 번호. 페이징할 때
+    var startItemNo = (pageNo - 1) * countPerPage;    // itemOffset이 낫겠어
+    // console.log(startItemNo, '해당 페이지의 글 번호');
+    var endItemNo = Math.min(startItemNo + countPerPage - 1, totalPost);   // 수정좀 if로 따로 하는게 낫나?
+    if (curSet == 1) {
+        previousPage = 0;// < 표시 안해
+    } else {
+        previousPage = startPage - 1;
+    }
+    if (curSet == totalSet) {   // 마지막 set이면
+        nextPage = 0; // > 표시 안해
+        endPage = totalPage;
+        endItemNo = totalPost;  //얜 별개인가?
+    } else {
+        nextPage = endPage + 1;
+    }
+
+    //위에 카운트에서도 되던게 여기선 안되는매직
+    try {
+        const dataList = await model.findAll({
+            where: condition,
+            order: res.locals.sort? res.locals.sort: [["createdAt", "DESC"]],
+            limit: countPerPage,
+            offset: startItemNo
+        });
+        res.locals.dataList = dataList;
+        // console.log('middleware - pagination - dataList 값 확인:', dataList, typeof dataList);
+    } catch (err) {
+        console.log('[Error]: while getting data from DB -mw', err.message);
+    }
+    // 빈 값은 [] == ''
+
+    paginationInfo = {};
+    paginationInfo.pageNo = pageNo; // 현재 페이지 볼드 표시
+    paginationInfo.curSet = curSet; // ⚠️필요할까?
+    paginationInfo.countPerPage = countPerPage; // ⚠️필요할까?
+    paginationInfo.setSize = setSize;   // ⚠️세트 10 사이즈 필요해?
+    paginationInfo.totalPost = totalPost; // 총 글 개수가 필요해? 글 몇개 있는지 상단에 표시하자
+    paginationInfo.totalSet = totalSet; //⚠️필요해?   몇 세트 있는지 필요해?
+    paginationInfo.totalPage = totalPage;
+    paginationInfo.startPage = startPage;   // 하단 첫번째 페이지 번호
+    paginationInfo.endPage = endPage;   // 하단 마지막 페이지 번호
+    paginationInfo.previousPage = previousPage; // 하단 < 링크
+    paginationInfo.nextPage = nextPage; // 하단 > 링크
+    paginationInfo.startItemNo = startItemNo; // 글 번호 표기할 때 필요. // 이거하면 좋겠는데.
+    paginationInfo.endItemNo = endItemNo;
+
+    // console.log('middleware - paginationinfo 값 확인:', paginationInfo);    //, typeof paginationInfo
+    res.locals.paginationInfo = paginationInfo;
+    // console.log('middleware - paginationinfo 값 확인:', res.locals.paginationInfo); 
+    // console.log('middleware - datalist chck ', res.locals.dataList);
+    return next();
+}
+
+
+
     // 태그 검색 함수
     // https://jeonst.tistory.com/35
 }
