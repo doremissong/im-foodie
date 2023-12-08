@@ -11,6 +11,7 @@ const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, storeUrl } = r
 router.get("/", storeUrl, recipeController.showMainPage)
 
 // ⚠️2) 전체 레시피 목록 - ✅최신순, ✅조회수순, 좋아요순, + 페이지네이션
+// 🚩 pagination 함수 따로 만들고 기존 함수랑 바꾸기
 router.get("/list", storeUrl, setDBModel(db.recipe), getPaginationInfo, recipeController.getTagNameList, recipeController.showRecipeListPage);
     // 좋아요 순을 여기에 넣어야할까/
 // ⚠️3) 특정 상황별 레시피 목록 ; 상황(category)별 전체, 시간, 인기순, + 페이지네이션

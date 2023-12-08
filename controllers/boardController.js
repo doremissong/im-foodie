@@ -389,7 +389,7 @@ module.exports = {
 
     // 어떻게 해야하지? setLike를 미들웨어로 두는게 나을까? 
     // like가 가능한 기능은 2가지: 1) 게시판 2) 레시피 (이후에 3) 밥모임)
-    setLike: async(req, res, next)=>{
+    setLike: async(req, res)=>{
         // mem_id, post_id, 가져오는 거.
         // 1이면 0으로 변경
         //이 이프 문 안에 넣기
@@ -465,16 +465,22 @@ module.exports = {
     getCommentInfo: async (req, res, next)=>{
         // console.log('[getCommentInfo] 도착');
         // console.log('[getCommentInfo] Checking data list -[getComment]', res.locals.dataList);
-        if (res.locals.paginationInfo && res.locals.dataList) {
+        
+        if(!res.locals.paginationInfo || !res.locals.dataList){
+            console.log('[Error]: While setting commentInfo');
+            // 에러 생기려나???
+            next(err);
+        }
+        try {
             res.locals.commentInfo={};
             res.locals.commentInfo.pagination = res.locals.paginationInfo;
             res.locals.commentInfo.dataList = res.locals.dataList;
             res.locals.commentInfo.count = await db.post_comment.count({where:{post_id: req.query.no}});
             next();
             // obj.pathname = req.params.category? '/'+req.params.category: ''; // fetch 용인데,,음,,,
-        } else{
-            console.log('[Error]: While setting commentInfo');
-            res.redirect('/');
+        } catch(err){
+            // res.redirect('/');
+            next(err);
         }
     },
     createComment: async (req, res, next) => {
