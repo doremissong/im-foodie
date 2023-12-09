@@ -21,7 +21,7 @@
 				<ul class="recipeList-sub-list">
                     <% tagNameList.forEach((name, index)=> { %> 
                         <li class="recipeList-sub-name">
-                            <a href="/recipe/list?tag=<%= name %>">#<%= name %></a>
+                            <a href="/recipe/list/<%= name %>">#<%= name %></a>
                             <!-- <%= tagIdList[index]%> 가 tagid -->
                         </li>
                     <% }) %>
@@ -126,6 +126,7 @@
             <% if (dataList == ''){ %>
                 <!-- <ul class="post-list"> -->
                     아직 레시피가 없어요. 푸디들을 위해 레시피를 공유해주세요 :D
+                    ⚠️위치 바꿔야할 거 같음. 위로
                 <!-- </ul> -->
             <% } else { %>
                 <div class="pagination-container">

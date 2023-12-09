@@ -9,7 +9,16 @@ module.exports={
     // recipe_tag 의 notice_id 찾아서 ==> recipe 테이블에서 검색한 거 
     // 일부 보여주기. 
     // 함수로 만들어야하나? limit: 주고
+    testCtrl: (req,res)=>{
+      console.log('hi = testCtrl');  
+    },
     showMainPage: async (req, res)=>{
+        try{
+            console.log(module.exports);
+            module.exports.testCtrl(req,res);
+        } catch(err){
+            console.log(err);
+        }
     // 1) 메인 레시피, 5위까지 + 추천
     // try{
     //     const data = await db.post.findAll({
@@ -67,10 +76,10 @@ module.exports={
             // console.log(obj.dataList[0]);
 
             // dataList로 recipeId 배열 만들기
-            const recipeIds = obj.dataList.map(recipe=> recipe.dataValues.recipe_id);
+            const recipeIds = obj.dataList.map(recipe=> recipe.dataValues.recipe_id);   // raw: true하고 dataValues 빼기
             console.log('recipeIds: ', recipeIds);
 
-            // tag들 정리
+            // 각 레시피의 Tag 정리
             // const tagList = [];
             obj.tagList = [];
 
@@ -94,9 +103,10 @@ module.exports={
                                 recipe_id: id,
                             },
                             as: "recipe_tags"
-                        }]
+                        }],
+                    raw: true
                 })
-                obj.tagList[index].tags = result.map(tag=> tag.dataValues.tag_name); 
+                obj.tagList[index].tags = result.map(tag=> tag.tag_name); 
                 // console.log(obj.tagList[index], '3', typeof obj.tagList[index]);
 
                 // 😊
@@ -343,11 +353,11 @@ module.exports={
 
         // 🚩 이 아래 부분을 따로 함수로 빼고 update, create할 때 적용할까?
         // tag 저장
-        const recipe_tag_data = this.setRecipeTagData(req,res);
+        const recipe_tag_data = module.exports.setRecipeTagData(req,res);
         // ingredients 저장
-        const ingredient_data = this.setRecipeIngredientData(req, res);
+        const ingredient_data = module.exports.setRecipeIngredientData(req, res);
         // step 요리 단계 저장
-        const step_data=this.setRecipeStepData(req,res);
+        const step_data=module.exports.setRecipeStepData(req,res);
         // db 3개 저장
         try{
             await sequelize.transaction(async t=>{
@@ -461,11 +471,11 @@ module.exports={
         // error부분  빼고 createRecipe랑 똑같음.
         // 2) recipe_tag, ingredient, step 다시 생성
         // tag 저장
-        const recipe_tag_data = this.setRecipeTagData(req,res);
+        const recipe_tag_data = module.exports.setRecipeTagData(req,res);
         // ingredients 저장
-        const ingredient_data = this.setRecipeIngredientData(req, res);
+        const ingredient_data = module.exports.setRecipeIngredientData(req, res);
         // step 요리 단계 저장
-        const step_data=this.setRecipeStepData(req,res);
+        const step_data=module.exports.setRecipeStepData(req,res);
         // db 3개 저장
         try{
             await sequelize.transaction(async t=>{
@@ -540,14 +550,15 @@ module.exports={
         }
     },
     
-    getTagNameList: async(req, res, next)=>{
+    getTagNameNIdList: async(req, res, next)=>{
         try {
             const result = await db.tag.findAll({
                 attributes: [['tag_id','tag_id'], ['tag_name','tag_name']],
+                raw: true,
             })
 
-            res.locals.tagNameList = result.map(data => data.dataValues.tag_name);
-            res.locals.tagIdList = result.map(data=> data.dataValues.tag_id);
+            res.locals.tagNameList = result.map(data => data.tag_name);
+            res.locals.tagIdList = result.map(data=> data.tag_id);
             // [
             //     1, 2, 3, 4,  5,
             //     6, 7, 8, 9, 10,
@@ -752,6 +763,7 @@ module.exports={
     // 페이지네이션 함수를 또 가져오긴 그렇고, 
     // 그전 미들웨어에서 tag, recipe_tag 조인하고 tag_name으로 recipe_id를 찾아서 그 레시피만 가져와.
     searchRecipeList: async(req, res)=>{
+        // ?searchType=TAG, INGREDIENT, CONTENT, TITLE, WRITER, 
         // 종합
 
         // searchTagTable의 리턴값
@@ -767,39 +779,80 @@ module.exports={
         // ㄱㄷ
 
     },
+    
+    checkSearchValue: async (req, res, next)=>{
+        console.log('1');
+        console.log(req.params.tag);
+        if(req.query.keyword || req.params.tag){
+            
+            console.log('1-1');
+            //왜 searchTagTable로 안가지?
+            const _recipeIds = await module.exports.searchTagTable(req,res);
+            console.log(_recipeIds);
+            res.locals.condition = {
+                recipe_id: _recipeIds
+            }
+            console.log(res.locals.condition);
+            next();
+        } else {
+            next();
+        }
+    },
 
+    // ⚠️⚠️⚠️Search--> !temp인 경우, 검색 0나오게  col에 없는 조건
     searchTagTable: async(req, res)=>{
+        console.log('2');
         var temp = {};
+        // 태그별로 리스트업 할때도 이거 쓸거임. showRecipeListPage
         try {
             const keyword = req.query.keyword;
-            // title, menu, intro, writer_id 확인
-            temp = await db.recipe_tag.findAll({
-                attributes: ['recipe_id', 'recipe_id'],
-                include:{
-                    model: db.tag,
-                    attributes: ['tag_id', 'tag_id'],
-                    where: {
-                        tag_name : {
-                            [Op.like]: `%${keyword}%`
-                        },
+            const tagVal = req.params.tag;
+            var condition;
+            if (keyword) {
+                condition = {
+                    tag_name: {
+                        [Op.like]: `%${keyword}%`
                     },
-                    as: "tag"
-                },
-                raw: true, // raw 속성을 true로 설정하면 결과를 순수한 JSON 객체로 얻을 수 있습니다.
-                // group: "recipe_id"
-            });
+                }
+            } else if (tagVal) {
+                condition = {
+                    tag_name: tagVal,
+                }
+                // title, menu, intro, writer_id 확인
+                temp = await db.recipe_tag.findAll({
+                    attributes: ['recipe_id', 'recipe_id'],
+                    include: {
+                        model: db.tag,
+                        attributes: ['tag_id', 'tag_id'],
+                        where: condition,
+                        as: "tag"
+                    },
+                    raw: true, // raw 속성을 true로 설정하면 결과를 순수한 JSON 객체로 얻을 수 있습니다.
+                    // group: "recipe_id"
+                });
+            }
         } catch (err) {
             console.log('[ERROR] while searching recipe_tag', err);
+            throw(err);
         }
-        if (!temp) {
+
+        if (!temp || temp.length === 0) {
+            res.locals.condition={
+                where:{ recipe_id: 0 }
+            }
             return false;
         } else {
             console.log('raw: 테스트', temp);
-            const _recipeIds = temp.map(data => data.recipe_id);    //raw: 테스트 [ { recipe_id: 1 }, { recipe_id: 1 } ]
+            const _recipeIds = temp.map(data => data.recipe_id);    //raw: 테스트 [ { recipe_id: 1 }, { recipe_id: 1 } ] 
+            // raw: 테스트 [ { recipe_id: 2, 'tag.tag_id': 1 } ]
             console.log('findAll결과:', _recipeIds);    //findAll결과: [ 1, 2 ]
+            // res.locals.condition = {
+            //     recipe_id: _recipeIds
+            // }
             return _recipeIds;
         }
     },
+    
     searchStepTable: async(req, res)=>{ //✅
 
         //태그 검색어 검색
@@ -905,7 +958,23 @@ module.exports={
         }
     },
 
-    
+    // 정렬 
+    /* if (req.query.sort) {
+        const sort = req.query.sort;
+        // 최신순latest = [["createdAt", "DESC"]],
+        // 조회수순 = [["viewCount", "DESC"]],
+        // 좋아요 순 = 이건 나중에 - 레시피, 게시판, 모임별 다 따로 
+        if (sort == "viewCount") {
+            res.locals.sort = [["viewCount", "DESC"]]
+        }
+        else if(sort == "earliest"){
+            res.locals.sort = [["createdAt", "ASC"]]
+        }
+        // else if(sort=="like"){
+        // }
+    }
+    */
+
     getPaginationInfo: async (req, res, next)=>{
     // ❤️ condition을 req.query로 받아도 되지 않을까? 라우터가 넘 번잡해
 

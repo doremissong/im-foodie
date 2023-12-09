@@ -50,7 +50,11 @@
                         </div>
 
                     </div>
-
+                    <!--  요리 시간, 요리 난이도 -->
+                    <div> 
+                        cookTime,
+                        cookLevel, ⭐⭐⭐⭐⭐. value =1,2,3,4,5
+                    </div>
                     <!-- 썸네일과 간략 소개글 -->
                     <div class="thumbnintro-box">
                         <!-- 썸네일(레시피 전체리스트에 보여지는 대표이미지) 업로드 -->
@@ -69,6 +73,9 @@
                         <!-- ⚠️재료도 블로그 글에 태그 적는 것처럼 # 달고 하나씩 추가할 수 있을까?
                         재료랑  -->
                         <textarea name="ingredient" placeholder="필요한 재료들을 적어주세요." required></textarea>
+                        + 재료 입력 | 
+                        <textarea name="amount" placeholder="ex) 500g, 100mL, 종이컵 1컵" required></textarea>
+                        재료랑 양 한 세트 이것도 동적으로 추가하고 삭제 수정정
                     </div>
 
                     <!-- 글 작성하기 -->
@@ -80,8 +87,6 @@
                         </div>
                         
                     </div>
-                    cookTime,
-                    cookLevel, ⭐⭐⭐⭐⭐. value =1,2,3,4,5
                 </div>
 
                 <!-- 폼 등록 버튼 -->
