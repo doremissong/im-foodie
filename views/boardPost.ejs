@@ -33,7 +33,7 @@
                         <li>
                             <span>
                                 <!-- 해당 글 카테고리 목록으로 이동 ex) 자유게시판이면 자유 클릭시 자유게시판 목록으로 이동 -->
-                                <a href="/board/<%= post.category %>"><%= post.category %></a>
+                                <a href="/board/<%= post.category %>"><%= post.category %>게시판</a>
                             </span>
                         </li>
                     </ul>
@@ -137,31 +137,31 @@
                     </div>
     
                     <!-- 로그인한 유저가 글 작성자일때 보이기 -->
-                    <div class="editbox">
-                        <ul>
-                            <li>
-                                <span>
-                                    <!-- 글 작성자이면 게시글 수정 페이지로 이동 -->
-                                    <a href="/board/update">수정</a>
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    <!-- 글 작성자이면 게시글 삭제 -->
-                                    <a>삭제</a>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                </div>
+                    <% if(typeof user != 'undefined' && user.mem_id == post.writer_id){ %>
+                        <div class="editbox">
+                            <ul>
+                                <li>
+                                    <span>
+                                        <!-- 글 작성자이면 게시글 수정 페이지로 이동 -->
+                                        <a href="/board/update?no=<%= post.post_id%>">수정</a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <!-- 글 작성자이면 게시글 삭제 -->
+                                        <a href="/board/delete?no=<%= post.post_id%>">삭제</a>
+                                        <!-- 정말 삭제하시겠습니까 창. yes=> /post/delete?no=<%=post.post_id%>-->
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    <% } %>
+                </div>       
             </div>
 
             <!-- 댓글 부분 -->
             <div class="comment-section">
                 <a name="comment">
-                    <!-- ⚠️확인 필요⚠️ 
-                        if (commentInfo.dataList == '') 안에 있던거 위로 빼옴-->
                     <div class="comment-view">
                         <div class="comment-title">
                             <!-- 괄호 안에 댓글수 표시 -->
@@ -170,21 +170,16 @@
                     </div>
                     <!-- 작성된 댓글이 없을 경우 -->
                     <% if (commentInfo.dataList == ''){ %>
+                        <div class="comment-view">
+                            <div class="comment-page"></div>
+                        </div>
                         <div class="comment-list">
-                            <div class="comment-list">
                                 <div class class="com-namentime">
                                     아직 댓글이 없어요!! 
                                 </div>
-                            </div>
                         </div>
                     <% } else { %>
                         <div class="comment-view">
-                            <!-- ⚠️확인 필요⚠️ 
-                                댓글수 표시 부분을 맨 위에 통합  -->
-                            <!-- <div class="comment-title"> -->
-                                <!-- 괄호 안에 댓글수 표시 -->
-                                <!-- 🗨️댓글(<%= commentInfo.count %>) -->
-                            <!-- </div> -->
                             <div class="comment-page">
                                 <!-- 댓글 페이지, 댓글이 20개 이상일 때 1,2... 페이지 나타나기. 아래는 예시 -->
                                 <% if(commentInfo.pagination.pageNo!=1){ %>
@@ -204,7 +199,7 @@
                         </div>
                         
                         <div class="comment-list">
-                            <% commentInfo.dataList.reverse().forEach((data, index)=>{ %>
+                            <% commentInfo.dataList.forEach((data, index)=>{ %>
                                 <div class="com-namentime">
                                     <div class="com-name">
                                         <!-- 댓글 작성자 이름 -->
@@ -337,13 +332,12 @@
     }
 
     document.getElementById("commentForm").addEventListener("submit", function (event) {
-        // 
         event.preventDefault(); // a, submit 태그 클릭 시, 창 이동, 새로고침 실행됨. 그 동작 방지.
         const formData = new FormData(event.target);
         const content = formData.get("content");
         // console.log('[post.ejs] postId랑 content', postId, content);
         
-        fetch(`/board/newComment?no=<%= post.post_id %>`, {   //`/board/post?no=${postId}`
+        fetch(`/board/newComment?no=<%= post.post_id %>&sort=earliest`, {   //`/board/post?no=${postId}`
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -352,9 +346,9 @@
         })
         .then(response=> response.json())
         .then(data=>{
-            // 뭘 받을거냐면, paginationInfo랑, 댓글데이터 받을거야
             document.getElementById("comment-textarea").value ="";
-            // ⚠️fetchData 호출하기. 댓글 업데이트하는
+            // fetchData 호출하기
+            fetchCommentData(data.page);    ///댓글 마지막 페이지만 가져와서 전달
             // console.log('[서버 응답]: ',data);
         })
         .catch(error=>{
@@ -365,12 +359,11 @@
 
     
         // getElementsByClassName("")[index]. 로 각 페이지 버튼 접근하자
-    // 하하, 이걸 참 어떻게 해야할지. 댓글 작성하고 댓글 페이지네이션 업데이트하면 좀 중복이잖아 대가리 미치겠네
+    // 하하, 이걸 참 어떻게 해야할지. 댓글 작성하고 댓글 페이지네이션 업데이트하면 좀 중복이잖아
     async function fetchCommentData(page){
         // test 페이지네이션이랑 데이터 목록 변경 확인
         try{
-            //⚠️ 수정하기 countperpage
-            const response = await fetch(`/board/getComment?no=${postId}&pageno=${page}&countperpage=2`);
+            const response = await fetch(`/board/getComment?no=${postId}&pageno=${page}&sort=earliest`);
             const data = await response.json();
             const pagination = data.commentInfo.pagination;
             const dataList = data.commentInfo.dataList;
@@ -400,7 +393,7 @@
                     comListDiv.innerText="";    //이거 순서랑 시간 날짜 때문에 안됐었다ㅏㅏ앙 시간 날짜 땜에 댓글이 아이디만 표시됨
             // div.comment-list>div.com-namentime>div.com-name + div.com-time
             //                  div.com-content
-                dataList.reverse().forEach((data, index)=>{
+                dataList.forEach((data, index)=>{
                     // contentComment = 
                     let nameNTimeDiv = document.createElement('div');
                     nameNTimeDiv.setAttribute("class", "com-namentime");

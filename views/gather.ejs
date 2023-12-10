@@ -15,10 +15,10 @@
 			<div class="gather-sub">
 				<ul class="gather-sub-list">
 					<li class="gather-sub-name">
-						<a href="/gather/recruiting?countperpage=9">모집중</a>
+						<a href="/gather/recruiting?countperpage=9&gsort=0">모집중</a>
 					</li>
 					<li class="gather-sub-name">
-						<a href="/gather/completed?countperpage=9">모집완료</a>
+						<a href="/gather/completed?countperpage=9&gsort=1">모집완료</a>
 					</li>
 					<li class="gather-sub-name">
 						<a href="/gather/mygroup">나의 밥모임</a>
@@ -34,7 +34,7 @@
 			<div class="gathering-title">
 				<span class="text">지금 모집중인 밥모임</span>
 				<span class="more">
-					<a href="/gather/recruiting?countperpage=9">[더보기]</a>
+					<a href="/gather/recruiting?countperpage=9&gsort=0">[더보기]</a>
 				</span>
 			</div>
 
@@ -74,7 +74,7 @@
 								</span>
 								<span class="gather-number">
 									<!-- 현인원/총원 -->
-									<%= data.maximumHeadCount %> / <%= data.currentHeadCount %>
+									<%= data.currentHeadCount %> / <%= data.maximumHeadCount %>
 								</span>
 								<!-- hover시 신청, 자세히 버튼 -->
 								<div class="button-box">
@@ -90,7 +90,7 @@
 						
 						<!-- 모집중인 모임이 6개 이상일 경우에만 추가로 출력 -->
 						<div>
-							<a href="/gather/recruiting?countperpage=9">
+							<a href="/gather/recruiting?countperpage=9&gsort=0">
 								<div class="slide-item">
 									더 많은 모임을 확인해보세요!
 								</div>
@@ -119,7 +119,7 @@
 			<div class="gathering-title">
 				<span class="text">모집 끝! 이런 모임도 있었어요 :)</span>
 				<span class="more">
-					<a href="/gather/completed?countperpage=9">[더보기]</a>
+					<a href="/gather/completed?countperpage=9&gsort=1">[더보기]</a>
 				</span>
 			</div>
 
@@ -159,7 +159,7 @@
 								</span>
 								<span class="gather-number">
 									<!-- 현인원/총원 -->
-									<%= data.maximumHeadCount %> / <%= data.currentHeadCount %>
+									<%= data.currentHeadCount %> / <%= data.maximumHeadCount %>
 								</span>
 						
 								<!-- hover시 신청, 자세히 버튼 -->
@@ -176,7 +176,7 @@
 
 						<!-- 모집완료 모임이 6개 이상일 경우만 추가로 출력 -->
 						<div>
-							<a href="/gather/completed?countperpage=9">
+							<a href="/gather/completed?countperpage=9&gsort=1">
 								<div class="slide-item">
 									더 많은 모임을 확인해보세요!
 								</div>

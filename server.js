@@ -90,11 +90,11 @@ app.get('/gather/recruiting', (req, res) => {
 })
 
 app.get('/gather/recruiting', (req, res) => {
-  res.render('gatherRecruiting');
+  res.render('gatherRecruiting(n)');
 })
 
 app.get('/gather/completed', (req, res) => {
-  res.render('gatherCompleted');
+  res.render('gatherCompleted(n)');
 })
 
 app.get('/gather/create', (req, res) => {
