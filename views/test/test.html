@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+
+<SCRIPT>
+
+var count = 1; // textarea 의 name 에 사용할 카운터를 설정합니다
+var num = 1; // textarea 에 디폴트로 보여줄 텍스트 번호를 설정 합니다
+var i = 1;
+
+function delBox (i) {
+  const box = document.getElementByName();
+  
+  box.remove();
+} 
+
+function addBox (x) {
+    var newArea = document.createElement('textarea');
+    newArea.name = 'step' + count++;
+    newArea.rows = 1;
+    newArea.cols = 10;
+    newArea.value = newArea.name;
+    // x.appendChild(document.createElement('p'));
+    x.appendChild(newArea);
+
+    var newButton = document.createElement('input');
+    newButton.type = 'button';
+    newButton.value = "x";
+    newButton.id = i++;
+    x.appendChild(newButton);
+
+}
+
+
+</SCRIPT>
+
+<link rel="stylesheet" href="/views/test/test.css">
+
+</HEAD>
+<BODY>
+
+    <FORM NAME="myForm" method=post action="">
+        <INPUT TYPE="button" VALUE="입력영역 추가하기" onclick="addBox(this.form)">
+        <INPUT TYPE="submit" value=" 전송하기 ">
+
+    </FORM>
+
+    <fieldset class="rate">
+        <input type="radio" id="rating10" name="rating" value="10"><label for="rating10" title="5점"></label>
+        <input type="radio" id="rating9" name="rating" value="9"><label class="half" for="rating9" title="4.5점"></label>
+        <input type="radio" id="rating8" name="rating" value="8"><label for="rating8" title="4점"></label>
+        <input type="radio" id="rating7" name="rating" value="7"><label class="half" for="rating7" title="3.5점"></label>
+        <input type="radio" id="rating6" name="rating" value="6"><label for="rating6" title="3점"></label>
+        <input type="radio" id="rating5" name="rating" value="5"><label class="half" for="rating5" title="2.5점"></label>
+        <input type="radio" id="rating4" name="rating" value="4"><label for="rating4" title="2점"></label>
+        <input type="radio" id="rating3" name="rating" value="3"><label class="half" for="rating3" title="1.5점"></label>
+        <input type="radio" id="rating2" name="rating" value="2"><label for="rating2" title="1점"></label>
+        <input type="radio" id="rating1" name="rating" value="1"><label class="half" for="rating1" title="0.5점"></label>
+
+    </fieldset>
+
+</BODY>
+</HTML>

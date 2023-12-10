@@ -61,7 +61,7 @@
                         <!-- 인원수 선택, 숫자를 직접 입력하거나 업다운 버튼 이용 -->
                         <td class="g-number">
                             <div class="t-box-title">모임 인원수</div>
-                            <input type="number" name="number" placeholder="인원수" min="2" max="9" value="" required>
+                            <input type="number" name="number" placeholder="인원수" min="2" max="9" value="" maxlength="1" oninput="checkMaxLength(this)" required>
                                 명
                             <div class="t-box-text">인원은 최소 2명, 최대 9명 제한입니다.</div>
                         </td>
