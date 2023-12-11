@@ -4,32 +4,60 @@
 
 <SCRIPT>
 
-var count = 1; // textarea 의 name 에 사용할 카운터를 설정합니다
-var num = 1; // textarea 에 디폴트로 보여줄 텍스트 번호를 설정 합니다
-var i = 1;
+var count = 1; // input text 의 name 에 사용할 카운터를 설정합니다
+var num = 1; // div id 설정
+var i = 1; // button id 설정
+var numm = 1;
 
-function delBox (i) {
-  const box = document.getElementByName();
-  
-  box.remove();
-} 
+// function delBox (obj) {
+//     const box = document.getElementById('box'+num);
+//     document.getElementById('box').removeChild(obj.parentNode);
+
+//     box.remove();
+// } 
 
 function addBox (x) {
-    var newArea = document.createElement('textarea');
-    newArea.name = 'step' + count++;
-    newArea.rows = 1;
-    newArea.cols = 10;
-    newArea.value = newArea.name;
-    // x.appendChild(document.createElement('p'));
-    x.appendChild(newArea);
 
+    // NewDiv 생성
+    // var newDiv = document.getElementById('gg');
+    var newDiv = document.createElement('div');
+    newDiv.id = 'box' + num++;
+    gg.appendChild(newDiv);
+
+    newDiv.style.border = '1px solid black';
+    newDiv.appendChild(document.createElement('p'));
+
+    // NewDiv에 재료 이름 입력칸 만들기
+    var newArea = document.createElement('input');
+    newArea.type = 'text'
+    newArea.name = 'ingredient' + count++;
+    newArea.value = newArea.name;
+    newDiv.appendChild(newArea);
+
+    // NewDiv에 재료 양 입력칸 만들기
+    var newArea2 = document.createElement('input');
+    newArea2.type = 'text'
+    newArea2.name = 'ingredient' + count++;
+    newArea2.value = newArea2.name;
+    // x.appendChild(document.createElement('p'));
+    newDiv.appendChild(newArea2);
+
+    // NewDiv에 삭제 버튼 만들기
     var newButton = document.createElement('input');
     newButton.type = 'button';
     newButton.value = "x";
+    newDiv.appendChild(newButton);
     newButton.id = i++;
-    x.appendChild(newButton);
 
+    newDiv.appendChild(document.createElement('p'));
+
+    newButton.onclick = function () {
+        const delBox = document.getElementById('box' + numm);
+        delBox.remove();
+        numm++;
+    }
 }
+
 
 
 </SCRIPT>
@@ -40,8 +68,33 @@ function addBox (x) {
 <BODY>
 
     <FORM NAME="myForm" method=post action="">
-        <INPUT TYPE="button" VALUE="입력영역 추가하기" onclick="addBox(this.form)">
-        <INPUT TYPE="submit" value=" 전송하기 ">
+        
+        <div class="gg" id="gg">
+            <INPUT TYPE="button" VALUE="입력영역 추가하기" onclick="addBox(this.form)">
+                아니 왜 맨 뒤에 생성돼ㅜㅜ
+                <P></P>
+        </div>
+
+
+        <div>
+            <p>
+            환장...<p></p>
+        </div>
+
+        <div>
+            해결!!<p></p>
+        </div>
+
+        <div>
+            새로운 문제... 한번 삭제하면 name이 돌아오지 않아... <p></p>
+            미친... name 문제 해결하려면 걍 diplay:none 설정 써야...
+        </div>
+
+        <div>
+
+            <INPUT TYPE="submit" value=" 전송하기 ">
+
+        </div>
 
     </FORM>
 

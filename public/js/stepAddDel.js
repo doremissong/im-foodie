@@ -7,6 +7,7 @@ window.onload = function () {
 
     add02.onclick = function () {  // 추가 버튼 클릭했을 때
         step02.style.display = 'flex';
+        add02.style.display = 'none';
     }
 
     del02.onclick = function () {  // 삭제 버튼 클릭했을 때
@@ -29,6 +30,14 @@ window.onload = function () {
                 document.getElementById("stepArea08").value='';
                 document.getElementById("stepArea09").value='';  
                 // alert("삭제되었습니다.");
+                add02.style.display = 'block';
+                add03.style.display = 'block';
+                add04.style.display = 'block';
+                add05.style.display = 'block';
+                add06.style.display = 'block';
+                add07.style.display = 'block';
+                add08.style.display = 'block';
+                add09.style.display = 'block';
             }else{
 
             }
@@ -46,6 +55,7 @@ window.onload = function () {
 
     add03.onclick = function () {  // 추가 버튼 클릭했을 때
         step03.style.display = 'flex';
+        add03.style.display = 'none';
     }
 
     del03.onclick = function () {  // 삭제 버튼 클릭했을 때
@@ -66,6 +76,13 @@ window.onload = function () {
                 document.getElementById("stepArea08").value='';
                 document.getElementById("stepArea09").value='';  
                 // alert("삭제되었습니다.");
+                add03.style.display = 'block';
+                add04.style.display = 'block';
+                add05.style.display = 'block';
+                add06.style.display = 'block';
+                add07.style.display = 'block';
+                add08.style.display = 'block';
+                add09.style.display = 'block';
             }else{
 
             }
@@ -83,6 +100,7 @@ window.onload = function () {
 
     add04.onclick = function () {  // 추가 버튼 클릭했을 때
         step04.style.display = 'flex';
+        add04.style.display = 'none';
     }
 
     del04.onclick = function () {  // 삭제 버튼 클릭했을 때
@@ -101,6 +119,12 @@ window.onload = function () {
                 document.getElementById("stepArea08").value='';
                 document.getElementById("stepArea09").value='';  
                 // alert("삭제되었습니다.");
+                add04.style.display = 'block';
+                add05.style.display = 'block';
+                add06.style.display = 'block';
+                add07.style.display = 'block';
+                add08.style.display = 'block';
+                add09.style.display = 'block';
             }else{
 
             }
@@ -118,6 +142,7 @@ window.onload = function () {
 
     add05.onclick = function () {  // 추가 버튼 클릭했을 때
         step05.style.display = 'flex';
+        add05.style.display = 'none';
     }
 
     del05.onclick = function () {  // 삭제 버튼 클릭했을 때
@@ -134,6 +159,11 @@ window.onload = function () {
                 document.getElementById("stepArea08").value='';
                 document.getElementById("stepArea09").value='';  
                 // alert("삭제되었습니다.");
+                add05.style.display = 'block';
+                add06.style.display = 'block';
+                add07.style.display = 'block';
+                add08.style.display = 'block';
+                add09.style.display = 'block';
             }else{
 
             }
@@ -151,6 +181,7 @@ window.onload = function () {
 
     add06.onclick = function () {  // 추가 버튼 클릭했을 때
         step06.style.display = 'flex';
+        add06.style.display = 'none';
     }
 
     del06.onclick = function () {  // 삭제 버튼 클릭했을 때
@@ -165,6 +196,10 @@ window.onload = function () {
                 document.getElementById("stepArea08").value='';
                 document.getElementById("stepArea09").value='';  
                 // alert("삭제되었습니다.");
+                add06.style.display = 'block';
+                add07.style.display = 'block';
+                add08.style.display = 'block';
+                add09.style.display = 'block';
             }else{
 
             }
@@ -182,6 +217,7 @@ window.onload = function () {
 
     add07.onclick = function () {  // 추가 버튼 클릭했을 때
         step07.style.display = 'flex';
+        add07.style.display = 'none';
     }
 
     del07.onclick = function () {  // 삭제 버튼 클릭했을 때
@@ -194,6 +230,9 @@ window.onload = function () {
                 document.getElementById("stepArea08").value='';
                 document.getElementById("stepArea09").value='';  
                 // alert("삭제되었습니다.");
+                add07.style.display = 'block';
+                add08.style.display = 'block';
+                add09.style.display = 'block';
             }else{
 
             }
@@ -211,6 +250,7 @@ window.onload = function () {
 
     add08.onclick = function () {  // 추가 버튼 클릭했을 때
         step08.style.display = 'flex';
+        add08.style.display = 'none';
     }
 
     del08.onclick = function () {  // 삭제 버튼 클릭했을 때
@@ -221,6 +261,8 @@ window.onload = function () {
                 document.getElementById("stepArea08").value='';   // textarea 내용 비우기
                 document.getElementById("stepArea09").value='';  
                 // alert("삭제되었습니다.");
+                add08.style.display = 'block';
+                add09.style.display = 'block';
             }else{
 
             }
@@ -238,6 +280,7 @@ window.onload = function () {
 
     add09.onclick = function () {  // 추가 버튼 클릭했을 때
         step09.style.display = 'flex';
+        add09.style.display = 'none';
     }
 
     del09.onclick = function () {  // 삭제 버튼 클릭했을 때
@@ -246,6 +289,7 @@ window.onload = function () {
                 step09.style.display = 'none';
                 document.getElementById("stepArea09").value='';   // textarea 내용 비우기
                 // alert("삭제되었습니다.");
+                add09.style.display = 'block';
             }else{
 
             }
