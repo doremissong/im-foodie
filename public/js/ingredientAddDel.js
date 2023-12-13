@@ -38,8 +38,8 @@ var IQ10 = document.getElementById("IQ10");
 
 
 // 추가하기 버튼
-var addBtn = document.getElementById('addBtn'); // 추가하기
-addBtn.onclick = function () {
+var addIQ = document.getElementById('addIQ'); // 추가하기
+addIQ.onclick = function () {
     if(IQ2.style.display != 'flex') {
         IQ2.style.display = 'flex';
     }
