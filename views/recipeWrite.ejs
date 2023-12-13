@@ -40,23 +40,23 @@
                             <!-- 태그 종류 -->
                             <div class="tag-category">
                                 <!-- required... 최소 하나 선택하게끔 -->
-                                <input type="checkbox" id="easy" name="tag" value="01">
+                                <input type="checkbox" id="easy" name="tag" value="1">
                                 <label for="easy">#초보자</label>
-                                <input type="checkbox" id="simple" name="tag" value="02">
+                                <input type="checkbox" id="simple" name="tag" value="2">
                                 <label for="simple">#간단</label>
-                                <input type="checkbox" id="night" name="tag" value="03">
+                                <input type="checkbox" id="night" name="tag" value="3">
                                 <label for="night">#야식</label>
-                                <input type="checkbox" id="lunchbox" name="tag" value="04">
+                                <input type="checkbox" id="lunchbox" name="tag" value="4">
                                 <label for="lunchbox">#도시락</label>
-                                <input type="checkbox" id="party" name="tag" value="05">
+                                <input type="checkbox" id="party" name="tag" value="5">
                                 <label for="party">#홈파티</label>
-                                <input type="checkbox" id="health" name="tag" value="06">
+                                <input type="checkbox" id="health" name="tag" value="6">
                                 <label for="health">#건강식</label>
-                                <input type="checkbox" id="alcohol" name="tag" value="07">
+                                <input type="checkbox" id="alcohol" name="tag" value="7">
                                 <label for="alcohol">#안주</label>
-                                <input type="checkbox" id="dessert" name="tag" value="08">
+                                <input type="checkbox" id="dessert" name="tag" value="8">
                                 <label for="dessert">#디저트</label>
-                                <input type="checkbox" id="dessert" name="tag" value="09">
+                                <input type="checkbox" id="dessert" name="tag" value="9">
                                 <label for="dessert">#한식</label>
                                 <input type="checkbox" id="dessert" name="tag" value="10">
                                 <label for="dessert">#중식</label>
@@ -141,9 +141,141 @@
                     </div>
 
                     <!-- 필요 재료 적는 칸 -->
-                    <!-- 동적 추가 삭제하기 하는중 어려웡... -->
-                    <div class="ingredients">
-                        <textarea name="ingredients" placeholder="필요한 재료들을 적어주세요." required></textarea>
+                    <div class="recipe-write-ingredients">  
+
+                        <!-- 재료 타이틀 -->
+                        <div class="ingredients-title">
+                            재료 입력하기
+                            <button type="button" id="addBtn">추가하기</button>
+                        </div>
+
+                        <!-- 재료 입력란 -->
+                        <div class="ingredients-box">
+
+                            <!-- 재료 1 -->
+                            <div class="recipe-ingredient-basic">
+
+                                <div class="ingredient">
+                                    <input type="text" name="ingredient1" placeholder="1" required>
+                                    <input type="text" name="quantity1" placeholder="1" required>
+                                    ,
+                                </div>
+
+                                <!-- 재료 입력란 추가하기 버튼 -->
+                                <!-- <button type="button" id="addIQ2">+</button> -->
+
+                            </div>
+
+                            <!-- 재료 2 -->
+                            <div id="IQ2" class="recipe-ingredient-special">
+
+                                <div class="ingredient">
+                                    <input type="text" name="ingredient2" id="I2" placeholder="2" required>
+                                    <input type="text" name="quantity2" id="Q2" placeholder="2" required>
+                                    <button type="button" id="delIQ2">X</button>
+                                    ,
+                                </div>
+
+                            </div>
+
+                            <!-- 재료 3 -->
+                            <div id="IQ3" class="recipe-ingredient-special">
+
+                                <div class="ingredient">
+                                    <input type="text" name="ingredient3" id="I3" placeholder="3" required>
+                                    <input type="text" name="quantity3" id="Q3" placeholder="3" required>
+                                    <button type="button" id="delIQ3">X</button>
+                                    ,
+                                </div>
+
+                            </div>
+
+                            <!-- 재료 4 -->
+                            <div id="IQ4" class="recipe-ingredient-special">
+
+                                <div class="ingredient">
+                                    <input type="text" name="ingredient4" id="I4" placeholder="4" required>
+                                    <input type="text" name="quantity4" id="Q4" placeholder="4" required>
+                                    <button type="button" id="delIQ4">X</button>
+                                    ,
+                                </div>
+
+                            </div>
+
+                            <!-- 재료 5 -->
+                            <div id="IQ5" class="recipe-ingredient-special">
+
+                                <div class="ingredient">
+                                    <input type="text" name="ingredient5" id="I5" placeholder="5" required>
+                                    <input type="text" name="quantity5" id="Q5" placeholder="5" required>
+                                    <button type="button" id="delIQ5">X</button>
+                                    ,
+                                </div>
+
+                            </div>
+
+                            <!-- 재료 6 -->
+                            <div id="IQ6" class="recipe-ingredient-special">
+
+                                <div class="ingredient">
+                                    <input type="text" name="ingredient6" id="I6" placeholder="6" required>
+                                    <input type="text" name="quantity6" id="Q6" placeholder="6" required>
+                                    <button type="button" id="delIQ6">X</button>
+                                    ,
+                                </div>
+
+                            </div>
+
+                            <!-- 재료 7 -->
+                            <div id="IQ7" class="recipe-ingredient-special">
+
+                                <div class="ingredient">
+                                    <input type="text" name="ingredient7" id="I7" placeholder="7" required>
+                                    <input type="text" name="quantity7" id="Q7" placeholder="7" required>
+                                    <button type="button" id="delIQ7">X</button>
+                                    ,
+                                </div>
+
+                            </div>
+
+                            <!-- 재료 8 -->
+                            <div id="IQ8" class="recipe-ingredient-special">
+
+                                <div class="ingredient">
+                                    <input type="text" name="ingredient8" id="I8" placeholder="8" required>
+                                    <input type="text" name="quantity8" id="Q8" placeholder="8" required>
+                                    <button type="button" id="delIQ8">X</button>
+                                    ,
+                                </div>
+
+                            </div>
+
+                            <!-- 재료 9 -->
+                            <div id="IQ9" class="recipe-ingredient-special">
+
+                                <div class="ingredient">
+                                    <input type="text" name="ingredient9" id="I9" placeholder="9" required>
+                                    <input type="text" name="quantity9" id="Q9" placeholder="9" required>
+                                    <button type="button" id="delIQ9">X</button>
+                                    ,
+                                </div>
+
+                            </div>
+
+                            <!-- 재료 6 -->
+                            <div id="IQ10" class="recipe-ingredient-special">
+
+                                <div class="ingredient">
+                                    <input type="text" name="ingredient10" id="I10" placeholder="10" required>
+                                    <input type="text" name="quantity10" id="Q10" placeholder="10" required>
+                                    <button type="button" id="delIQ10">X</button>
+                                    ,
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
 
                     <!-- 버튼 클릭시 텍스트아리아 div display:none -> display:block, 요리 단계 추가용 -->
@@ -163,16 +295,16 @@
 
                             <!-- 텍스트아리아 -->
                             <div class="step-area-basic">
-                                <textarea name="step01" placeholder="단계 1." required></textarea>
+                                <textarea name="step1" placeholder="단계 1." required></textarea>
                             </div>
 
                             <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
-                            <button type="button" id="addStep02">추가</button>
+                            <button type="button" id="addStep2">추가</button>
                         
                         </div>
 
                         <!-- 단계 2 -->
-                        <div id="step-02" class="recipe-step-special">
+                        <div id="step-2" class="recipe-step-special">
 
                             <div class="">단계 2</div>
 
@@ -183,18 +315,18 @@
 
                             <!-- 텍스트아리아 -->
                             <div class="step-area-special">
-                                <textarea id="stepArea02" name="step02" placeholder="단계 2." required></textarea>
+                                <textarea id="stepArea2" name="step2" placeholder="단계 2." required></textarea>
                             </div>
 
-                            <button type="button" id="delStep02">X</button>
+                            <button type="button" id="delStep2">X</button>
 
                             <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
-                            <button type="button" id="addStep03">추가</button>
+                            <button type="button" id="addStep3">추가</button>
 
                         </div>
 
                         <!-- 단계 3 -->
-                        <div id="step-03" class="recipe-step-special">
+                        <div id="step-3" class="recipe-step-special">
 
                             <div class="">단계 3</div>
 
@@ -205,18 +337,18 @@
 
                             <!-- 텍스트아리아 -->
                             <div class="step-area-special">
-                                <textarea id="stepArea03" name="step03" placeholder="단계 3." required></textarea>
+                                <textarea id="stepArea3" name="step3" placeholder="단계 3." required></textarea>
                             </div>
 
-                            <button type="button" id="delStep03">X</button>
+                            <button type="button" id="delStep3">X</button>
 
                             <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
-                            <button type="button" id="addStep04">추가</button>
+                            <button type="button" id="addStep4">추가</button>
                             
                         </div>
 
                         <!-- 단계 4 -->
-                        <div id="step-04" class="recipe-step-special">
+                        <div id="step-4" class="recipe-step-special">
 
                             <div class="">단계 4</div>
 
@@ -227,18 +359,18 @@
 
                             <!-- 텍스트아리아 -->
                             <div class="step-area-special">
-                                <textarea id="stepArea04" name="step04" placeholder="단계 4." required></textarea>
+                                <textarea id="stepArea4" name="step4" placeholder="단계 4." required></textarea>
                             </div>
 
-                            <button type="button" id="delStep04">X</button>
+                            <button type="button" id="delStep4">X</button>
 
                             <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
-                            <button type="button" id="addStep05">추가</button>
+                            <button type="button" id="addStep5">추가</button>
                             
                         </div>
 
                         <!-- 단계 5 -->
-                        <div id="step-05" class="recipe-step-special">
+                        <div id="step-5" class="recipe-step-special">
 
                             <div class="">단계 5</div>
 
@@ -249,18 +381,18 @@
 
                             <!-- 텍스트아리아 -->
                             <div class="step-area-special">
-                                <textarea id="stepArea05" name="step05" placeholder="단계 5." required></textarea>
+                                <textarea id="stepArea5" name="step5" placeholder="단계 5." required></textarea>
                             </div>
 
-                            <button type="button" id="delStep05">X</button>
+                            <button type="button" id="delStep5">X</button>
 
                             <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
-                            <button type="button" id="addStep06">추가</button>
+                            <button type="button" id="addStep6">추가</button>
                             
                         </div>
 
                         <!-- 단계 6 -->
-                        <div id="step-06" class="recipe-step-special">
+                        <div id="step-6" class="recipe-step-special">
 
                             <div class="">단계 6</div>
 
@@ -271,18 +403,18 @@
 
                             <!-- 텍스트아리아 -->
                             <div class="step-area-special">
-                                <textarea id="stepArea06" name="step06" placeholder="단계 6." required></textarea>
+                                <textarea id="stepArea6" name="step6" placeholder="단계 6." required></textarea>
                             </div>
 
-                            <button type="button" id="delStep06">X</button>
+                            <button type="button" id="delStep6">X</button>
 
                             <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
-                            <button type="button" id="addStep07">추가</button>
+                            <button type="button" id="addStep7">추가</button>
                             
                         </div>
 
                         <!-- 단계 7 -->
-                        <div id="step-07" class="recipe-step-special">
+                        <div id="step-7" class="recipe-step-special">
 
                             <div class="">단계 7</div>
 
@@ -293,18 +425,18 @@
 
                             <!-- 텍스트아리아 -->
                             <div class="step-area-special">
-                                <textarea id="stepArea07" name="step07" placeholder="단계 7." required></textarea>
+                                <textarea id="stepArea7" name="step7" placeholder="단계 7." required></textarea>
                             </div>
 
-                            <button type="button" id="delStep07">X</button>
+                            <button type="button" id="delStep7">X</button>
 
                             <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
-                            <button type="button" id="addStep08">추가</button>
+                            <button type="button" id="addStep8">추가</button>
                             
                         </div>
 
                         <!-- 단계 8 -->
-                        <div id="step-08" class="recipe-step-special">
+                        <div id="step-8" class="recipe-step-special">
 
                             <div class="">단계 8</div>
 
@@ -315,18 +447,18 @@
 
                             <!-- 텍스트아리아 -->
                             <div class="step-area-special">
-                                <textarea id="stepArea08" name="step08" placeholder="단계 8." required></textarea>
+                                <textarea id="stepArea8" name="step8" placeholder="단계 8." required></textarea>
                             </div>
 
-                            <button type="button" id="delStep08">X</button>
+                            <button type="button" id="delStep8">X</button>
 
                             <!-- 단계 추가 버튼. 누르면 다음 단계 div display:block으로 바꾸기 -->
-                            <button type="button" id="addStep09">추가</button>
+                            <button type="button" id="addStep9">추가</button>
                             
                         </div>
 
                         <!-- 단계 9 -->
-                        <div id="step-09" class="recipe-step-special">
+                        <div id="step-9" class="recipe-step-special">
 
                             <div class="">단계 9</div>
 
@@ -336,11 +468,11 @@
                             </div>
 
                             <!-- 텍스트아리아 -->
-                            <div class="step-area-09">
-                                <textarea id="stepArea09" name="step09" placeholder="단계 9." required></textarea>
+                            <div class="step-area-9">
+                                <textarea id="stepArea9" name="step9" placeholder="단계 9." required></textarea>
                             </div>
 
-                            <button type="button" id="delStep09">X</button>
+                            <button type="button" id="delStep9">X</button>
 
                         </div>
 
