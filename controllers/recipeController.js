@@ -11,10 +11,11 @@ module.exports={
     // 함수로 만들어야하나? limit: 주고
     testCtrl: (req,res)=>{
       console.log('hi = testCtrl');  
+    //   return 'hi';
     },
     showMainPage: async (req, res)=>{
         try{
-            console.log(module.exports);
+            // console.log(module.exports);
             module.exports.testCtrl(req,res);
         } catch(err){
             console.log(err);
@@ -303,7 +304,7 @@ module.exports={
 
     // # 해시태그로 검색은??❓
     searchRecipe: (req, res)=>{
-        
+        // ==> showSearchedRecipe 
         // 불러올 것. recipe_id로
         // recipe
         // recipe_ingredient 
@@ -311,6 +312,25 @@ module.exports={
 
         // 이것도 "검색어"가 있다는 거 빼곤 showRecipeListPage랑 같음.
         // 아직 몰라
+        module.exports.testCtrl(req,res);
+        // const test = ///
+        // if(!res.locals.paginationInfo || !res.locals.dataList){
+        //     console.log("[ERROR] There's no pagination information or data list. - /search");
+        //     res.redirect("/recipe");
+        // }
+        
+        // try{
+        //     const obj = {};
+        //     obj.pagination = res.locals.paginationInfo;
+        //     obj.dataList = res.locals.dataList;
+    
+        //     // res.render('recipeSearchResult', obj);
+        //     res.json(obj);
+        // } catch (err) {
+        //     console.log("[ERROR] While rendering recipe search List", err);
+        //     res.redirect("/list");
+        // }
+        res.json('hiiii');
     },
     createRecipe: async (req, res)=>{
         // method='POST'
@@ -756,13 +776,9 @@ module.exports={
 
     // 추후에 따로 뺄 함수들
     // 1) TAG, STEP, INGREDIENT CREATE하는 함수
-
-
-
     // 2) 레시피 리스트 가져오는 함수, 페이지네이션 새로 해야할거 같은데
     // 페이지네이션 함수를 또 가져오긴 그렇고, 
     // 그전 미들웨어에서 tag, recipe_tag 조인하고 tag_name으로 recipe_id를 찾아서 그 레시피만 가져와.
-    searchRecipeList: async(req, res)=>{
         // ?searchType=TAG, INGREDIENT, CONTENT, TITLE, WRITER, 
         // 종합
 
@@ -778,17 +794,11 @@ module.exports={
         // 정보 OBJ에 담아 전달하기
         // ㄱㄷ
 
-    },
-    
-    checkSearchValue: async (req, res, next)=>{
-        console.log('1');
-        console.log(req.params.tag);
-        if(req.query.keyword || req.params.tag){
-            
-            console.log('1-1');
-            //왜 searchTagTable로 안가지?
+    checkTagValue: async (req, res, next)=>{
+        console.log('/list/:tag 값 확인: ', req.params.tag);
+
+        if(req.params.tag){
             const _recipeIds = await module.exports.searchTagTable(req,res);
-            console.log(_recipeIds);
             res.locals.condition = {
                 recipe_id: _recipeIds
             }
@@ -797,6 +807,82 @@ module.exports={
         } else {
             next();
         }
+    },
+
+    make1DArray: (temp) =>{
+        const originalArray = temp;
+        const newArray = [];
+
+        for (let i =0; i<originalArray.length; i++){
+            if(Array.isArray(originalArray[i])){
+                // 배열일 경우, 각 요소를 새로운 배열에 push
+                newArray.push(...originalArray[i]);
+            } else{
+                // 배열이 아닌 경우 그대로 push
+                newArray.push(originalArray[i]);
+            }
+        }
+        const uniqueArray = [...new Set(newArray)];
+
+        console.log(uniqueArray);
+        return uniqueArray;
+    },
+
+    checkSearchValue: async (req, res, next)=>{
+        // 정렬 
+        /* if (req.query.sort) {
+            const sort = req.query.sort;
+            // 최신순latest = [["createdAt", "DESC"]],
+            // 조회수순 = [["viewCount", "DESC"]],
+            // 좋아요 순 = 이건 나중에 - 레시피, 게시판, 모임별 다 따로 
+            if (sort == "viewCount") {
+                res.locals.sort = [["viewCount", "DESC"]]
+            }
+            else if(sort == "earliest"){
+                res.locals.sort = [["createdAt", "ASC"]]
+            }
+            // else if(sort=="like"){
+            // }
+        }
+        */
+
+        // searchType이 없으면 다.
+        // ㅠㅠ 작성자로 하려면 따로 빼야했네,,,,,,,,,ㅓㅏ
+        if(!req.query.keyword){
+            // 검색어 없으면
+            res.locals.condition = { recipe_id: 0 };
+            next();
+        }
+        //검색어가 있으면
+
+        const temp = [];
+        switch(req.query.searchType) {
+            case 'WRITER':
+                temp.push(await module.exports.searchRecipeTable(req, res));
+                break;
+            case 'TITLE':
+                temp.push(await module.exports.searchRecipeTable(req, res));
+                break;
+            default: // case 'CONTENT':
+                temp.push(await module.exports.searchTagTable(req, res));
+                temp.push(await module.exports.searchRecipeTable(req, res));
+                temp.push(await module.exports.searchStepTable(req, res));
+                temp.push(await module.exports.searchIngredientTable(req, res));
+                break;
+        }
+        console.log('temp', temp);
+        const uniqueArray = module.exports.make1DArray(temp);
+        res.locals.condition = {
+            recipe_id: uniqueArray
+        }
+        console.log('페이지네이션에 들어갈 where 조건 - [checkSearchValue]', res.locals.condition);
+        // const result = await db.recipe.findAll({
+        //     where:res.locals.condition,
+        //     group: 'recipe_id',
+        //     raw: true
+        // });
+        // console.log('이 상태로 검색이 되는지 확인: ', result);
+        next();
     },
 
     // ⚠️⚠️⚠️Search--> !temp인 경우, 검색 0나오게  col에 없는 조건
@@ -818,31 +904,33 @@ module.exports={
                 condition = {
                     tag_name: tagVal,
                 }
-                // title, menu, intro, writer_id 확인
-                temp = await db.recipe_tag.findAll({
-                    attributes: ['recipe_id', 'recipe_id'],
-                    include: {
-                        model: db.tag,
-                        attributes: ['tag_id', 'tag_id'],
-                        where: condition,
-                        as: "tag"
-                    },
-                    raw: true, // raw 속성을 true로 설정하면 결과를 순수한 JSON 객체로 얻을 수 있습니다.
-                    // group: "recipe_id"
-                });
             }
+            // title, menu, intro, writer_id 확인
+            temp = await db.recipe_tag.findAll({
+                attributes: ['recipe_id', 'recipe_id'],
+                include: {
+                    model: db.tag,
+                    attributes: ['tag_id', 'tag_id'],
+                    where: condition,
+                    as: "tag"
+                },
+                raw: true, // raw 속성을 true로 설정하면 결과를 순수한 JSON 객체로 얻을 수 있습니다.
+                // group: "recipe_id"
+            });
         } catch (err) {
             console.log('[ERROR] while searching recipe_tag', err);
             throw(err);
         }
 
         if (!temp || temp.length === 0) {
-            res.locals.condition={
+            // ⚠️근데 이렇게 하면 앞에 있는 애들이 사라지자나. /list/:tag만 하니까 상관업나
+            res.locals.condition= {
                 where:{ recipe_id: 0 }
             }
             return false;
         } else {
             console.log('raw: 테스트', temp);
+            // const _recipeIds = 1;
             const _recipeIds = temp.map(data => data.recipe_id);    //raw: 테스트 [ { recipe_id: 1 }, { recipe_id: 1 } ] 
             // raw: 테스트 [ { recipe_id: 2, 'tag.tag_id': 1 } ]
             console.log('findAll결과:', _recipeIds);    //findAll결과: [ 1, 2 ]
@@ -854,7 +942,7 @@ module.exports={
     },
     
     searchStepTable: async(req, res)=>{ //✅
-
+        console.log('searchStepTable');
         //태그 검색어 검색
         var temp = {};
         try {
@@ -874,7 +962,7 @@ module.exports={
         } catch (err) {
             console.log('[ERROR] while searching recipe_step', err);
         }
-        if (!temp) {
+        if (!temp || temp.length === 0) {
             return false;
         } else {
             console.log('raw: 테스트', temp);
@@ -902,7 +990,7 @@ module.exports={
         } catch(err){
             console.log('[ERROR] while searching recipe_ingredient', err);
         }
-        if(!temp){
+        if(!temp || temp.length === 0){
             return false;
         } else {
             console.log('raw: 테스트', temp);
@@ -916,64 +1004,88 @@ module.exports={
         var temp = {};
         try {
             const keyword = req.query.keyword;
+            const searchType = req.query.searchType;
+            console.log(searchType, '검색어');
+            var tempCondition = {};
+            switch (searchType){
+                case 'WRITER':
+                    tempCondition = {
+                        writer_id: {
+                            [Op.like]: `%${keyword}%`
+                        }
+                    }
+                    break;
+                case 'TITLE':
+                    tempCondition = {
+                        title: {
+                            [Op.like]: `%${keyword}%`
+                        },
+                    };
+                    break;
+                case 'CONTENT': 
+                    tempCondition = {
+                        [Op.or]: [
+                            {
+                                menu: {
+                                    [Op.like]: `%${keyword}%`
+                                }
+                            },
+                            {
+                                intro: {
+                                    [Op.like]: `%${keyword}%`
+                                }
+                            },
+                        ]
+                    }
+                    break;
+                default: 
+                    tempCondition = {
+                        [Op.or]: [
+                            {
+                                title: {
+                                    [Op.like]: `%${keyword}%`
+                                },
+                            },
+                            {
+                                menu: {
+                                    [Op.like]: `%${keyword}%`
+                                }
+                            },
+                            {
+                                intro: {
+                                    [Op.like]: `%${keyword}%`
+                                }
+                            },
+                            {
+                                // 다 mem_id로 바꿔버려?
+                                writer_id: {
+                                    [Op.like]: `%${keyword}%`
+                                }
+                            }
+                        ]
+                    };
+                    break;
+            }
+                
             // title, menu, intro, writer_id 확인
             temp = await db.recipe.findAll({
                 attributes: ['recipe_id', 'recipe_id'],
-                where: {
-                    [Op.or]: [
-                        {
-                            title: {
-                                [Op.like]: `%${keyword}%`
-                            },
-                        },
-                        {
-                            menu: {
-                                [Op.like]: `%${keyword}%`
-                            }
-                        },
-                        {
-                            intro: {
-                                [Op.like]: `%${keyword}%`
-                            }
-                        },
-                        {
-                            // 다 mem_id로 바꿔버려?
-                            writer_id: {
-                                [Op.like]: `%${keyword}%`
-                            }
-                        }
-                    ]
-                },
+                where: tempCondition,
                 group: "recipe_id"
             });
+            console.log('writer 확인',temp);
         } catch(err){
             console.log('[ERROR] while searching recipe_tag', err);
         }
-        if(!temp){
+        if(!temp || temp.length === 0){
             return false;
         } else{
             console.log('raw: 테스트', temp);
             const _recipeIds = temp.map(data => data.recipe_id);    //raw: 테스트 [ { recipe_id: 1 }, { recipe_id: 1 } ]
             console.log('findAll결과:', _recipeIds);    //findAll결과: [ 1, 2 ]
+            return _recipeIds;
         }
     },
-
-    // 정렬 
-    /* if (req.query.sort) {
-        const sort = req.query.sort;
-        // 최신순latest = [["createdAt", "DESC"]],
-        // 조회수순 = [["viewCount", "DESC"]],
-        // 좋아요 순 = 이건 나중에 - 레시피, 게시판, 모임별 다 따로 
-        if (sort == "viewCount") {
-            res.locals.sort = [["viewCount", "DESC"]]
-        }
-        else if(sort == "earliest"){
-            res.locals.sort = [["createdAt", "ASC"]]
-        }
-        // else if(sort=="like"){
-        // }
-    }
-    */
 
     getPaginationInfo: async (req, res, next)=>{
     // ❤️ condition을 req.query로 받아도 되지 않을까? 라우터가 넘 번잡해

@@ -6,10 +6,10 @@ const participant = require('../models/participant');
 const RECRUITING = 0;
 const COMPLETED = 1;
 const ISLEADER = 0;
-// ISMEMBER = 1,
-// ISAPPLYING 
+ISMEMBER = 1;
+ISAPPLYING = 2;
 // ISACCEPTED
-// ISREFUSED
+ISREFUSED = 3;
 
 // 기본값 == undefined. 그러면 내가 해줄 필요없어.
 async function searchGathering (state, gatherId, leaderId) { // gathering_id, 
@@ -75,7 +75,6 @@ module.exports={
         obj.recruitingList = recruitingList;
         obj.completedList = completedList;
         
-        // res.render("gatherMain", obj);
         res.render("gather", obj);
     },
 
@@ -99,7 +98,7 @@ module.exports={
      // /gather/details?id=gathering_id 화면
     showGatheringDetail: async(req, res)=>{
         // 가져오기 정보.
-        const gatheringId = req.query.id;
+        const gatheringId = req.query.gid;
         const data = await db.gathering.findOne({
             where:{
                 gathering_id: gatheringId,
@@ -523,29 +522,27 @@ module.exports={
         //필요한 값 - 일단은 다 가져오자. 내가 가입한 그룹
         const memId = req.user.mem_id;
         try{
-            var partList = await db.participant.findAll({
-                attributes: ['gathering_id'],
-                where: {
-                    mem_id: memId
-                }
-            });
-            partList = partList.map(i=>i.dataValues); // 그러면 key 값이 없이 그냥 1,2만 나옴
-
-            var gatherList = await db.gathering.findAll({
-                // attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
-                where: {[Op.or]: partList}
-            });
+            const gatherList = await db.gathering.findAll({
+                include:{
+                    model: db.participant,
+                    attributes: ['mem_id', 'mem_id'],
+                    where: {
+                        mem_id: memId,
+                        state: { [Op.or]: [ISLEADER, ISMEMBER] }
+                    },
+                    as: "participants",
+                },
+                raw: true
+            })
             // gatherList = list.map(i => i.dataValues);
-            console.log(gatherList);
-            // res.send(gatherList);
-            
+            console.log('innerjoin한 모임목록: ', gatherList[0]['participants.mem_id']);
+            // join한 attriubte는 ['']로 접근해야함!!!
             // DATA가 DB에서 검색하고 없으면 NON -CHAT LIST 띄위ㅓ.
             res.render("chatList", {user: req.user, dataList: gatherList, msg: '가입한 밥모임이 없어요'});
 
         } catch(err){
             console.log(err);
         }
-
         // 2. gathering_id ==> roomId / gathering_name 을 보여주고, chatList.ejs에서 input태그의 value를 roomId(gathering_id)로 하기
 
     },
@@ -569,7 +566,11 @@ module.exports={
         console.log('roomId: ', res.locals.roomId, 'mem_id: ', req.user.mem_id);
         isMember = await db.participant.findOne({
             attribute: ['mem_id'],
-            where:{ gathering_id: res.locals.roomId, mem_id: req.user.mem_id}
+            where:{ 
+                gathering_id: res.locals.roomId,
+                mem_id: req.user.mem_id,
+                state: { [Op.or]: [ISLEADER, ISMEMBER] }
+            }
         });
         // console.log('isMember- findOne한 결과값이 없으면 false가 나올까?, null 나옴.)',!isMember);
         

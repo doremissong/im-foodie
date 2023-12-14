@@ -26,7 +26,7 @@ router.get("/test", async(req, res)=>{
 router.get("/list", storeUrl, recipeController.getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
     // 좋아요 순을 여기에 넣어야할까/
 // ⚠️3) 특정 상황별 레시피 목록 ; 상황(category)별 전체, 시간, 인기순, + 페이지네이션
-router.get("/list/:tag", storeUrl, recipeController.checkSearchValue, recipeController.getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
+router.get("/list/:tag", storeUrl, recipeController.checkTagValue, recipeController.getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
  
 
 // 레시피 보여주기
@@ -36,26 +36,11 @@ router.get("/view", storeUrl, recipeController.showRecipe);
 
 // 4) 검색
 // query로 검색어랑 검색 조건 입력 받기
-// router.get("/search", recipeController.searchRecipe);
+router.get("/search", storeUrl, recipeController.checkSearchValue, recipeController.getPaginationInfo, 
+    (req, res) => {
+        res.json(res.locals);
+    });
 // ?search=xxx로 하면 미들웨어 setDBModel에서 설정함.
-router.get("/search", storeUrl, setDBModel, getPaginationInfo, (req, res)=>{
-    if(!res.locals.paginationInfo || !res.locals.dataList){
-        console.log("[ERROR] There's no pagination information or data list. - /search");
-        res.redirect("/list");
-    }
-    
-    try{
-        const obj = {};
-        obj.pagination = res.locals.paginationInfo;
-        obj.dataList = res.locals.dataList;
-
-        // res.render('recipeSearchResult', obj);
-        res.json(obj);
-    } catch (err) {
-        console.log("[ERROR] While rendering recipe search List", err);
-        res.redirect("/list");
-    }
-})
 
 // 5) recipe writing
 router.get("/write", isLoggedIn, recipeController.getTagNameNIdList, recipeController.showWritePage);
