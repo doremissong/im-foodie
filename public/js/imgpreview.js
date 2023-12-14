@@ -11,6 +11,19 @@ function readURL(input) {
     }
 }
 
+// function readStep1(input) {
+//     if (input.files && input.files[0]) {
+//         var reader = new FileReader();
+//         reader.onload = function(e) {
+//             document.getElementById('prev_step1').src = e.target.result;
+//         };
+//         reader.readAsDataURL(input.files[0]);
+//     }   
+//     else {
+//         document.getElementById('prev_step1').src = "";
+//     }
+// }
+
 // function setThumbnail(event) {
 //     var reader = new FileReader();
 
