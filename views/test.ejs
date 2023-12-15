@@ -29,7 +29,7 @@ function addBox (x) {
     newArea.type = 'text'
     newArea.name = 'ingredient';
     newArea.placeholder = newDiv.id;
-    // newArea.required = true;
+    newArea.required = true;
     newDiv.appendChild(newArea);
 
     // NewDiv에 재료 양 입력칸 만들기
@@ -37,7 +37,7 @@ function addBox (x) {
     newArea2.type = 'text'
     newArea2.name = 'quantity';
     newArea2.placeholder = newDiv.id;
-    // newArea2.required = true;
+    newArea2.required = true;
     newDiv.appendChild(newArea2);
 
     // NewDiv에 삭제 버튼 만들기
@@ -60,12 +60,17 @@ function addBox (x) {
 
     function Checkform() {
 
-        if (document.getElementById('checkP')) {
-            alert('myDiv exists');
-            return true;
-        }
-        else {
-            alert('없당');
+        // if (document.getElementById('checkP')) {
+        //     alert('myDiv exists');
+        //     return true;
+        // }
+        // else {
+        //     alert('없당');
+        //     return false;
+        // }
+
+        if (document.querySelector('#checkP') == null) {
+            alert("없당");
             return false;
         }
 
@@ -81,7 +86,7 @@ function addBox (x) {
 </HEAD>
 <BODY>
 
-    <FORM NAME="myForm" method=post action="" onsubmit="return Checkform()">
+    <FORM NAME="myForm" method=post action="" >
         
         <div class="gg" id="gg">
             <INPUT TYPE="button" VALUE="입력영역 추가하기" onclick="addBox(this.form)" >
@@ -106,7 +111,7 @@ function addBox (x) {
 
         <div>
 
-            <INPUT TYPE="submit" value=" 전송하기 ">
+            <INPUT TYPE="submit" value=" 전송하기 " onclick="Checkform">
 
         </div>
 
