@@ -17,9 +17,9 @@ router.get("/completed", storeUrl, setDBModel(db.gathering), getPaginationInfo, 
 router.get("/recruiting", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showRecruitingList);
 
 // //test
-router.get("/test", gatheringController.checkMember);
+// router.get("/test", gatheringController.checkMember);
 
-router.get("/test2", gatheringController.test2);
+// router.get("/test2", gatheringController.test2);
 
 // 4) 나의 밥모임 목록
 router.get("/mine", storeUrl, isLoggedIn, gatheringController.showMyGatherList);

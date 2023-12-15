@@ -5,7 +5,7 @@ const participant = require('../models/participant');
 // const { getPaginationInfo } = require('./middlewares');
 const RECRUITING = 0, COMPLETED = 1;
 const ISCREATING = 0, ISMODIFYING = 1;
-const ISLEADER = 0, ISMEMBER = 1, ISAPPLYING = 2, ISREFUSED = 3;
+const ISLEADER = 0, ISMEMBER = 1, ISAPPLYING = 2, ISREFUSED = 3, ISNOTMEMBER =4;
 // ISACCEPTED
 
 getGatherParams = (info, isModifying, _memId)=>{
@@ -44,6 +44,7 @@ getGatherParams = (info, isModifying, _memId)=>{
     return result;
 }
 // 기본값 == undefined. 그러면 내가 해줄 필요없어.
+// 맨뒤 condition 만들어줘
 searchGathering = async (_cols, _state, _gatherId, _leaderId) => { // gathering_id, 
     var condition={};
     if (typeof _state !== "undefined") condition.state = _state;
@@ -56,7 +57,7 @@ searchGathering = async (_cols, _state, _gatherId, _leaderId) => { // gathering_
         where:condition,
         raw: true,
     })  
-    console.log('밥모임 검색 결과: ',list);
+    // console.log('밥모임 검색 결과: ',list);
     return list;
 };
 // 기본값 == undefined. 그러면 내가 해줄 필요없어.
@@ -66,13 +67,13 @@ searchGatherings = async (_cols, _state, _gatherId, _leaderId) => { // gathering
     if (typeof _gatherId !== "undefined") condition.gathering_id = _gatherId
     if (typeof _leaderId !== "undefined") condition.leader_id = _leaderId;
 
-    console.log('[searchGatherings',condition);
+    // console.log('[searchGatherings',condition);
     const list = await db.gathering.findAll({
         attributes: _cols,
         where:condition,
         raw: true,
     })  
-    console.log('밥모임 검색 결과: ',list);
+    // console.log('밥모임 검색 결과: ',list);
     return list;
 };
 // column형식은 ['name', 'mem_id'];
@@ -90,7 +91,7 @@ searchParticipant = async (_cols, _state, _gatherId, _memId)=> {
         where: condition,
         raw: true,
     });
-    console.log('[searchParticipant] result:', list);
+    // console.log('[searchParticipant] result:', list);
     return list;
 };
 // column형식은 ['name', 'mem_id'];
@@ -99,7 +100,9 @@ searchParticipants = async (_cols, _state, _gatherId, _memId)=> {
     if (typeof _memId != "undefined") condition.mem_id = _memId;
     if (typeof _state != "undefined") condition.state = _state;
     if (typeof _gatherId != "undefined") condition.gathering_id = _gatherId;
-
+    console.log('[searchParticipant] conditon: ', condition);
+    //columns 는 필요한 컬럼 object 가입한 목록은,
+    console.log('[searchParticipant] _cols: ', _cols);
     //columns 는 필요한 컬럼 object 가입한 목록은,
     const list = await db.participant.findAll({
         attributes: _cols,
@@ -185,12 +188,10 @@ module.exports={
         // 가져오기 정보.
         const obj = {};
         // 유효성
-        if(!req.user){
-            console.log('This user is not logged In');
-            res.redirect('/auth/login');
+        if(req.user){
+            obj.user = req.user;
         }
-        obj.user = req.user;
-        const _memId = req.user.mem_id;
+        const _memId = req.user? req.user.mem_id : '';   //undefined하면 who가 0이됨
 
         if(!req.query.no){
             console.log('There is no number of gather');
@@ -202,60 +203,54 @@ module.exports={
         try {
             //  (_cols, _state, _gatherId, _leaderId) 
             var data = await searchGathering(undefined, undefined, _gatherId, undefined);
-            console.log('함수로 얻은 값 호가인:', data);
             if (!data || data.length == 0) { // 검색어 없으면 
                 console.log('[ERROR] WRONG ACCESS');
                 res.redirect('/gather');
             }
             obj.gatherData = data;
-            console.log('obj test:', obj);
+            // console.log('obj test:', obj);
         } catch(err){
             console.log('[ERROR] While getting data on gathering from DB ', err);
             res.redirect('/gather');
             // res.send(err);
         }
         try {
-            const who = await searchParticipant(['state'], undefined, _gatherId, _memId);
-            const who1 = await db.participant.findOne({
-                attributes:['state'],
-                where: {
-                    gathering_id: _gatherId,
-                    mem_id: _memId,
-                },
-                raw: true
-            });
-            // obj.who = who;
+            var who = await searchParticipant(['state'], undefined, _gatherId, _memId);
+            if(!who || who.length ==0){
+                who = ISNOTMEMBER;
+            } else{
+                who = who.state;
+            }
+            obj.who = who;
             console.log('who:', who);
-            console.log('who1:', who1);
-
-            
-            // switch(who){
-            //     case ISLEADER: 
-            //     case ISMEMBER:
-                    
-            //         // column형식은 ['name', 'mem_id'];
-            //         searchParticipant = async (columns, memId, state)=>
-            //         // 회원 검색하는 쿼리 get
-            //         // 모임원 볼 수 있게 하려나?
-            //         break;
-            //     case ISAPPLYING:
-            //         //⚠️지원자는 버튼 클릭하면 이미 신청했어요!
-            //         // break;
-            //     case ISREFUSED:
-            //     default: 
-            //         break;
-            // }
-            // if (!data || data.length == 0) { // 검색어 없으면 
-            //     console.log('[ERROR] WRONG ACCESS');
-            //     res.redirect('/gather');
-            // }
+            switch(who){
+                case ISLEADER:  
+                    // console.log('switch동작');
+                    // 해당 모임의 가입신청한 유저 목록 저장
+                    obj.applicantList = await searchParticipants(undefined, ISAPPLYING, _gatherId, undefined);
+                case ISMEMBER:
+                    // 모임원 목록
+                    obj.gatherMemberList = await searchParticipants(undefined, [ISLEADER, ISMEMBER], _gatherId, undefined);
+                    break;
+                case ISAPPLYING:
+                    //⚠️지원자는 버튼 클릭하면 이미 신청했어요!
+                    // break;
+                case ISREFUSED:
+                default: //ISNOTMEMBER
+                    break;
+            }
+            if (!data || data.length == 0) { // 검색어 없으면 
+                console.log('[ERROR] WRONG ACCESS');
+                res.redirect('/gather');
+            }
         } catch(err){
             console.log('[ERROR] While getting data on gathering from DB ', err);
             res.redirect('/gather');
         }
         // 작성자면 => [수정/삭제]
         // 모임원이면 => [탈퇴]
-        res.render("gatherShowDetail", obj);
+        console.log('obj test:', obj);
+        res.render("gatherView", obj);
 
     },
     showRecruitingList: async (req, res, next) => {
@@ -694,133 +689,166 @@ module.exports={
 
     // 3. 그룹선택
     selectRoom: (req, res)=>{
-        
-        console.log('DELETE: userID ',req.user.mem_id);
-        res.locals.roomId = req.query.roomId; //res // 선택한 그룹채팅방 id 가져오기.
-        console.log('DELETE: RoomId ',res.locals.roomId, '가 GET방식으로 전달 받은 값이다.- gController-selectRoom');
-        res.locals.name = req.query.name;
-        console.log('DELETE: name ',res.locals.name, '가 GET방식으로 전달 받은 값이다.- gController-selectRoom');
-        // ❓❤️❤️❤️ user 넘기지 말고 이름만 넘겨?  id랑?귀찮다..
-        res.render("chat", {user: req.user, roomId: res.locals.roomId, gatherName: res.locals.name});
+        const obj = {};
+        // 유저 로그인 x
+        if(!req.query.roomId){
+            console.log('There is no room number');
+            res.redirect('/gather/chat/list');
+        }
+        const _gatherId = req.query.roomId;
+        // 유저 로그인 x
+        if(!req.user){
+            console.log('This user is not logged In');
+            res.redirect('/auth/login');
+        }
+        const user = req.user;
+        // const _memId = req.user.mem_id;
+        if(!req.query.name){
+            console.log('There is no room name');
+            res.redirect('/gather/chat/list');
+        }
+        obj.gatherName = req.query.name;
+
+        // res.locals.roomId = _gatherId; //res // 선택한 그룹채팅방 id 가져오기.
+        // console.log('DELETE: RoomId ',res.locals.roomId, '가 GET방식으로 전달 받은 값이다.- gController-selectRoom');
+        // res.locals.name = req.query.name;
+        // console.log('DELETE: name ',res.locals.name, '가 GET방식으로 전달 받은 값이다.- gController-selectRoom');
+        obj.user= user;
+        obj.roomId = _gatherId;
+        res.render("chat", obj); //{user: req.user, roomId: res.locals.roomId, gatherName: res.locals.name});
         // res.redirect("/chat/room");
         // roomId값을 어케 전달하누
     },
     checkMember: async(req, res, next)=>{
         // res.locals.roomId = 3;
-        res.locals.roomId = req.query.roomId;
-        console.log('roomId: ', res.locals.roomId, 'mem_id: ', req.user.mem_id);
-        isMember = await db.participant.findOne({
-            attribute: ['mem_id'],
-            where:{ 
-                gathering_id: res.locals.roomId,
-                mem_id: req.user.mem_id,
-                state: { [Op.or]: [ISLEADER, ISMEMBER] }
-            }
-        });
+        // 유저 로그인 x
+        if(!req.query.roomId){
+            console.log('There is no room number');
+            res.redirect('/gather/chat/list');
+        }
+        const _gatherId = req.query.roomId;
+        // 유저 로그인 x
+        if(!req.user){
+            console.log('This user is not logged In');
+            res.redirect('/auth/login');
+        }
+        const _memId = req.user.mem_id;
+        console.log('roomId: ', res.locals.roomId, 'mem_id: ', _memId);
+
+        const isMember= await searchParticipant(['mem_id'], [ISLEADER, ISMEMBER], _gatherId, _memId);
+        // const isMember2 = await db.participant.findOne({
+        //     attribute: ['mem_id'],
+        //     where:{ 
+        //         gathering_id: res.locals.roomId,
+        //         mem_id: req.user.mem_id,
+        //         state: { [Op.or]: [ISLEADER, ISMEMBER] }
+        //     }
+        // });
         // console.log('isMember- findOne한 결과값이 없으면 false가 나올까?, null 나옴.)',!isMember);
-        
+        // res.locals.roomId = _gatherId;   <-- 그럼 왜한거지? selectroomd에서 필요벗느데
         if (!isMember) { res.redirect('/gather/chat/list'); }
         next();
     },
 
-    test: async (req, res)=>{
-        console.time('쿼리 한번에 하는 거');
-        const user = req.query.user;
-        // include 이용해서 조인 테스트
-        try{
-            const list = await db.gathering.findAll({
-                attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
-                include: [{
-                    model: db.participant,
-                    attributes: [['gathering_id','gathering_id'], ['mem_id','mem_id']], // participants 테이블의 열을 선택
-                    as: 'participants',
-                    where: {
-                        mem_id: user
-                    },
-                    required: true,
-                    raw: true,  // dataValues만 보인다는데 효과x
-                }]
-            });
-            gatherList = list.map(i => i.dataValues);
-            console.log(gatherList);
-            var partList = [];
+    // test: async (req, res)=>{
+    //     console.time('쿼리 한번에 하는 거');
+    //     const user = req.query.user;
+    //     // include 이용해서 조인 테스트
+    //     try{
+    //         const list = await db.gathering.findAll({
+    //             attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
+    //             include: [{
+    //                 model: db.participant,
+    //                 attributes: [['gathering_id','gathering_id'], ['mem_id','mem_id']], // participants 테이블의 열을 선택
+    //                 as: 'participants',
+    //                 where: {
+    //                     mem_id: user
+    //                 },
+    //                 required: true,
+    //                 raw: true,  // dataValues만 보인다는데 효과x
+    //             }]
+    //         });
+    //         gatherList = list.map(i => i.dataValues);
+    //         console.log(gatherList);
+    //         var partList = [];
             
-            // 확인이 안됨. list.participants로는 
-            for (child of gatherList){
-                partList.push(child.participants.map(i=>i.dataValues));
-            }
-            console.log('참여자 확인: ', partList);
-            // console.log('list: ', list);
-            // console.log('join test: ', list[0].gathering_id);
-            // const arr = list.map(i => i.gathering_id);
-            // console.log(arr);
-            res.send(list);
-            console.timeEnd('쿼리 한번에 하는 거');
-        } catch(err){
-            console.log(err);
-        }
+    //         // 확인이 안됨. list.participants로는 
+    //         for (child of gatherList){
+    //             partList.push(child.participants.map(i=>i.dataValues));
+    //         }
+    //         console.log('참여자 확인: ', partList);
+    //         // console.log('list: ', list);
+    //         // console.log('join test: ', list[0].gathering_id);
+    //         // const arr = list.map(i => i.gathering_id);
+    //         // console.log(arr);
+    //         res.send(list);
+    //         console.timeEnd('쿼리 한번에 하는 거');
+    //     } catch(err){
+    //         console.log(err);
+    //     }
 
-    },
-    test2: async(req, res)=>{
-        console.time('쿼리 따로 따로');
-        const user = req.query.user;
-        try{
-            var partList = await db.participant.findAll({
-                attributes: ['gathering_id'],
-                where: {
-                    mem_id: user
-                }
-            });
-            partList = partList.map(i=>i.dataValues); // 그러면 key 값이 없이 그냥 1,2만 나옴
+    // },
+    // test2: async(req, res)=>{
+    //     console.time('쿼리 따로 따로');
+    //     const user = req.query.user;
+    //     try{
+    //         var partList = await searchGatherings(['gathering_id'], undefined, undefined, user)
+    //         var partList = await db.participant.findAll({
+    //             attributes: ['gathering_id'],
+    //             where: {
+    //                 mem_id: user
+    //             }
+    //         });
+    //         partList = partList.map(i=>i.dataValues); // 그러면 key 값이 없이 그냥 1,2만 나옴
 
-            console.log('타입; ', partList);
+    //         console.log('타입; ', partList);
 
-            var gatherList = await db.gathering.findAll({
-                attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
-                where: {[Op.or]: partList}
-            });
-            // gatherList = list.map(i => i.dataValues);
-            console.log(gatherList);
-            res.send(gatherList);
-            console.timeEnd('쿼리 따로 따로');
-        } catch(err){
-            console.log(err);
-        }
+    //         var gatherList = await db.gathering.findAll({
+    //             attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
+    //             where: {[Op.or]: partList}
+    //         });
+    //         // gatherList = list.map(i => i.dataValues);
+    //         console.log(gatherList);
+    //         res.send(gatherList);
+    //         console.timeEnd('쿼리 따로 따로');
+    //     } catch(err){
+    //         console.log(err);
+    //     }
 
 
-        // const posts = await db.post.findAll({
-        //     // where,
-        //     limit: 10,
-        //     include: [{
-        //       model: db.post_image, // 게시글의 이미지
-        //       as: 'post_images'
-        //     }, {
-        //       model: db.post_comment, // 게시글의 댓글
-        //     //   include: [{
-        //     //     model: db.member, //댓글을 쓴 사람
-        //     //     attributes: ['mem_id', 'name'],
+    //     // const posts = await db.post.findAll({
+    //     //     // where,
+    //     //     limit: 10,
+    //     //     include: [{
+    //     //       model: db.post_image, // 게시글의 이미지
+    //     //       as: 'post_images'
+    //     //     }, {
+    //     //       model: db.post_comment, // 게시글의 댓글
+    //     //     //   include: [{
+    //     //     //     model: db.member, //댓글을 쓴 사람
+    //     //     //     attributes: ['mem_id', 'name'],
                 
-        //     //   }],
-        //       as: 'post_comments',
-        //     }, {
-        //       model: db.post_like, // 좋아요 누른 사람
-        //       as: 'post_likes',
-        //       attributes: ['mem_id'],
-        //     }],
-        //     order: [
-        //       ['createdAt', 'DESC'],
-        //       ['post_comments', 'createdAt', 'DESC']
-        //     ],
-        //   });
-        //   const dataList = posts.map(i=>i.dataValues);
-        //   var nestedList =[];
-        //   for (child of dataList){
-        //     nestedList = child.post_comments.map(i=>i.dataValues);            
-        //   }
-        //   console.log(nestedList);
+    //     //     //   }],
+    //     //       as: 'post_comments',
+    //     //     }, {
+    //     //       model: db.post_like, // 좋아요 누른 사람
+    //     //       as: 'post_likes',
+    //     //       attributes: ['mem_id'],
+    //     //     }],
+    //     //     order: [
+    //     //       ['createdAt', 'DESC'],
+    //     //       ['post_comments', 'createdAt', 'DESC']
+    //     //     ],
+    //     //   });
+    //     //   const dataList = posts.map(i=>i.dataValues);
+    //     //   var nestedList =[];
+    //     //   for (child of dataList){
+    //     //     nestedList = child.post_comments.map(i=>i.dataValues);            
+    //     //   }
+    //     //   console.log(nestedList);
 
-        //   console.log(dataList);
-        //   res.send(dataList);
-    },
+    //     //   console.log(dataList);
+    //     //   res.send(dataList);
+    // },
 
 }

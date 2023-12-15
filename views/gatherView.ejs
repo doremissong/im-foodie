@@ -1,3 +1,4 @@
+<!-- gatherShowDetail.ejs ==> gatherView.ejs -->
 <!-- STYLESHEET -->
 <link rel="stylesheet" href="/css/boardPost.css">
 
@@ -63,9 +64,31 @@
             </div>
             <div>
                 <!-- 유저가 작성자면 [수정/삭제] 버튼 -->
-                <% if (user.mem_id == gatherData.leader_id) { %>
+                <% if (typeof user != 'undefined' && user.mem_id == gatherData.leader_id) { %>
                     <a href='/gather/update?no=<%= gatherData.gathering_id %>'>[편집]</a>
                     <a href='/gather/delete?no=<%= gatherData.gathering_id %>'>[삭제]</a>
+                <% } %>
+                
+                <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
+                who값<%= who %>
+                <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
+                <% switch(who){ 
+                    case 0: %> 
+                        <a href='/gather/update?no=<%= gatherData.gathering_id %>'>[편집]</a>
+                        <a href='/gather/delete?no=<%= gatherData.gathering_id %>'>[삭제]</a>
+                        <% break; %>
+                    <% case 1: %>   
+                    모임원
+                        <a href="">[탈퇴]</a>
+                        <% break; %>
+                    <% case 2: %>   
+                    신청한 사람
+                        
+                        <% break; %>
+                    <% case 3: %> 
+                    거절당한 사람
+                    <% default: %>
+                        <% break; %>
                 <% } %>
             </div>
             <div class="post-content">
