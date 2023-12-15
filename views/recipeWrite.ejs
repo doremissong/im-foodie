@@ -28,7 +28,9 @@
                         <div class="recipe-write-title">
                             <input type="text" name="title" placeholder="제목을 입력해주세요 :)" value="" required />
                         </div>
-
+                        <div>
+                            메뉴선택
+                        </div>
                         <!-- 태그 선택 checkbox 박스 -->
                         <div class="recipe-write-tag">
 
@@ -97,12 +99,12 @@
                                     썸네일 250 x 160 픽셀
                                 </div>
 
-                                <!-- 이미지 업로드 버튼 -->
+                                <!-- 이미지 업로드 -->
                                 <div class="thumbnail-prev-btn">
                                     <label for="file">
                                         <div class="btn-upload">업로드</div>
                                     </label>
-                                    <input type="file" name="image_url" id="file" accept="image/*" value="" onchange="readURL(this);" required> 
+                                    <input type="file" name="image_thumbnail" id="file" accept="image/*" value="" onchange="readURL(this);"> 
                                 </div>
 
                             </div>
@@ -148,8 +150,8 @@
 
                                     <!-- 재료 1번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient1" id="I1" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity1" id="Q1" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I1" placeholder="ex) 양파" required>
+                                        <input type="text" name="quantity" id="Q1" placeholder="ex) 1개" required>
                                         <button type="button" id="delIQ1">X</button>
                                     </div>
 
@@ -164,9 +166,10 @@
                                 <div id="IQ2" class="recipe-ingredient">
 
                                     <!-- 재료 2번 입력하기 input -->
+                                    <!-- class로 묶는건?? ingredient들-->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient2" id="I2" placeholder="ex) 양파"" required>
-                                        <input type="text" name="quantity2" id="Q2" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I2" placeholder="ex) 양파"">
+                                        <input type="text" name="quantity" id="Q2" placeholder="ex) 1개">
                                         <button type="button" id="delIQ2">X</button>
                                     </div>
 
@@ -182,8 +185,8 @@
 
                                     <!-- 재료 3번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient3" id="I3" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity3" id="Q3" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I3" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q3" placeholder="ex) 1개">
                                         <button type="button" id="delIQ3">X</button>
                                     </div>
 
@@ -199,8 +202,8 @@
 
                                     <!-- 재료 4번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient4" id="I4" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity4" id="Q4" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I4" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q4" placeholder="ex) 1개">
                                         <button type="button" id="delIQ4">X</button>
                                     </div>
 
@@ -222,8 +225,8 @@
 
                                     <!-- 재료 5번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient5" id="I5" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity5" id="Q5" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I5" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q5" placeholder="ex) 1개">
                                         <button type="button" id="delIQ5">X</button>                     
                                     </div>
 
@@ -239,8 +242,8 @@
 
                                     <!-- 재료 6번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient6" id="I6" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity6" id="Q6" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I6" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q6" placeholder="ex) 1개">
                                         <button type="button" id="delIQ6">X</button>
                                     </div>
 
@@ -256,8 +259,8 @@
 
                                     <!-- 재료 7번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient7" id="I7" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity7" id="Q7" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I7" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q7" placeholder="ex) 1개">
                                         <button type="button" id="delIQ7">X</button>
                                     </div>
 
@@ -273,8 +276,8 @@
 
                                     <!-- 재료 8번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient8" id="I8" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity8" id="Q8" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I8" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q8" placeholder="ex) 1개">
                                         <button type="button" id="delIQ8">X</button>
                                     </div>
 
@@ -296,8 +299,8 @@
 
                                     <!-- 재료 9번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient9" id="I9" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity9" id="Q9" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I9" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q9" placeholder="ex) 1개">
                                         <button type="button" id="delIQ9">X</button>
                                     </div>
 
@@ -313,8 +316,8 @@
 
                                     <!-- 재료 10번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient10" id="I10" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity10" id="Q10" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I10" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q10" placeholder="ex) 1개">
                                         <button type="button" id="delIQ10">X</button>
                                     </div>
 
@@ -330,8 +333,8 @@
 
                                     <!-- 재료 11번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient11" id="I11" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity11" id="Q11" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I11" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q11" placeholder="ex) 1개">
                                         <button type="button" id="delIQ11">X</button>
                                     </div>
 
@@ -347,8 +350,8 @@
 
                                     <!-- 재료 12번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient12" id="I12" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity12" id="Q12" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I12" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q12" placeholder="ex) 1개">
                                         <button type="button" id="delIQ12">X</button>
                                     </div>
 
@@ -370,8 +373,8 @@
 
                                     <!-- 재료 13번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient13" id="I13" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity13" id="Q13" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I13" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q13" placeholder="ex) 1개">
                                         <button type="button" id="delIQ13">X</button>
                                     </div>
 
@@ -387,8 +390,8 @@
 
                                     <!-- 재료 14번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient14" id="I14" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity14" id="Q14" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I14" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q14" placeholder="ex) 1개">
                                         <button type="button" id="delIQ14">X</button>
                                     </div>
 
@@ -404,8 +407,8 @@
 
                                     <!-- 재료 15번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient15" id="I15" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity15" id="Q15" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I15" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q15" placeholder="ex) 1개">
                                         <button type="button" id="delIQ15">X</button>
                                     </div>
 
@@ -421,8 +424,8 @@
 
                                     <!-- 재료 16번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient16" id="I16" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity16" id="Q16" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I16" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q16" placeholder="ex) 1개">
                                         <button type="button" id="delIQ16">X</button>
                                     </div>
 
@@ -444,8 +447,8 @@
 
                                     <!-- 재료 17번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient17" id="I17" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity17" id="Q17" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I17" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q17" placeholder="ex) 1개">
                                         <button type="button" id="delIQ17">X</button>
                                     </div>
 
@@ -461,8 +464,8 @@
 
                                     <!-- 재료 18번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient18" id="I18" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity18" id="Q18" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I18" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q18" placeholder="ex) 1개">
                                         <button type="button" id="delIQ18">X</button>
                                     </div>
 
@@ -478,8 +481,8 @@
 
                                     <!-- 재료 19번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient19" id="I19" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity19" id="Q19" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I19" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q19" placeholder="ex) 1개">
                                         <button type="button" id="delIQ19">X</button>
                                     </div>
 
@@ -495,8 +498,8 @@
 
                                     <!-- 재료 20번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient20" id="I20" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity20" id="Q20" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I20" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q20" placeholder="ex) 1개">
                                         <button type="button" id="delIQ20">X</button>
                                     </div>
 
@@ -518,8 +521,8 @@
 
                                     <!-- 재료 21번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient21" id="I21" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity21" id="Q21" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I21" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q21" placeholder="ex) 1개">
                                         <button type="button" id="delIQ21">X</button>
                                     </div>
 
@@ -535,8 +538,8 @@
 
                                     <!-- 재료 22번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient22" id="I22" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity22" id="Q22" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I22" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q22" placeholder="ex) 1개">
                                         <button type="button" id="delIQ22">X</button>
                                     </div>
 
@@ -552,8 +555,8 @@
 
                                     <!-- 재료 23번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient23" id="I23" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity23" id="Q23" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I23" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q23" placeholder="ex) 1개">
                                         <button type="button" id="delIQ23">X</button>
                                     </div>
 
@@ -569,8 +572,8 @@
 
                                     <!-- 재료 24번 입력하기 input -->
                                     <div class="ingredient">
-                                        <input type="text" name="ingredient24" id="I24" placeholder="ex) 양파" required>
-                                        <input type="text" name="quantity24" id="Q24" placeholder="ex) 1개" required>
+                                        <input type="text" name="ingredient" id="I24" placeholder="ex) 양파">
+                                        <input type="text" name="quantity" id="Q24" placeholder="ex) 1개">
                                         <button type="button" id="delIQ24">X</button>
                                     </div>
 
@@ -607,178 +610,239 @@
                                 <!-- STEP 타이틀 -->
                                 <div class="step-title">
                                     STEP 1
+
+                                    <!-- 삭제 버튼 -->
+                                    <div class="x-Btn">
+                                        <button type="button" id="delStep1">X</button>
+                                    </div>
+                                    
                                 </div>
 
-                                <!-- 단계 이미지 하나 업로드 필수x -->
-                                <div class="step-image">
-                                    이미지
+                                <!-- 이미지와 텍스트아리아 -->
+                                <div class="imgtext-box">
+
+                                    <!-- 단계 이미지 하나 업로드 필수x -->
+                                    <!-- <div class="step-image">
+                                        <div class="thumbnail-box-right">
+                                            <img class="image-box" id="prev_step1" />
+                                        </div>
+                                        <div class="thumbnail-prev-btn">
+                                            <label for="img_step1">
+                                                <div class="btn-upload">업로드</div>
+                                            </label>
+                                            <input type="file" name="image_step1" id="img_step1" accept="image/*" value="" onchange="readStep1(this);"> 
+                                        </div>
+                                    </div> -->
+
+                                    <!-- 텍스트아리아 -->
+                                    <div class="step-area-box">
+                                        <textarea id="stepArea1" name="step" placeholder="단계 1." required></textarea>
+                                    </div>
+
                                 </div>
 
-                                <!-- 텍스트아리아 -->
-                                <div class="step-area-box">
-                                    <textarea id="stepArea1" name="step1" placeholder="단계 1." required></textarea>
-                                </div>
-
-                                <button type="button" id="delStep1">X</button>
-                        
                             </div>
 
                         <!-- 단계 2 -->
                         <div id="step-2" class="recipe-step">
 
-                            <div class="">단계 2</div>
+                            <!-- STEP 타이틀 -->
+                            <div class="step-title">
+                                STEP 2
 
-                            <!-- 단계 이미지 하나 업로드 필수x -->
-                            <div class="step-image">
-                                이미지
+                                <!-- 삭제 버튼 -->
+                                <div class="x-Btn">
+                                    <button type="button" id="delStep2">X</button>
+                                </div>
+                                
                             </div>
 
-                            <!-- 텍스트아리아 -->
-                            <div class="step-area-box">
-                                <textarea id="stepArea2" name="step2" placeholder="단계 2." required></textarea>
-                            </div>
+                            <!-- 이미지와 텍스트아리아 -->
+                            <div class="imgtext-box">
 
-                            <button type="button" id="delStep2">X</button>
+                                <!-- 텍스트아리아 -->
+                                <div class="step-area-box">
+                                    <textarea id="stepArea2" name="step" placeholder="단계 2."></textarea>
+                                </div>
+
+                            </div>
 
                         </div>
 
                         <!-- 단계 3 -->
                         <div id="step-3" class="recipe-step">
 
-                            <div class="">단계 3</div>
+                            <div class="step-title">
+                                STEP 3
 
-                            <!-- 단계 이미지 하나 업로드 필수x -->
-                            <div class="step-image">
-                                이미지
+                                <!-- 삭제 버튼 -->
+                                <div class="x-Btn">
+                                    <button type="button" id="delStep3">X</button>
+                                </div>
+                                
                             </div>
 
-                            <!-- 텍스트아리아 -->
-                            <div class="step-area-special">
-                                <textarea id="stepArea3" name="step3" placeholder="단계 3." required></textarea>
-                            </div>
+                            <!-- 이미지와 텍스트아리아 -->
+                            <div class="imgtext-box">
 
-                            <button type="button" id="delStep3">X</button>
+                                <!-- 텍스트아리아 -->
+                                <div class="step-area-special">
+                                    <textarea id="stepArea3" name="step" placeholder="단계 3."></textarea>
+                                </div>
+
+                            </div>
                             
                         </div>
 
                         <!-- 단계 4 -->
                         <div id="step-4" class="recipe-step">
 
-                            <div class="">단계 4</div>
+                            <div class="step-title">
+                                STEP 4
 
-                            <!-- 단계 이미지 하나 업로드 필수x -->
-                            <div class="step-image">
-                                이미지
+                                <!-- 삭제 버튼 -->
+                                <div class="x-Btn">
+                                    <button type="button" id="delStep4">X</button>
+                                </div>
+                                
                             </div>
 
-                            <!-- 텍스트아리아 -->
-                            <div class="step-area-special">
-                                <textarea id="stepArea4" name="step4" placeholder="단계 4." required></textarea>
-                            </div>
+                            <!-- 이미지와 텍스트아리아 -->
+                            <div class="imgtext-box">
 
-                            <button type="button" id="delStep4">X</button>
+                                <!-- 텍스트아리아 -->
+                                <div class="step-area-special">
+                                    <textarea id="stepArea4" name="step" placeholder="단계 4."></textarea>
+                                </div>
+
+                            </div>
                             
                         </div>
 
                         <!-- 단계 5 -->
                         <div id="step-5" class="recipe-step">
 
-                            <div class="">단계 5</div>
+                            <div class="step-title">
+                                STEP 5
 
-                            <!-- 단계 이미지 하나 업로드 필수x -->
-                            <div class="step-image">
-                                이미지
+                                <!-- 삭제 버튼 -->
+                                <div class="x-Btn">
+                                    <button type="button" id="delStep5">X</button>
+                                </div>
+                                
                             </div>
 
-                            <!-- 텍스트아리아 -->
-                            <div class="step-area-special">
-                                <textarea id="stepArea5" name="step5" placeholder="단계 5." required></textarea>
-                            </div>
+                            <!-- 이미지와 텍스트아리아 -->
+                            <div class="imgtext-box">
 
-                            <button type="button" id="delStep5">X</button>
+                                <!-- 텍스트아리아 -->
+                                <div class="step-area-special">
+                                    <textarea id="stepArea5" name="step" placeholder="단계 5."></textarea>
+                                </div>
+
+                            </div>
                             
                         </div>
 
                         <!-- 단계 6 -->
                         <div id="step-6" class="recipe-step">
 
-                            <div class="">단계 6</div>
+                            <div class="step-title">
+                                STEP 6
 
-                            <!-- 단계 이미지 하나 업로드 필수x -->
-                            <div class="step-image">
-                                이미지
+                                <!-- 삭제 버튼 -->
+                                <div class="x-Btn">
+                                    <button type="button" id="delStep6">X</button>
+                                </div>
+                                
                             </div>
 
-                            <!-- 텍스트아리아 -->
-                            <div class="step-area-special">
-                                <textarea id="stepArea6" name="step6" placeholder="단계 6." required></textarea>
-                            </div>
+                            <!-- 이미지와 텍스트아리아 -->
+                            <div class="imgtext-box">
 
-                            <button type="button" id="delStep6">X</button>
+                                <!-- 텍스트아리아 -->
+                                <div class="step-area-special">
+                                    <textarea id="stepArea6" name="step" placeholder="단계 6."></textarea>
+                                </div>
+
+                            </div> 
                             
                         </div>
 
                         <!-- 단계 7 -->
                         <div id="step-7" class="recipe-step">
 
-                            <div class="">단계 7</div>
+                            <div class="step-title">
+                                STEP 7
 
-                            <!-- 단계 이미지 하나 업로드 필수x -->
-                            <div class="step-image">
-                                이미지
+                                <!-- 삭제 버튼 -->
+                                <div class="x-Btn">
+                                    <button type="button" id="delStep7">X</button>
+                                </div>
+                                
                             </div>
 
-                            <!-- 텍스트아리아 -->
-                            <div class="step-area-special">
-                                <textarea id="stepArea7" name="step7" placeholder="단계 7." required></textarea>
-                            </div>
+                            <!-- 이미지와 텍스트아리아 -->
+                            <div class="imgtext-box">
 
-                            <button type="button" id="delStep7">X</button>
+                                <!-- 텍스트아리아 -->
+                                <div class="step-area-special">
+                                    <textarea id="stepArea7" name="step" placeholder="단계 7."></textarea>
+                                </div>
+
+                            </div>
                             
                         </div>
 
                         <!-- 단계 8 -->
                         <div id="step-8" class="recipe-step">
 
-                            <div class="">단계 8</div>
+                            <div class="step-title">
+                                STEP 8
 
-                            <!-- 단계 이미지 하나 업로드 필수x -->
-                            <div class="step-image">
-                                이미지
+                                <!-- 삭제 버튼 -->
+                                <div class="x-Btn">
+                                    <button type="button" id="delStep1">X</button>
+                                </div>
+                                
                             </div>
 
-                            <!-- 텍스트아리아 -->
-                            <div class="step-area-special">
-                                <textarea id="stepArea8" name="step8" placeholder="단계 8." required></textarea>
-                            </div>
+                            <!-- 이미지와 텍스트아리아 -->
+                            <div class="imgtext-box">
 
-                            <button type="button" id="delStep8">X</button>
+                                <!-- 텍스트아리아 -->
+                                <div class="step-area-special">
+                                    <textarea id="stepArea8" name="step" placeholder="단계 8."></textarea>
+                                </div>
+
+                            </div>
                             
                         </div>
 
                         <!-- 단계 9 -->
                         <div id="step-9" class="recipe-step">
 
-                            <div class="">단계 9</div>
+                            <div class="step-title">
+                                STEP 9
 
-                            <!-- 단계 이미지 하나 업로드 필수x -->
-                            <div class="step-image">
-                                이미지
+                                <!-- 삭제 버튼 -->
+                                <div class="x-Btn">
+                                    <button type="button" id="delStep1">X</button>
+                                </div>
+                                
                             </div>
 
-                            <!-- 텍스트아리아 -->
-                            <div class="step-area-9">
-                                <textarea id="stepArea9" name="step9" placeholder="단계 9." required></textarea>
+                            <!-- 이미지와 텍스트아리아 -->
+                            <div class="imgtext-box">
+
+                                <!-- 텍스트아리아 -->
+                                <div class="step-area-9">
+                                    <textarea id="stepArea9" name="step" placeholder="단계 9."></textarea>
+                                </div>
+
                             </div>
 
-                            <button type="button" id="delStep9">X</button>
-
-                        </div>
-
-                        </div>
-                        
-
-                        
+                        </div>  
 
                     </div>
                     

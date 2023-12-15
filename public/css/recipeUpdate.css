@@ -472,10 +472,6 @@ input[type='file'] {
     cursor: pointer;
 }
 
-.step-area-box {
-    /* border: 1px solid gray; */
-}
-
 .content-box textarea {
     width: 864px;
     height: 50px;

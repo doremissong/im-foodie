@@ -3,6 +3,7 @@ const { db, sequelize } = require("../models/index");
 const { Op } = require('sequelize');
 const recipe = require("../models/recipe");
 const { setPagingVar } = require("../routes/middlewares");
+const recipe_ingredient = require("../models/recipe_ingredient");
 
 module.exports={
     // 사용자 좋아요 테이블에서 recipe_tag나 작성한 레시피 recipe_tag 가져와서 
@@ -20,6 +21,13 @@ module.exports={
         } catch(err){
             console.log(err);
         }
+        const obj ={};
+        if(!req.user){
+            console.log('This user is not logged in');
+            res.redirect("/auth/login");
+        }
+
+        obj.user = req.user;
     // 1) 메인 레시피, 5위까지 + 추천
     // try{
     //     const data = await db.post.findAll({
@@ -34,7 +42,7 @@ module.exports={
     //     res.json(err);
     // }
 
-        res.render("recipeMain");
+        res.render("recipeMain", obj);
     },
 
     showRecipeListPage: async(req, res)=>{
@@ -180,20 +188,32 @@ module.exports={
         // ⚠️recipe_comment     --> 댓글 수, 댓글 가져오기
 
         if (!req.query.recipe_no) {
-            res.redirect('/recipe');
             console.log(`[Error]: There's no recipe_no in url - showUpdatePage`);
+            res.redirect('/recipe');
         }
+        console.log('query값 확인: ', req.query.recipe_no);
 
+        if(!res.locals.tagNameList || !res.locals.tagIdList){
+            console.log('[ERROR] There is no tag name or id list');
+            res.redirect("/recipe");
+        }
         const obj = {};
+        obj.tagNameList = res.locals.tagNameList;
+        obj.tagIdList = res.locals.tagIdList;
+        
         var temp = {};
+        const recipeInfo = {};
         const recipeId = req.query.recipe_no;
         try {
             // recipe 정보 가져오기
+            // 따로 가져오는 게 맞아
+
             temp = await db.recipe.findOne({
                 attributes: ['recipe_id', 'title', 'menu', 'intro', 'cookTime', 'cookLevel', 'imageURL', 'viewCount'],
-                where: { recipe_id: recipeId }
+                where: { recipe_id: recipeId },
+                raw: true,
             })
-            obj.dataList = temp.dataValues;
+            obj.dataList = temp;
             console.log(obj.dataList, '값확인');
 
             // ⚠️태그는 write처럼 전체 태그 가져오고, 검색한 걸를 selected tag로 해서
@@ -201,34 +221,42 @@ module.exports={
             // recipe_tag 정보 가져오기
             temp = await db.recipe_tag.findAll({
                 attributes: ['tag_id', 'tag_id'],
-                where: { recipe_id: recipeId }
+                where: { recipe_id: recipeId },
+                raw: true,
             });
             // ⚠️dataValues로 하면 안되고 매핑해야할 거 같음
-            obj.selectedTagIdList = temp.dataValues;
+            obj.selectedTagIdList = temp.map(data=>data.tag_id);
+            console.log('tag value: ', obj.selectedTagIdList);
 
             // recipe_step 가져오기
             temp = await db.recipe_step.findAll({
                 attributes:[['step_no', 'step_no'], ['content', 'content'], ['imageURL','imageURL']],
-                where: {recipe_id: recipeId }
+                where: {recipe_id: recipeId },
+                raw: true,
             });
             // ⚠️dataValues로 하면 안되고 매핑해야할 거 같음
-            obj.stepList = temp.dataValues;
+            obj.stepList = temp;
 
             // recipe_ingredient 가져오기
             temp = await db.recipe_ingredient.findAll({
                 attributes:[['name', 'name'],
+                // ['amount', 'amount'],
                 //  ['imageURL','imageURL']
                 ],
-                where: {recipe_id: recipeId }
+                where: {recipe_id: recipeId },
+                raw: true,
             });
             // ⚠️dataValues로 하면 안되고 매핑해야할 거 같음
-            obj.ingredientList = temp.dataValues;
+            obj.ingredientList = temp;
             
         } catch (err) {
             console.log(`[Error] cannot get recipe data from DB - showUpdatePage.- recipe`, err);
-            res.redirect('/recipe');
+            // res.redirect('/recipe');
+            res.send(err);
         }
 
+        console.log('따로국밥: ', obj);
+        console.log('이너조인 4개:', recipeInfo);
         // 관리자 아이디 obj에 너허어
         // obj.operator_id = req.operator.id;
         res.render('recipeUpdate', obj);
@@ -342,78 +370,79 @@ module.exports={
         }
 
         console.log(req.body);
-        console.log("태그 값이 여러개면",req.body.tag, req.body.tag);
+        console.log('빈값 테스트:',typeof req.body.quantity[3]);
+        // console.log("태그 값이 여러개면",req.body.tag, req.body.tag);
 
-        // 값 전달 잘 되면
-        const recipeObj = {
-            writer_id: req.user.mem_id,
-            title: req.body.title,
-            menu: req.body.menu,
-            intro: req.body.intro,
-            cookTime: req.body.cooktime,
-            cookLevel: req.body.cookLevel,
-            // imageURL: req.body.imageURL,
-            viewCount: 0,
-        }
-        // recipe 생성
-        try {
-            var data = {};
-            await sequelize.transaction(async t => {
-                data = await db.recipe.create(recipeObj, { transaction: t });
-            })
-            res.locals.recipeId = data.recipe_id;
-            // console.log(`createRecipe- data test: ${data}`);
-        } catch (err) {
-            console.log(`[ERROR] while creating recipe - createRecipe - recipe`, err);
-            res.redirect('/recipe');
-        }
-        // 🚩 위에 recipe 생성이 먼저 되고, 아래 함수들 실행될까?
-        // res.locals.recipeId =0;
+        // // 값 전달 잘 되면
+        // const recipeObj = {
+        //     writer_id: req.user.mem_id,
+        //     title: req.body.title,
+        //     menu: req.body.menu,
+        //     intro: req.body.intro,
+        //     cookTime: req.body.cooktime,
+        //     cookLevel: req.body.cookLevel,
+        //     // imageURL: req.body.imageURL,
+        //     viewCount: 0,
+        // }
+        // // recipe 생성
+        // try {
+        //     var data = {};
+        //     await sequelize.transaction(async t => {
+        //         data = await db.recipe.create(recipeObj, { transaction: t });
+        //     })
+        //     res.locals.recipeId = data.recipe_id;
+        //     // console.log(`createRecipe- data test: ${data}`);
+        // } catch (err) {
+        //     console.log(`[ERROR] while creating recipe - createRecipe - recipe`, err);
+        //     res.redirect('/recipe');
+        // }
+        // // 🚩 위에 recipe 생성이 먼저 되고, 아래 함수들 실행될까?
+        // // res.locals.recipeId =0;
 
 
-        // 🚩 이 아래 부분을 따로 함수로 빼고 update, create할 때 적용할까?
-        // tag 저장
-        const recipe_tag_data = module.exports.setRecipeTagData(req,res);
-        // ingredients 저장
-        const ingredient_data = module.exports.setRecipeIngredientData(req, res);
-        // step 요리 단계 저장
-        const step_data=module.exports.setRecipeStepData(req,res);
-        // db 3개 저장
-        try{
-            await sequelize.transaction(async t=>{
-                // 태그 저장장
-                await db.recipe_tag.bulkCreate(recipe_tag_data, {transaction:t})
-                    .then(createdRows => {
-                        console.log(createdRows);
-                    })
-                    .catch(err => {
-                        console.log('[ERROR] during bulkCreate on recipe_ta', err);
-                    })
+        // // 🚩 이 아래 부분을 따로 함수로 빼고 update, create할 때 적용할까?
+        // // tag 저장
+        // const recipe_tag_data = module.exports.setRecipeTagData(req,res);
+        // // ingredients 저장
+        // const ingredient_data = module.exports.setRecipeIngredientData(req, res);
+        // // step 요리 단계 저장
+        // const step_data=module.exports.setRecipeStepData(req,res);
+        // // db 3개 저장
+        // try{
+        //     await sequelize.transaction(async t=>{
+        //         // 태그 저장장
+        //         await db.recipe_tag.bulkCreate(recipe_tag_data, {transaction:t})
+        //             .then(createdRows => {
+        //                 console.log(createdRows);
+        //             })
+        //             .catch(err => {
+        //                 console.log('[ERROR] during bulkCreate on recipe_ta', err);
+        //             })
 
-                // 재료 저장
-                await db.recipe_ingredient.bulkCreate(ingredient_data, {transaction:t})
-                    .then(createdRows => {
-                        console.log(createdRows); // 생성된 행의 정보
-                    })
-                    .catch(err => {
-                        console.error('[ERROR] during bulkCreate on recipe_ingredient', err);
-                    });
-                // 요리단계 저장
-                await db.recipe_step.bulkCreate(step_data, {transaction:t})
-                    .then(createdRows => {
-                        console.log(createdRows);
-                    })
-                    .catch(err => {
-                        console.log('[ERROR] during bulkCreate on recipe_step', err);
-                    })
-            })
+        //         // 재료 저장
+        //         await db.recipe_ingredient.bulkCreate(ingredient_data, {transaction:t})
+        //             .then(createdRows => {
+        //                 console.log(createdRows); // 생성된 행의 정보
+        //             })
+        //             .catch(err => {
+        //                 console.error('[ERROR] during bulkCreate on recipe_ingredient', err);
+        //             });
+        //         // 요리단계 저장
+        //         await db.recipe_step.bulkCreate(step_data, {transaction:t})
+        //             .then(createdRows => {
+        //                 console.log(createdRows);
+        //             })
+        //             .catch(err => {
+        //                 console.log('[ERROR] during bulkCreate on recipe_step', err);
+        //             })
+        //     })
             
-        } catch(err){
-            console.log('[ERROR] Transaction failed: ',err);
-        }
+        // } catch(err){
+        //     console.log('[ERROR] Transaction failed: ',err);
+        // }
 
         
-        res.redirect(`/recipe/view?recipe_no=${data.recipe_id}`);
+        // res.redirect(`/recipe/view?recipe_no=${data.recipe_id}`);
     },
 
     updateRecipe: async (req, res)=>{
@@ -606,11 +635,15 @@ module.exports={
     setRecipeIngredientData:(req, res)=>{
         const recipeId = req.locals.recipeId;
         const ingredients = req.body.ingredient;
+        const amounts = req.body.quantity;
         const ingredient_data=[];
         for(let i=0; i<ingredients.length; i++){
+            if(ingredients[i]=='')
+                break;
             const ingredientObj = {
                 recipe_id: recipeId,
                 name: ingredients[i],
+                amount: amounts[i]
             }
             ingredient_data.push(ingredientObj);
         };
@@ -621,6 +654,8 @@ module.exports={
         const steps = req.body.step;
         const step_data=[];
         for(let i=0; i<steps.length; i++){
+            if(steps[i]=='')
+                break;
             const stepObj = {
                 recipe_id: recipeId,
                 step_no: i+1,

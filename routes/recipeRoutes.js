@@ -20,15 +20,6 @@ router.get("/test", async(req, res)=>{
 // router.get("/test", recipeController.searchTagTable);
 // router.get("/test", recipeController.searchRecipeTable);
 
-// ⚠️2) 전체 레시피 목록 - ✅최신순, ✅조회수순, 좋아요순, + 페이지네이션
-// 🚩 pagination 함수 따로 만들고 기존 함수랑 바꾸기
-// router.get("/list", storeUrl, setDBModel(db.recipe), getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
-router.get("/list", storeUrl, recipeController.getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
-    // 좋아요 순을 여기에 넣어야할까/
-// ⚠️3) 특정 상황별 레시피 목록 ; 상황(category)별 전체, 시간, 인기순, + 페이지네이션
-router.get("/list/:tag", storeUrl, recipeController.checkTagValue, recipeController.getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
- 
-
 // 레시피 보여주기
 // router.get("/view", recipeController.showRecipe);
 // showRecipe에서 ejs 파일내부에 작성자가 맞는지 확인하고, 맞으면 수정/삭제 버튼 보여줄 것.
@@ -47,12 +38,21 @@ router.get("/write", isLoggedIn, recipeController.getTagNameNIdList, recipeContr
 router.post("/write", isLoggedIn, recipeController.createRecipe);
 
 // 6) recipe updating
-router.get("/update", isLoggedIn, /*작성자 체크*/ recipeController.showUpdatePage);
+router.get("/update", isLoggedIn, /*작성자 체크*/ recipeController.getTagNameNIdList, recipeController.showUpdatePage);
 router.post("/update", isLoggedIn, /*작성차 체크*/recipeController.updateRecipe);
 
 // ✅7) delete
 router.get("/delete", isLoggedIn, /*작성자 체크*/recipeController.deleteRecipe);
 // query ?(recipe)no = & 
+
+// ⚠️2) 전체 레시피 목록 - ✅최신순, ✅조회수순, 좋아요순, + 페이지네이션
+// 🚩 pagination 함수 따로 만들고 기존 함수랑 바꾸기
+// router.get("/list", storeUrl, setDBModel(db.recipe), getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
+router.get("/list", storeUrl, recipeController.getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
+    // 좋아요 순을 여기에 넣어야할까/
+// ⚠️3) 특정 상황별 레시피 목록 ; 상황(category)별 전체, 시간, 인기순, + 페이지네이션
+router.get("/list/:tag", storeUrl, recipeController.checkTagValue, recipeController.getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
+ 
 
 router.use(errorController.pageNotFoundError);
 router.use(errorController.internalServerError);

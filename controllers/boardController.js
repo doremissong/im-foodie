@@ -229,7 +229,7 @@ module.exports = {
                 //  const data 붙임
                     const result = await db.post.create(postData, { transaction: t });
                     console.log('create 결과: ',result);
-                    console.log('uploading post success!')
+                    console.log('uploading post success!');
                     res.redirect(`/board/post?no=${result.dataValues.post_id}`);
             })
         } catch (err) {

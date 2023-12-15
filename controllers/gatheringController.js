@@ -3,49 +3,109 @@ const {db, sequelize,} = require('../models/index');
 const { Op, Sequelize } = require('sequelize');
 const participant = require('../models/participant');
 // const { getPaginationInfo } = require('./middlewares');
-const RECRUITING = 0;
-const COMPLETED = 1;
-const ISLEADER = 0;
-ISMEMBER = 1;
-ISAPPLYING = 2;
+const RECRUITING = 0, COMPLETED = 1;
+const ISCREATING = 0, ISMODIFYING = 1;
+const ISLEADER = 0, ISMEMBER = 1, ISAPPLYING = 2, ISREFUSED = 3;
 // ISACCEPTED
-ISREFUSED = 3;
 
+getGatherParams = (info, isModifying, _memId)=>{
+    // 작성자 추출. req.session.user? 아니면 req.user에서 id 가져와야하ㅁ.
+    var result = {};
+    if(!isModifying){    // 생성
+        result =  {
+            name: info.name,
+            leader_id: _memId,
+            city: info.city,
+            district: info.district,
+            neighborhood: info.neighborhood,
+            place: info.place,
+            description: info.description,
+            deadline: info.deadline,
+            state: RECRUITING,
+            maximumHeadCount: info.number,
+            //image_url: 
+            viewCount: 0,
+        }
+    } else{
+        result = {
+            name: info.name,
+            city: info.city,
+            district: info.district,
+            neighborhood: info.neighborhood,
+            place: info.place,
+            description: info.description,
+            deadline: info.deadline,
+            state: (info.deadline > new Date())? RECRUITING: COMPLETED,
+            // state 테스트 필요.
+            maximumHeadCount: info.number,
+            //image_url: 
+        }
+    }
+    return result;
+}
 // 기본값 == undefined. 그러면 내가 해줄 필요없어.
-async function searchGathering (state, gatherId, leaderId) { // gathering_id, 
+searchGathering = async (_cols, _state, _gatherId, _leaderId) => { // gathering_id, 
     var condition={};
-    if(typeof state !== "undefined"){
-        condition.state = state;
-    }
-    if(typeof gatherId !== "undefined"){
-        condition.gathering_id = gatherId;
-    }
-    if(typeof leaderId !== "undefined"){
-        condition.leader_id = leaderId;
-    }
-    const list = await db.gathering.findAll({
-        where:condition
+    if (typeof _state !== "undefined") condition.state = _state;
+    if (typeof _gatherId !== "undefined") condition.gathering_id = _gatherId
+    if (typeof _leaderId !== "undefined") condition.leader_id = _leaderId;
+
+    console.log('[searchGathering',condition);
+    const list = await db.gathering.findOne({
+        attributes: _cols,
+        where:condition,
+        raw: true,
     })  
+    console.log('밥모임 검색 결과: ',list);
     return list;
 };
+// 기본값 == undefined. 그러면 내가 해줄 필요없어.
+searchGatherings = async (_cols, _state, _gatherId, _leaderId) => { // gathering_id, 
+    var condition={};
+    if (typeof _state !== "undefined") condition.state = _state;
+    if (typeof _gatherId !== "undefined") condition.gathering_id = _gatherId
+    if (typeof _leaderId !== "undefined") condition.leader_id = _leaderId;
 
+    console.log('[searchGatherings',condition);
+    const list = await db.gathering.findAll({
+        attributes: _cols,
+        where:condition,
+        raw: true,
+    })  
+    console.log('밥모임 검색 결과: ',list);
+    return list;
+};
 // column형식은 ['name', 'mem_id'];
-async function searchParticipant(columns, memId, state) {
-    var whereCondition = {};
-    if(typeof memId != "undefined"){
-        whereCondition.mem_id = memId;
-    }
-    if(typeof state != "undefined"){
-        whereCondition.state = state;
-    }
+searchParticipant = async (_cols, _state, _gatherId, _memId)=> {
+    var condition = {};
+    if (typeof _memId != "undefined") condition.mem_id = _memId;
+    if (typeof _state != "undefined") condition.state = _state;
+    if (typeof _gatherId != "undefined") condition.gathering_id = _gatherId;
+    console.log('[searchParticipant] conditon: ', condition);
+    //columns 는 필요한 컬럼 object 가입한 목록은,
+    console.log('[searchParticipant] _cols: ', _cols);
+    // ❓근데 gathering_id 다 뽑았어. 그거가지고 condition에 where {}에 몽땅 집어넣어도 괜찮아/??응 괜찮아
+    const list = await db.participant.findOne({
+        attributes: _cols,
+        where: condition,
+        raw: true,
+    });
+    console.log('[searchParticipant] result:', list);
+    return list;
+};
+// column형식은 ['name', 'mem_id'];
+searchParticipants = async (_cols, _state, _gatherId, _memId)=> {
+    var condition = {};
+    if (typeof _memId != "undefined") condition.mem_id = _memId;
+    if (typeof _state != "undefined") condition.state = _state;
+    if (typeof _gatherId != "undefined") condition.gathering_id = _gatherId;
 
     //columns 는 필요한 컬럼 object 가입한 목록은,
-    // ❓근데 gathering_id 다 뽑았어. 그거가지고 condition에 where {}에 몽땅 집어넣어도 괜찮아/??응 괜찮아
-    var conditions = {
-        attributes: columns,
-        where: whereCondition
-    };
-    const list = await db.participant.findAll(conditions);
+    const list = await db.participant.findAll({
+        attributes: _cols,
+        where: condition,
+        raw: true,
+    });
     return list;
 };
 
@@ -87,30 +147,117 @@ module.exports={
         res.render("gatherCreate", obj);
     },
 
-    showUpdatePage: (req, res)=>{
+    showUpdatePage: async (req, res)=>{
         const obj ={};
-        if(req.user){
-            obj.user = req.user;
+
+        if(!req.user){
+            console.log('[ERROR] This user is not logged in');
+            res.redirect("/gather");
+        }
+        obj.user = req.user;
+        if(!req.query.no){
+            console.log('[ERROR] There is no gathering number');
+            res.redirect("/gather");
+        }
+        const _gatherId = req.query.no;
+
+        try{
+            const temp = await db.gathering.findOne({
+                where: { gathering_id: _gatherId },
+                raw: true
+            });
+            if(temp==null){
+                throw error;
+            }
+            obj.dataList = temp;
+            console.log('🐰query value: ', temp);
+
+        } catch(err){
+            console.log(`[Error] cannot get gathering data from DB - showUpdatePage.- gather`, err);
+            // res.redirect('/recipe');
+            res.send(err);
         }
         res.render("gatherUpdate", obj);
     },
 
-     // /gather/details?id=gathering_id 화면
+     // /gather/view?id나 no=gathering_id 화면
     showGatheringDetail: async(req, res)=>{
         // 가져오기 정보.
-        const gatheringId = req.query.gid;
-        const data = await db.gathering.findOne({
-            where:{
-                gathering_id: gatheringId,
+        const obj = {};
+        // 유효성
+        if(!req.user){
+            console.log('This user is not logged In');
+            res.redirect('/auth/login');
+        }
+        obj.user = req.user;
+        const _memId = req.user.mem_id;
+
+        if(!req.query.no){
+            console.log('There is no number of gather');
+            res.redirect('/gather')
+        }
+        const _gatherId = req.query.no;
+
+        // 모임 정보 가져가기
+        try {
+            //  (_cols, _state, _gatherId, _leaderId) 
+            var data = await searchGathering(undefined, undefined, _gatherId, undefined);
+            console.log('함수로 얻은 값 호가인:', data);
+            if (!data || data.length == 0) { // 검색어 없으면 
+                console.log('[ERROR] WRONG ACCESS');
+                res.redirect('/gather');
             }
-        });
-        // first, send all info about gathering, gathering members(accepted), and if user is leader, then show buttons[edit] in the top 
-        // and next to the member, there's also button [delete/]
-        res.render("gatherShowDetail", {user:req.user, data: data});
+            obj.gatherData = data;
+            console.log('obj test:', obj);
+        } catch(err){
+            console.log('[ERROR] While getting data on gathering from DB ', err);
+            res.redirect('/gather');
+            // res.send(err);
+        }
+        try {
+            const who = await searchParticipant(['state'], undefined, _gatherId, _memId);
+            const who1 = await db.participant.findOne({
+                attributes:['state'],
+                where: {
+                    gathering_id: _gatherId,
+                    mem_id: _memId,
+                },
+                raw: true
+            });
+            // obj.who = who;
+            console.log('who:', who);
+            console.log('who1:', who1);
+
+            
+            // switch(who){
+            //     case ISLEADER: 
+            //     case ISMEMBER:
+                    
+            //         // column형식은 ['name', 'mem_id'];
+            //         searchParticipant = async (columns, memId, state)=>
+            //         // 회원 검색하는 쿼리 get
+            //         // 모임원 볼 수 있게 하려나?
+            //         break;
+            //     case ISAPPLYING:
+            //         //⚠️지원자는 버튼 클릭하면 이미 신청했어요!
+            //         // break;
+            //     case ISREFUSED:
+            //     default: 
+            //         break;
+            // }
+            // if (!data || data.length == 0) { // 검색어 없으면 
+            //     console.log('[ERROR] WRONG ACCESS');
+            //     res.redirect('/gather');
+            // }
+        } catch(err){
+            console.log('[ERROR] While getting data on gathering from DB ', err);
+            res.redirect('/gather');
+        }
+        // 작성자면 => [수정/삭제]
+        // 모임원이면 => [탈퇴]
+        res.render("gatherShowDetail", obj);
 
     },
-
-    
     showRecruitingList: async (req, res, next) => {
         // //searchGathering (state, gatherId, leaderId)
         // const list = await searchGathering(state = 0);
@@ -264,92 +411,90 @@ module.exports={
         // recipe 서치 참고. 아니면 공지사항 서치 참고
     },
 
-    // ❤️ 모임 생성하기
     createGather: async(req,res)=>{
-        //gather.ejs 확인
-        //1) gathering 생성
-        // 2) participant 추가
+        //gather.ejs 확인       1) gathering 생성 2) participant 추가
         if(!req.body){
             res.redirect("/gather/create");
         }
-        // 왜 gatherData로 하면 안된느겨,,
-        const gatherData = {
-            // gathering_id: 
-            name: req.body.name,
-            leader_id: req.user.mem_id, //⚠️
-            region: req.body.city + ' ' + req.body.district + ' ' + req.body.neighborhood,
-            place: req.body.place,
-            description: req.body.description,  ///⚠️
-            deadline: req.body.deadline,
-            state: RECRUITING,
-            maximumHeadCount: req.body.number,//⚠️
-            // image_url: 
-            viewCount: 0,
+        if(!req.user){
+            console.log('This user is not logged In');
+            res.redirect('/auth/login');
         }
+        const _memId = req.user.mem_id;
+        // 왜 gatherData로 하면 안된느겨,,
+        const gatherData = getGatherParams(req.body, ISCREATING, _memId);
         console.log('[createGather] 전달받은 값 확인: ', req.body, 'gatherData 확인: ', gatherData);
-        // var result = null;
-
         // // 모임 데이터 생성
         try{
-            await sequelize.transaction(async t =>{
-                result = await db.gathering.create({
-                    // gathering_id: 
-                    name: req.body.name,
-                    leader_id: req.user.mem_id, //⚠️
-                    region: req.body.district + ' ' + req.body.city + ' ' + req.body.neighborhood,
-                    place: req.body.place,
-                    description: req.body.description,  ///⚠️
-                    deadline: req.body.deadline,
-                    state: RECRUITING,
-                    maximumHeadCount: req.body.number,//⚠️
-                    // image_url: 
-                    viewCount: 0,
-                });
+            await sequelize.transaction(async t => {
+                result = await db.gathering.create(
+                    gatherData,
+                    {   //아뉘,, transaction 위치 때문에 안되는 거였다. 231215
+                        transaction: t,
+                        raw: true,
+                    }
+                );
             })
+
             await sequelize.transaction(async t=>{
                 await db.participant.create({
-                    gathering_id: result.dataValues.gathering_id,
-                    mem_id: req.user.mem_id,
+                    gathering_id: result.gathering_id,
+                    mem_id: _memId,
                     message: '',
                     state: ISLEADER,
                     isConnected: 0,
-                })
+                },
+                {transaction: t});
             })
-            // res.redirect(`/gather/view?no=${result.dataValues.gathering_id}`);
-            res.redirect('/gather');
+            res.redirect(`/gather/view?no=${result.dataValues.gathering_id}`);
+            // res.redirect('/gather');
+            res.send(result);
         } catch(err){
             console.log(`Error creating gathering, participant:`, err);
-            res.redirect("/gather/create");
-        }
-        // PARTICIPANT 참가자 데이터 생성
-        try{
-        } catch(err){
             // res.redirect("/gather/create");
+            res.send(err);
         }
     },
 
     updateGather: async(req, res, next)=>{
-        //gather.ejs 확인
+        console.log('updateGather 도착');
+        //gather.ejs 확인       1) gathering 생성 2) participant 추가
+        if(!req.body){
+            res.redirect("/gather/create");
+        }
+        if(!req.user){
+            console.log('This user is not logged In');
+            res.redirect('/auth/login');
+        }
+        if(!req.query.no){
+            console.log('There is no number of gather');
+            res.redirect('/gather')
+        }
+        const _memId = req.user.mem_id;
+        const _gatherId = req.query.no;
 
-    //     const data = { //💚전달받은 거
-    //         name:'모임이름', leader_id : req.body.leader_id, region:req.body.region+'어딘기' ,
-    //         place:req.body.place+'미정', description:req.body.description+'와 맛있겠다', headCount:req.body.headCount, image_url:req.body.image_url
-    //         //create_date = , update_date 어딘ㄷ가 알서,,,
-    //     };
-    //     try {
-    //         await sequelize.transaction(async t => {
-    //             await db.gathering.update(data,{
-    //                 where: {
-    //                     leader_id: req.user.mem_id,
-    //                 },
-    //                 transaction: t
-    //             })
-    //         });
-    //         next();
-    //     } catch (err) {
-    //         console.log(`Error updating gathering information: ${err}`);
-    //         next(err);
-    //     }
+        const gatherData = getGatherParams(req.body, ISMODIFYING, _memId);
+        console.log('[createGather] 전달받은 값 확인: ', req.body, 'gatherData 확인: ', gatherData);
+        // // 모임 데이터 생성
+        try{
+            await sequelize.transaction(async t => {
+                result = await db.gathering.update(
+                    gatherData,
+                    {   //아뉘,, transaction 위치 때문에 안되는 거였다. 231215
+                        where: { gathering_id: _gatherId, leader_id: _memId },  // 리더 확인한느 건 혹시나 다른 유저가 할까봐
+                        transaction: t,
+                        raw: true,
+                    }
+                );
+            })
+            res.redirect(`/gather/view?no=${_gatherId}`);
+            // res.redirect('/gather');
+            // res.send(result);
+        } catch(err){
+            console.log(`Error updating gathering information:`, err);
+            // res.redirect("/gather/create");
+            res.send(err);
+        }
     },
 
         // gathering, participant,apply 테이블 삭제
@@ -587,7 +732,7 @@ module.exports={
                 attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
                 include: [{
                     model: db.participant,
-                    attributes: ['gathering_id', 'mem_id'], // participants 테이블의 열을 선택
+                    attributes: [['gathering_id','gathering_id'], ['mem_id','mem_id']], // participants 테이블의 열을 선택
                     as: 'participants',
                     where: {
                         mem_id: user

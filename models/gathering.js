@@ -16,10 +16,18 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(20),
       allowNull: false
     },
-    region: {
-      type: DataTypes.STRING(20),
+    city: {
+      type: DataTypes.STRING(10),
       allowNull: false,
       defaultValue: "미정"
+    },
+    district: {
+      type: DataTypes.STRING(10),
+      allowNull: true
+    },
+    neighborhood: {
+      type: DataTypes.STRING(10),
+      allowNull: true
     },
     place: {
       type: DataTypes.STRING(50),

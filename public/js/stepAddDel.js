@@ -38,29 +38,37 @@ var step9 = document.getElementById("step-9");
 // 추가하기 버튼
 var addStep = document.getElementById('addStep'); // 추가하기
 addStep.onclick = function () {
-    if(step2.style.display != 'flex') {
-        step2.style.display = 'flex';
+    if(step2.style.display != 'block') {
+        step2.style.display = 'block';
+        document.getElementById("stepArea2").required=true;
     }
-    else if(step3.style.display != 'flex') {
-        step3.style.display = 'flex';
+    else if(step3.style.display != 'block') {
+        step3.style.display = 'block';
+        document.getElementById("stepArea3").required=true;
     }
-    else if(step4.style.display != 'flex') {
-        step4.style.display = 'flex';
+    else if(step4.style.display != 'block') {
+        step4.style.display = 'block';
+        document.getElementById("stepArea4").required=true;
     }
-    else if(step5.style.display != 'flex') {
-        step5.style.display = 'flex';
+    else if(step5.style.display != 'block') {
+        step5.style.display = 'block';
+        document.getElementById("stepArea5").required=true;
     }
-    else if(step6.style.display != 'flex') {
-        step6.style.display = 'flex';
+    else if(step6.style.display != 'block') {
+        step6.style.display = 'block';
+        document.getElementById("stepArea6").required=true;
     }
-    else if(step7.style.display != 'flex') {
-        step7.style.display = 'flex';
+    else if(step7.style.display != 'block') {
+        step7.style.display = 'block';
+        document.getElementById("stepArea7").required=true;
     }
-    else if(step8.style.display != 'flex') {
-        step8.style.display = 'flex';
+    else if(step8.style.display != 'block') {
+        step8.style.display = 'block';
+        document.getElementById("stepArea8").required=true;
     }
-    else if(step9.style.display != 'flex') {
-        step9.style.display = 'flex';
+    else if(step9.style.display != 'block') {
+        step9.style.display = 'block';
+        document.getElementById("stepArea9").required=true;
     }
 }
 
@@ -68,7 +76,8 @@ addStep.onclick = function () {
 // step 1 삭제
 del1.onclick = function () {  // 삭제 버튼 클릭했을 때
     if(confirm("step 1의 내용을 삭제하시겠습니까?")){
-        
+
+        // textarea value 옮기기
         document.getElementById("stepArea1").value=document.getElementById("stepArea2").value;
         document.getElementById("stepArea2").value=document.getElementById("stepArea3").value;
         document.getElementById("stepArea3").value=document.getElementById("stepArea4").value;
@@ -78,15 +87,42 @@ del1.onclick = function () {  // 삭제 버튼 클릭했을 때
         document.getElementById("stepArea7").value=document.getElementById("stepArea8").value;
         document.getElementById("stepArea8").value=document.getElementById("stepArea9").value;
 
-        if (step9.style.display == 'flex') { document.getElementById("stepArea9").value=''; step9.style.display = 'none'; }
-        else if (step9.style.display != 'flex' && step8.style.display == 'flex') { document.getElementById("stepArea8").value=''; step8.style.display = 'none'; }
-        else if (step8.style.display != 'flex' && step7.style.display == 'flex') { document.getElementById("stepArea7").value=''; step7.style.display = 'none'; }
-        else if (step7.style.display != 'flex' && step6.style.display == 'flex') { document.getElementById("stepArea6").value=''; step6.style.display = 'none'; }
-        else if (step6.style.display != 'flex' && step5.style.display == 'flex') { document.getElementById("stepArea5").value=''; step5.style.display = 'none'; }
-        else if (step5.style.display != 'flex' && step4.style.display == 'flex') { document.getElementById("stepArea4").value=''; step4.style.display = 'none'; }
-        else if (step4.style.display != 'flex' && step3.style.display == 'flex') { document.getElementById("stepArea3").value=''; step3.style.display = 'none'; }
-        else if (step3.style.display != 'flex' && step2.style.display == 'flex') { document.getElementById("stepArea2").value=''; step2.style.display = 'none'; }
-        else if (step2.style.display != 'flex' && step1.style.display == 'flex') { document.getElementById("stepArea1").value=''; step1.style.display = 'none'; }
+        if (step9.style.display == 'block') { 
+            document.getElementById("stepArea9").value=''; step9.style.display = 'none'; 
+            document.getElementById("stepArea9").required=false;
+        }
+        else if (step9.style.display != 'block' && step8.style.display == 'block') { 
+            document.getElementById("stepArea8").value=''; step8.style.display = 'none'; 
+            document.getElementById("stepArea8").required=false;
+        }
+        else if (step8.style.display != 'block' && step7.style.display == 'block') { 
+            document.getElementById("stepArea7").value=''; step7.style.display = 'none'; 
+            document.getElementById("stepArea7").required=false;
+        }
+        else if (step7.style.display != 'block' && step6.style.display == 'block') { 
+            document.getElementById("stepArea6").value=''; step6.style.display = 'none';
+            document.getElementById("stepArea6").required=false; 
+        }
+        else if (step6.style.display != 'block' && step5.style.display == 'block') { 
+            document.getElementById("stepArea5").value=''; step5.style.display = 'none'; 
+            document.getElementById("stepArea5").required=false;
+        }
+        else if (step5.style.display != 'block' && step4.style.display == 'block') { 
+            document.getElementById("stepArea4").value=''; step4.style.display = 'none';
+            document.getElementById("stepArea4").required=false; 
+        }
+        else if (step4.style.display != 'block' && step3.style.display == 'block') { 
+            document.getElementById("stepArea3").value=''; step3.style.display = 'none'; 
+            document.getElementById("stepArea3").required=false;
+        }
+        else if (step3.style.display != 'block' && step2.style.display == 'block') { 
+            document.getElementById("stepArea2").value=''; step2.style.display = 'none';
+            document.getElementById("stepArea2").required=false;
+        }
+        else if (step2.style.display != 'block' && step1.style.display == 'block') { 
+            document.getElementById("stepArea1").value=''; step1.style.display = 'none'; 
+            document.getElementById("stepArea1").required=false;
+        }
 
     }
 }
@@ -103,14 +139,38 @@ del2.onclick = function () {  // 삭제 버튼 클릭했을 때
         document.getElementById("stepArea7").value=document.getElementById("stepArea8").value;
         document.getElementById("stepArea8").value=document.getElementById("stepArea9").value;
 
-        if (step9.style.display == 'flex') { document.getElementById("stepArea9").value=''; step9.style.display = 'none'; }
-        else if (step9.style.display != 'flex' && step8.style.display == 'flex') { document.getElementById("stepArea8").value=''; step8.style.display = 'none'; }
-        else if (step8.style.display != 'flex' && step7.style.display == 'flex') { document.getElementById("stepArea7").value=''; step7.style.display = 'none'; }
-        else if (step7.style.display != 'flex' && step6.style.display == 'flex') { document.getElementById("stepArea6").value=''; step6.style.display = 'none'; }
-        else if (step6.style.display != 'flex' && step5.style.display == 'flex') { document.getElementById("stepArea5").value=''; step5.style.display = 'none'; }
-        else if (step5.style.display != 'flex' && step4.style.display == 'flex') { document.getElementById("stepArea4").value=''; step4.style.display = 'none'; }
-        else if (step4.style.display != 'flex' && step3.style.display == 'flex') { document.getElementById("stepArea3").value=''; step3.style.display = 'none'; }
-        else if (step3.style.display != 'flex' && step2.style.display == 'flex') { document.getElementById("stepArea2").value=''; step2.style.display = 'none'; }
+        if (step9.style.display == 'block') { 
+            document.getElementById("stepArea9").value=''; step9.style.display = 'none'; 
+            document.getElementById("stepArea9").required=false;
+        }
+        else if (step9.style.display != 'block' && step8.style.display == 'block') { 
+            document.getElementById("stepArea8").value=''; step8.style.display = 'none'; 
+            document.getElementById("stepArea8").required=false;
+        }
+        else if (step8.style.display != 'block' && step7.style.display == 'block') { 
+            document.getElementById("stepArea7").value=''; step7.style.display = 'none'; 
+            document.getElementById("stepArea7").required=false;
+        }
+        else if (step7.style.display != 'block' && step6.style.display == 'block') { 
+            document.getElementById("stepArea6").value=''; step6.style.display = 'none';
+            document.getElementById("stepArea6").required=false; 
+        }
+        else if (step6.style.display != 'block' && step5.style.display == 'block') { 
+            document.getElementById("stepArea5").value=''; step5.style.display = 'none'; 
+            document.getElementById("stepArea5").required=false;
+        }
+        else if (step5.style.display != 'block' && step4.style.display == 'block') { 
+            document.getElementById("stepArea4").value=''; step4.style.display = 'none';
+            document.getElementById("stepArea4").required=false; 
+        }
+        else if (step4.style.display != 'block' && step3.style.display == 'block') { 
+            document.getElementById("stepArea3").value=''; step3.style.display = 'none'; 
+            document.getElementById("stepArea3").required=false;
+        }
+        else if (step3.style.display != 'block' && step2.style.display == 'block') { 
+            document.getElementById("stepArea2").value=''; step2.style.display = 'none';
+            document.getElementById("stepArea2").required=false;
+        }
 
     }
 }
@@ -126,13 +186,34 @@ del3.onclick = function () {  // 삭제 버튼 클릭했을 때
         document.getElementById("stepArea7").value=document.getElementById("stepArea8").value;
         document.getElementById("stepArea8").value=document.getElementById("stepArea9").value;
 
-        if (step9.style.display == 'flex') { document.getElementById("stepArea9").value=''; step9.style.display = 'none'; }
-        else if (step9.style.display != 'flex' && step8.style.display == 'flex') { document.getElementById("stepArea8").value=''; step8.style.display = 'none'; }
-        else if (step8.style.display != 'flex' && step7.style.display == 'flex') { document.getElementById("stepArea7").value=''; step7.style.display = 'none'; }
-        else if (step7.style.display != 'flex' && step6.style.display == 'flex') { document.getElementById("stepArea6").value=''; step6.style.display = 'none'; }
-        else if (step6.style.display != 'flex' && step5.style.display == 'flex') { document.getElementById("stepArea5").value=''; step5.style.display = 'none'; }
-        else if (step5.style.display != 'flex' && step4.style.display == 'flex') { document.getElementById("stepArea4").value=''; step4.style.display = 'none'; }
-        else if (step4.style.display != 'flex' && step3.style.display == 'flex') { document.getElementById("stepArea3").value=''; step3.style.display = 'none'; }
+        if (step9.style.display == 'block') { 
+            document.getElementById("stepArea9").value=''; step9.style.display = 'none'; 
+            document.getElementById("stepArea9").required=false;
+        }
+        else if (step9.style.display != 'block' && step8.style.display == 'block') { 
+            document.getElementById("stepArea8").value=''; step8.style.display = 'none'; 
+            document.getElementById("stepArea8").required=false;
+        }
+        else if (step8.style.display != 'block' && step7.style.display == 'block') { 
+            document.getElementById("stepArea7").value=''; step7.style.display = 'none'; 
+            document.getElementById("stepArea7").required=false;
+        }
+        else if (step7.style.display != 'block' && step6.style.display == 'block') { 
+            document.getElementById("stepArea6").value=''; step6.style.display = 'none';
+            document.getElementById("stepArea6").required=false; 
+        }
+        else if (step6.style.display != 'block' && step5.style.display == 'block') { 
+            document.getElementById("stepArea5").value=''; step5.style.display = 'none'; 
+            document.getElementById("stepArea5").required=false;
+        }
+        else if (step5.style.display != 'block' && step4.style.display == 'block') { 
+            document.getElementById("stepArea4").value=''; step4.style.display = 'none';
+            document.getElementById("stepArea4").required=false; 
+        }
+        else if (step4.style.display != 'block' && step3.style.display == 'block') { 
+            document.getElementById("stepArea3").value=''; step3.style.display = 'none'; 
+            document.getElementById("stepArea3").required=false;
+        }
 
     }
 }
@@ -147,12 +228,30 @@ del4.onclick = function () {  // 삭제 버튼 클릭했을 때
         document.getElementById("stepArea7").value=document.getElementById("stepArea8").value;
         document.getElementById("stepArea8").value=document.getElementById("stepArea9").value;
 
-        if (step9.style.display == 'flex') { document.getElementById("stepArea9").value=''; step9.style.display = 'none'; }
-        else if (step9.style.display != 'flex' && step8.style.display == 'flex') { document.getElementById("stepArea8").value=''; step8.style.display = 'none'; }
-        else if (step8.style.display != 'flex' && step7.style.display == 'flex') { document.getElementById("stepArea7").value=''; step7.style.display = 'none'; }
-        else if (step7.style.display != 'flex' && step6.style.display == 'flex') { document.getElementById("stepArea6").value=''; step6.style.display = 'none'; }
-        else if (step6.style.display != 'flex' && step5.style.display == 'flex') { document.getElementById("stepArea5").value=''; step5.style.display = 'none'; }
-        else if (step5.style.display != 'flex' && step4.style.display == 'flex') { document.getElementById("stepArea4").value=''; step4.style.display = 'none'; }
+        if (step9.style.display == 'block') { 
+            document.getElementById("stepArea9").value=''; step9.style.display = 'none'; 
+            document.getElementById("stepArea9").required=false;
+        }
+        else if (step9.style.display != 'block' && step8.style.display == 'block') { 
+            document.getElementById("stepArea8").value=''; step8.style.display = 'none'; 
+            document.getElementById("stepArea8").required=false;
+        }
+        else if (step8.style.display != 'block' && step7.style.display == 'block') { 
+            document.getElementById("stepArea7").value=''; step7.style.display = 'none'; 
+            document.getElementById("stepArea7").required=false;
+        }
+        else if (step7.style.display != 'block' && step6.style.display == 'block') { 
+            document.getElementById("stepArea6").value=''; step6.style.display = 'none';
+            document.getElementById("stepArea6").required=false; 
+        }
+        else if (step6.style.display != 'block' && step5.style.display == 'block') { 
+            document.getElementById("stepArea5").value=''; step5.style.display = 'none'; 
+            document.getElementById("stepArea5").required=false;
+        }
+        else if (step5.style.display != 'block' && step4.style.display == 'block') { 
+            document.getElementById("stepArea4").value=''; step4.style.display = 'none';
+            document.getElementById("stepArea4").required=false; 
+        }
 
     }
 }
@@ -166,15 +265,29 @@ del5.onclick = function () {  // 삭제 버튼 클릭했을 때
         document.getElementById("stepArea7").value=document.getElementById("stepArea8").value;
         document.getElementById("stepArea8").value=document.getElementById("stepArea9").value;
 
-        if (step9.style.display == 'flex') { document.getElementById("stepArea9").value=''; step9.style.display = 'none'; }
-        else if (step9.style.display != 'flex' && step8.style.display == 'flex') { document.getElementById("stepArea8").value=''; step8.style.display = 'none'; }
-        else if (step8.style.display != 'flex' && step7.style.display == 'flex') { document.getElementById("stepArea7").value=''; step7.style.display = 'none'; }
-        else if (step7.style.display != 'flex' && step6.style.display == 'flex') { document.getElementById("stepArea6").value=''; step6.style.display = 'none'; }
-        else if (step6.style.display != 'flex' && step5.style.display == 'flex') { document.getElementById("stepArea5").value=''; step5.style.display = 'none'; }
+        if (step9.style.display == 'block') { 
+            document.getElementById("stepArea9").value=''; step9.style.display = 'none'; 
+            document.getElementById("stepArea9").required=false;
+        }
+        else if (step9.style.display != 'block' && step8.style.display == 'block') { 
+            document.getElementById("stepArea8").value=''; step8.style.display = 'none'; 
+            document.getElementById("stepArea8").required=false;
+        }
+        else if (step8.style.display != 'block' && step7.style.display == 'block') { 
+            document.getElementById("stepArea7").value=''; step7.style.display = 'none'; 
+            document.getElementById("stepArea7").required=false;
+        }
+        else if (step7.style.display != 'block' && step6.style.display == 'block') { 
+            document.getElementById("stepArea6").value=''; step6.style.display = 'none';
+            document.getElementById("stepArea6").required=false; 
+        }
+        else if (step6.style.display != 'block' && step5.style.display == 'block') { 
+            document.getElementById("stepArea5").value=''; step5.style.display = 'none'; 
+            document.getElementById("stepArea5").required=false;
+        }
 
     }
 }
-
 
 // step 6 삭제
 del6.onclick = function () {  // 삭제 버튼 클릭했을 때
@@ -184,11 +297,23 @@ del6.onclick = function () {  // 삭제 버튼 클릭했을 때
         document.getElementById("stepArea7").value=document.getElementById("stepArea8").value;
         document.getElementById("stepArea8").value=document.getElementById("stepArea9").value;
 
-        if (step9.style.display == 'flex') { document.getElementById("stepArea9").value=''; step9.style.display = 'none'; }
-        else if (step9.style.display != 'flex' && step8.style.display == 'flex') { document.getElementById("stepArea8").value=''; step8.style.display = 'none'; }
-        else if (step8.style.display != 'flex' && step7.style.display == 'flex') { document.getElementById("stepArea7").value=''; step7.style.display = 'none'; }
-        else if (step7.style.display != 'flex' && step6.style.display == 'flex') { document.getElementById("stepArea6").value=''; step6.style.display = 'none'; }
-       
+        if (step9.style.display == 'block') { 
+            document.getElementById("stepArea9").value=''; step9.style.display = 'none'; 
+            document.getElementById("stepArea9").required=false;
+        }
+        else if (step9.style.display != 'block' && step8.style.display == 'block') { 
+            document.getElementById("stepArea8").value=''; step8.style.display = 'none'; 
+            document.getElementById("stepArea8").required=false;
+        }
+        else if (step8.style.display != 'block' && step7.style.display == 'block') { 
+            document.getElementById("stepArea7").value=''; step7.style.display = 'none'; 
+            document.getElementById("stepArea7").required=false;
+        }
+        else if (step7.style.display != 'block' && step6.style.display == 'block') { 
+            document.getElementById("stepArea6").value=''; step6.style.display = 'none';
+            document.getElementById("stepArea6").required=false; 
+        }
+
     }
 }
 
@@ -200,10 +325,19 @@ del7.onclick = function () {  // 삭제 버튼 클릭했을 때
         document.getElementById("stepArea7").value=document.getElementById("stepArea8").value;
         document.getElementById("stepArea8").value=document.getElementById("stepArea9").value;
 
-        if (step9.style.display == 'flex') { document.getElementById("stepArea9").value=''; step9.style.display = 'none'; }
-        else if (step9.style.display != 'flex' && step8.style.display == 'flex') { document.getElementById("stepArea8").value=''; step8.style.display = 'none'; }
-        else if (step8.style.display != 'flex' && step7.style.display == 'flex') { document.getElementById("stepArea7").value=''; step7.style.display = 'none'; }
-       
+        if (step9.style.display == 'block') { 
+            document.getElementById("stepArea9").value=''; step9.style.display = 'none'; 
+            document.getElementById("stepArea9").required=false;
+        }
+        else if (step9.style.display != 'block' && step8.style.display == 'block') { 
+            document.getElementById("stepArea8").value=''; step8.style.display = 'none'; 
+            document.getElementById("stepArea8").required=false;
+        }
+        else if (step8.style.display != 'block' && step7.style.display == 'block') { 
+            document.getElementById("stepArea7").value=''; step7.style.display = 'none'; 
+            document.getElementById("stepArea7").required=false;
+        }
+
     }
 }
 
@@ -213,9 +347,15 @@ del8.onclick = function () {  // 삭제 버튼 클릭했을 때
         
         document.getElementById("stepArea8").value=document.getElementById("stepArea9").value;
 
-        if (step9.style.display == 'flex') { document.getElementById("stepArea9").value=''; step9.style.display = 'none'; }
-        else if (step9.style.display != 'flex' && step8.style.display == 'flex') { document.getElementById("stepArea8").value=''; step8.style.display = 'none'; }
-       
+        if (step9.style.display == 'block') { 
+            document.getElementById("stepArea9").value=''; step9.style.display = 'none'; 
+            document.getElementById("stepArea9").required=false;
+        }
+        else if (step9.style.display != 'block' && step8.style.display == 'block') { 
+            document.getElementById("stepArea8").value=''; step8.style.display = 'none'; 
+            document.getElementById("stepArea8").required=false;
+        }
+
     }
 }
 
@@ -224,9 +364,8 @@ del8.onclick = function () {  // 삭제 버튼 클릭했을 때
 del9.onclick = function () {  // 삭제 버튼 클릭했을 때
     if(confirm("step 9의 내용을 삭제하시겠습니까?")){
         
-        document.getElementById("stepArea9").value='';
-
-        step9.style.display = 'none'; 
+        document.getElementById("stepArea9").value=''; step9.style.display = 'none'; 
+        document.getElementById("stepArea9").required=false;
         
     }
 }

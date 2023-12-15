@@ -32,7 +32,7 @@ function getDateAfter21() {
 
 // 기본값 설정
 var dateForm = document.getElementById('7daysfromnow');
-dateForm.value = getDateAfter7();
+dateForm.value = dateForm.value? dateForm.value: getDateAfter7();
 dateForm.setAttribute("min", new Date().toISOString().split("T")[0]);
 dateForm.setAttribute("max", getDateAfter21());
 
