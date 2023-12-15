@@ -334,6 +334,7 @@ input[type='file'] {
 /* 재료 입력란 */
 .ingredients-box {
     border-top: 2px dashed gray;
+    height: 500px;
 }
 .ingredients-bind {
     display: flex;

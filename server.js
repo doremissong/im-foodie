@@ -156,8 +156,8 @@ app.get('/recipe/update', (req, res) => {
 })
 
 
-app.get('/aaa', (req, res) => {
-  res.render('aaa');
+app.get('/formtest', (req, res) => {
+  res.render('formtest');
 })
 
 app.get('/test', (req, res) => {
