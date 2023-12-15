@@ -1,8 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-
-<SCRIPT>
 
 var count = 1; // input text 의 name 에 사용할 카운터를 설정합니다
 var num = 1; // div id 설정
@@ -13,23 +8,22 @@ function addBox (x) {
     // NewDiv 생성
     var newDiv = document.createElement('div');
     newDiv.id = 'box' + num++;
-    gg.appendChild(newDiv);
+    asdf.appendChild(newDiv);
+    newDiv.style.border = '1px solid black';
+    newDiv.appendChild(document.createElement('p'));
 
     // 요소 확인용
     var newP = document.createElement('p');
-    newP.innerHTML = "확인";
+    newP.innerHTML = "만들엉";
     newP.id = 'checkP';
     newDiv.appendChild(newP);
-
-    newDiv.style.border = '1px solid black';
-    newDiv.appendChild(document.createElement('p'));
 
     // NewDiv에 재료 이름 입력칸 만들기
     var newArea = document.createElement('input');
     newArea.type = 'text'
     newArea.name = 'ingredient';
     newArea.placeholder = newDiv.id;
-    // newArea.required = true;
+    newArea.required = true;
     newDiv.appendChild(newArea);
 
     // NewDiv에 재료 양 입력칸 만들기
@@ -37,7 +31,7 @@ function addBox (x) {
     newArea2.type = 'text'
     newArea2.name = 'quantity';
     newArea2.placeholder = newDiv.id;
-    // newArea2.required = true;
+    newArea2.required = true;
     newDiv.appendChild(newArea2);
 
     // NewDiv에 삭제 버튼 만들기
@@ -58,59 +52,29 @@ function addBox (x) {
         }
     }
 
-    function Checkform() {
-
-        if (document.getElementById('checkP')) {
-            alert('myDiv exists');
-            return true;
-        }
-        else {
-            alert('없당');
-            return false;
-        }
-
-    }
-
 }
 
+var send = document.getElementById("send");
+send.addEventListener("click", function () {
+    var form = document.getElementById("form");
+    // var id = document.getElementById("id");
+    // var pw = document.getElementById("pw");
 
-</SCRIPT>
+    if (document.querySelector('#checkP') !== null) {
+        alert("있당");
+    }
+    else {
+        alert("없당");
+        return false;
+    }
 
-<link rel="stylesheet" href="/views/test/test.css">
+    // if (pw.value.trim() == "" || id.value.trim() == "") {
+    //     alert("id와 비번 잘 적어라");
+    //     return false;
+    // }
 
-</HEAD>
-<BODY>
+    form.action = "http://www.naver.com";
+    form.mothod = "GET";
+    form.submit();
 
-    <FORM NAME="myForm" method=post action="" onsubmit="return Checkform()">
-        
-        <div class="gg" id="gg">
-            <INPUT TYPE="button" VALUE="입력영역 추가하기" onclick="addBox(this.form)" >
-                아니 왜 맨 뒤에 생성돼ㅜㅜ
-                <P></P>
-        </div>
-
-
-        <div>
-            <p>
-            환장...<p></p>
-        </div>
-
-        <div>
-            해결!!<p></p>
-        </div>
-
-        <div>
-            새로운 문제... 한번 삭제하면 name이 돌아오지 않아... <p></p>
-            미친... name 문제 해결하려면 걍 diplay:none 설정 써야...
-        </div>
-
-        <div>
-
-            <INPUT TYPE="submit" value=" 전송하기 ">
-
-        </div>
-
-    </FORM>
-
-</BODY>
-</HTML>
+});
