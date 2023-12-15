@@ -61,7 +61,7 @@ var first = 0;
 function deleteFirst() {
     if(confirm('해당 재료를 삭제하시겠습니까?')){
         if (document.querySelector('.happy') == null ) {
-            alert('더이상 삭제할 수 없습니다!');
+            alert('더이상 삭제할 수 없어여');
         }
         else {
     

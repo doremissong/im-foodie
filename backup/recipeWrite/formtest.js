@@ -1,7 +1,7 @@
 var stepNum = 1; // div id 설정
 var stepI = 1; // button id 설정
 
-function addStepBox (z) {
+function addStep (x) {
 
     // newStepDiv 생성
     var newStepDiv = document.createElement('div');
@@ -40,7 +40,7 @@ function addStepBox (z) {
 var firstStep = 0;
 
 function deleteFirstStep() {
-    if(confirm('해당 단계를 삭제하시겠습니까?')){
+    if(confirm('해당 재료를 삭제하시겠습니까?')){
         if (document.querySelector('.smile') == null ) {
             alert('더이상 삭제할 수 없어여');
         }

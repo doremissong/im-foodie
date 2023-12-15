@@ -1,4 +1,3 @@
-var count = 1; // input text 의 name 에 사용할 카운터를 설정합니다
 var num = 1; // div id 설정
 var i = 1; // button id 설정
 
@@ -32,7 +31,7 @@ function addBox (x) {
     // NewDiv에 삭제 버튼 만들기
     var newButton = document.createElement('input');
     newButton.type = 'button';
-    newButton.value = "x";
+    newButton.value = "X";
     newDiv.appendChild(newButton);
     newButton.id = i++;
 
@@ -60,7 +59,7 @@ function deleteFirst() {
     
             // alert(document.getElementById('Q'+first).value);
     
-            for (var cnt = 1; cnt<99; cnt++){
+            for (var cnt = 1; cnt<num; cnt++){
                 var bDiv = document.getElementById('box'+cnt);
                 if (bDiv !== null){
     

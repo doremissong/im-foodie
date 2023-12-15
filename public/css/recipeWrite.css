@@ -435,6 +435,11 @@ input[type='file'] {
 }
 
 /* 단계 입력란 */
+.steps-box {
+    border-top: 2px dashed gray;
+    height: 500px;
+}
+
 .content-box {
     border-top: 2px dashed gray;
 }

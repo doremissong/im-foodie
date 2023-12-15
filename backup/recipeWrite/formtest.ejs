@@ -1,0 +1,14 @@
+
+    <form method="get" id="form" action="/formsubmit" onsubmit="return confirm('제출?')">
+        아이디 : <input type="text" name="" id="id" ><br>
+        비밀번호 : <input type="password" name="" id="pw" ><br>
+    <div id="qwer">
+        <input type="button" value="입력영역 추가하기" onclick="addStep(this.form)">
+        <textarea id="S0" name="step" placeholder="기본" required></textarea>
+        <input type="button" value="X" onclick="deleteFirstStep()">
+    </div>
+        <button type="submit" id="send">전송</button>
+    </form>
+
+    <!-- <script src="/views/test/formtest.js"></script> -->
+    
