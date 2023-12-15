@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+
+<SCRIPT>
+
+var count = 1; // input text 의 name 에 사용할 카운터를 설정합니다
+var num = 1; // div id 설정
+var i = 1; // button id 설정
+
+function addBox (x) {
+
+    // NewDiv 생성
+    // var newDiv = document.getElementById('gg');
+    var newDiv = document.createElement('div');
+    newDiv.id = 'box' + num++;
+    gg.appendChild(newDiv);
+
+    newDiv.style.border = '1px solid black';
+    newDiv.appendChild(document.createElement('p'));
+
+    // NewDiv에 재료 이름 입력칸 만들기
+    var newArea = document.createElement('input');
+    newArea.type = 'text'
+    newArea.name = 'ingredient';
+    newArea.placeholder = newDiv.id;
+    newArea.required = true;
+    newDiv.appendChild(newArea);
+
+    // NewDiv에 재료 양 입력칸 만들기
+    var newArea2 = document.createElement('input');
+    newArea2.type = 'text'
+    newArea2.name = 'quantity';
+    newArea2.placeholder = newDiv.id;
+    newArea2.required = true;
+    newDiv.appendChild(newArea2);
+
+    // NewDiv에 삭제 버튼 만들기
+    var newButton = document.createElement('input');
+    newButton.type = 'button';
+    newButton.value = "x";
+    newDiv.appendChild(newButton);
+    newButton.id = i++;
+
+    newDiv.appendChild(document.createElement('p'));
+
+    // 수정필요!!!
+    newButton.onclick = function () {
+        if(confirm("삭제하시겠습니까?")){
+            // 클릭한 버튼 본인의 부모요소(Div) 삭제하기
+            const delBox = document.getElementById('box' + this.id);
+            delBox.remove();
+        }
+    }
+}
+
+
+
+</SCRIPT>
+
+<link rel="stylesheet" href="/views/test/test.css">
+
+</HEAD>
+<BODY>
+
+    <FORM NAME="myForm" method=post action="">
+        
+        <div class="gg" id="gg">
+            <INPUT TYPE="button" VALUE="입력영역 추가하기" onclick="addBox(this.form)">
+                아니 왜 맨 뒤에 생성돼ㅜㅜ
+                <P></P>
+        </div>
+
+
+        <div>
+            <p>
+            환장...<p></p>
+        </div>
+
+        <div>
+            해결!!<p></p>
+        </div>
+
+        <div>
+            새로운 문제... 한번 삭제하면 name이 돌아오지 않아... <p></p>
+            미친... name 문제 해결하려면 걍 diplay:none 설정 써야...
+        </div>
+
+        <div>
+
+            <INPUT TYPE="submit" value=" 전송하기 ">
+
+        </div>
+
+    </FORM>
+
+</BODY>
+</HTML>
