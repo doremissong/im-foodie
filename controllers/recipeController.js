@@ -213,8 +213,8 @@ module.exports={
                 where: { recipe_id: recipeId },
                 raw: true,
             })
-            obj.dataList = temp;
-            console.log(obj.dataList, '값확인');
+            obj.data = temp;
+            console.log(obj.data, '값확인');
 
             // ⚠️태그는 write처럼 전체 태그 가져오고, 검색한 걸를 selected tag로 해서
             // 같으면 선택 처리 해야할 거 같음..⚠️ 그렇게 하면 굳이 이름을 가져올 필요까지는 없음.

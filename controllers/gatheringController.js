@@ -45,70 +45,97 @@ getGatherParams = (info, isModifying, _memId)=>{
 }
 // 기본값 == undefined. 그러면 내가 해줄 필요없어.
 // 맨뒤 condition 만들어줘
-searchGathering = async (_cols, _state, _gatherId, _leaderId) => { // gathering_id, 
+searchGathering = async (_cols, _state, _gatherId, _leaderId, _condition) => { // gathering_id, 
     var condition={};
-    if (typeof _state !== "undefined") condition.state = _state;
-    if (typeof _gatherId !== "undefined") condition.gathering_id = _gatherId
-    if (typeof _leaderId !== "undefined") condition.leader_id = _leaderId;
-
-    console.log('[searchGathering',condition);
-    const list = await db.gathering.findOne({
-        attributes: _cols,
-        where:condition,
-        raw: true,
-    })  
+    var where = {};
+    if (typeof _state !== "undefined") where.state = _state;
+    if (typeof _gatherId !== "undefined") where.gathering_id = _gatherId
+    if (typeof _leaderId !== "undefined") where.leader_id = _leaderId;
+    if (typeof _condition !== "undefined"){
+        condition = _condition;
+    } else {
+        condition = {
+            attributes: _cols,
+            where,
+            raw: true
+        };
+    }
+    const list = await db.gathering.findOne(condition);
+    console.log('[searchGathering]',condition);
     // console.log('밥모임 검색 결과: ',list);
     return list;
 };
+// console.log('안녕');
+// searchGathering(undefined, undefined, undefined, undefined, {where:{leader_id: 'black'},  raw:true});
+// searchGathering(undefined, undefined, undefined, 'black');
 // 기본값 == undefined. 그러면 내가 해줄 필요없어.
-searchGatherings = async (_cols, _state, _gatherId, _leaderId) => { // gathering_id, 
+searchGatherings = async (_cols, _state, _gatherId, _leaderId, _condition) => { // gathering_id, 
     var condition={};
-    if (typeof _state !== "undefined") condition.state = _state;
-    if (typeof _gatherId !== "undefined") condition.gathering_id = _gatherId
-    if (typeof _leaderId !== "undefined") condition.leader_id = _leaderId;
-
-    // console.log('[searchGatherings',condition);
-    const list = await db.gathering.findAll({
-        attributes: _cols,
-        where:condition,
-        raw: true,
-    })  
+    var where = {};
+    if (typeof _state !== "undefined") where.state = _state;
+    if (typeof _gatherId !== "undefined") where.gathering_id = _gatherId
+    if (typeof _leaderId !== "undefined") where.leader_id = _leaderId;
+    if (typeof _condition !== "undefined"){
+        condition = _condition;
+    } else {
+        condition = {
+            attributes: _cols,
+            where,
+            raw: true
+        };
+    }
+    const list = await db.gathering.findAll(condition);
     // console.log('밥모임 검색 결과: ',list);
     return list;
 };
 // column형식은 ['name', 'mem_id'];
-searchParticipant = async (_cols, _state, _gatherId, _memId)=> {
+searchParticipant = async (_cols, _state, _gatherId, _memId, _condition)=> {
     var condition = {};
-    if (typeof _memId != "undefined") condition.mem_id = _memId;
-    if (typeof _state != "undefined") condition.state = _state;
-    if (typeof _gatherId != "undefined") condition.gathering_id = _gatherId;
-    console.log('[searchParticipant] conditon: ', condition);
+    var where = {};
+    if (typeof _memId != "undefined") where.mem_id = _memId;
+    if (typeof _state != "undefined") where.state = _state;
+    if (typeof _gatherId != "undefined") where.gathering_id = _gatherId;
+    if (typeof _condition !== "undefined"){
+        condition = _condition;
+    } else {
+        condition = {
+            attributes: _cols,
+            where,
+            raw: true
+        };
+    }
+    const list = await db.participant.findOne(condition);
+
+    console.log('[searchParticipants] conditon: ', condition);
+    console.log('[searchParticipant] where: ', where);
     //columns 는 필요한 컬럼 object 가입한 목록은,
     console.log('[searchParticipant] _cols: ', _cols);
-    // ❓근데 gathering_id 다 뽑았어. 그거가지고 condition에 where {}에 몽땅 집어넣어도 괜찮아/??응 괜찮아
-    const list = await db.participant.findOne({
-        attributes: _cols,
-        where: condition,
-        raw: true,
-    });
-    // console.log('[searchParticipant] result:', list);
+    console.log('[searchParticipant] result:', list);
     return list;
 };
+// searchParticipant(['state', 'gathering_id', 'mem_id'], undefined, 1, '');
+            
 // column형식은 ['name', 'mem_id'];
-searchParticipants = async (_cols, _state, _gatherId, _memId)=> {
+searchParticipants = async (_cols, _state, _gatherId, _memId, _condition)=> {
     var condition = {};
-    if (typeof _memId != "undefined") condition.mem_id = _memId;
-    if (typeof _state != "undefined") condition.state = _state;
-    if (typeof _gatherId != "undefined") condition.gathering_id = _gatherId;
-    console.log('[searchParticipant] conditon: ', condition);
+    var where = {};
+    if (typeof _memId != "undefined") where.mem_id = _memId;
+    if (typeof _state != "undefined") where.state = _state;
+    if (typeof _gatherId != "undefined") where.gathering_id = _gatherId;
+    if (typeof _condition !== "undefined"){
+        condition = _condition;
+    } else {
+        condition = {
+            attributes: _cols,
+            where,
+            raw: true
+        };
+    }
+    const list = await db.participant.findOne(condition);
+    console.log('[searchParticipants] conditon: ', condition);
     //columns 는 필요한 컬럼 object 가입한 목록은,
-    console.log('[searchParticipant] _cols: ', _cols);
+    console.log('[searchParticipants] _cols: ', _cols);
     //columns 는 필요한 컬럼 object 가입한 목록은,
-    const list = await db.participant.findAll({
-        attributes: _cols,
-        where: condition,
-        raw: true,
-    });
     return list;
 };
 
@@ -122,18 +149,20 @@ module.exports={
         if(req.user){
             obj.user = req.user;
         }
-        const recruitingList = await db.gathering.findAll({
-            where:{state: RECRUITING},
-            order:[['createdAt', 'DESC']],
+        const recruitingList = await searchGatherings(undefined, undefined, undefined, undefined, {
+            where: { state: RECRUITING },
+            order: [['createdAt', 'DESC']],
             limit: limit,
+            raw: true,
         });
+        console.log('recruiting list result:', recruitingList);
 
-        const completedList = await db.gathering.findAll({
-            where:{state: COMPLETED},
-            order:[['createdAt', 'DESC']],
+        const completedList = await searchGatherings(undefined, undefined, undefined, undefined, {
+            where: { state: COMPLETED },
+            order: [['createdAt', 'DESC']],
             limit: limit,
         });
-        console.log(completedList =="");
+        console.log('모집완료 글 없나?', completedList =="");
 
         obj.recruitingList = recruitingList;
         obj.completedList = completedList;
@@ -165,14 +194,15 @@ module.exports={
         const _gatherId = req.query.no;
 
         try{
-            const temp = await db.gathering.findOne({
-                where: { gathering_id: _gatherId },
-                raw: true
-            });
+            const temp = await searchGathering(undefined, undefined, _gatherId);
+            // await db.gathering.findOne({
+            //     where: { gathering_id: _gatherId },
+            //     raw: true
+            // });
             if(temp==null){
                 throw error;
             }
-            obj.dataList = temp;
+            obj.data = temp;
             console.log('🐰query value: ', temp);
 
         } catch(err){
@@ -192,7 +222,7 @@ module.exports={
             obj.user = req.user;
         }
         const _memId = req.user? req.user.mem_id : '';   //undefined하면 who가 0이됨
-
+// 'fuck';
         if(!req.query.no){
             console.log('There is no number of gather');
             res.redirect('/gather')
@@ -215,8 +245,18 @@ module.exports={
             // res.send(err);
         }
         try {
-            var who = await searchParticipant(['state'], undefined, _gatherId, _memId);
-            if(!who || who.length ==0){
+            // memId, _gatherId, state 가져와서, _gatherId가 맞는지 비교?// console.log('1st-----------');
+            // var who = await searchParticipant(undefined, undefined, undefined, undefined, {
+            //     attributes: ['state', 'gathering_id', 'mem_id'],
+            //     where:{
+            //         mem_id: _memId,
+            //         gathering_id: _gatherId
+            //     },
+            //     raw: true
+            // });
+            // console.log('2nd-------------');
+            var who = await searchParticipant(['state', 'gathering_id', 'mem_id'], undefined, _gatherId, _memId);
+            if(!who || who.length ==0 || typeof who == 'undefined'){
                 who = ISNOTMEMBER;
             } else{
                 who = who.state;
@@ -225,10 +265,12 @@ module.exports={
             console.log('who:', who);
             switch(who){
                 case ISLEADER:  
+                console.log('switch');
                     // console.log('switch동작');
                     // 해당 모임의 가입신청한 유저 목록 저장
                     obj.applicantList = await searchParticipants(undefined, ISAPPLYING, _gatherId, undefined);
                 case ISMEMBER:
+                    console.log('switch');
                     // 모임원 목록
                     obj.gatherMemberList = await searchParticipants(undefined, [ISLEADER, ISMEMBER], _gatherId, undefined);
                     break;
@@ -239,13 +281,10 @@ module.exports={
                 default: //ISNOTMEMBER
                     break;
             }
-            if (!data || data.length == 0) { // 검색어 없으면 
-                console.log('[ERROR] WRONG ACCESS');
-                res.redirect('/gather');
-            }
         } catch(err){
             console.log('[ERROR] While getting data on gathering from DB ', err);
-            res.redirect('/gather');
+            // res.redirect('/gather');
+            res.send(err);
         }
         // 작성자면 => [수정/삭제]
         // 모임원이면 => [탈퇴]
@@ -356,17 +395,18 @@ module.exports={
     // 팀장이 볼 때, 조원 어떻게 있는지 확인
     showMemberOfGathering: async (req, res) => {
         // 💚 query로 받음.
-        const gatheringId = req.query.gatheringId;
-        await db.participant.findAll({
-            where: {
-                gathering_id: gatheringId
-            }
-        })
-            .then((members) => {
-                res.json(members);
-            })
-            .catch((err) => { console.log(err, 'gatheringController-showMemberOfGathering') });
-
+        if(!req.query.no){
+            console('There is no gathering number');
+            res.redirect('/gather');
+        }
+        const _gatherId = req.query.no;
+        var members;
+        try{
+            members = await searchParticipants(undefined, undefined, _gatherId);
+            res.json(members);
+        } catch(err){
+            console.log(err, 'gatheringController-showMemberOfGathering');
+        }
     },
 
 
@@ -559,16 +599,20 @@ module.exports={
     // 모임 
     applyForGather: async(req, res)=>{
         //⚠️⚠️⚠️try문 req.query 유효성 검사
-        const gatheringId = req.query.id;
+        if(!req.user){
+            res.redirect('/gather');
+            console.log('[Wrong Access] This user is not logged in');
+        }
+        const _memId = req.user.mem_id;
+        if(!req.query.no){
+            res.redirect('/gather');
+            console.log('[Uncertain Information] There is no gathering number');
+        }
+        const _gatherId = req.query.id;
 
         // 이미 가입 신청했는지 확인.
         // ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️applied 대신 checkMember 사용!!!!!
-        const applied = await db.participant.findOne({
-            where:{
-                gathering_id: gatheringId,
-                mem_id: req.user.mem_id
-            }
-        })
+        const applied = await searchParticipant(undefined, undefined, _gatherId, _memId);
         
         if(!applied){
             try{
@@ -662,7 +706,7 @@ module.exports={
         //필요한 값 - 일단은 다 가져오자. 내가 가입한 그룹
         const memId = req.user.mem_id;
         try{
-            const gatherList = await db.gathering.findAll({
+            const gatherList = await this.searchGathers(undefined, undefined, undefined,undefined, {
                 include:{
                     model: db.participant,
                     attributes: ['mem_id', 'mem_id'],
@@ -673,7 +717,20 @@ module.exports={
                     as: "participants",
                 },
                 raw: true
-            })
+            });
+            //⚠️condition은 따로 해야하나?? overriding??
+            //  await db.gathering.findAll({
+            //     include:{
+            //         model: db.participant,
+            //         attributes: ['mem_id', 'mem_id'],
+            //         where: {
+            //             mem_id: memId,
+            //             state: { [Op.or]: [ISLEADER, ISMEMBER] }
+            //         },
+            //         as: "participants",
+            //     },
+            //     raw: true
+            // })
             // gatherList = list.map(i => i.dataValues);
             console.log('innerjoin한 모임목록: ', gatherList[0]['participants.mem_id']);
             // join한 attriubte는 ['']로 접근해야함!!!
