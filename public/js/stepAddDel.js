@@ -1,7 +1,7 @@
 var stepNum = 1; // div id 설정
 var stepI = 1; // button id 설정
 
-function addStepBox (z) {
+function addStepBox (content, index) {
 
     // newStepDiv 생성
     var newStepDiv = document.createElement('div');
@@ -14,7 +14,10 @@ function addStepBox (z) {
     var newTextArea = document.createElement('textarea');
     newTextArea.name = 'step';
     newTextArea.id = 'S'+ stepI;
-    newTextArea.placeholder = newTextArea.id;
+    // newTextArea.placeholder = newTextArea.id;
+    if(content){
+        newTextArea.value = content;
+    }
     newTextArea.required = true;
     newStepDiv.appendChild(newTextArea);
 
@@ -27,12 +30,19 @@ function addStepBox (z) {
 
     newStepDiv.appendChild(document.createElement('p'));
 
+    if(index){
+        console.log(index);
+    }
     // 추가한 텍스트아리아 삭제
-    newStepBtn.onclick = function () {
-        if(confirm("단계를 삭제하시겠습니까?")){
-            // 클릭한 버튼 본인의 부모요소(Div) 삭제하기
-            const delStepBox = document.getElementById('stepBox' + this.id);
-            delStepBox.remove();
+    if (index == 0) {
+        newStepBtn.onClick = this.deleteFirstStep();
+    } else {
+        newStepBtn.onclick = function () {
+            if (confirm("단계를 삭제하시겠습니까?")) {
+                // 클릭한 버튼 본인의 부모요소(Div) 삭제하기
+                const delStepBox = document.getElementById('stepBox' + this.id);
+                delStepBox.remove();
+            }
         }
     }
 }

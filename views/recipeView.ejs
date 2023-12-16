@@ -14,7 +14,7 @@
                     <li class="writer-name">
                         <!-- 작성자 이름 불러오기 -->
                         작성자
-                        <%= dataList.user.mem_id %>
+                        <%= dataList.writer_id %>
                         <!--  operator_id -->
                     </li>
                     <li class="write-date">
@@ -98,7 +98,7 @@
                         스크랩
                     </button>
                     <button id="likeButton" name="login" value="좋아요" onClick="handleLikeButtonClick();">♡좋아요</button>
-                    <p id="likeState"> <%= likeInfo.isLiked %> </p>
+                    <p id="likeState">  likeInfo.isLiked  </p>
                 </div>
             <% } else{ %>
                 <!-- 비로그인 -->
