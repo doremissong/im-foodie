@@ -8,13 +8,15 @@ function addStepBox (z) {
     newStepDiv.id = 'stepBox' + stepNum++;
     newStepDiv.className = 'smile';
     qwer.appendChild(newStepDiv);
-    newStepDiv.style.border = '1px solid black';
+    newStepDiv.style.display = 'flex';
+    newStepDiv.style.borderBottom = '1px dashed gray';
+    newStepDiv.style.padding = '15px 0 10px 0';
 
     // newStepDiv에 단계 입력칸 만들기
     var newTextArea = document.createElement('textarea');
     newTextArea.name = 'step';
     newTextArea.id = 'S'+ stepI;
-    newTextArea.placeholder = newTextArea.id;
+    newTextArea.placeholder = '요리 단계 내용을 입력해주세요 :)';
     newTextArea.required = true;
     newStepDiv.appendChild(newTextArea);
 
@@ -24,8 +26,8 @@ function addStepBox (z) {
     newStepBtn.value = "X";
     newStepDiv.appendChild(newStepBtn);
     newStepBtn.id = stepI++;
-
-    newStepDiv.appendChild(document.createElement('p'));
+    newStepBtn.style.border = 'none';
+    newStepBtn.style.cursor = 'pointer';
 
     // 추가한 텍스트아리아 삭제
     newStepBtn.onclick = function () {
