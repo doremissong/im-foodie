@@ -9,7 +9,7 @@ function addBox (x) {
     newDiv.id = 'box' + num++;                  // 생성마다 div id num 순차 증가
     newDiv.className = 'happy';                 // div class="happy"
     asdf.appendChild(newDiv);                   // class="asdf"인 div에 생성
-    newDiv.style.borderBottom = '1px solid black';    //
+    newDiv.style.borderBottom = '1px solid black';    
     newDiv.style.display = 'inline-block';
     newDiv.style.margin = '10px 10px 5px 15px';
     newDiv.style.padding = '0 0 7px 0';
@@ -40,8 +40,7 @@ function addBox (x) {
     newButton.id = i++;                             // 생성마다 아이디 값 ++
     newButton.style.border = 'none';
     newButton.style.cursor = 'pointer';
-
-    // newDiv.appendChild(document.createElement('p'));
+    newButton.onclick = 
 
     // 삭제 버튼 클릭 시
     newButton.onclick = function () {
@@ -53,6 +52,8 @@ function addBox (x) {
     }
 
 }
+
+
 
 var first = 0;
 

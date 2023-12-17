@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/views/test/copytest.css">
+</head>
+<body>
+    <div class="qw">
+
+        <!-- 복사되는 것 -->
+        <div id='testbtn0' class='red-border'>
+            <input type="text" name="ingredient" value="" placeholder="test">
+            <input type="text" name="quantity" value="" placeholder="test">
+            <button id="btn0" onclick="delStep(this.id)">X</button>
+        </div>
+
+    </div>
+    
+    <input type='button' value='deep copy' onclick='deepCopy()'/>
+    <input type='button' value='shallow copy' onclick='shallowCopy()'/>
+
+    <script>
+var idNum = 0;
+
+function deepCopy()  {
+    // 'test' node 선택
+    const testDiv = document.getElementById('testbtn'+idNum);
+  
+    // 노드 복사하기 (deep copy)
+    const newNode = testDiv.cloneNode(true);
+  
+    // 복사된 Node id 변경하기
+    idNum++;
+    newNode.id = 'testbtn' + idNum;
+
+    // 복사한 노드 붙여넣기
+    testDiv.after(newNode);
+
+    document.querySelector('testbtn'+idNum).lastElementChild.id = 'btn'+idNum;
+}
+
+function shallowCopy()  {
+  // 'test' node 선택
+  const testDiv = document.getElementById('testbtn'+idNum);
+  
+  // 노드 복사하기 (shallow copy)
+  const newNode = testDiv.cloneNode(false);
+  
+  // 복사된 Node id 변경하기\
+  idNum++;
+  newNode.id = 'testbtn' + idNum;
+
+  // 복사한 노드 붙여넣기
+  testDiv.after(newNode);
+}
+
+function delStep(po) {
+    if(confirm("단계를 삭제하시겠습니까?")){
+        // 클릭한 버튼 본인의 부모요소(Div) 삭제하기
+        const delStepBox = document.getElementById('test' + po);
+        delStepBox.remove();
+    }
+}
+    </script>
+</body>
+</html>

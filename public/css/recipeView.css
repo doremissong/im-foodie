@@ -149,14 +149,217 @@
     font-weight: bold;
 }
 
+/* 글 내용 */
+.recipe-view-contents {
+    position: relative;
+    width: 930px;
+    margin: 20px 10px;
+
+    /* border: 1px solid black; */
+}
+
+/* 태그 */
+.recipe-view-tag {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 20px 0;
+    width: 930px;
+
+}
+
+.recipe-view-tag span {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+
+/* 쿡타임과 난이도 */
+.recipe-view-timelevel {
+    width: 930px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    /* border: 1px solid black; */
+}
+
+/* 쿡타임 */
+.recipe-view-cooktime {
+    display: flex;
+    width: 190px;
+    justify-content: end;
+    align-items: center;
+    font-size: 18px;
+    margin-right: 10px;
+    /* border-right: 1px dotted black; */
+}
+
+.recipe-view-cooktime span {
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+/* 난이도 */
+.recipe-view-level {
+    display: flex;
+    width: 200px;
+    /* justify-content: center; */
+    align-items: center;
+    font-size: 18px;
+}
+
+/* 소개글과 썸네일 */
+.recipe-view-imgintro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+
+    /* border: 1px solid black; */
+}
+
+/* 썸네일 */
+.recipe-view-thumb {
+    width: 250px;
+	height: 160px;
+	margin: 20px 20px 20px 10px;
+	border: 2px dotted rgb(227, 211, 211);
+}
+
+.recipe-view-thumb img {
+    width: 250px;
+	height: 160px;
+}
+
+/* 소개글 */
+.recipe-view-intro {
+    display: flex;
+    align-items: center;
+    width: 560px;
+    height: 140px;
+    padding: 10px;
+    margin: 0 10px 0 0;
+    font-size: 17px;
+    border: 2px dashed rgb(227, 211, 211);
+    border-radius: 2px;
+    /* background-color: rgb(248, 248, 248); */
+}
+
+
+/* 재료 */
+.recipe-view-ingredients {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 900px;
+    margin: auto;
+
+    border: 2px dashed  rgb(227, 211, 211);
+}
+
+/* 재료 타이틀 */
+.view-ingredients-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+
+    letter-spacing :3px;
+
+    width: 80px;
+    padding: 10px;
+}
+
+/* 재료들 박스 */
+.view-ingredients-box {
+
+    width: 800px;
+    padding: 10px;
+
+    border-left: 2px dashed rgb(227, 211, 211);
+}
+
+/* 재료 */
+.view-ingredient {
+    display: inline-block;
+
+    height: 23px;
+    margin: 5px 0 5px 5px;
+    font-size: 17px;
+
+    /* border: 1px solid black; */
+}
+
+.view-ingr {
+    margin: 0 2px 0 5px;
+
+}
+
+.view-quan {
+    margin: 0 3px 0 0;
+}
+
+
+/* 단계 */
+.recipe-view-steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 900px;
+    margin: 20px auto;
+
+    border: 2px dashed  rgb(227, 211, 211);
+}
+
+/* 단계 타이틀 */
+.view-steps-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+
+    letter-spacing :3px;
+
+    width: 80px;
+    padding: 10px;
+}
+
+/* 단계들 박스 */
+.view-steps-box {
+
+    width: 800px;
+    padding: 10px;
+
+    border-left: 2px dashed rgb(227, 211, 211);
+}
+
+.view-step {
+    display: flex;
+    font-size: 18px;
+    margin: 12px 5px 15px 5px;
+    letter-spacing: 0.25px;
+    line-height: 26px;
+
+    /* border: 1px solid black; */
+}
+
+.chkchk {
+    margin: 0 5px 0 0;
+}
+
+
 
 /* post content */
-.post-content {
-    /* background-color: rgb(248, 248, 255); */
+/* .post-content {
     padding: 25px 10px 45px 10px;
     font-size: 17px;
     line-height: 200%;
-}
+}  */
 
 
 /* up & scrap */

@@ -72,36 +72,146 @@
                     </ul>
                 </div>
 
-                <!-- 태그 -->
-                <div class="recipe-view-tag">
-                    태그
-                </div>
+                <!-- 태그, 쿡타임과 난이도, 썸네일과 소개글, 재료, 요리과정 -->
+                <div class="recipe-view-contents">
 
-                <!-- 쿡타임, 난이도 -->
-                <div class="recipe-view-timelevel">
-                    쿡타임, 난이도
-                </div>
+                    <!-- 태그 -->
+                    <div class="recipe-view-tag">
+                        <!-- 태그 불러오기 -->
+                        <span>
+                            #한식 
+                        </span>
+                        <span>
+                            #도시락
+                        </span>
+                        <span>
+                            #초보자
+                        </span>
+                    </div>
 
-                <!-- 소개글 -->
-                <div class="recipe-view-intro">
-                    소개글
-                </div>
+                    <!-- 쿡타임, 난이도 -->
+                    <div class="recipe-view-timelevel">
 
-                <!-- 재료 -->
-                <div class="recipe-view-ingredients">
-                    재료
-                </div>
+                        <!-- 쿡타임 -->
+                        <div class="recipe-view-cooktime">
+                            ⏱️쿡타임 약
+                            <div class="recipe-time-on">
+                                <!-- 쿡타임 불러오기 -->
+                                <span>30</span>
+                            </div>
+                            분 ,
+                        </div>
 
-                <!-- 단계 -->
-                <div class="">
-                    단계
-                </div>
+                        <!-- 난이도 -->
+                        <div class="recipe-view-level">
+                            난이도 
+                            <!-- 난이도 불러오기 -->
+                            ⭐⭐⭐⭐
+                        </div>
 
-                <!-- 글 내용 부분 -->
-                <div class="post-content">
-                    <!-- 글 내용 불러오기 -->
+                    </div>
+
+                    <!-- 소개글과 썸네일 -->
+                    <div class="recipe-view-imgintro">
+
+                        <!-- 썸네일 -->
+                        <div class="recipe-view-thumb">
+                            <img src="/images/recipeDefault.png">
+                        </div>
+
+                        <!-- 소개글 -->
+                        <div class="recipe-view-intro">
+                            <!-- 소개글 내용 불러오기 -->
+                            초보자도 만들 수 있는 소불고기~! 백반에도 생일상에도 올라가는 국민 반찬 소불고기
+                            <br>쉽게 요리하는 맛있는 메인 요리~~~
+                        </div>
+
+                    </div>
+
+                    <!-- 재료 -->
+                    <div class="recipe-view-ingredients">
+                        
+                        <!-- 재료 타이틀 -->
+                        <div class="view-ingredients-title">
+                            재료
+                        </div>
+
+                        <!-- 재료들 -->
+                        <div class="view-ingredients-box">
+
+                            <!-- 재료 하나 -->
+                            <div class="view-ingredient">
+
+                                <!-- 재료 이름 불러오기 -->
+                                <span class="view-ingr">양파</span>
+
+                                <!-- 재료 양 불러오기 -->
+                                <span class="view-quan">1개</span>
+                                ,
+                            </div>
+
+                            <div class="view-ingredient">
+                                <span class="view-ingr">돼지고기 앞다리살</span>
+                                <span class="view-quan">600g</span>
+                                ,
+                            </div>
+
+                            <div class="view-ingredient">
+                                <span class="view-ingr">진간장</span>
+                                <span class="view-quan">두스푼</span>
+                                ,
+                            </div>
+
+                            <div class="view-ingredient">
+                                <span class="view-ingr">소금</span>
+                                <span class="view-quan">한꼬집</span>
+                                ,
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                    <!-- 단계 -->
+                    <div class="recipe-view-steps">
+
+                        <!-- 단계 타이틀 -->
+                        <div class="view-steps-title">
+                            요리
+                            <br>과정
+                        </div>
+
+                        <!-- 단계들 -->
+                        <div class="view-steps-box">
+
+                            <!-- 단계 하나 -->
+                            <div class="view-step">
+                                <div class="chkchk">✔️</div>
+                                
+                                <!-- 단계 내용 불러오기 -->
+                                재료들을 물로 씻어줍니다.
+                            </div>
+
+                            <div class="view-step">
+                                <div class="chkchk">✔️</div>
+                                재료들을 적당한 크기로 썰어줍니다. 당근 감자는 네모네모 고기는 조그맣게 또 뭐라적지
+                                얌얌 어슷썰기 큐브모양으로 썰기
+                            </div>
+
+                            <div class="view-step">
+                                <div class="chkchk">✔️</div>
+                                냄비에 물을 넣고 끓이기
+                            </div>
+
+
+                        </div>
+
+                    </div>
 
                 </div>
+                
                 
                 <!-- 추천, 스크랩하기 -->
                 <% if(typeof user != "undefined"){ %>
