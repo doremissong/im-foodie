@@ -33,7 +33,27 @@
                         <li>
                             <span>
                                 <!-- 해당 글 카테고리 목록으로 이동 ex) 자유게시판이면 자유 클릭시 자유게시판 목록으로 이동 -->
-                                <a href="/board/<%= post.category %>"><%= post.category %>게시판</a>
+                                <!-- <a href="/board/<%= post.category %>"><%= post.category %>게시판</a> -->
+                                <% switch(post.category){ 
+                                    case '맛집': %>
+                                        <a href="/board/restaurant"><%= post.category %>게시판</a>
+                                        <% break; %>
+                                    <% case '자랑': %>
+                                        <a href="/board/boast"><%= post.category %>게시판</a>
+                                        <% break; %>
+                                    <% case '꿀팁': %>
+                                        <a href="/board/tip"><%= post.category %>게시판</a>
+                                        <% break; %>
+                                    <% case '자유': %>
+                                        <a href="/board/free"><%= post.category %>게시판</a>
+                                        <% break; %>
+                                    <% case '나눔': %>
+                                        <a href="/board/share"><%= post.category %>게시판</a>
+                                        <% break; %>
+                                    <% case '밥친구': %>
+                                        <a href="/board/mealfriend"><%= post.category %>게시판</a>
+                                        <% break; %>
+                                <% } %>
                             </span>
                         </li>
                     </ul>

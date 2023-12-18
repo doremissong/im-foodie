@@ -3,7 +3,7 @@ const { db, sequelize } = require('../models/index');
 const { Op } = require('sequelize');
 const path = require('path');
 const { storeUrl, redirect } = require('../routes/middlewares');
-
+const MODIFY = 1;
 /*
 * 게시판 관련 기능
 *
@@ -64,12 +64,12 @@ const { storeUrl, redirect } = require('../routes/middlewares');
 
 // };
 
-getPostParams = (info, modify, reqMemId)=>{
+getPostParams = (info, modify, _memId)=>{
     // 작성자 추출. req.session.user? 아니면 req.user에서 id 가져와야하ㅁ.
     if(!modify){    // 생성
         return {
             category: info.category, //어디서 가져오지?
-            writer_id: reqMemId,
+            writer_id: _memId,
             title: info.title,
             content: info.content,
             viewCount: 0,
@@ -77,9 +77,13 @@ getPostParams = (info, modify, reqMemId)=>{
             img_flag: 0
         }
     } else{
-        return {
-            modify:'modify'
-        }
+        const result = {
+            category: info.category, //어디서 가져오지?
+            writer_id: _memId,
+            title: info.title,
+            content: info.content,
+        };
+        return result;
     }
 }
 
@@ -204,20 +208,37 @@ module.exports = {
     },
 
     showUpdatePage: async(req, res)=>{
-        // try{
-        //     const obj ={};
-        //     if(req.user){
-        //         obj.user = req.user;
-        //     }
-    
-        //     // async 
-    
-        //     res.render("boardUpdate", obj);
-        // } catch(err){
-        //     redirect(req,res);
-        // }
-        res.send('hi working?');
+        const obj = {};
+        // validation
+        if(!req.user){
+            console.log('[ERROR] This user is not logged in.');
+            res.redirect('/board');
+        }
+        const _memId = req.user.mem_id;
+        obj.user = req.user;
+
+        if(!req.query.no){
+            console.log('[ERROR] There is no post number');
+            res.redirect('/board');
+        }
+        const _postId = req.query.no;
+        
         // update. 1)유저아이디, 2)기존 데이터 검색
+        const data = await db.post.findOne({
+            where: {
+                writer_id: _memId,
+                post_id: _postId
+            }
+        });
+        if(!data || data.length==0){
+            res.redirect(`/board/post?no=${_postId}&pageno=1&sort=earliest`);
+            console.log('[ERROR] 수정 권한이 없는 글입니다.');
+        }
+        obj.data = data;
+        console.log('updatePost-data보내기전: ', obj);
+
+        res.render("boardUpdate", obj);
+        // res.send('hi working?');
     },
 
     writePost: async(req, res)=>{
@@ -230,7 +251,7 @@ module.exports = {
                     const result = await db.post.create(postData, { transaction: t });
                     console.log('create 결과: ',result);
                     console.log('uploading post success!');
-                    res.redirect(`/board/post?no=${result.dataValues.post_id}`);
+                    res.redirect(`/board/post?no=${result.dataValues.post_id}&pageno=1&sort=earliest`);
             })
         } catch (err) {
             console.log(`Error saving post: ${err.message}`);
@@ -242,17 +263,43 @@ module.exports = {
 
     //게시글 수정
     updatePost: async(req, res) => {
-        // update 결과값도 확인하기
-        var postData = getPostParams(req.body, 0, req.user.mem_id);
+        const obj = {};
+        // validation
+        if(!req.user){
+            console.log('[ERROR] This user is not logged in.');
+            res.redirect('/board');
+        }
+        const _memId = req.user.mem_id;
+        obj.user = req.user;
+
+        if(!req.query.no){
+            console.log('[ERROR] There is no post number');
+            res.redirect('/board');
+        }
+        const _postId = req.query.no;
+
+        if(!req.body){
+            console.log('[ERROR] There is no value from client');
+            res.redirect('/board');
+        }
+        console.log('updatePost 도착');
+        
+        // // update 결과값도 확인하기
+        var postData = getPostParams(req.body, MODIFY, _memId);
         console.log('test', postData);
-        // res.json(postData);
+        console.log('post 전달값:', req.body);
+        // // res.json(postData);
         try {
             await sequelize.transaction(async t => {
                 //  const data 붙임
-                    const result = await db.post.create(postData, { transaction: t });
-                    console.log('update 결과: ',result);
-                    console.log('uploading post success!')
-                    res.redirect(`/board/post?no=${result.dataValues.post_id}`);
+                const result = await db.post.update(postData, {
+                    where: { post_id: _postId, },
+                    transaction: t,
+                    raw: true
+                });
+                console.log('update 결과: ', result);
+                console.log('uploading post success!')
+                res.redirect(`/board/post?no=${_postId}&pageno=1&sort=earliest`);
             })
         } catch (err) {
             console.log(`Error saving post: ${err.message}`);
@@ -457,7 +504,7 @@ module.exports = {
             } catch (err) {
                 console.log("[좋아요 설정 오류] ", err.message);
                 res.json({success:false});
-                // res.redirect(`/board/post?no=${postId}`);
+                // res.redirect(`/board/post?no=${postId}&pageno=1&sort=earliest`);
             }
         }
         

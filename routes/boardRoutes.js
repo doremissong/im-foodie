@@ -27,7 +27,7 @@ router.post("/write", isLoggedIn, boardController.writePost);
 // 작성자 체크
 // router.get("/update", isLoggedIn, boardController.showUpdatePage);
 router.get("/update", isLoggedIn, boardController.checkWriter, boardController.showUpdatePage);
-router.post("/update", isLoggedIn, boardController.checkWriter, boardController.updatePost);
+router.post("/update", isLoggedIn, boardController.updatePost);
 // 작성자 체크
 router.get("/delete", isLoggedIn, boardController.checkWriter, boardController.deletePost);
 
@@ -43,7 +43,6 @@ router.get("/getComment", setDBModel(db.post_comment), getPaginationInfo, boardC
 //     console.log('이건 되긴해?');
 // })
 // 삭제
-router.get("/delete", isLoggedIn, );
 
 // 게시판 종류별 라우팅
 router.get("/:category", storeUrl, boardController.checkBoard, setDBModel(db.post), getPaginationInfo, boardController.showBoardPage);
