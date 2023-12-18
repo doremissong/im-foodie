@@ -1,0 +1,668 @@
+.section-box {
+    width: 930px;
+    margin: auto;
+    padding-left: 20px;
+
+    display: flex;
+    position: relative;
+    justify-content: center;
+
+    /* border: 1px solid blue; */
+}
+
+.recipe-view-section {
+    width: 950px;
+    padding: 0px 50px;
+
+    margin: 0 auto;
+    position: relative;
+    display: block;
+
+    /* border: 1px solid grey; */
+}
+
+.post-section {
+    /* background-color: rgb(255, 243, 251); */
+    position: relative;
+    border-bottom: 1px solid rgb(145, 145, 145);
+}
+
+
+/* category */
+.post-category-box {
+    position: relative;
+    display: flex;
+    padding-top: 50px;
+    border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #e3d7cf;
+}
+
+.post-category {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.post-category li::before {
+    content: "";
+    width: 1px;
+    height: 12px;
+    background-color: rgb(129, 129, 129);
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+}
+
+.post-category li:first-child::before {
+    display: none;
+}
+
+.post-category li span {
+    padding: 5px 10px;
+    display: block;
+    font-size: 16;
+    color: #656565;
+}
+
+
+/* title */
+.post-title {
+    margin-top: 40px;
+    padding: 12px 7px;
+    font-size: 22px;
+    font-weight: bold;
+    border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #e3d7cf;
+}
+
+
+/* post info */
+.post-info-box {
+    position: relative;
+    display: flex;
+    border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #e3d7cf;
+}
+
+.post-info-first {
+    position: relative;
+    display: flex;
+    float: left;
+    margin-right: auto;
+}
+
+.post-info-first .writer-name {
+    padding: 7px 10px;
+    display: block;
+    font-size: 16;
+    color: #656565;
+    /* background-color: rgb(208, 208, 254); */
+}
+
+.post-info-first .write-date {
+    padding: 7px 10px;
+    display: block;
+    font-size: 16;
+    color: #656565;
+    /* background-color: rgb(214, 214, 255); */
+}
+
+.post-info-second {
+    position: relative;
+    display: flex;
+    float: right;
+}
+
+.post-info-second .post-views {
+    padding: 7px 10px;
+    display: block;
+    font-size: 16;
+    color: #656565;
+    /* background-color: rgb(222, 222, 255); */
+}
+
+.post-info-second .post-ups {
+    padding: 7px 10px;
+    display: block;
+    font-size: 16;
+    color: #656565;
+    /* background-color: rgb(237, 237, 255); */
+}
+
+.post-info-second .post-com-num {
+    padding: 7px 10px;
+    display: block;
+    font-size: 16;
+    color: #656565;
+    /* background-color: rgb(243, 243, 253); */
+}
+
+.post-com-num a:hover {
+    text-decoration-line: underline;
+}
+
+.post-info-second span {
+    font-weight: bold;
+}
+
+/* 글 내용 */
+.recipe-view-contents {
+    position: relative;
+    width: 930px;
+    margin: 20px 10px;
+
+    /* border: 1px solid black; */
+}
+
+/* 태그 */
+.recipe-view-tag {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 20px 0;
+    width: 930px;
+
+}
+
+.recipe-view-tag span {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+
+/* 쿡타임과 난이도 */
+.recipe-view-timelevel {
+    width: 930px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    /* border: 1px solid black; */
+}
+
+/* 쿡타임 */
+.recipe-view-cooktime {
+    display: flex;
+    width: 190px;
+    justify-content: end;
+    align-items: center;
+    font-size: 18px;
+    margin-right: 10px;
+    /* border-right: 1px dotted black; */
+}
+
+.recipe-view-cooktime span {
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+/* 난이도 */
+.recipe-view-level {
+    display: flex;
+    width: 200px;
+    /* justify-content: center; */
+    align-items: center;
+    font-size: 18px;
+}
+
+/* 소개글과 썸네일 */
+.recipe-view-imgintro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+
+    /* border: 1px solid black; */
+}
+
+/* 썸네일 */
+.recipe-view-thumb {
+    width: 250px;
+	height: 160px;
+	margin: 20px 20px 20px 10px;
+	border: 2px dotted rgb(227, 211, 211);
+}
+
+.recipe-view-thumb img {
+    width: 250px;
+	height: 160px;
+}
+
+/* 소개글 */
+.recipe-view-intro {
+    display: flex;
+    align-items: center;
+    width: 560px;
+    height: 140px;
+    padding: 10px;
+    margin: 0 10px 0 0;
+    font-size: 17px;
+    border: 2px dashed rgb(227, 211, 211);
+    border-radius: 2px;
+    /* background-color: rgb(248, 248, 248); */
+}
+
+
+/* 재료 */
+.recipe-view-ingredients {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 900px;
+    margin: auto;
+
+    border: 2px dashed  rgb(227, 211, 211);
+}
+
+/* 재료 타이틀 */
+.view-ingredients-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+
+    letter-spacing :3px;
+
+    width: 80px;
+    padding: 10px;
+}
+
+/* 재료들 박스 */
+.view-ingredients-box {
+
+    width: 800px;
+    padding: 10px;
+
+    border-left: 2px dashed rgb(227, 211, 211);
+}
+
+/* 재료 */
+.view-ingredient {
+    display: inline-block;
+
+    height: 23px;
+    margin: 5px 0 5px 5px;
+    font-size: 17px;
+
+    /* border: 1px solid black; */
+}
+
+.view-ingr {
+    margin: 0 2px 0 5px;
+
+}
+
+.view-quan {
+    margin: 0 3px 0 0;
+}
+
+
+/* 단계 */
+.recipe-view-steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 900px;
+    margin: 20px auto;
+
+    border: 2px dashed  rgb(227, 211, 211);
+}
+
+/* 단계 타이틀 */
+.view-steps-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+
+    letter-spacing :3px;
+
+    width: 80px;
+    padding: 10px;
+}
+
+/* 단계들 박스 */
+.view-steps-box {
+
+    width: 800px;
+    padding: 10px;
+
+    border-left: 2px dashed rgb(227, 211, 211);
+}
+
+.view-step {
+    display: flex;
+    font-size: 18px;
+    margin: 12px 5px 15px 5px;
+    letter-spacing: 0.25px;
+    line-height: 26px;
+
+    /* border: 1px solid black; */
+}
+
+.chkchk {
+    margin: 0 5px 0 0;
+}
+
+
+
+/* post content */
+/* .post-content {
+    padding: 25px 10px 45px 10px;
+    font-size: 17px;
+    line-height: 200%;
+}  */
+
+
+/* up & scrap */
+.upscrap-box {
+    /* background-color: #edebeb; */
+    position: relative;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    padding-bottom: 40px;
+}
+
+.upscrap-box button {
+    background-color: #fefac8;
+    border: 1px solid rgb(255, 198, 198);
+    border-radius: 50px;
+    margin: 20px;
+    padding: 10px;
+    width: 65px;
+}
+
+.upscrap-box button:hover {
+    cursor: pointer;
+}
+
+
+/* comment */
+.comment-section {
+    display: block;
+}
+
+.comment-view {
+    display: flex;
+    position: relative;
+    padding: 20px 20px 20px 15px;
+}
+
+.comment-title {
+    position: relative;
+    display: flex;
+    float: left;
+    margin-right: auto;
+    font-weight: bold;
+}
+
+.comment-page {
+    position: relative;
+    display: flex;
+    float: right;
+    padding-right: 5px;
+}
+
+
+/*  */
+.comment-list {
+    display: block;
+    position: relative;
+    /* border-bottom: 1px solid rgb(255, 204, 204); */
+}
+
+.com-namentime {
+    display: flex;
+    position: relative;
+    padding: 10px 0px 5px 10px;
+}
+
+.com-name {
+    position: relative;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.com-time {
+    position: relative;
+    font-size: 14px;
+    margin-left: 4px;
+    padding-top: 2px;
+    color: rgb(181, 171, 166);
+}
+
+.com-text {
+    position: relative;
+    font-size: 16px;
+    padding: 0px 10px 10px 10px;
+    border-bottom: 1px solid rgb(255, 204, 204);
+}
+
+
+/*  */
+.comment-write {
+    width: auto;
+    padding: 20px 10px;
+    margin: 40px 0px;
+    background-color: rgb(252, 241, 241);
+}
+
+.commenter {
+    position: relative;
+    font-size: 16px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    font-weight: bold;
+}
+
+.comment-write-section {
+    position: relative;
+    width: 100%;
+    display: flex;
+}
+
+.write-comment {
+    width: 100%;
+    display: block;
+    padding-left: 10px;
+}
+
+.write-comment textarea {
+    width: 95%;
+    height: 50px;
+    resize: none;
+    border: none;
+    padding: 10px;
+}
+
+textarea:focus {
+    outline-width: 1px;
+    outline-color: #a3a3a3;
+}
+
+
+.submit-button {
+    display: block;
+    padding: 0px 10px 0px 0px;
+}
+
+.submit-button button {
+    margin: auto;
+    display: block;
+    border: none;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.non-user-comment {
+    background-color: #a3a3a3;
+    position: relative;
+    width: auto;
+    padding: 20px;
+    margin: 40px 0px;
+    background-color: rgb(252, 241, 241);
+}
+
+.non-user-comment textarea {
+    width: 95%;
+    margin: auto;
+    height: 30px;
+    resize: none;
+    border: none;
+    padding: 20px;
+}
+
+.non-user-comment textarea:focus {
+    outline: none;
+}
+
+
+.box {
+    margin: 60px 0px;
+}
+
+.box button {
+    margin: auto;
+    display: block;
+    border: none;
+    width: 70px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid rgb(205, 205, 205);
+    background-color: rgb(255, 255, 255);
+}
+
+
+
+/* botton navigation */
+.bottom-nav {
+    /* border: 1px solid rgb(210, 210, 210); */
+    
+    width: 950px;
+    margin: auto;
+    display: flex;
+    position: relative;
+    margin-bottom: 40px;
+
+    /* justify-content: right; */
+}
+
+.goback {
+    display: flex;
+    position: relative;
+    padding: 2px 0 0 15px;
+    font-size: 12;
+}
+
+.goback a:hover{
+    color: black;
+    text-decoration: underline;
+    text-decoration-color: #656565;
+}
+
+.editbox {
+    display: flex;
+    position: absolute;
+    right: 0px;
+}
+
+.editbox ul {
+    display: flex;
+}
+  
+.editbox ul li::before {
+    content: "";
+    width: 1px;
+    height: 13px;
+    background-color: rgb(96, 96, 96);
+    position: absolute;
+    top: 2px;
+    bottom: 0px;
+    margin: auto;
+}
+  
+.editbox ul li:first-child::before {
+    display: none;
+}
+  
+.editbox ul li span {
+    padding: 2px 15px;
+    display: block;
+    font-size: 12;
+    color: #656565;
+}
+  
+.editbox ul li a:hover {
+    color: black;
+    cursor: pointer;
+}
+
+
+
+/* sidebar */
+.sidebar-section {
+    /* position: fixed;
+    top:0;
+    right: 50px; */
+
+    width: 100px;
+    padding-right: 30px;
+    /* border: 1px solid gainsboro; */
+
+    display: flex;
+    position: relative;
+}
+
+.sidebar-box-left {
+    width: 20px;
+    height: 70px;
+    display: none;
+    position: sticky;
+    top: 50%;
+    left: 0;
+    align-items: center;
+
+    border: 1px solid black;
+}
+
+.sidebar-box-right {
+    width: 20px;
+    height: 80px;
+    display: block;
+    position: sticky;
+    top: 75%;
+    left: 0;
+    align-items: center;
+
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+
+/* 댓글 수정 삭제 */
+.com-editbox {
+    /* display: flex; */
+    position: absolute;
+    right: 10px;
+    color: rgb(120, 120, 120);
+    font-size: 14px;
+    
+    /* border: 1px solid black; */
+}
+
+.com-editbox span {
+    margin: 0 0 0 3px;
+    cursor: pointer;
+}

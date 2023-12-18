@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     amount: {
       type: DataTypes.STRING(45),
-      allowNull: false
+      allowNull: true
     },
     imageURL: {
       type: DataTypes.BLOB,

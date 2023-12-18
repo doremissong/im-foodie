@@ -23,8 +23,8 @@ router.get("/test", async(req, res)=>{
 // 레시피 보여주기
 // router.get("/view", recipeController.showRecipe);
 // showRecipe에서 ejs 파일내부에 작성자가 맞는지 확인하고, 맞으면 수정/삭제 버튼 보여줄 것.
-router.get("/view", storeUrl, recipeController.showRecipe);
-
+router.get("/view", storeUrl, setDBModel(db.recipe_comment), getPaginationInfo, recipeController.getCommentInfo, recipeController.showRecipe);
+// storeURL, setDBModel(db.recipe_comment), getPaginationInfo,
 // 4) 검색
 // query로 검색어랑 검색 조건 입력 받기
 router.get("/search", storeUrl, recipeController.checkSearchValue, recipeController.getPaginationInfo, 
@@ -53,6 +53,14 @@ router.get("/list", storeUrl, recipeController.getPaginationInfo, recipeControll
 // ⚠️3) 특정 상황별 레시피 목록 ; 상황(category)별 전체, 시간, 인기순, + 페이지네이션
 router.get("/list/:tag", storeUrl, recipeController.checkTagValue, recipeController.getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
  
+// 좋아요!!!
+router.post("/like", isLoggedIn, recipeController.setLike);
+
+router.post("/newComment", recipeController.createComment, setDBModel(db.recipe_comment), getPaginationInfo, recipeController.getCommentInfo, recipeController.showComment);
+router.get("/getComment", setDBModel(db.recipe_comment), getPaginationInfo, recipeController.getCommentInfo, recipeController.sendComment);
+// router.get("/getComment", (req, res)=>{
+//     console.log('이건 되긴해?');
+// })
 
 router.use(errorController.pageNotFoundError);
 router.use(errorController.internalServerError);

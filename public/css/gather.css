@@ -149,17 +149,17 @@
 
 
 /* hover effect */
-.slide-item .join-group {
+.slide-item .show-group {
 	display: none;
-	width: 70px;
+	width: 75px;
 	height: 35px;
 	margin: 5px 5px 5px 22px;
 	cursor: pointer;
 }
 
-.slide-item .show-group {
+.slide-item .join-group {
 	display: none;
-	width: 75px;
+	width: 70px;
 	height: 35px;
 	margin: 5px 22px 5px 5px;
 	cursor: pointer;
@@ -313,4 +313,82 @@
 .no-gather {
 	font-size: 20px;
 	margin: 30px 0 50px 20px;
+}
+
+
+
+/* 자세히 모달 */
+/* 모달팝업을 감싸고 있는 최상위 부모 */
+#modalWrapDetails {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: none;
+}
+  
+/* 모달 팝업창 */
+#modalBody {
+    width: 500px;
+    height: 500px;
+    padding: 20px 30px 30px 30px;
+    margin: 0 auto;
+    border: 1px solid #777;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+/* 모달창 닫기 버튼 */
+#closeBtnDetails {
+    float:right;
+    font-weight: bold;
+    color: #777;
+    font-size:25px;
+    cursor: pointer;
+}
+
+.zxcv {
+    border: 1px solid black;
+    margin-top: 50px;
+}
+
+
+/* 신청 모달 */
+/* 모달팝업을 감싸고 있는 최상위 부모 */
+#modalWrapJoin {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: none;
+}
+  
+/* 모달 팝업창 */
+#modalBodyJoin {
+    width: 500px;
+    height: 300px;
+    padding: 20px 30px 30px 30px;
+    margin: 0 auto;
+    border: 1px solid #777;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+/* 모달창 닫기 버튼 */
+#closeBtnJoin {
+    float:right;
+    font-weight: bold;
+    color: #777;
+    font-size:25px;
+    cursor: pointer;
 }

@@ -22,9 +22,8 @@ module.exports={
             console.log(err);
         }
         const obj ={};
-        if(!req.user){
-            console.log('This user is not logged in');
-            res.redirect("/auth/login");
+        if(req.user){
+            obj.user = req.user;
         }
 
         obj.user = req.user;
@@ -281,9 +280,25 @@ module.exports={
         }
         const recipeId = req.query.no;
         const obj = {};
+        obj.likeInfo = {};
         if (req.user) {
             obj.user = req.user;
+            const result = await db.recipe_like.findOne({ attributes: ['isLiked'], where: { recipe_id: recipeId, mem_id: req.user.mem_id } });
+            obj.likeInfo.isLiked = result ? result.isLiked : false;
         }
+        // 1) 좋아요
+        // 개수도 필요한데, 유저 정보도 필요해. 이사람이 추천, 스크랩 했는지 안했는지
+        const likeCount = await db.recipe_like.count({ where: {  recipe_id: recipeId, isLiked: 1 } });
+        obj.likeInfo.likeCount = likeCount;
+        
+        // 2) 댓글
+        if (res.locals.commentInfo) {
+            // obj.commentInfo = {};
+            obj.commentInfo = res.locals.commentInfo;
+            // console.log('obj 값 확인 : ', obj.commentInfo);
+        }
+
+        
         // 조회수 업데이트!
         try {
             await sequelize.transaction(async t => {
@@ -301,18 +316,21 @@ module.exports={
         }
         // 글 정보 가져오기
         try {
-            obj.dataList = await db.recipe.findOne({
-                where: { recipe_id: recipeId }
+            obj.data = await db.recipe.findOne({
+                where: { recipe_id: recipeId },
+                raw: true,
             });
 
             // 재료
             // ❓dataValues 해야하나?
             obj.ingredientList = await db.recipe_ingredient.findAll({
-                where: { recipe_id: recipeId }
+                where: { recipe_id: recipeId },
+                raw: true,
             });
             // 요리 순서 
             obj.stepList = await db.recipe_step.findAll({
-                where: { recipe_id: recipeId }
+                where: { recipe_id: recipeId },
+                raw: true,
             });
 
             // 태그
@@ -323,16 +341,14 @@ module.exports={
                     attributes: ["tag_id", "tag_id"],
                     where: { recipe_id: recipeId },
                     as: "recipe_tags"
-                }]
+                }],
+                raw: true,
             })
             // ❓맞나??
-            obj.tagList = temp.map(data=> data.dataValues.tag_name);
+            obj.tagList = temp.map(data=> data.tag_name);
 
-            // 추가 
-            // 1) 댓글
-            // 2) 좋아요
 
-            console.log(`showRecipe컨트롤러 ojb 확인:`, obj.dataList);
+            console.log(`showRecipe컨트롤러 ojb 확인:`, obj);
         } catch (err) {
             console.log(`[ERROR] select a recipe - showRecipe`, err);
             res.redirect('/recipe',);
@@ -686,7 +702,7 @@ module.exports={
         return step_data;
     },
     setLike: async(req, res)=>{
-        console.log('[setLike] 도착');
+        console.log('[setLike] 도착', req.body);
         // post 방식
 
         if(!req.user){
@@ -694,82 +710,83 @@ module.exports={
             res.json({success: false});
         }
 
-        if(!req.body.recipeId || !req.body.isLiked){
+        if(typeof req.body.recipeId == 'undefined' || typeof req.body.isLiked == 'undefined'){
             console.log('[ERROR] recipe id and isLiked value are not sent.');
             res.json({success: false});
         }
+
         const recipeId = req.body.recipeId;
         const memId = req.user.mem_id;
         const likeClicked = req.body.isLiked || 0;
-        console.log('[setLike-recipe] recipe_id:', recipeId, 'likeClicked: ', likeClicked);
+        var likeResult = false;
+        // console.log('[setLike-recipe] recipe_id:', recipeId, 'likeClicked: ', likeClicked);
 
         // recipe_like 수정시작
         try{
-            await sequelize.transaction(async t=>{
-                await db.recipe_like.findOne({
+            await sequelize.transaction(async t => {
+                const existingRecord = await db.recipe_like.findOne({
                     where: {
                         recipe_id: recipeId,
                         mem_id: memId,
                     }
-                }). then(async existingRecord=>{
-                    if(existingRecord){
-                        console.log('recipe_like UPDATE');
-                        // 그 row 가지고?
-                        const result = await existingRecord.update(
-                            {isLiked: likeClicked},
-                            {transaction: t}
-                        )
-                        return result;  //⚠️ return 하면 어디감?
-                    } else{
-                        //존재하지 않는 경우
-                        console.log('recipe_like CREATE');
-                        const result = await db.recipe_like.create({
-                            recipe_id: recipeId,
-                            mem_id: memId,
-                            isLiked: true
-                        });
-                        return result;
-                    }
-                }).catch(err=>{
-                    console.log('[ERROR] setLike - recipe ctrl: ', err);
                 });
-                //.then(result => {
-                //     console.log('레코드 업데이트 또는 생성 완료: ', result);
-                // })
-
-                
-                // ⚠️(따로빼기) 좋아요 수 업데이트 확인
-                const likeCount = await db.recipe_like.count({
-                    where: {
-                        recipe_id: recipeId,
-                        isLiked: { [Op.eq]: 1 }
-                    }
-                });
-                // 좋아요 결과
-                var result = await db.recipe_like.findOne({
-                    attributes: ['isLiked'],
-                    where: {
+                if (existingRecord) {
+                    console.log('recipe_like UPDATE');
+                    // 그 row 가지고?
+                    const result = await db.recipe_like.update(
+                        { isLiked: likeClicked },
+                        { where: { recipe_id: recipeId, mem_id: memId }, transaction: t, raw: true }
+                    );
+                    likeResult = result.isLiked;
+                    // console.log('update result:', result);
+                } else {
+                    //존재하지 않는 경우
+                    console.log('recipe_like CREATE');
+                    const result = await db.recipe_like.create({
                         recipe_id: recipeId,
                         mem_id: memId,
-                    }
-                })
+                        isLiked: likeClicked
+                    },
+                        { raw: true });
+                    // console.log('create result:', result);
+                    likeResult = result.isLiked;
+                }
+            });
 
-                res.json({success: true, message: '좋아요를 눌렀습니다!', likeCount: likeCount, isLiked: isLiked});
+            // ⚠️(따로빼기) 좋아요 수 업데이트 확인
+            const likeCount = await db.recipe_like.count({
+                where: {
+                    recipe_id: recipeId,
+                    isLiked: 1,
+                }
+            });
+            // 좋아요 결과
+            var result = await db.recipe_like.findOne({
+                attributes: ['isLiked'],
+                where: {
+                    recipe_id: recipeId,
+                    mem_id: memId,
+                }
             })
+            const isLiked = result? result.isLiked: false;
+            
+            console.log("좋아요 설정 완료", isLiked);
+            // const isLiked = result? result.isLiked: false;
+            console.log('[setLike-recipe]11 recipe_id:', recipeId, 'likeClicked: ', likeClicked);
+            res.json({ success: true, message: '좋아요를 눌렀습니다!', likeCount: likeCount, isLiked: isLiked });
+
         } catch(err){
             console.log('[ERROR] setLike - recipe ctrl: ', err);
             res.json({success: false});
         }
-
-        // 좋아요 수 세는 함수 만들기 --> 1) showRecipe(/view) 2) setLike
-
     },
 
     // POST /newComment
-    createComment : async(req, res)=>{
-        if(!res.body){
+    createComment : async(req, res, next)=>{
+        if(!req.body){
             res.json({success: false, message:'댓글 내용이 없습니다. 다시 시도해주세요.'});
         }
+        console.log('fetch result:', req.body)
 
         try{
             await sequelize.transaction(async t=>{
@@ -777,7 +794,7 @@ module.exports={
                     recipe_id: req.body.recipeId,
                     mem_id: req.user.mem_id,
                     content: req.body.content
-                })
+                }, {transaction: t})
             })
             next();
         } catch(err){
@@ -799,6 +816,9 @@ module.exports={
             res.locals.commentInfo.pagination = res.locals.paginationInfo;
             res.locals.commentInfo.dataList = res.locals.dataList;
             res.locals.commentInfo.count = await db.recipe_comment.count({where:{recipe_id: req.query.no}});
+            // console.log('getCommentInfo - dataList:', res.locals.commentInfo.count);    
+            
+            next();
         } catch(err){
             // res.redirect('/');
             next(err);
@@ -808,7 +828,7 @@ module.exports={
         const obj = {};
         try {
             obj.success = true;
-            obj.page = res.locals.commentInfo.pagination.totalpage;
+            obj.page = res.locals.commentInfo.pagination.totalPage;
             res.json(obj);
         } catch(err){
             res.json({success: false});

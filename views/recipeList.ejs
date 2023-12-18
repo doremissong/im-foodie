@@ -28,7 +28,7 @@
                             <!-- <%= tagIdList[index]%> 가 tagid -->
                         </li>
                     <% }) %>
-                    <%= (curTag)? '/' + curTag : '🐰' %>
+                    <!-- <%= (curTag)? '/' + curTag : '🐰' %>/ -->
 				</ul>
 			</div>
 
@@ -122,16 +122,12 @@
                             <div class="recipe-level-box">
                                 난이도
                                 <div class="recipe-level-on">
-                                    <% for(let i =0; i<data.cookLevel; i++){ %>
-                                        ⭐
-                                    <% } %>
-                                    <!-- <%= "⭐" * data.cookLevel%> -->
-                                    <!-- ⭐⭐⭐⭐⭐ -->
+                                    <%- Array(data.cookLevel + 1).join('⭐') %>
                                 </div>
                             </div>
 
                             <div class="recipe-details-box">
-                                <a href="/recipe/view?no=<%= data.recipe_id %>">자세히 보기 ></a>
+                                <a href="/recipe/view?no=<%= data.recipe_id %>&sort=earliest">자세히 보기 ></a>
                             </div>
                         </div>
 

@@ -67,7 +67,7 @@ exports.setPagingVar=(variables, defaultValue) =>{
 exports.setDBModel = (modelType) => {
     return (req, res, next) => {
         res.locals.model = modelType;
-        console.log('디비 확인-미들웨어:', modelType);
+        console.log(modelType, "'s model type is", typeof modelType);
         res.locals.condition = {};
 
         // gathering
@@ -112,7 +112,12 @@ exports.setDBModel = (modelType) => {
             // console.log('[setDBModel]',res.locals.condition.category, '게시판 카테고리 값 확인');
         }
         if (req.query.no) {   //해당 글의 id - 댓글 페이지네이션용
-            res.locals.condition.post_id = req.query.no;
+            if(modelType==db.post || modelType == db.post_comment){
+                res.locals.condition.post_id = req.query.no;
+            } else if(modelType==db.recipe || modelType == db.recipe_comment){
+                res.locals.condition.recipe_id = req.query.no;
+                console.log(res.locals.condition, 'mdw');
+            }
         }
         
         if (req.query.sort) {
@@ -129,16 +134,8 @@ exports.setDBModel = (modelType) => {
             // else if(sort=="like"){
             // }
         }
-
-        // const dataList = await modelType.findAll({
-        //     where: res.locals.condition,
-        //     order: [["createdAt", "DESC"]],
-        // });
-        // console.log('데이터베이스 :', dataList);
         next();
     }
-    // console.log(modelType, "'s model type is", typeof modelType);
-    // modelType.findOne({where:{mem_id:'mint'}}).then((member_id)=>console.log('모델 타입 파라미터로 주고 동작하는지 확인.',member_id));
     // ⚠️에러 처리는
 }
 

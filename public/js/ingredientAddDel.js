@@ -9,7 +9,7 @@ function addBox (x) {
     newDiv.id = 'box' + num++;                  // 생성마다 div id num 순차 증가
     newDiv.className = 'happy';                 // div class="happy"
     asdf.appendChild(newDiv);                   // class="asdf"인 div에 생성
-    newDiv.style.borderBottom = '1px solid black';    //
+    newDiv.style.borderBottom = '1px solid black';    
     newDiv.style.display = 'inline-block';
     newDiv.style.margin = '10px 10px 5px 15px';
     newDiv.style.padding = '0 0 7px 0';
@@ -29,7 +29,7 @@ function addBox (x) {
     newArea2.name = 'quantity';
     newArea2.id = 'Q'+i;
     newArea2.placeholder = "ex) 1개";
-    newArea2.required = false; //true; 양 애매할 때도 있어서/?
+    newArea2.required = true;
     newDiv.appendChild(newArea2);
 
     // NewDiv에 삭제 버튼 만들기
@@ -41,8 +41,6 @@ function addBox (x) {
     newButton.style.border = 'none';
     newButton.style.cursor = 'pointer';
 
-    // newDiv.appendChild(document.createElement('p'));
-
     // 삭제 버튼 클릭 시
     newButton.onclick = function () {
         if(confirm("삭제하시겠습니까?")){
@@ -53,6 +51,8 @@ function addBox (x) {
     }
 
 }
+
+
 
 var first = 0;
 

@@ -177,16 +177,6 @@ module.exports = {
                 obj.commentInfo = res.locals.commentInfo;
                 // console.log('obj 값 확인 : ', obj.commentInfo);
             }
-
-            // if (res.locals.paginationInfo && res.locals.dataList) {
-            //     obj.commentInfo.pagination = res.locals.paginationInfo;
-            //     obj.commentInfo.dataList = res.locals.dataList;
-            //     obj.commentInfo.count = Object.keys(obj.commentInfo.dataList).length;
-            //     // obj.pathname = req.params.category? '/'+req.params.category: ''; // fetch 용인데,,음,,,
-            // } else{
-            //     console.log('[Error]: While setting commentInfo');
-            //     res.redirect('/');
-            // }
             // storeUrl(req,res);
             res.render("boardPost", obj);// { user: req.user, post: data, likeCount: likeCount,  });
 
@@ -471,7 +461,8 @@ module.exports = {
                                 post_id: postId,
                                 mem_id: memId,
                                 isLiked: true
-                            });
+                            },
+                            { raw: true });
                             return result;
                         }
                     }).catch(error => {
@@ -540,7 +531,7 @@ module.exports = {
                     post_id: req.body.postId,
                     mem_id: req.user.mem_id,
                     content: req.body.content
-                })
+                }, { transaction: t })
             })
             next();
         } catch(err){
