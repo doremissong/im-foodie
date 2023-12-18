@@ -40,7 +40,6 @@ function addBox (x) {
     newButton.id = i++;                             // 생성마다 아이디 값 ++
     newButton.style.border = 'none';
     newButton.style.cursor = 'pointer';
-    newButton.onclick = 
 
     // 삭제 버튼 클릭 시
     newButton.onclick = function () {

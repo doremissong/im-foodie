@@ -85,9 +85,6 @@ app.get('/gather', (req, res) => {
   res.render('gather(n)');
 })
 
-app.get('/gather/recruiting', (req, res) => {
-  res.render('gatherRecruiting');
-})
 
 app.get('/gather/recruiting', (req, res) => {
   res.render('gatherRecruiting(n)');

@@ -7,6 +7,54 @@
 	<!-- 전체 틀 -->
     <div class="gather-section">
 
+		<!-- 자세히 모달 창 -->
+		<div id="modalWrapDetails">
+			<div id="modalBody">
+				<span id="closeBtnDetails">&times;</span>
+				<div class="zxcv">
+					<p>자세히 modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+				</div>
+	
+			</div>
+		</div>
+
+		<!-- 신청 모달 창 -->
+		<div id="modalWrapJoin">
+			<div id="modalBodyJoin">
+				<span id="closeBtnJoin">&times;</span>
+				<div class="zxcv">
+					<p>신청 modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+					<p>modal-popup 입니다.</p>
+				</div>
+	
+			</div>
+		</div>
+
+
+
 		<!-- 밥모임 카테고리 -->
         <div class="gather-list">
             <div class="gather-main">
@@ -77,12 +125,17 @@
 
 								<!-- hover시 신청, 자세히 버튼 -->
 								<div class="button-box">
-									<a href="/gather/join">
-										<button class="join-group">신청</button>
+
+									<!-- 자세히 버튼 -->
+									<a>
+										<button class="show-group" onclick="viewDetailsClick()">자세히</button>
 									</a>
-									<a href="/gather/details">
-										<button class="show-group">자세히</button>
+									
+									<!-- 신청 버튼 -->
+									<a>
+										<button class="join-group" onclick="viewJoinClick()">신청</button>
 									</a>
+
 								</div>
 							</div>
 						
@@ -162,8 +215,8 @@
 
 								<!-- hover시 신청, 자세히 버튼 -->
 								<div class="button-box">
-									<a href="/gather/details">
-										<button class="show-group-completed">자세히</button>
+									<a>
+										<button class="show-group-completed" onclick="viewDetailsClick()">자세히</button>
 									</a>
 								</div>
 							</div>
