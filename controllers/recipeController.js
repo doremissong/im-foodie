@@ -147,6 +147,8 @@ module.exports={
             console.log(`[ERROR] showRecipeListPage check getPaginationInfo - recipe`, err);
             // res.redirect('/');
         }
+        obj.curTag = req.params.tag;
+        console.log(obj.curTag);
         res.render('recipeList', obj);
         // console.log('tagList 값 확인////', obj);
     },
@@ -161,6 +163,14 @@ module.exports={
         // ⚠️recipe_comment     --> 댓글 수, 댓글 가져오기
         
         const obj = {};
+
+        // user 로그인 확인
+        if(!req.user){
+            console.log('[ERROR] This user is not logged in.');
+            res.redirect("/auth/login");
+        }
+        obj.user = req.user;
+
         if(!res.locals.tagNameList || !res.locals.tagIdList){
             console.log('[ERROR] There is no tag name or id list');
             res.redirect("/recipe");
@@ -374,7 +384,7 @@ module.exports={
         const recipeObj = {
             writer_id: req.user.mem_id,
             title: req.body.title,
-            menu: '-', //req.body.menu,
+            menu: req.body.menu,
             intro: req.body.intro,
             cookTime: req.body.cooktime,
             cookLevel: req.body.cookLevel,
@@ -842,7 +852,8 @@ module.exports={
         console.log('/list/:tag 값 확인: ', req.params.tag);
 
         if(req.params.tag){
-            const _recipeIds = await module.exports.searchTagTable(req,res);
+            // 태그 해당하는 레시피 id 가져옴.
+            const _recipeIds = await module.exports.searchTagTable(req,res); 
             res.locals.condition = {
                 recipe_id: _recipeIds
             }

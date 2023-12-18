@@ -33,13 +33,13 @@ router.get("/search", storeUrl, recipeController.checkSearchValue, recipeControl
     });
 // ?search=xxx로 하면 미들웨어 setDBModel에서 설정함.
 
-// 5) recipe writing
+// 5) recipe write
 router.get("/write", isLoggedIn, recipeController.getTagNameNIdList, recipeController.showWritePage);
 router.post("/write", isLoggedIn, recipeController.createRecipe);
 
-// 6) recipe updating
-router.get("/update", isLoggedIn, /*작성자 체크*/ recipeController.getTagNameNIdList, recipeController.showUpdatePage);
-router.post("/update", isLoggedIn, /*작성차 체크*/recipeController.updateRecipe);
+// 6) recipe update
+// router.get("/update", isLoggedIn, /*작성자 체크*/ recipeController.getTagNameNIdList, recipeController.showUpdatePage);
+// router.post("/update", isLoggedIn, /*작성차 체크*/recipeController.updateRecipe);
 
 // ✅7) delete
 router.get("/delete", isLoggedIn, /*작성자 체크*/recipeController.deleteRecipe);

@@ -26,7 +26,7 @@
 
                         <!-- 제목 박스 -->
                         <div class="recipe-write-title">
-                            <input type="text" name="title" placeholder="제목을 입력해주세요 :)" value="" required />
+                            <input type="text" name="title" placeholder="제목을 입력해주세요 :) (ex) 맛있는 집밥 된장찌개)" value="" required />
                         </div>
                         <div>
                             메뉴 입력 
@@ -66,6 +66,12 @@
                             분
                         </div>
                             
+                        <div class="menu-label">
+                            메뉴
+                            <div class="menu-box">
+                                <input type="text" name="menu" placeholder="ex) 된장찌개" requird>
+                            </div>
+                        </div>
                         <!-- 난이도 별표시 -->
                         <div class="levelstar-label">
                             난이도
@@ -127,50 +133,54 @@
                     </div>
 
                     <!-- 필요 재료 적는 칸 -->
-                    <!-- 재료 최대 24개 입력 가능 -->
-                    <!-- 재료 이름 ex)양파 : name ingredient1,2,... -->
-                    <!-- 재료 양 ex)한개 : name quantity1,2... -->
-                    <!-- 기본 한 개는 display:flex -->
                     <div class="recipe-write-ingredients">  
 
                         <!-- 재료 타이틀 -->
                         <div class="ingredients-title">
                             <span>재료 입력하기</span>
-                            <button type="button" id="addIQ">추가하기</button>
+                            <INPUT type="button" value="추가하기" onclick="addBox()">
                         </div>
 
                         <!-- 재료 입력란 -->
                         <div class="ingredients-box">
 
+                            <!-- 재료 입력 input 생성되는 div -->
                             <div id="asdf">
-                                <INPUT type="button" value="입력영역 추가하기" onclick="addBox(this.form)">
-                                <input type="text" id="I0" name="ingredient" placeholder="기본" required>
-                                <input type="text" id="Q0" name="quantity" placeholder="기본" required>
-                                <input type="button" value="X" onclick="deleteFirst()">
+
+                                <!-- 첫번째 기본 재료 입력란 -->
+                                <div class="happy-first">
+                                    <input type="text" id="I0" name="ingredient" placeholder="ex) 양파" required>
+                                    <input type="text" id="Q0" name="quantity" placeholder="ex) 1개" required>
+                                    <input type="button" value="X" onclick="deleteFirst()">
+                                </div>
+
                             </div>
                             
                         </div>
 
                     </div>
 
-                    <!-- 버튼 클릭시 텍스트아리아 div display:none -> display:flex, 요리 단계 추가용 -->
                     <!-- 단계별 작성하기, 단계당 이미지 하나 업로드 가능, 거기에 맞는 요리 단계 설명글 적기 -->
-                    <!-- 일단 최대 9단계까지! -->
                     <div class="recipe-write-content">
 
                         <!-- 단계 타이틀 -->
                         <div class="content-title">
                             <span>단계 입력하기</span>
-                            <button type="button" id="addStep">추가하기</button>
+                            <INPUT type="button" value="추가하기" onclick="addStepBox()">
                         </div>
 
                         <!-- 단계 입력란 -->
                         <div class="steps-box">
 
+                            <!-- 단계 입력 textarea 생성되는 div -->
                             <div id="qwer">
-                                <INPUT type="button" value="입력영역 추가하기" onclick="addStepBox(this.form)">
-                                <textarea id="S0" name="step" placeholder="기본" required></textarea>
-                                <input type="button" value="X" onclick="deleteFirstStep()">
+                                
+                                <!-- 첫번째 기본 단계 입력란 -->
+                                <div class="smile-first">
+                                    <textarea id="S0" name="step" placeholder="STEP 1" required></textarea>
+                                    <input type="button" value="X" onclick="deleteFirstStep()">
+                                </div>
+
                             </div>
                             
                         </div>

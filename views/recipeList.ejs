@@ -20,10 +20,15 @@
 				<ul class="recipeList-sub-list">
                     <% tagNameList.forEach((name, index)=> { %> 
                         <li class="recipeList-sub-name">
-                            <a href="/recipe/list/<%= name %>">#<%= name %></a>
+                            <% if(name===curTag){ %>
+                                <a href="/recipe/list/<%= name %>" style="font-weight: 800;">#<%= name %></a>
+                            <%} else { %>
+                                <a href="/recipe/list/<%= name %>">#<%= name %></a>
+                            <% } %>
                             <!-- <%= tagIdList[index]%> 가 tagid -->
                         </li>
                     <% }) %>
+                    <%= (curTag)? '/' + curTag : '🐰' %>
 				</ul>
 			</div>
 
@@ -109,7 +114,7 @@
                                 ⏱️쿡타임 약
                                 <div class="recipe-time-on">
                                     <!-- 쿡타임 불러오기 -->
-                                    45
+                                    <%= data.cookTime %>
                                 </div>
                                 분 ,
                             </div>
@@ -117,7 +122,11 @@
                             <div class="recipe-level-box">
                                 난이도
                                 <div class="recipe-level-on">
-                                    ⭐⭐⭐⭐⭐
+                                    <% for(let i =0; i<data.cookLevel; i++){ %>
+                                        ⭐
+                                    <% } %>
+                                    <!-- <%= "⭐" * data.cookLevel%> -->
+                                    <!-- ⭐⭐⭐⭐⭐ -->
                                 </div>
                             </div>
 
@@ -133,9 +142,6 @@
 
 
             <!-- 페이지네이션 -->
-            <div class="recipe-page-box">
-                1 2 3
-            </div>
 
             <% if (dataList == ''){ %>
                 <!-- <ul class="post-list"> -->
@@ -143,31 +149,31 @@
                     ⚠️위치 바꿔야할 거 같음. 위로
                 <!-- </ul> -->
             <% } else { %>
-                <div class="pagination-container">
-                    <% if (pagination.curSet > 1){ %>  
+                <div class="recipe-page-box">
+                    <% if (pagination.curSet > 1){ %>
                         /recipe/list/현재태그  
-                        <div class="prev-set-button"><a href="/recipe/list?pageno=<%= pagination.startPage-1%>&countperpage=10">&lt;&lt;&nbsp; </a></div>
+                        <div class="prev-set-button"><a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= pagination.startPage-1%>&countperpage=10">&lt;&lt;&nbsp; </a></div>
                     <% } %>
                     <% if (pagination.pageNo!=1){ %>    
-                        <div class="prev-button"><a href="/recipe/list?pageno=<%= pagination.pageNo-1%>&countperpage=10">&nbsp;이전&nbsp;</a></div>
+                        <div class="prev-button"><a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= pagination.pageNo-1%>&countperpage=10">&nbsp;이전&nbsp;</a></div>
                     <% } %>
                     <div class="number-button-wrapper">
                         <% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
                             <span class="number-button"> 
                                 <% if (pagination.pageNo==i){ %>
                                     <% console.log(i, pagination.pageNo); %>
-                                    <a href="/recipe/list?pageno=<%= i %>&countperpage=10" style="font-weight: 800;"><%= i %></a>
+                                    <a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= i %>&countperpage=10" style="font-weight: 800;"><%= i %></a>
                                 <% } else{ %>
-                                    <a href="/recipe/list?pageno=<%= i %>&countperpage=10"><%= i %></a>
+                                    <a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= i %>&countperpage=10"><%= i %></a>
                                 <% } %>
                             </span>
                         <% } %>
                     </div>
                     <% if (pagination.pageNo != pagination.totalPage){ %>
-                        <div class="next-button"><a href="/recipe/list?pageno=<%= pagination.pageNo+1%>&countperpage=10"> &nbsp;이후&nbsp;</a></div>
+                        <div class="next-button"><a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= pagination.pageNo+1%>&countperpage=10"> &nbsp;이후&nbsp;</a></div>
                     <% }%>
                     <% if (pagination.curSet < pagination.totalSet){ %>
-                        <div class="next-set-button"><a href="/recipe/list?pageno=<%= pagination.endPage+1%>&countperpage=10">&nbsp;&gt;&gt;</a></div>
+                        <div class="next-set-button"><a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= pagination.endPage+1%>&countperpage=10">&nbsp;&gt;&gt;</a></div>
                     <% }%>
                 </div>
             <% } %>

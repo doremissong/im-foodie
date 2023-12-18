@@ -3,147 +3,270 @@
 
 <!-- SECTION -->
 <section>
-    <div class="board-post-section">
-        <div class="post-section">
-            <div class="post-title">
-                <!-- 글 제목 불러오기 -->
-                <%= dataList.title %>
+
+    <!-- 전체 틀 -->
+    <div class="section-box">
+
+        <!-- 왼쪽 사이드바, 사실상 쓸모x -->
+        <div class="sidebar-section">
+            <div class="sidebar-box-left">
+                <a>▲</a>
+                <a>▼</a>
+                <a>🗨️</a>
             </div>
-            <div class="post-info-box">
-                <ul class="post-info-first">
-                    <li class="writer-name">
-                        <!-- 작성자 이름 불러오기 -->
-                        작성자
-                        <%= dataList.writer_id %>
-                        <!--  operator_id -->
-                    </li>
-                    <li class="write-date">
-                        <!-- 작성일 불러오기 -->
-                        <%= dataList.createdAt.toISOString().split('T')[0] %>
-                        <%= dataList.createdAt.toISOString().split('T')[1].slice(0,5) %>
-                    </li>
-                </ul>
-                <ul class="post-info-second">
-                    <li class="post-views">
-                        조회
-                        <span>
-                            <!-- 조회수 불러오기 -->
-                            <%= dataList.viewCount %>
-                            
-                        </span>
-                    </li>
-                    <li class="post-ups">
-                        추천 
-                        <span id="like">
-                            <!-- 위에 아이디 삭제 ⚠️⚠️⚠️추천수 불러오기 -->
-                            33
-                        </span>
-                    </li>
-                    <li class="post-com-num">
-                        댓글
-                        <!-- 숫자 클릭 시 댓글 창 부분으로 이동 -->
-                        <a href="#comment">
+        </div>
+
+        <!-- 글 보여지는 가운데 화면 div -->
+        <div class="recipe-view-section">
+
+            <!-- 글 부분 -->
+            <div class="post-section">
+
+                <!-- 글 제목 부분 -->
+                <div class="post-title">
+                    <!-- 글 제목 불러오기 -->
+                    <%= dataList.title %>
+                </div>
+
+                <!-- 작성자 ~ 댓글 부분 -->
+                <div class="post-info-box">
+
+                    <!-- 작성자 이름과 날짜 -->
+                    <ul class="post-info-first">
+                        <li class="writer-name">
+                            <!-- 작성자 이름 불러오기 -->
+                            작성자이름
+                            <%= dataList.writer_id %>
+                            <!--  operator_id -->
+                        </li>
+                        <li class="write-date">
+                            <!-- 작성일 불러오기 -->
+                            <%= dataList.createdAt.toISOString().split('T')[0] %>
+                            <%= dataList.createdAt.toISOString().split('T')[1].slice(0,5) %>
+                        </li>
+                    </ul>
+
+                    <!-- 조회수, 추천, 댓글 -->
+                    <ul class="post-info-second">
+                        <li class="post-views">
+                            조회
                             <span>
-                                <!-- 댓글수 불러오기 -->
-                                2
+                                <!-- 조회수 불러오기 -->
+                                <%= dataList.viewCount %>                            
                             </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                        </li>
+                        <li class="post-ups">
+                            추천 
+                            <span id="like">
+                                <!-- 위에 아이디 삭제 ⚠️⚠️⚠️추천수 불러오기 -->
+                                33
+                            </span>
+                        </li>
+                        <li class="post-com-num">
+                            댓글
+                            <!-- 숫자 클릭 시 댓글 창 부분으로 이동 -->
+                            <a href="#comment">
+                                <span>
+                                    <!-- 댓글수 불러오기 -->
+                                    2
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
             <!-- 태그 -->
             <div class="recipe-view-tag">
-                태그
+                태그forEach롤 # + tag.name
             </div>
 
-            <!-- 쿡타임, 난이도 -->
-            <div class="recipe-view-timelevel">
-                쿡타임, 난이도
-            </div>
+                    <!-- 쿡타임, 난이도 -->
+                    <div class="recipe-view-timelevel">
 
-            <!-- 소개글 -->
-            <div class="recipe-view-intro">
-                소개글
-            </div>
+                        <!-- 쿡타임 -->
+                        <div class="recipe-view-cooktime">
+                            ⏱️쿡타임 약
+                            <div class="recipe-time-on">
+                                <!-- 쿡타임 불러오기 -->
+                                <span>data.cookTime</span>
+                            </div>
+                            분 ,
+                        </div>
 
-            <!-- 재료 -->
-            <div class="recipe-view-ingredients">
-                재료
-            </div>
+                        <!-- 난이도 -->
+                        <div class="recipe-view-level">
+                            난이도 
+                            <!-- 난이도 불러오기 -->
+                            data.cookLevel만큼 곱하기 ⭐
+                            ⭐⭐⭐⭐
+                        </div>
 
-            <!-- 단계 -->
-            <div class="">
-                단계
-            </div>
-
-            <!-- 글 내용 부분 -->
-            <div class="post-content">
-                <!-- 글 내용 불러오기 -->
-
-            </div>
-            
-            <!-- 추천, 스크랩하기 -->
-            <% if(typeof user != "undefined"){ %>
-                <!-- 로그인 상태일 시 -->
-                <div class="upscrap-box">
-                    <!-- 추천 -->
-                    <button class="up-bt" onclick="alert('추천되었습니다')">
-                        👍<br>
-                        추천
-                    </button>
-                    <!-- 스크랩 -->
-                    <button class="scrap-bt" onclick="alert('스크랩되었습니다')">
-                        ⭐<br>
-                        스크랩
-                    </button>
-                    <button id="likeButton" name="login" value="좋아요" onClick="handleLikeButtonClick();">♡좋아요</button>
-                    <p id="likeState">  likeInfo.isLiked  </p>
-                </div>
-            <% } else{ %>
-                <!-- 비로그인 -->
-                <div class="upscrap-box">
-                    <!-- 추천 -->
-                    <button class="up-bt" onclick="alert('로그인 후 추천 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
-                        👍<br>
-                        추천
-                    </button>
-                    <!-- 스크랩 -->
-                    <button class="scrap-bt" onclick="alert('로그인 후 스크랩 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
-                        ⭐<br>
-                        스크랩
-                    </button>
-                    <button name="login"  onClick="handleLikeButtonClick();">♡좋아요</button>
-                </div>
-            <% } %>
-
-            <!-- 글 하단 -->
-            <div class="bottom-nav">
-                <div class="goback">
-                    <a href="/recipe/list">🔙 목록으로</a>
-                </div>
-
-                <!-- 로그인한 유저가 글 작성자일때 보이기 -->
-                
-                    <div class="editbox">
-                        <ul>
-                            <li>
-                                <span>
-                                    <!-- 글 작성자이면 게시글 수정 페이지로 이동 -->
-                                    <a>수정</a>
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    <!-- 글 작성자이면 게시글 삭제 -->
-                                    <a>삭제</a>
-
-                                </span>
-                            </li>
-                        </ul>
                     </div>
 
-            </div>       
+                    <!-- 소개글과 썸네일 -->
+                    <div class="recipe-view-imgintro">
+
+                        <!-- 썸네일 -->
+                        <div class="recipe-view-thumb">
+                            <img src="/images/recipeDefault.png">
+                        </div>
+
+                        <!-- 소개글 -->
+                        <div class="recipe-view-intro">
+                            <!-- 소개글 내용 불러오기 -->
+                            data.intro
+                            초보자도 만들 수 있는 소불고기~! 백반에도 생일상에도 올라가는 국민 반찬 소불고기
+                            <br>쉽게 요리하는 맛있는 메인 요리~~~
+                        </div>
+
+                    </div>
+
+                    <!-- 재료 -->
+                    <div class="recipe-view-ingredients">
+                        
+                        <!-- 재료 타이틀 -->
+                        <div class="view-ingredients-title">
+                            재료
+                        </div>
+
+                        <!-- 재료들 -->
+                        <div class="view-ingredients-box">
+                            ⚠️여기도 forEach
+                            <!-- 재료 하나 -->
+                            <div class="view-ingredient">
+
+                                <!-- 재료 이름 불러오기 -->
+                                <span class="view-ingr">양파</span>
+
+                                <!-- 재료 양 불러오기 -->
+                                <span class="view-quan">1개</span>
+                                ,
+                            </div>
+
+                            <div class="view-ingredient">
+                                <span class="view-ingr">돼지고기 앞다리살</span>
+                                <span class="view-quan">600g</span>
+                                ,
+                            </div>
+
+                            <div class="view-ingredient">
+                                <span class="view-ingr">진간장</span>
+                                <span class="view-quan">두스푼</span>
+                                ,
+                            </div>
+
+                            <div class="view-ingredient">
+                                <span class="view-ingr">소금</span>
+                                <span class="view-quan">한꼬집</span>
+                                ,
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                    <!-- 단계 -->
+                    <div class="recipe-view-steps">
+
+                        <!-- 단계 타이틀 -->
+                        <div class="view-steps-title">
+                            요리 data.title
+                            <br>과정
+                        </div>
+
+                        <!-- 단계들 -->
+                        <div class="view-steps-box">
+                            여기에 forEach하면 되겠군
+                            <!-- 단계 하나 -->
+                            <div class="view-step">
+                                <div class="chkchk">✔️</div>
+                                
+                                <!-- 단계 내용 불러오기 -->
+                                재료들을 물로 씻어줍니다.
+                            </div>
+
+                            <div class="view-step">
+                                <div class="chkchk">✔️</div>
+                                재료들을 적당한 크기로 썰어줍니다. 당근 감자는 네모네모 고기는 조그맣게 또 뭐라적지
+                                얌얌 어슷썰기 큐브모양으로 썰기
+                            </div>
+
+                            <div class="view-step">
+                                <div class="chkchk">✔️</div>
+                                냄비에 물을 넣고 끓이기
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+                
+                <!-- 추천, 스크랩하기 -->
+                <% if(typeof user != "undefined"){ %>
+                    <!-- 로그인 상태일 시 -->
+                    <div class="upscrap-box">
+                        <!-- 추천 -->
+                        <button class="up-bt" onclick="alert('추천되었습니다')">
+                            👍<br>
+                            추천
+                        </button>
+                        <!-- 스크랩 -->
+                        <button class="scrap-bt" onclick="alert('스크랩되었습니다')">
+                            ⭐<br>
+                            스크랩
+                        </button>
+                        <button id="likeButton" name="login" value="좋아요" onClick="handleLikeButtonClick();">♡좋아요</button>
+                        <p id="likeState">  likeInfo.isLiked  </p>
+                    </div>
+                <% } else{ %>
+                    <!-- 비로그인 -->
+                    <div class="upscrap-box">
+                        <!-- 추천 -->
+                        <button class="up-bt" onclick="alert('로그인 후 추천 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
+                            👍<br>
+                            추천
+                        </button>
+                        <!-- 스크랩 -->
+                        <button class="scrap-bt" onclick="alert('로그인 후 스크랩 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
+                            ⭐<br>
+                            스크랩
+                        </button>
+                        <button name="login"  onClick="handleLikeButtonClick();">♡좋아요</button>
+                    </div>
+                <% } %>
+    
+                <!-- 글 하단 -->
+                <div class="bottom-nav">
+                    <div class="goback">
+                        <a href="/recipe/list">🔙 목록으로</a>
+                    </div>
+    
+                    <!-- 로그인한 유저가 글 작성자일때 보이기 -->
+
+                        <div class="editbox">
+                            <ul>
+                                <li>
+                                    <span>
+                                        <!-- 글 작성자이면 게시글 수정 페이지로 이동 -->
+                                        <a>수정</a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <!-- 글 작성자이면 게시글 삭제 -->
+                                        <a>삭제</a>
+
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+
+                </div>       
                         </span>
                     </li>
                 </ul>

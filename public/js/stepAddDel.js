@@ -8,13 +8,15 @@ function addStepBox (content, index) {
     newStepDiv.id = 'stepBox' + stepNum++;
     newStepDiv.className = 'smile';
     qwer.appendChild(newStepDiv);
-    newStepDiv.style.border = '1px solid black';
+    newStepDiv.style.display = 'flex';
+    newStepDiv.style.borderBottom = '1px dashed gray';
+    newStepDiv.style.padding = '15px 0 10px 0';
 
     // newStepDiv에 단계 입력칸 만들기
     var newTextArea = document.createElement('textarea');
     newTextArea.name = 'step';
     newTextArea.id = 'S'+ stepI;
-    // newTextArea.placeholder = newTextArea.id;
+    newTextArea.placeholder = '요리 단계 내용을 입력해주세요 :)';
     if(content){
         newTextArea.value = content;
     }
@@ -27,24 +29,24 @@ function addStepBox (content, index) {
     newStepBtn.value = "X";
     newStepDiv.appendChild(newStepBtn);
     newStepBtn.id = stepI++;
+    newStepBtn.style.border = 'none';
+    newStepBtn.style.cursor = 'pointer';
 
-    newStepDiv.appendChild(document.createElement('p'));
-
-    if(index){
-        console.log(index);
-    }
-    // 추가한 텍스트아리아 삭제
-    if (index == 0) {
-        newStepBtn.onClick = this.deleteFirstStep();
-    } else {
-        newStepBtn.onclick = function () {
-            if (confirm("단계를 삭제하시겠습니까?")) {
-                // 클릭한 버튼 본인의 부모요소(Div) 삭제하기
-                const delStepBox = document.getElementById('stepBox' + this.id);
-                delStepBox.remove();
-            }
+    // if(index){
+    //     console.log(index);
+    // }
+    // // 추가한 텍스트아리아 삭제
+    // if (index == 0) {
+    //     newStepBtn.onClick = this.deleteFirstStep();
+    // } else {
+    newStepBtn.onclick = function () {
+        if (confirm("단계를 삭제하시겠습니까?")) {
+            // 클릭한 버튼 본인의 부모요소(Div) 삭제하기
+            const delStepBox = document.getElementById('stepBox' + this.id);
+            delStepBox.remove();
         }
     }
+    // }
 }
 
 var firstStep = 0;
