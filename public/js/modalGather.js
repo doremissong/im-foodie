@@ -27,6 +27,7 @@ function viewJoinClick() {
 // x버튼 클릭 시 창 닫힘
 closeBtnJoin.onclick = function() {
     modalJoin.style.display = 'none';
+    document.getElementById("gatherJoinArea").value = '';
 }
 
 
@@ -37,5 +38,6 @@ window.onclick = function(event) {
     }
     else if (event.target == modalJoin) {
         modalJoin.style.display = "none";
+        document.getElementById("gatherJoinArea").value = '';
     }
 }

@@ -9,24 +9,44 @@
 
 		<!-- 자세히 모달 창 -->
 		<div id="modalWrapDetails">
-			<div id="modalBody">
+
+			<!-- 모달 -->
+			<div id="modalBodyDetails">
+
+				<!-- 닫기 버튼 -->
 				<span id="closeBtnDetails">&times;</span>
-				<div class="zxcv">
-					<p>자세히 modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
+
+				<!-- 내용물 -->
+				<div class="gather-details-contents">
+
+					<div class="details-img">
+						대표이미지
+					</div>
+
+					<div class="">
+						밥모임 이름
+					</div>
+
+					<div class="">
+						지역
+					</div>
+
+					<div class="">
+						인원수
+					</div>
+
+					<div class="">
+						맛집 이름
+					</div>
+
+					<div class="">
+						마감일
+					</div>
+
+					<div class="">
+						소개글
+					</div>
+
 				</div>
 	
 			</div>
@@ -34,20 +54,73 @@
 
 		<!-- 신청 모달 창 -->
 		<div id="modalWrapJoin">
+
+			<!-- 모달 -->
 			<div id="modalBodyJoin">
-				<span id="closeBtnJoin">&times;</span>
-				<div class="zxcv">
-					<p>신청 modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
-					<p>modal-popup 입니다.</p>
+
+				<!-- 닫기 버튼 -->
+				<!-- <span id="closeBtnJoin">&times;</span> -->
+
+				<!-- 내용물 -->
+				<div class="gather-join-contents">
+
+					<!-- 밥모임 이름 -->
+					<div class="join-target">
+
+						<!-- 클릭한 밥모임의 이름 불러오기 -->
+						왕짜장 먹으러 가자~!
+						
+					</div>
+					
+					<!-- 신청 폼 -->
+					<form method="post" onsubmit="return confirm('신청하시겠습니까?')">
+
+						<!-- 인사말 박스 -->
+						<div class="gather-join-text">
+
+							<!-- 타이틀 -->
+							<div class="join-title">
+								같이 먹어요😊
+							</div>
+
+							<!-- 인사말 -->
+							<div class="join-text">
+
+								<!-- 인사말 타이틀과 선 -->
+								<div class="join-text-title">
+
+									<!-- 인사말 타이틀 내용 -->
+									<div class="join-text-title-content">
+										인사말
+									</div>
+									<div class="join-text-title-border">
+										<p>&nbsp;</p>
+									</div>
+
+								</div>
+
+								<div class="join-textarea-box">
+									<!-- 텍스트아리아 -->
+									<textarea name="gatherJoin" id="gatherJoinArea" placeholder="인사말을 적어주세요 :)"></textarea>
+								</div>
+								
+							</div>
+							
+						</div>
+
+						<!-- 버튼 박스 -->
+						<div class="join-btn-box">
+
+							<!-- 신청 버튼 -->
+							<button type="submit">신청</button>
+
+							<!-- 취소 버튼 -->
+							<button type="button" id="closeBtnJoin">취소</button>
+
+						</div>	
+
+					</form>
+
 				</div>
 	
 			</div>
@@ -113,6 +186,7 @@
 
 							<!-- 슬라이드 하나 -->
 							<div class="slide-item">
+								
 								<span class="gather-name">
 									모임이름
 								</span>
