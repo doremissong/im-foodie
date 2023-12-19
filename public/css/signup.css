@@ -119,3 +119,103 @@ input[name="submit"] {
 select:focus {
     outline: none;
 }
+
+
+/* 모달 */
+/* 버튼 디자인 */
+#popupBtnUpAM {
+    border: none;
+    background-color: #ffffff00;
+    cursor: pointer;
+    /* font-family: 'Gowun Dodum', sans-serif; */
+    color: #535b63;
+    font-size: 14px;
+    text-decoration-line: underline;
+}
+
+/* 모달팝업을 감싸고 있는 최상위 부모 */
+#modalWrapUpAM {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: none;
+}
+  
+/* 모달 팝업창 */
+#modalBodyUpAM {
+    width: 500px;
+    height: 500px;
+    padding: 30px 30px;
+    margin: 0 auto;
+    border: 1px solid #777;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+/* 모달창 닫기 버튼 */
+#closeBtnUpAM {
+    float:right;
+    font-weight: bold;
+    color: #777;
+    font-size:25px;
+    cursor: pointer;
+}
+
+
+/* 버튼 디자인 */
+#popupBtnUpPN {
+    border: none;
+    background-color: #ffffff00;
+    cursor: pointer;
+    /* font-family: 'Gowun Dodum', sans-serif; */
+    color: #535b63;
+    font-size: 14px;
+    text-decoration-line: underline;
+}
+
+/* 모달팝업을 감싸고 있는 최상위 부모 */
+#modalWrapUpPN {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: none;
+}
+  
+/* 모달 팝업창 */
+#modalBodyUpPN {
+    width: 500px;
+    height: 500px;
+    padding: 30px 30px;
+    margin: 0 auto;
+    border: 1px solid #777;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+/* 모달창 닫기 버튼 */
+#closeBtnUpPN {
+    float:right;
+    font-weight: bold;
+    color: #777;
+    font-size:25px;
+    cursor: pointer;
+}
+
+.zxcv {
+    /* border: 1px solid black; */
+    margin-top: 50px;
+    font-size: 14px;
+}
+

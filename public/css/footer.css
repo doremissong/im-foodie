@@ -74,6 +74,7 @@ footer .content {
 }
 
 .zxcv {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin-top: 50px;
+    font-size: 14px;
 }
