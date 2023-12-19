@@ -131,7 +131,7 @@ searchParticipants = async (_cols, _state, _gatherId, _memId, _condition)=> {
             raw: true
         };
     }
-    const list = await db.participant.findOne(condition);
+    const list = await db.participant.findAll(condition);
     console.log('[searchParticipants] conditon: ', condition);
     //columns 는 필요한 컬럼 object 가입한 목록은,
     console.log('[searchParticipants] _cols: ', _cols);
@@ -344,6 +344,31 @@ module.exports={
         
     },
     showMyGatherList: async(req, res)=>{
+        
+        const obj = {};
+        if(req.user){
+            obj.user=req.user;
+        }
+        obj.listCreated = await getGatherListAsLeader(req,res);// listCreated==false면 만든 목록 없는 것것
+        obj.listJoined = await getGatherListAsMember(req,res);
+        obj.listApplied = await getGatherListOfApply(req,res);
+        // res.send(obj);
+        res.render("gatherMine", obj);
+    },
+
+    showCompletedList: async (req, res) => {
+        const obj = {};
+        if(req.user){
+            obj.user=req.user;
+        }
+        if(!res.locals.paginationInfo || !res.locals.dataList){
+            console.log('[ERROR] check pagination data.');
+            // res.redirect(res.locals.history);
+            res.redirect('/gather');
+        }
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        res.render("gatherRecruiting", obj);
         
     },
     /*💚가입한 목록, 만든 목록
@@ -807,6 +832,114 @@ module.exports={
         next();
     },
 
+
+}
+
+getGatherListAsLeader= async(req, res)=>{
+    // if(!req.user){
+    //     console.log('[ERROR] This user is not logged in.');
+    // } ==> 이거 하면 아예 그 페이지 접근 불가야
+    const count = 6;    // 근데 페이지네이션하려면,,,,,,,,,,,,,,,,,,,,,,, 하하하,, 그때는 또 하나하나만 하니까 middleware에서 하면 되겟지 이게 뭘까
+    var _memId = 0;
+    if(req.user){
+        _memId = req.user.mem_id; 
+    }
+    try {
+        // 그냥 리더가 나인 거 하면 되자나!!
+        result = await searchGatherings(undefined, undefined, undefined, undefined, {
+            where: { leader_id: _memId },
+            limit: count,
+            raw: true
+        });
+        // console.log('레시퍼겸색겨롸', result ,'/');
+        if(!result || result.length ==0){
+            return false; // false면 
+        }
+        return result;
+    } catch (err) {
+        console.log('[ERROR] While finding gathering list of user as a leader', err);
+        return false;// 이렇게 하면 될 거 같다
+        //res.redirect('/gather/');
+    }
+};
+
+getGatherListAsMember= async(req, res)=>{
+    const count = 6;
+    var _memId = 0;
+    if(req.user){
+        _memId = req.user.mem_id; 
+    }
+    try {
+        const result = await searchGatherings(undefined, undefined, undefined, undefined, {
+            // attr:x
+            include: [{
+                attributes: [['gathering_id', 'gathering_id']],
+                model: db.participant,
+                where: {
+                    mem_id: _memId,
+                    state: 1,
+                },
+                as: 'participants'
+            }],
+            order: [['createdAt', 'ASC']],
+            limit: count,
+            raw: true
+        })
+        // console.log('레시퍼겸색겨롸', result ,'/');
+        if(!result || result.length ==0){
+            return false; // false면 
+        }
+        return result;
+    } catch (err) {
+        console.log('[ERROR] While finding gathering list of user as a leader', err);
+        return false;// 이렇게 하면 될 거 같다
+        //res.redirect('/gather/');
+    }
+};
+
+getGatherListOfApply = async(req, res)=>{
+    const count = 6;
+    var _memId = 0;
+    if(req.user){
+        _memId = req.user.mem_id; 
+    }
+    //페이지네이션은 어떻게 연결하지?
+    try {
+        // ㅓjoin으로
+        const result = await searchGatherings(undefined, undefined, undefined, undefined, {
+            // attr:x
+            include: [{
+                attributes: [['gathering_id', 'gathering_id']],
+                model: db.participant,
+                where: {
+                    mem_id: _memId,
+                    state: [2,3],
+                },
+                as: 'participants'
+            }],
+            order: [['createdAt', 'ASC']],
+            limit: count, // 뭐가 없으면 ? : coutn
+            raw: true
+        })
+        // console.log('레시퍼겸색겨롸', result ,'/');
+        if(!result || result.length ==0){
+            return false; // false면 
+        }
+        return result;
+    } catch (err) {
+        console.log('[ERROR] While finding gathering list of user as a leader', err);
+        return false;// 이렇게 하면 될 거 같다
+        //res.redirect('/gather/');
+    }
+};
+
+
+
+
+
+
+
+
     // test: async (req, res)=>{
     //     console.time('쿼리 한번에 하는 거');
     //     const user = req.query.user;
@@ -907,5 +1040,3 @@ module.exports={
     //     //   console.log(dataList);
     //     //   res.send(dataList);
     // },
-
-}

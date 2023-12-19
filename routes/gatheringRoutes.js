@@ -16,15 +16,16 @@ router.get("/completed", storeUrl, setDBModel(db.gathering), getPaginationInfo, 
 // 3) 모집완료 목록
 router.get("/recruiting", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showRecruitingList);
 
+// 4) 나의 밥모임 목록
+router.get("/mine", storeUrl, isLoggedIn, /*밥모임설정스 */gatheringController.showMyGatherList);
+                                        // ㄴ participant에서 memId로 검색해서, recipe_id랑 state를 가져와
+                                        // ㄴ order: ['updateAt', 'ASC']
+                                        // ㄴ state로 group . group에 limit 가능??
+                                        //  ( group by로 묶어서 5개씩만 가져올 수 있나?) 안됨 따로 따로 가져와야함.
 // //test
 // router.get("/test", gatheringController.checkMember);
 
 // router.get("/test2", gatheringController.test2);
-
-// 4) 나의 밥모임 목록
-router.get("/mine", storeUrl, isLoggedIn, gatheringController.showMyGatherList);
-// router.get("/joined", isLoggedIn, gatheringController.showJoinedPage);
-// router.get("/imade", isLoggedIn, gatheringController.showIMadePage);
 
 // 5) 밥모임 생성
 router.get("/create", isLoggedIn, gatheringController.showCreatePage);

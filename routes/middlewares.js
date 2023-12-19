@@ -211,6 +211,7 @@ exports.getPaginationInfo = async (req, res, next)=>{
     //위에 카운트에서도 되던게 여기선 안되는매직
     try {
         const dataList = await model.findAll({
+            // include:
             where: condition,
             order: res.locals.sort? res.locals.sort: [["createdAt", "DESC"]],
             limit: countPerPage,
