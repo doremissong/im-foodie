@@ -121,31 +121,31 @@
                     <!-- 로그인 상태일 시 -->
                     <div class="upscrap-box">
                         <!-- 추천 -->
-                        <button class="up-bt" onclick="alert('추천되었습니다')">
+                        <!-- <button class="up-bt" onclick="alert('추천되었습니다')">
                             👍<br>
                             추천
-                        </button>
+                        </button> -->
                         <!-- 스크랩 -->
-                        <button class="scrap-bt" onclick="alert('스크랩되었습니다')">
+                        <!-- <button class="scrap-bt" onclick="alert('스크랩되었습니다')">
                             ⭐<br>
                             스크랩
-                        </button>
-                        <button id="likeButton" name="login" value="좋아요" onClick="handleLikeButtonClick();">♡좋아요</button>
+                        </button> -->
+                        <button id="likeButton" name="login" value="좋아요" onClick="alert('로그인이 필요합니다.');">♡좋아요</button>
                         <p id="likeState"> <%= likeInfo.isLiked %> </p>
                     </div>
                 <% } else{ %>
                     <!-- 비로그인 -->
                     <div class="upscrap-box">
                         <!-- 추천 -->
-                        <button class="up-bt" onclick="alert('로그인 후 추천 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
+                        <!-- <button class="up-bt" onclick="alert('로그인 후 추천 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
                             👍<br>
                             추천
-                        </button>
+                        </button> -->
                         <!-- 스크랩 -->
-                        <button class="scrap-bt" onclick="alert('로그인 후 스크랩 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
+                        <!-- <button class="scrap-bt" onclick="alert('로그인 후 스크랩 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
                             ⭐<br>
                             스크랩
-                        </button>
+                        </button> -->
                         <button name="login"  onClick="handleLikeButtonClick();">♡좋아요</button>
                     </div>
                 <% } %>

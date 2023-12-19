@@ -3,10 +3,13 @@ const { Op } = require("sequelize");
 
 module.exports = {
     showMainPage: (req, res)=>{
+        const obj = {};
+        if(req.user){
+            obj.user = req.user;
+        }
         // if(req.operator){
             // 관리자 로그인 되어 있으면
             // try{
-                const obj = {};
                 obj.pagination = res.locals.paginationInfo;
                 obj.dataList = res.locals.dataList;
                 // console.log(`[TEST] SHOWMAINPAGE`, obj);
@@ -19,8 +22,12 @@ module.exports = {
         // }
     },
     showWritePage: (req, res)=>{
+        // 관리자 확인
         try{
             const obj = {};
+            if(req.user){
+                obj.user = req.user;
+            }
             obj.noticeId = req.query.ntc_no;
             // obj.operator_id = req.operator.id;
             res.render('noticeWrite', obj);
@@ -31,10 +38,14 @@ module.exports = {
     },
 
     showUpdatePage: async (req, res)=>{
+        // 관리자 확인 
         // title, content, priority (3) 수정가능
         if(req.query.ntc_no){
             const obj = {};
             var temp = {};
+            if(req.user){ // admin
+                obj.user = req.user;
+            }
             const notice_id = req.query.ntc_no;
             try{
                 await sequelize.transaction(async t =>{
@@ -63,6 +74,9 @@ module.exports = {
         if (req.query.ntc_no){
             const noticeId = req.query.ntc_no;
             const obj = {};
+            if(req.user){
+                obj.user = req.user;
+            }
             //관리자 잇으면
             /* if(req.operator){
                 obj.operator = req.operator;

@@ -356,21 +356,6 @@ module.exports={
         res.render("gatherMine", obj);
     },
 
-    showCompletedList: async (req, res) => {
-        const obj = {};
-        if(req.user){
-            obj.user=req.user;
-        }
-        if(!res.locals.paginationInfo || !res.locals.dataList){
-            console.log('[ERROR] check pagination data.');
-            // res.redirect(res.locals.history);
-            res.redirect('/gather');
-        }
-        obj.pagination = res.locals.paginationInfo;
-        obj.dataList = res.locals.dataList;
-        res.render("gatherRecruiting", obj);
-        
-    },
     /*💚가입한 목록, 만든 목록
         showJoinedPage: async (req, res) => {
             //participant ==>
@@ -624,42 +609,43 @@ module.exports={
     // 모임 
     applyForGather: async(req, res)=>{
         //⚠️⚠️⚠️try문 req.query 유효성 검사
-        if(!req.user){
-            res.redirect('/gather');
-            console.log('[Wrong Access] This user is not logged in');
-        }
-        const _memId = req.user.mem_id;
-        if(!req.query.no){
-            res.redirect('/gather');
-            console.log('[Uncertain Information] There is no gathering number');
-        }
-        const _gatherId = req.query.id;
+        res.send(req.body);
+        // if(!req.user){
+        //     res.redirect('/gather');
+        //     console.log('[Wrong Access] This user is not logged in');
+        // }
+        // const _memId = req.user.mem_id;
+        // if(!req.query.no){
+        //     res.redirect('/gather');
+        //     console.log('[Uncertain Information] There is no gathering number');
+        // }
+        // const _gatherId = req.query.id;
 
-        // 이미 가입 신청했는지 확인.
-        // ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️applied 대신 checkMember 사용!!!!!
-        const applied = await searchParticipant(undefined, undefined, _gatherId, _memId);
+        // // 이미 가입 신청했는지 확인.
+        // // ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️applied 대신 checkMember 사용!!!!!
+        // const applied = await searchParticipant(undefined, undefined, _gatherId, _memId);
         
-        if(!applied){
-            try{
-                await sequelize.transaction(async t => {
-                    await db.participant.create({
-                        gathering_id: 1,
-                        mem_id: req.user.mem_id,
-                        message: '공릉동 맛집 뽀시고 싶어요!!'
-                    }, { transaction: t});
-                });
-                const test = await db.participant.findAll();
-                res.send(test);
-                // res.redirect("/gather");
-            } catch(err){
-                console.log(`Error applying for Gathering ${err.message}`);
-                res.send(err.message);
-                // res.redirect("/gather")
-            }
-        } else{
-            console.log("이미 신청완료되었습니다.");
-            res.redirect("/gather/create");
-        }
+        // if(!applied){
+        //     try{
+        //         await sequelize.transaction(async t => {
+        //             await db.participant.create({
+        //                 gathering_id: 1,
+        //                 mem_id: req.user.mem_id,
+        //                 message: '공릉동 맛집 뽀시고 싶어요!!'
+        //             }, { transaction: t});
+        //         });
+        //         const test = await db.participant.findAll();
+        //         res.send(test);
+        //         // res.redirect("/gather");
+        //     } catch(err){
+        //         console.log(`Error applying for Gathering ${err.message}`);
+        //         res.send(err.message);
+        //         // res.redirect("/gather")
+        //     }
+        // } else{
+        //     console.log("이미 신청완료되었습니다.");
+        //     res.redirect("/gather/create");
+        // }
 
         
     },
@@ -731,7 +717,7 @@ module.exports={
         //필요한 값 - 일단은 다 가져오자. 내가 가입한 그룹
         const memId = req.user.mem_id;
         try{
-            const gatherList = await this.searchGathers(undefined, undefined, undefined,undefined, {
+            const gatherList = await searchGatherings(undefined, undefined, undefined,undefined, {
                 include:{
                     model: db.participant,
                     attributes: ['mem_id', 'mem_id'],

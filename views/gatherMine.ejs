@@ -21,7 +21,13 @@
 						<a href="/gather/completed?countperpage=9&gsort=1">모집완료</a>
 					</li>
 					<li class="gather-sub-name">
-						<a href="/gather/mine">나의 밥모임</a>
+						<span class="font-bold" style="font-weight: 800;">
+							<% if(typeof user == 'undefined'){ %>
+								<a href="javascript:void(0)" onclick="alert('로그인 후에 이용하실 수 있습니다');">나의 밥모임</a>
+							<% } else { %>
+								<a href="/gather/mine">나의 밥모임</a>
+							<% } %>
+						</span>
 					</li>
 				</ul>
 			</div>
@@ -78,9 +84,9 @@
 								</span>
 								<!-- hover시 신청, 자세히 버튼 -->
 								<div class="button-box">
-									<a href="/gather/join">
+									<!-- <a href="/gather/join">
 										<button class="join-group">신청</button>
-									</a>
+									</a> -->
 									<a href="/gather/view?no=<%= data.gathering_id%>">
 										<button class="show-group">자세히</button>
 									</a>
@@ -92,7 +98,7 @@
 						<div>
 							<a href="/gather/imade?countperpage=9&gsort=0">
 								<div class="slide-item">
-									더 많은 모임을 확인해보세요!
+									더보기
 								</div>
 							</a>
 						</div>
@@ -126,7 +132,7 @@
 			<!-- 모집완료 모임이 없을 경우만 출력 -->
 			<% if (listJoined == "" || listJoined == false){ %>
 				<div class="no-gather">
-					아직 모집이 완료된 모임이 없어요!
+					참여 중인 모임이 없어요!
 				</div>
 
 			<!-- 모집완료 모임이 있을 경우만 -->
@@ -212,7 +218,7 @@
 			<!-- 모집완료 모임이 없을 경우만 출력 -->
 			<% if (listApplied == "" || listApplied == false){ %>
 				<div class="no-gather">
-					아직 모집이 완료된 모임이 없어요!
+					아직 신청한 모임이 없어요
 				</div>
 
 			<!-- 모집완료 모임이 있을 경우만 -->
