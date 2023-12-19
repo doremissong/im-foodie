@@ -40,4 +40,7 @@ window.onclick = function(event) {
         modalJoin.style.display = "none";
         document.getElementById("gatherJoinArea").value = '';
     }
+    else if (event.target == modalFooter) {
+        modalFooter.style.display = "none";
+    }
 }
