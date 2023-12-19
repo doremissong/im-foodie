@@ -71,7 +71,7 @@
 						<div class="post-container">
 							<p class="post-number"><%= pagination.startItemNo + 1 + index %></p>
 							<p class="post-board"><%=data.category%></p>
-							<p class="post-title"><a href="/board/post?no=<%= data.post_id %>&sort=earliest"><%= data.title %></a></p>
+							<p class="post-title"><a href="/board/post?no=<%= data.post_id %>&pagno=1&sort=earliest"><%= data.title %></a></p>
 							<p class="post-writer"><%= data.writer_id%></p>
 							<p class="post-date"><%= data.createdAt.toISOString().slice(2,10);%></p>
 							<p class="post-view"><%= data.viewCount%></p>
