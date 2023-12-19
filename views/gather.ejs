@@ -7,6 +7,64 @@
 	<!-- 전체 틀 -->
     <div class="gather-section">
 
+
+		<!-- 신청 모달 창 -->
+		<div id="modalWrapJoin">
+
+			<!-- 모달 -->
+			<div id="modalBodyJoin">
+				<!-- 내용물 -->
+				<div class="gather-join-contents">
+
+					<!-- 밥모임 이름 -->
+					<div class="join-target">
+						<!-- 클릭한 밥모임의 이름 불러오기 -->
+						왕짜장 먹으러 가자~!
+					</div>
+					
+					<!-- 신청 폼 -->
+					<!-- 클릭한 밥모임에 신청 -->
+					<form method="post" onsubmit="return confirm('신청하시겠습니까?')">
+
+						<!-- 인사말 박스 -->
+						<div class="gather-join-text">
+							<!-- 타이틀 -->
+							<div class="join-title">
+								같이 먹어요😊
+							</div>
+							<!-- 인사말 -->
+							<div class="join-text">
+								<!-- 인사말 타이틀과 선 -->
+								<div class="join-text-title">
+									<!-- 인사말 타이틀 내용 -->
+									<div class="join-text-title-content">
+										인사말
+									</div>
+									<div class="join-text-title-border">
+										<p>&nbsp;</p>
+									</div>
+								</div>
+								<!-- 텍스트 박스 -->
+								<div class="join-textarea-box">
+									<!-- 텍스트아리아 -->
+									<textarea name="gatherJoin" id="gatherJoinArea" placeholder="인사말을 적어주세요 :)"></textarea>
+								</div>
+							</div>
+						</div>
+						<!-- 버튼 박스 -->
+						<div class="join-btn-box">
+							<!-- 신청 버튼 -->
+							<button type="submit">신청</button>
+							<!-- 취소 버튼 -->
+							<button type="button" id="closeBtnJoin">취소</button>
+						</div>	
+
+					</form>
+				</div>
+	
+			</div>
+		</div>
+
 		<!-- 밥모임 카테고리 -->
         <div class="gather-list">
             <div class="gather-main">
@@ -78,11 +136,13 @@
 								</span>
 								<!-- hover시 신청, 자세히 버튼 -->
 								<div class="button-box">
-									<a href="/gather/join">
-										<button class="join-group">신청</button>
+									<!-- 자세히 버튼 -->
+									<a>
+										<button class="show-group" onclick="viewDetailsClick()">자세히</button>
 									</a>
-									<a href="/gather/details">
-										<button class="show-group">자세히</button>
+									<!-- 신청 버튼 -->
+									<a>
+										<button class="join-group" onclick="viewJoinClick()">신청</button>
 									</a>
 								</div>
 							</div>
@@ -164,11 +224,8 @@
 						
 								<!-- hover시 신청, 자세히 버튼 -->
 								<div class="button-box">
-									<!-- <a href="/gather/join">
-															<button class="join-group">신청</button>
-														</a> -->
-									<a href="/gather/details">
-										<button class="show-group-completed">자세히</button>
+									<a>
+										<button class="show-group-completed" onclick="viewDetailsClick()">자세히</button>
 									</a>
 								</div>
 							</div>
