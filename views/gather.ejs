@@ -7,35 +7,133 @@
 	<!-- 전체 틀 -->
     <div class="gather-section">
 
+		<!-- 자세히 모달 창 -->
+		<div id="modalWrapDetails">
+
+			<!-- 모달 -->
+			<div id="modalBodyDetails">
+
+				<!-- 닫기 버튼 -->
+				<span id="closeBtnDetails">&times;</span>
+
+				<!-- 내용물 -->
+				<div class="gather-details-contents">
+
+					<!-- 밥모임 이름 -->
+					<div class="details-name">
+						<!-- 모임이름 불러오기 -->
+						왕짜장 먹으러 갈 사람~~!
+					</div>
+
+					<!-- 이미지와 밥모임 이름 -->
+					<div class="details-imgNothers">
+						
+						<!-- 이미지 -->
+						<div class="details-img">
+							<img src="/images/candy-blue.png">
+						</div>
+
+						<!-- 지역과 식당 -->
+						<div class="details-regionNrest">
+							<!-- 지역 -->
+							<div class="details-region">
+								<div class="details-region-title">
+									모임 지역 :
+								</div>
+								<!-- 지역 불러오기 -->
+								<div class="details-region-data">
+									서울시 노원구 공릉동
+								</div>
+							</div>
+							<!-- 식당 -->
+							<div class="details-restaurant">
+								<div class="details-restaurant-title">
+									맛집 이름 :
+								</div>
+								<!-- 맛집 불러오기 -->
+								<div class="details-restaurant-data">
+									왕짜장
+								</div>
+							</div>
+						</div>	
+						
+					</div>
+					<!-- 인원수 -->
+					<div class="details-numbers">
+						<div class="details-numbers-title">
+							모집 인원수 :
+						</div>					
+
+						<!-- 인원수 불러오기 -->
+						<div class="details-numbers-data">
+							3/5
+						</div>
+					</div>
+					<!-- 마감일 -->
+					<div class="details-deadline">
+						<div class="details-deadline-title">
+							모집 마감일 :
+						</div>
+
+						<!-- 마감일 불러오기 -->
+						<div class="details-deadline-data">
+							2023년 12월 31일
+						</div>
+					</div>
+					<!-- 소개글 -->
+					<div class="details-intro">
+						<div class="details-intro-title">
+							모임 소개글 :
+						</div>
+
+						<!-- 소개글 불러오기 -->
+						<div class="details-intro-data">
+							같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!
+						</div>
+					</div>
+
+				</div>
+	
+			</div>
+		</div>
 
 		<!-- 신청 모달 창 -->
 		<div id="modalWrapJoin">
 
 			<!-- 모달 -->
 			<div id="modalBodyJoin">
+
+				<!-- 닫기 버튼 -->
+				<!-- <span id="closeBtnJoin">&times;</span> -->
+
 				<!-- 내용물 -->
 				<div class="gather-join-contents">
 
 					<!-- 밥모임 이름 -->
 					<div class="join-target">
+
 						<!-- 클릭한 밥모임의 이름 불러오기 -->
 						왕짜장 먹으러 가자~!
+
 					</div>
 					
 					<!-- 신청 폼 -->
-					<!-- 클릭한 밥모임에 신청 -->
 					<form method="post" onsubmit="return confirm('신청하시겠습니까?')">
 
 						<!-- 인사말 박스 -->
 						<div class="gather-join-text">
+
 							<!-- 타이틀 -->
 							<div class="join-title">
 								같이 먹어요😊
 							</div>
+
 							<!-- 인사말 -->
 							<div class="join-text">
+
 								<!-- 인사말 타이틀과 선 -->
 								<div class="join-text-title">
+
 									<!-- 인사말 타이틀 내용 -->
 									<div class="join-text-title-content">
 										인사말
@@ -43,27 +141,36 @@
 									<div class="join-text-title-border">
 										<p>&nbsp;</p>
 									</div>
+
 								</div>
-								<!-- 텍스트 박스 -->
+
 								<div class="join-textarea-box">
 									<!-- 텍스트아리아 -->
 									<textarea name="gatherJoin" id="gatherJoinArea" placeholder="인사말을 적어주세요 :)"></textarea>
 								</div>
+								
 							</div>
+							
 						</div>
+
 						<!-- 버튼 박스 -->
 						<div class="join-btn-box">
+
 							<!-- 신청 버튼 -->
 							<button type="submit">신청</button>
+
 							<!-- 취소 버튼 -->
 							<button type="button" id="closeBtnJoin">취소</button>
+
 						</div>	
 
 					</form>
+
 				</div>
 	
 			</div>
 		</div>
+		
 
 		<!-- 밥모임 카테고리 -->
         <div class="gather-list">
