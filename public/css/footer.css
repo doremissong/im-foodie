@@ -1,21 +1,24 @@
 /*FOOTER*/
 footer {
     border-top: 1px solid #fef0e699;
-    background-color: #fdf8f6;
+    background-color: hsl(17, 64%, 98%);
+    /* position: sticky; */
 }
 
 footer .content {
-    height: 100px;
+    height: 110px;
 }
 
 .go-notice {
+    /* display: flex;
+    align-items: center; */
     padding: 18px 0px 15px 10px;
     font-size: 14px;
 }
 
 .go-notice a {
     width: 300px;
-    padding-right: 5px;
+    padding-right: 10px;
 }
 
 
@@ -23,4 +26,54 @@ footer .content {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding-left: 10px;
     font-size: 12px;
+}
+
+/* 모달 */
+/* 버튼 디자인 */
+#popupBtnFooter {
+    border: none;
+    background-color: #ffffff00;
+    cursor: pointer;
+    font-family: 'Gowun Dodum', sans-serif;
+    color: #333;
+    font-size: 14px;
+}
+
+/* 모달팝업을 감싸고 있는 최상위 부모 */
+#modalWrapFooter {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    display: none;
+}
+  
+/* 모달 팝업창 */
+#modalBodyFooter {
+    width: 500px;
+    height: 500px;
+    padding: 30px 30px;
+    margin: 0 auto;
+    border: 1px solid #777;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+/* 모달창 닫기 버튼 */
+#closeBtnFooter {
+    float:right;
+    font-weight: bold;
+    color: #777;
+    font-size:25px;
+    cursor: pointer;
+}
+
+.zxcv {
+    border: 1px solid black;
+    margin-top: 50px;
 }
