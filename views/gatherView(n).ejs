@@ -112,37 +112,6 @@
                 </ul>
             </div>
 
-            <!-- 특정 상황 -->
-            <!-- <div>
-                유저가 작성자면 [수정/삭제] 버튼
-
-                    <a>[편집]</a>
-                    <a>[삭제]</a>
-
-                
-                유저가 모임원이면 [탈퇴] 버튼 
-
-                유저가 모임원이면 [탈퇴] 버튼 
-
-
-                        <a>[편집]</a>
-                        <a>[삭제]</a>
-
-
-                    모임원
-                        <a href="">[탈퇴]</a>
-
-
-                    신청한 사람
-                        
-
-
-                    거절당한 사람
-
-
-
-            </div> -->
-
             <!-- 이미지, 지역, 식당, 인원, 마감일, 소개글 -->
             <div class="post-content">
                 
@@ -188,7 +157,9 @@
 
 						<!-- 인원수 불러오기 -->
 						<div class="view-numbers-data">
-							3/5
+							<span>3</span>
+                            /
+                            <span>5</span>
 						</div>
 					</div>
 					<!-- 마감일 -->
@@ -218,7 +189,24 @@
 				</div>
             </div>
 
-            <!-- 같이먹어요와 목록 -->
+            <!-- if 열람유저 = 작성자(모임장): 수정, 삭제, 목록 -->
+            <div class="view-button-box">
+                <!-- 수정 -->
+                <div class="">
+                    <button>수정하기</button>            
+                </div>
+                <!-- 삭제 -->
+                <div class="">
+                    <button>삭제하기</button>            
+                </div>
+                <!-- 목록으로 -->
+                <div>
+                    <a href="/gather">
+                        <button>목록으로</button>
+                    </a>
+                </div>
+            </div>
+            <!-- else: 신청, 목록 -->
             <div class="view-button-box">
                 <!-- 같이먹어요 -->
                 <div class="">
@@ -232,8 +220,143 @@
                 </div>
             </div>
 
-
         </div>
         
+        <!-- 유저 상황별 보이는 화면 -->
+        <div class="user-situation">
+
+            <!-- 열람유저 = 모임장 -->
+            <div class="view-user-master">
+
+                <!-- 모임원 목록 -->
+                <div class="master-member-list">
+                    <span class="title">모임원 목록</span>
+
+                    <!-- 맨 윗줄 인덱스 -->
+                    <div class="user-master-member-f">
+                        <div class="master-mem-f">
+                            모임원
+                        </div>
+                        <div class="master-mem-intro-f">
+                            인사말
+                        </div>
+                        <div class="master-mem-status-f">
+                            관리
+                        </div>
+                    </div>
+
+                    <!-- 불러오기 -->
+                    <div class="user-master-member">
+                        <div class="master-mem">
+                            초코케이크
+                        </div>
+                        <div class="master-mem-intro">
+                            안녕하세요 잘 부탁 드려요~~!!
+                        </div>
+                        <div class="master-mem-status">
+                            <span>[강퇴]</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 신청자 목록 -->
+                <div class="master-applicant-list">
+                    <span class="title">신청자 목록</span>
+
+                    <!-- 첫번째 인덱스 -->
+                    <div class="user-master-applicant-f">
+                        <div class="master-appli-f">
+                            신청자
+                        </div>
+                        <div class="master-appli-intro-f">
+                            인사말
+                        </div>
+                        <div class="master-appli-status-f">
+                            관리
+                        </div>
+                    </div>
+
+                    <!-- 불러오기 -->
+                    <div class="user-master-applicant">
+                        <div class="master-appli">
+                            로얄밀크티
+                        </div>
+                        <div class="master-appli-intro">
+                            받아주세용~
+                        </div>
+                        <div class="master-appli-status">
+                            <span>[수락]</span>
+                            <span>[거절]</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- 열람유저 = 모임원 -->
+            <div class="view-user-member">
+
+                <div class="member-group-list">
+                    <span class="title">모임 구성원 목록</span>
+                
+                    <!-- 모임장 불러오기 -->
+                    <div class="member-group-master">
+                        <div class="group-master-index">
+                            모임장
+                        </div>
+                        <div class="group-master-name">
+                            <!-- 이름 불러오기 -->
+                            타로버블티
+                        </div>
+                    </div>
+
+                    <!-- 모임원 불러오기 -->
+                    <div class="member-group">
+                        <div class="group-member-index">
+                            모임원
+                        </div>
+                        <div class="group-member-name">
+                            <!-- 이름 불러오기 -->
+                            초코케이크
+                        </div>
+                    </div>
+
+                    <div class="member-group">
+                        <div class="group-member-index">
+                            모임원
+                        </div>
+                        <div class="group-member-name">
+                            <!-- 이름 불러오기 -->
+                            초코우유
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 열람유저 = 신청자 -->
+            <div class="view-user-applicant">
+                <div class="user-applicant">
+                    <div class="user-applicant-cate">
+                        <span class="title">신청 상태 : </span>
+                        <!-- 상태 불러오기 -->
+                        <span class="status">요청중</span>
+                    </div>
+                    <div class="user-applicant-cate">
+                        <span class="title">가입 신청일 : </span> 
+                        <!-- 신청일 불러오기 -->
+                        <span class="status">2023년 12월 25일</span>
+                    </div>
+                    <!-- 신청 취소 박스 -->
+                    <div class="cancel-btn-box">
+                        <button>신청 취소</button>
+                    </div>
+                </div>             
+            </div>
+
+        </div>
+
     </div>
 </section>

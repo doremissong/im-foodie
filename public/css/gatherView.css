@@ -260,7 +260,7 @@
 .view-intro-data {
 	width: 665px;
     font-size: 20px;
-    margin: 10px 10px 10px 0;
+    margin: 10px 0px 10px 0;
 }
 
 
@@ -269,7 +269,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 30px 0 70px 0;
+    margin: 30px 0 60px 0;
 }
 
 .view-button-box button {
@@ -429,4 +429,317 @@
 
 .join-btn-box button:hover {
 	background-color: #e3d7cf;
+}
+
+
+/* 유저 상황별 화면 */
+.user-situation {
+	/* border: 1px solid black; */
+}
+
+/* if 모임장 */
+.view-user-master {
+	/* display: flex; */
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+/* 모임원 목록 첫번째 인덱스 */
+.user-master-member-f {
+	display: flex;
+	padding: 10px 0;
+	margin: 20px 10px 0 10px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+.master-mem-f {
+	width: 110px;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	font-size: 17px;
+	font-weight: bold;
+
+	/* border: 1px solid black; */
+}
+
+.master-mem-intro-f {
+	width: 600px;
+	padding: 10px;
+	font-size: 17px;
+	font-weight: bold;
+	/* border: 1px solid black; */
+}
+
+.master-mem-status-f {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 115px;
+	padding: 10px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+/* 모임원 목록 */
+.master-member-list {
+	width: 910px;
+	padding: 20px 0px 30px 0px;
+	margin: auto;
+	border-bottom: 1px dashed black;
+}
+
+.master-member-list .title {
+	margin: 0 15px;
+	font-size: 19px;
+	font-weight: bold;
+}
+
+.user-master-member {
+	display: flex;
+	padding-bottom: 10px;
+	margin: 10px 10px 0 10px;
+	border-bottom: 1px solid black;
+}
+
+.master-mem {
+	width: 110px;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+
+	/* border: 1px solid black; */
+}
+
+.master-mem-intro {
+	width: 600px;
+	padding: 10px;
+	/* border: 1px solid black; */
+}
+
+.master-mem-status {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 115px;
+	padding: 10px;
+}
+
+.master-mem-status span:hover {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+
+/* 신청자 목록 첫번째 인덱스 */
+.user-master-applicant-f {
+	display: flex;
+	padding: 10px 0;
+	margin: 20px 10px 0 10px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+.master-appli-f{
+	width: 110px;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	font-size: 17px;
+	font-weight: bold;
+
+	/* border: 1px solid black; */
+}
+
+.master-appli-intro-f {
+	width: 600px;
+	padding: 10px;
+	font-size: 17px;
+	font-weight: bold;
+	/* border: 1px solid black; */
+}
+
+.master-appli-status-f {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 115px;
+	padding: 10px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+/* 신청자 목록 */
+.master-applicant-list {
+	width: 910px;
+	padding: 20px 0px 30px 0px;
+	margin: auto;
+	/* border-bottom: 1px dashed black; */
+}
+
+.master-applicant-list .title {
+	margin: 0 15px;
+	font-size: 19px;
+	font-weight: bold;
+}
+
+.user-master-applicant {
+	display: flex;
+	padding-bottom: 10px;
+	margin: 10px 10px 0 10px;
+	border-bottom: 1px solid black;
+}
+
+.master-appli {
+	width: 110px;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.master-appli-intro {
+	width: 600px;
+	padding: 10px;
+}
+
+.master-appli-status {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 115px;
+	padding: 10px;
+}
+
+.master-appli-status span {
+	margin: 0 7px;
+}
+
+.master-appli-status span:hover {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+
+/* if 모임원 */
+.view-user-member {
+	margin-top: 20px;
+	margin-bottom: 20px ;
+	/* border: 1px solid black; */
+}
+
+.member-group-list {
+	width: 910px;
+	padding: 20px 0px 30px 0px;
+	margin: auto;
+}
+
+.member-group-list .title {
+	margin: 0 15px;
+	font-size: 19px;
+	font-weight: bold;
+}
+
+/* 모임장 불러오기 */
+.member-group-master {
+	display: flex;
+	padding: 10px 0;
+	margin: 20px 10px 0 10px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	/* border: 1px solid black; */
+}
+
+.group-master-index {
+	width: 110px;
+	padding: 10px;
+	font-size: 17px;
+	font-weight: bold;
+	/* border: 1px solid black; */
+}
+
+.group-master-name {
+	width: 220px;
+	padding: 10px;
+	/* border: 1px solid black; */
+}
+
+/* 모임원 불러오기 */
+.member-group {
+	display: flex;
+	padding: 10px 0;
+	margin: 0px 10px 0 10px;
+	border-bottom: 1px solid black;
+}
+
+.group-member-index {
+	width: 110px;
+	padding: 10px;
+	font-size: 17px;
+	font-weight: bold;
+	/* border: 1px solid black; */
+}
+
+.group-member-name {
+	width: 220px;
+	padding: 10px;
+	/* border: 1px solid black; */
+}
+
+
+/* 신청자 */
+.view-user-applicant {
+	
+	margin: 20px 0;
+}
+
+.user-applicant {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* width: 910px; */
+	padding: 20px 0px 30px 0px;
+	margin: 0 15px;
+}
+
+.user-applicant-cate {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+	margin: 10px 0;
+}
+
+.user-applicant .title {
+	margin: 0 15px;
+	font-size: 19px;
+	font-weight: bold;
+}
+
+.user-applicant .status {
+	margin-right: 15px;
+	font-size: 17px;
+}
+
+/* 신청 취소 버튼 */
+.cancel-btn-box {
+	/* margin: 20px 15px 0 15px; */
+	margin-left: 15px;
+}
+
+.cancel-btn-box button {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 80px;
+	height: 30px;
+	background-color: rgb(255, 242, 237);
+	border: 1px solid rgb(250, 226, 215);
+	border-radius: 2px;
+	color: #656565;
+}
+
+.cancel-btn-box button:hover {
+	color: black;
+	background-color: rgb(250, 226, 215);
 }
