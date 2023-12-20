@@ -8,6 +8,7 @@ function joinClick() {
             var joinForm = document.getElementById("form-apply");
             joinForm.submit(); 
             modalJoin.style.display = 'none';
+            modalViewJoin.style.display = 'none';
             document.getElementById("gatherJoinArea").value='';
         }
     }

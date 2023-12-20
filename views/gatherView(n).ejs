@@ -4,37 +4,101 @@
 <!-- SECTION -->
 <section>
     <div class="gather-view-section">
+
+        <!-- 신청 모달 창 -->
+		<div id="modalWrapViewJoin">
+
+			<!-- 모달 -->
+			<div id="modalBodyViewJoin">
+
+				<!-- 내용물 -->
+				<div class="gather-join-contents">
+
+					<!-- 밥모임 이름 -->
+					<div class="join-target">
+
+						<!-- 클릭한 밥모임의 이름 불러오기 -->
+						왕짜장 먹으러 가자~!
+
+					</div>
+					
+					<!-- 신청 폼 -->
+					<form method="post" id="form-apply" onsubmit="return joinClick()">
+
+						<!-- 인사말 박스 -->
+						<div class="gather-join-text">
+
+							<!-- 타이틀 -->
+							<div class="join-title">
+								같이 먹어요😊
+							</div>
+
+							<!-- 인사말 -->
+							<div class="join-text">
+
+								<!-- 인사말 타이틀과 선 -->
+								<div class="join-text-title">
+
+									<!-- 인사말 타이틀 내용 -->
+									<div class="join-text-title-content">
+										인사말
+									</div>
+									<div class="join-text-title-border">
+										<p>&nbsp;</p>
+									</div>
+
+								</div>
+
+								<div class="join-textarea-box">
+									<!-- 텍스트아리아 -->
+									<textarea name="gatherJoin" id="gatherJoinArea" placeholder="인사말을 적어주세요 :)"></textarea>
+								</div>
+								
+							</div>
+							
+						</div>
+
+						<!-- 버튼 박스 -->
+						<div class="join-btn-box">
+
+							<!-- 신청 버튼 -->
+							<button type="submit">신청</button>
+
+							<!-- 취소 버튼 -->
+							<button type="button" id="closeBtnViewJoin">취소</button>
+
+						</div>	
+
+					</form>
+
+				</div>
+	
+			</div>
+		</div>
+
+        <!-- 밥모임 내용 -->
         <div class="post-section">
-            <div class="post-category-box">
-                <ul class="post-category">
-                    <li>
-                        <span>
-                            <a href="/gather">밥모임</a>
-                        </span>
-                    </li>
-                </ul>
-            </div>
+
+            <!-- 모임 이름 -->
             <div class="post-title">
-                <!-- 글 제목 불러오기 -->
-                글제목
+                <div class="gather-view-title">
+                    <!-- 모임 이름 불러오기 -->
+                    노원구 왕짜장 먹으러 갈 사람~!~!~!
+                </div>
             </div>
+
+            <!-- 모임장, 게시일, 조회수 -->
             <div class="post-info-box">
                 <ul class="post-info-first">
                     <li class="writer-name">
+                        모임장
                         <!-- 작성자 이름 불러오기 -->
-                        작성자
                         초코우유
                     </li>
                     <li class="write-date">
                         게시일
                         <!-- 작성일 불러오기 -->
                         2023년 12월 19일
-                    </li>
-                    <li class="write-date">
-                        마감일
-                        <!-- deadline 또는 due date -->
-                        <!-- 작성일 불러오기 -->
-                        2023년 12월 31일
                     </li>
                 </ul>
                 <ul class="post-info-second">
@@ -45,32 +109,20 @@
                             123
                         </span>
                     </li>
-                    <li class="post-views">
-                        총인원수
-                        <span>
-                            <!-- 조회수 column만들기 -->
-                            5
-                        </span>
-                    </li>
-                    <li class="post-views">
-                        현재인원수
-                        <span>
-                            <!-- 조회수 column만들기 -->
-                            3
-                        </span>
-                    </li>
                 </ul>
             </div>
-            <div>
-                <!-- 유저가 작성자면 [수정/삭제] 버튼 -->
+
+            <!-- 특정 상황 -->
+            <!-- <div>
+                유저가 작성자면 [수정/삭제] 버튼
 
                     <a>[편집]</a>
                     <a>[삭제]</a>
 
                 
-                <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
+                유저가 모임원이면 [탈퇴] 버튼 
 
-                <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
+                유저가 모임원이면 [탈퇴] 버튼 
 
 
                         <a>[편집]</a>
@@ -89,27 +141,99 @@
 
 
 
-            </div>
+            </div> -->
+
+            <!-- 이미지, 지역, 식당, 인원, 마감일, 소개글 -->
             <div class="post-content">
-                1) 총인원<br>2) 현재인원<br> 3) 지역<br>4) 탐방할 맛집<br>
-                <!-- 글 내용 불러오기 -->
-                글 내용~~~
+                
+                <!-- 이미지, 지역, 식당 -->
+				<div class="view-imgNothers">
+					<!-- 이미지 -->
+					<div class="view-img">
+						<img src="/images/candy-blue.png">
+					</div>
+					<!-- 지역과 식당 -->
+					<div class="view-regionNrest">
+						<!-- 지역 -->
+						<div class="view-region">
+							<div class="view-region-title">
+								모임 지역 :
+							</div>
+							<!-- 지역 불러오기 -->
+							<div class="view-region-data">
+								서울시 노원구 공릉동
+							</div>
+						</div>
+						<!-- 식당 -->
+						<div class="view-restaurant">
+							<div class="view-restaurant-title">
+								함께 할 맛집 :
+							</div>
+							<!-- 맛집 불러오기 -->
+							<div class="view-restaurant-data">
+								왕짜장
+							</div>
+						</div>
+					</div>			
+				</div>
+
+                <!-- 모집인원과 마감일 -->
+                <div class="view-numNdeadline">
+
+                    <!-- 인원수 -->
+					<div class="view-numbers">
+						<div class="view-numbers-title">
+							모집 인원수 <span>(현재인원/총원)</span> :
+						</div>					
+
+						<!-- 인원수 불러오기 -->
+						<div class="view-numbers-data">
+							3/5
+						</div>
+					</div>
+					<!-- 마감일 -->
+					<div class="view-deadline">
+						<div class="view-deadline-title">
+							모집 마감일 :
+						</div>
+
+						<!-- 마감일 불러오기 -->
+						<div class="view-deadline-data">
+							2023년 12월 31일
+						</div>
+					</div>
+
+                </div>
+
+                <!-- 소개글 -->
+				<div class="view-intro">
+					<div class="view-intro-title">
+						모임 소개글 :
+					</div>
+
+					<!-- 소개글 불러오기 -->
+					<div class="view-intro-data">
+						같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!
+					</div>
+				</div>
             </div>
-            <!-- 추천, 스크랩하기 -->
-            <div class="upscrap-box">
-                <button class="up-bt">
-                    👍<br>
-                    같이먹어요
-                    <!-- 로그인 상태일 때 버튼 누르면 추천, 
-                         비 로그인 상태면 로그인 어쩌구 창 띄우기 -->
-                </button>
-                <button class="scrap-bt">
-                    ⭐<br>
-                    목록
-                    <!-- 로그인 상태일 때 버튼 누르면 스크랩, 
-                         비 로그인 상태면 로그인 어쩌구 창 띄우기 -->
-                </button>
+
+            <!-- 같이먹어요와 목록 -->
+            <div class="view-button-box">
+                <!-- 같이먹어요 -->
+                <div class="">
+                    <button class="join-group" onclick="gatherViewJoinClick()">같이먹어요</button>            
+                </div>
+                <!-- 목록으로 -->
+                <div>
+                    <a href="/gather">
+                        <button>목록으로</button>
+                    </a>
+                </div>
             </div>
+
+
         </div>
+        
     </div>
 </section>
