@@ -20,7 +20,7 @@
 				<div class="gather-details-contents">
 
 					<!-- 밥모임 이름 -->
-					<div class="details-name">
+					<div class="details-name" id="details-title">
 						<!-- 모임이름 불러오기 -->
 						왕짜장 먹으러 갈 사람~~!
 					</div>
@@ -29,7 +29,7 @@
 					<div class="details-imgNothers">
 						
 						<!-- 이미지 -->
-						<div class="details-img">
+						<div class="details-img" id="details-img">
 							<img src="/images/candy-blue.png">
 						</div>
 
@@ -41,8 +41,8 @@
 									모임 지역 :
 								</div>
 								<!-- 지역 불러오기 -->
-								<div class="details-region-data">
-									서울시 노원구 공릉동
+								<div class="details-region-data" id="details-region">
+									<!-- 서울시 노원구 공릉동 -->
 								</div>
 							</div>
 							<!-- 식당 -->
@@ -51,8 +51,8 @@
 									맛집 이름 :
 								</div>
 								<!-- 맛집 불러오기 -->
-								<div class="details-restaurant-data">
-									왕짜장
+								<div class="details-restaurant-data" id="details-restaurant">
+									<!-- 왕짜장 -->
 								</div>
 							</div>
 						</div>	
@@ -65,8 +65,8 @@
 						</div>					
 
 						<!-- 인원수 불러오기 -->
-						<div class="details-numbers-data">
-							3/5
+						<div class="details-numbers-data" id="details-numbers">
+							<!-- 3/5 -->
 						</div>
 					</div>
 					<!-- 마감일 -->
@@ -76,8 +76,8 @@
 						</div>
 
 						<!-- 마감일 불러오기 -->
-						<div class="details-deadline-data">
-							2023년 12월 31일
+						<div class="details-deadline-data" id="details-deadline">
+							<!-- 2023년 12월 31일 -->
 						</div>
 					</div>
 					<!-- 소개글 -->
@@ -87,8 +87,8 @@
 						</div>
 
 						<!-- 소개글 불러오기 -->
-						<div class="details-intro-data">
-							같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!
+						<div class="details-intro-data" id="details-intro">
+							<!-- 같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~! -->
 						</div>
 					</div>
 
@@ -118,7 +118,7 @@
 					</div>
 					
 					<!-- 신청 폼 -->
-					<form id="form-apply" method="post" target="applyResult">
+					<form id="form-apply" id="joinForm" method="post" target="applyResult">
 						<!-- onsubmit="return confirm('신청하시겠습니까?')" -->
 						<!-- 인사말 박스 -->
 						<div class="gather-join-text">
@@ -160,7 +160,7 @@
 						<div class="join-btn-box">
 
 							<!-- 신청 버튼 -->
-							<button type="submit">신청</button>
+							<button type="submit" onclick="joinClick()">신청</button>
 
 							<!-- 취소 버튼 -->
 							<button type="button" id="closeBtnJoin">취소</button>
@@ -250,7 +250,7 @@
 								</span>
 								<!-- hover시 신청, 자세히 버튼 -->
 								<div class="button-box">
-								`	<!-- 자세히 버튼 -->
+									<!-- 자세히 버튼 -->
 									<a>
 										<button class="show-group" onclick="viewDetailsClick()">자세히</button>
 									</a>

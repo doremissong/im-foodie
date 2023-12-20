@@ -623,28 +623,17 @@ module.exports={
         const _message = req.query.message;
         var isApplying = false;
 
+        // 해당 모임이 모집중인지 확인해야함. 아냐 화면이 이동이 없으니까 url 손대지는 못할거야
+
         // 신청 가능한지 확인(아예 없거나, ISREJECTED) / (ISLEADER, ISMEMBER는 불가능)
         try{
             const userState = await searchParticipant(['state'], undefined, _gatherId, _memId);
-            console.log('applyfor result', userState);
+            // console.log('applyfor result', userState);
             if(!userState || userState.length==0){
-                isApplying = true;
-                await db.par
-                // res.write("<script>alert('신청하였습니다.');</script>");
+                isApplying = true
             } else{
                 if (userState.state == ISREFUSED) {
-                    isApplying = true;
-                    // 참가자 tb. 상태, 메시지 변경
-                    // await db.participant.update(
-                    //     { state: ISAPPLYING, message: _message },
-                    //     {
-                    //         where: {
-                    //             gathering_id: _gatherId,
-                    //             mem_id: _memId
-                    //         }
-                    //     }
-                    // );                    
-                    // res.write("<script>alert('신청하였습니다.');</script>");
+                    isApplying = true;            
                 } else if (userState.state == ISLEADER) {
                     res.write("<script>alert('이 밥모임의 방장입니다.');</script>");
                 } else if (userState.state == ISMEMBER) {
@@ -662,40 +651,91 @@ module.exports={
                 gathering_id: _gatherId,
                 mem_id: _memId,
                 state: ISAPPLYING,
+                message: _message
             });
-            console.log('참가자 테이블이', (created)?'추가되었습니다.':'수정되었습니다.');
+            // console.log('참가자 테이블이', (created)?'추가되었습니다.':'수정되었습니다.');
             res.write("<script>alert('신청하였습니다.');</script>");
-        }
-        console.log(_gatherId,'에 신청한다');
+        } 
+        // console.log(_gatherId,'에 신청한다');
         // res.write("<script>alert('failed');</script>");
+    },
 
-        // // 이미 가입 신청했는지 확인.
-        // // ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️applied 대신 checkMember 사용!!!!!
-        // const applied = await searchParticipant(undefined, undefined, _gatherId, _memId);
+    acceptMember: async(req, res)=>{
+        // 유효성
+        // 1) 유저
+        if(!req.user){
+            console.log('This user is not logged in');
+            res.redirect('/gather');
+        }
+        const _memId = req.user.mem_id;
         
-        // if(!applied){
-        //     try{
-        //         await sequelize.transaction(async t => {
-        //             await db.participant.create({
-        //                 gathering_id: 1,
-        //                 mem_id: req.user.mem_id,
-        //                 message: '공릉동 맛집 뽀시고 싶어요!!'
-        //             }, { transaction: t});
-        //         });
-        //         const test = await db.participant.findAll();
-        //         res.send(test);
-        //         // res.redirect("/gather");
-        //     } catch(err){
-        //         console.log(`Error applying for Gathering ${err.message}`);
-        //         res.send(err.message);
-        //         // res.redirect("/gather")
-        //     }
-        // } else{
-        //     console.log("이미 신청완료되었습니다.");
-        //     res.redirect("/gather/create");
-        // }
+        if(!req.query.no || !req.query.aplctId){
+            console.log('There is no gathering number or applicant id');
+            req.redirect('/gather');
+        }
+        const _gatherId = req.query.no;
+        const _applicantId = req.query.aplctId;
+        console.log('전달값 확인:', _memId, _gatherId, _applicantId);
+        // 서치하자. query로 하면 수정할 수 있으니까.
+        // ❌ const {_leaderId, _maxCount, _curCount} = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
+        const gatherInfo = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
+        const _leaderId = gatherInfo.leader_id;
+        const _maxCount = gatherInfo.maximumHeadCount;
+        const _curCount = gatherInfo.currentHeadCount;
+        console.log('쿼리값', _leaderId, _maxCount, _curCount);
 
+        if(req.user.mem_id != _leaderId){
+            res.write('<script>alert("방장 권한이 없습니다.");</script>');
+        }
+
+        if(_maxCount>_curCount){
+            // ⚠️⚠️participant update
+            // gathering update
+            // gathering에 trigger 만들어야겠다. update, create, delete하면 다 적용되게 
+            res.write('<script>alert("수락합니다");</script>');// 왜 화면 바뀜?
+
+        } else{
+            res.write('<script>alert("현재 최대인원으로 수락할 수 없습니다. 최대인원을 변경해보세요.");</script>');
+        }
+
+        // // 하고 끝나야하는데 다음 줄까지 간닪마리야
+        // // 그러면 esle문ㅇ로해?
+        // if(req.query.)
+
+
+    },
+    refuseMember: async(req, res)=>{
+        // 유효성
+        // 1) 유저
+        if(!req.user){
+            console.log('This user is not logged in');
+            res.redirect('/gather');
+        }
+        const _memId = req.user.mem_id;
         
+        if(!req.query.no || !req.query.aplctId){
+            console.log('There is no gathering number or applicant id');
+            req.redirect('/gather');
+        }
+        const _gatherId = req.query.no;
+        const _applicantId = req.query.aplctId;
+        console.log('전달값 확인:', _memId, _gatherId, _applicantId);
+        // 서치하자. query로 하면 수정할 수 있으니까.
+        // ❌ const {_leaderId, _maxCount, _curCount} = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
+        const gatherInfo = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
+        const _leaderId = gatherInfo.leader_id;
+        const _maxCount = gatherInfo.maximumHeadCount;
+        const _curCount = gatherInfo.currentHeadCount;
+        console.log('쿼리값', _leaderId, _maxCount, _curCount);
+
+        if(req.user.mem_id != _leaderId){
+            res.write('<script>alert("방장 권한이 없습니다.");</script>');
+        }
+        // participant 테이블에 _ISREFUSED로 변경
+        res.write('<script>alert("거절했습니다.");</script>');
+        
+
+
     },
 
     // // ❤️❤️❤️❤️❤️update나 delete 시, 트리거 만들기!!!

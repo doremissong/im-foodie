@@ -29,4 +29,7 @@ window.onclick = function(event) {
     else if (event.target == modalUpAM) {
         modalUpAM.style.display = "none";
     }
+    else if (event.target == modalFooter) {
+        modalFooter.style.display = "none";
+    }
 }

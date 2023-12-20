@@ -2,7 +2,13 @@
 // const btnDetails = document.getElementById('popupBtnDetails');
 const modalDetails = document.getElementById('modalWrapDetails');
 const closeBtnDetails = document.getElementById('closeBtnDetails');
-
+// "details-intro"
+// "details-deadline"
+// "details-numbers"
+// "details-restaurant"
+// "details-region"
+// "details-img"
+// "details-title"
 // 자세히 버튼 클릭 시 모달 팝업 열림
 function viewDetailsClick() {
     modalDetails.style.display = 'block';
@@ -47,5 +53,8 @@ window.onclick = function(event) {
     else if (event.target == modalJoin) {
         modalJoin.style.display = "none";
         document.getElementById("gatherJoinArea").value = '';
+    }
+    else if (event.target == modalFooter) {
+        modalFooter.style.display = "none";
     }
 }

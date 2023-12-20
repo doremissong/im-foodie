@@ -40,6 +40,9 @@ router.get("/delete", isLoggedIn, gatheringController.deleteGather);
 // router.get("/apply", isLoggedIn, gatheringController.showGatherApplyPage);
 router.post("/apply", isLoggedIn, gatheringController.applyForGather);
 
+router.get("/acceptMember", isLoggedIn, gatheringController.acceptMember);
+router.get("/refuseMember", isLoggedIn, gatheringController.refuseMember);
+
 // 7) 밥모임 상세 페이지
 router.get("/view", storeUrl, gatheringController.showGatheringDetail);
 
