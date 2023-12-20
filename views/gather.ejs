@@ -118,7 +118,7 @@
 					</div>
 					
 					<!-- 신청 폼 -->
-					<form id="form-apply" method="post">
+					<form id="form-apply" method="post" target="applyResult">
 						<!-- onsubmit="return confirm('신청하시겠습니까?')" -->
 						<!-- 인사말 박스 -->
 						<div class="gather-join-text">
@@ -151,9 +151,9 @@
 								</div>
 								
 							</div>
-						<!-- <% if(typeof user != 'undefined'){ %> -->
-							<input id="mem_id" type="text" value="<%=user.mem_id%>" >
-						<!-- <% } %> -->
+							<% if(typeof user != 'undefined'){ %>
+								<input id="mem_id" name ="mem_id" type="text" value="<%=user.mem_id%>" hidden>
+							<% } %>
 						</div>
 
 						<!-- 버튼 박스 -->
@@ -168,7 +168,7 @@
 						</div>	
 
 					</form>
-
+					<iframe name="applyResult" style="display:none;"></iframe>
 				</div>
 	
 			</div>

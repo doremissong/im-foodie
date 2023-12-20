@@ -37,6 +37,8 @@ closeBtnJoin.onclick = function() {
 }
 
 
+// form 태그 클릭 시 모달 창 닫힘 필요!!!!
+
 // 바깥영역 클릭 시 창 닫힘
 window.onclick = function(event) {
     if (event.target == modalDetails) {

@@ -609,17 +609,65 @@ module.exports={
     // 모임 
     applyForGather: async(req, res)=>{
         //⚠️⚠️⚠️try문 req.query 유효성 검사
-        res.send(req.body);
-        // if(!req.user){
-        //     res.redirect('/gather');
-        //     console.log('[Wrong Access] This user is not logged in');
-        // }
-        // const _memId = req.user.mem_id;
-        // if(!req.query.no){
-        //     res.redirect('/gather');
-        //     console.log('[Uncertain Information] There is no gathering number');
-        // }
-        // const _gatherId = req.query.id;
+        // res.send(req.body);
+        if(!req.user){
+            res.redirect('/gather');
+            console.log('[Wrong Access] This user is not logged in');
+        }
+        const _memId = req.user.mem_id;
+        if(!req.query.no){
+            res.redirect('/gather');
+            console.log('[Uncertain Information] There is no gathering number');
+        }
+        const _gatherId = req.query.no;
+        const _message = req.query.message;
+        var isApplying = false;
+
+        // 신청 가능한지 확인(아예 없거나, ISREJECTED) / (ISLEADER, ISMEMBER는 불가능)
+        try{
+            const userState = await searchParticipant(['state'], undefined, _gatherId, _memId);
+            console.log('applyfor result', userState);
+            if(!userState || userState.length==0){
+                isApplying = true;
+                await db.par
+                // res.write("<script>alert('신청하였습니다.');</script>");
+            } else{
+                if (userState.state == ISREFUSED) {
+                    isApplying = true;
+                    // 참가자 tb. 상태, 메시지 변경
+                    // await db.participant.update(
+                    //     { state: ISAPPLYING, message: _message },
+                    //     {
+                    //         where: {
+                    //             gathering_id: _gatherId,
+                    //             mem_id: _memId
+                    //         }
+                    //     }
+                    // );                    
+                    // res.write("<script>alert('신청하였습니다.');</script>");
+                } else if (userState.state == ISLEADER) {
+                    res.write("<script>alert('이 밥모임의 방장입니다.');</script>");
+                } else if (userState.state == ISMEMBER) {
+                    res.write("<script>alert('이미 가입한 밥모임입니다.');</script>");
+                } else { //userState.state==ISAPPLYING){
+                    res.write("<script>alert('이미 신청한 밥모임입니다.');</script>");
+                }
+            }
+        } catch(err){
+            console.log('[ERROR] while checking participant table', err);
+            res.write("<script>alert('다시 시도해주세요.');</script>");
+        }
+        if(isApplying){
+            const [result, created] = await db.participant.upsert({
+                gathering_id: _gatherId,
+                mem_id: _memId,
+                state: ISAPPLYING,
+            });
+            console.log('참가자 테이블이', (created)?'추가되었습니다.':'수정되었습니다.');
+            res.write("<script>alert('신청하였습니다.');</script>");
+        }
+        console.log(_gatherId,'에 신청한다');
+        // res.write("<script>alert('failed');</script>");
 
         // // 이미 가입 신청했는지 확인.
         // // ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️applied 대신 checkMember 사용!!!!!
