@@ -12,35 +12,29 @@
                             <a href="/gather">밥모임</a>
                         </span>
                     </li>
-                    <li>
-                        <span>
-                            <!-- 글 정보 받아서 해당 글 카테고리 목록으로 이동 -->
-                            <a href="javascript:void(0)">카테고리</a>
-                        </span>
-                    </li>
                 </ul>
             </div>
             <div class="post-title">
                 <!-- 글 제목 불러오기 -->
-                <%= data.name %>
+                글제목
             </div>
             <div class="post-info-box">
                 <ul class="post-info-first">
                     <li class="writer-name">
                         <!-- 작성자 이름 불러오기 -->
                         작성자
-                        <%= data.leader_id %>
+                        작성자이름
                     </li>
                     <li class="write-date">
                         게시일
                         <!-- 작성일 불러오기 -->
-                        <%= data.createdAt.toISOString().slice(0,10) %>
+                        2023년 12월 19일
                     </li>
                     <li class="write-date">
                         마감일
                         <!-- deadline 또는 due date -->
                         <!-- 작성일 불러오기 -->
-                        <%= data.deadline.toISOString().slice(0,10) %>
+                        2023년 12월 31일
                     </li>
                 </ul>
                 <ul class="post-info-second">
@@ -48,29 +42,58 @@
                         조회
                         <span>
                             <!-- 조회수 column만들기 -->
-                            data.viewCount %>
+                            123
                         </span>
                     </li>
                     <li class="post-views">
                         총인원수
                         <span>
                             <!-- 조회수 column만들기 -->
-                            <%= data.maximumHeadCount %>
+                            5
                         </span>
                     </li>
                     <li class="post-views">
                         현재인원수
                         <span>
                             <!-- 조회수 column만들기 -->
-                            <%= data.currentHeadCount %>
+                            3
                         </span>
                     </li>
                 </ul>
             </div>
+            <div>
+                <!-- 유저가 작성자면 [수정/삭제] 버튼 -->
+
+                    <a>[편집]</a>
+                    <a>[삭제]</a>
+
+                
+                <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
+
+                <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
+
+
+                        <a>[편집]</a>
+                        <a>[삭제]</a>
+
+
+                    모임원
+                        <a href="">[탈퇴]</a>
+
+
+                    신청한 사람
+                        
+
+
+                    거절당한 사람
+
+
+
+            </div>
             <div class="post-content">
                 1) 총인원<br>2) 현재인원<br> 3) 지역<br>4) 탐방할 맛집<br>
                 <!-- 글 내용 불러오기 -->
-                <%= data.description %>
+                글 내용~~~
             </div>
             <!-- 추천, 스크랩하기 -->
             <div class="upscrap-box">
