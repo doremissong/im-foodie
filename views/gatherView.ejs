@@ -114,11 +114,40 @@
         </div>
     </div>
 
+
+    <!-- 이 아래는 백엔드 테스트용 -->
+    <div id="example">
+        switch(who){
+            case ISLEADER:  
+            console.log('switch');
+                // console.log('switch동작');
+                obj.memberList = await searchParticipants(undefined, [ISLEADER, ISMEMBER], _gatherId, undefined);
+                // 해당 모임의 가입신청한 유저 목록 저장
+                obj.applicantList = await searchParticipants(undefined, ISAPPLYING, _gatherId, undefined);
+            case ISMEMBER:
+                console.log('switch');
+                // 모임원 목록
+                obj.memberList = await searchParticipants(undefined, [ISLEADER, ISMEMBER], _gatherId, undefined);
+                break;
+            case ISAPPLYING:
+                obj.statusInfo = who;
+                // ✅메시지: [] | 상태 [신청중] | 신청일자: []
+                //⚠️지원자는 버튼 클릭하면 이미 신청했어요!
+                // break;
+            case ISREFUSED:
+                obj.statusInfo = who;
+                // ✅메시지: [] | 상태 [거절] | [재신청] | 신청일자: []
+            default: //ISNOTMEMBER
+                break;
+        }
+    </div>
     <!-- user.mem_id==leader_id일 때만 -->
     <div class="board-post-section">
-        <a href="/gather/acceptMember?no=13&aplctId=brown" target="blankifr">[수락]</a>
+        <!-- <a href="/gather/acceptMember?no=14&aplctId=pink" target="blankifr">[수락]</a> -->
+        <a href="/gather/acceptMember?no=<data.gathering_id>&aplctId=<applicantList.mem_id>" target="blankifr">[수락]</a>
          <!-- 모임 no, aplctId -->
-        <a href="/gather/refuseMember?no=13&aplctId=brown" target="blankifr">[거절]</a>
+        <!-- <a href="/gather/refuseMember?no=14&aplctId=pink" target="blankifr">[거절]</a> -->
+        <a href="/gather/refuseMember?no=<data.gathering_id>&aplctId=<applicantList.mem_id>" target="blankifr">[거절]</a>
         <!--  모임 no, aplctId -->
     </div>
     <iframe name="blankifr" style="display:none;"></iframe> 

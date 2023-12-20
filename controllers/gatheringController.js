@@ -214,7 +214,7 @@ module.exports={
     },
 
      // /gather/view?id나 no=gathering_id 화면
-    showGatheringDetail: async(req, res)=>{
+    showView: async(req, res)=>{
         // 가져오기 정보.
         const obj = {};
         // 유효성
@@ -222,14 +222,13 @@ module.exports={
             obj.user = req.user;
         }
         const _memId = req.user? req.user.mem_id : '';   //undefined하면 who가 0이됨
-// 'fuck';
         if(!req.query.no){
             console.log('There is no number of gather');
             res.redirect('/gather')
         }
         const _gatherId = req.query.no;
 
-        // 모임 정보 가져가기
+        // 1) 모임 정보 가져가기
         try {
             //  (_cols, _state, _gatherId, _leaderId) 
             var data = await searchGathering(undefined, undefined, _gatherId, undefined);
@@ -244,6 +243,8 @@ module.exports={
             res.redirect('/gather');
             // res.send(err);
         }
+
+        // 2) 모임 설명 하단, 관계자 표시 영역
         try {
             // memId, _gatherId, state 가져와서, _gatherId가 맞는지 비교?// console.log('1st-----------');
             // var who = await searchParticipant(undefined, undefined, undefined, undefined, {
@@ -255,11 +256,11 @@ module.exports={
             //     raw: true
             // });
             // console.log('2nd-------------');
-            var who = await searchParticipant(['state', 'gathering_id', 'mem_id'], undefined, _gatherId, _memId);
-            if(!who || who.length ==0 || typeof who == 'undefined'){
+            var userStatus = await searchParticipant(['state', 'gathering_id', 'mem_id', 'createdAt', 'message'], undefined, _gatherId, _memId);
+            if(!userStatus || userStatus.length ==0 || typeof userStatus == 'undefined'){
                 who = ISNOTMEMBER;
             } else{
-                who = who.state;
+                who = userStatus.state;
             }
             obj.who = who;
             console.log('who:', who);
@@ -267,17 +268,22 @@ module.exports={
                 case ISLEADER:  
                 console.log('switch');
                     // console.log('switch동작');
+                    obj.memberList = await searchParticipants(undefined, [ISLEADER, ISMEMBER], _gatherId, undefined);
                     // 해당 모임의 가입신청한 유저 목록 저장
                     obj.applicantList = await searchParticipants(undefined, ISAPPLYING, _gatherId, undefined);
                 case ISMEMBER:
                     console.log('switch');
                     // 모임원 목록
-                    obj.gatherMemberList = await searchParticipants(undefined, [ISLEADER, ISMEMBER], _gatherId, undefined);
+                    obj.memberList = await searchParticipants(undefined, [ISLEADER, ISMEMBER], _gatherId, undefined);
                     break;
                 case ISAPPLYING:
+                    obj.statusInfo = userStatus;
+                    // 메시지: [] | 상태 [신청중] | 신청일자: []
                     //⚠️지원자는 버튼 클릭하면 이미 신청했어요!
                     // break;
                 case ISREFUSED:
+                    obj.statusInfo = userStatus;
+                    // 메시지: [] | 상태 [거절] | [재신청] | 신청일자: []
                 default: //ISNOTMEMBER
                     break;
             }
@@ -357,7 +363,7 @@ module.exports={
     },
 
     /*💚가입한 목록, 만든 목록
-        showJoinedPage: async (req, res) => {
+        showJoinedPage: async (req, res) => {   //페이지네이션 필요
             //participant ==>
             const memId = req.user.mem_id;
             // function searchParticipant(columns, id, state)
@@ -386,7 +392,7 @@ module.exports={
             }
         },
 
-        showIMadePage: async (req, res) => {
+        showIMadePage: async (req, res) => { // 페이지네이션 필요
             const memId = req.user.mem_id;
             // searchGathering (state, gatherId, leaderId)
             const list = await searchGathering(undefined, undefined, memId);
@@ -398,6 +404,10 @@ module.exports={
                 // res.json(list);
                 res.render("iMadeGather", { user: req.user, dataList: list });
             }
+
+        },
+
+        showIAppliedPage: async (req, res)=>{   // 페이지네이션 필요
 
         },
         */
@@ -418,39 +428,6 @@ module.exports={
             console.log(err, 'gatheringController-showMemberOfGathering');
         }
     },
-
-
-    // 모임 신청 버튼
-    // showGatherApplyPage: async (req, res)=>{
-        
-    //     const gatheringId = req.query.id;
-    //     const data = await db.participant.findOne({
-    //         where:{
-    //             gathering_id: gatheringId,
-    //         }
-    //     });
-    //     res.json(data);
-    //     // res.render("gatherShowApply", {user:req.user, data: data});
-    // },
-
-    //✏️관리자용아님/ 접속회원용 / 그룹 목록 보여주고 선택하는 거잖아. 쿼리 하나로 둘다 할 수 잇어.
-    // 1)state로 모집중인거 2) {mem_id: mem_id}만 where 조건 주면됨.
-    // 근데 그냥 gathering 보여주면 되는 거 아니야? 굳이 participatn에서 뽑아낼 이유가 잇어?
-    /* showGatheringList: async(req, res)=>{  //<---사용 안함
-        // query 있으면 현재 모집중인 그룹.
-        if (res.locals.paginationInfo && res.locals.dataList) {
-            const paginationInfo = res.locals.paginationInfo;
-            const dataList = res.locals.dataList;
-            // const gatheringIdList = await db.gathering.findAll(  
-            //     // {where:{}}
-            // );
-            // res.locals.gatheringId = gatheringIdList;
-            res.render("mainGather", { user: req.user, dataList: dataList, pagination:paginationInfo });
-        }
-        // res.json(gatheringIdList);
-       },
-       */
-    
 
     searchGather: (req, res)=>{
         // recipe 서치 참고. 아니면 공지사항 서치 참고
@@ -577,34 +554,7 @@ module.exports={
             res.send('delete error');
         }
         // ON DELETE CASCADE로 했음!!!
-        // //2) participant에서 해당 그룹 삭제
-        // try{
-        //     await sequelize.transaction(async t=>{
-        //         await db.participant.destory({
-        //             where: {
-        //                 gathering_id: req.body.gatheirng_id
-        //             }
-        //         })
-        //     })
-        // } catch(err){
-        //     console.log(`Error deleting participant related gathering: ${err}`);
-        // }
-
-        // // 3) 채팅 기록 삭제
-        // try{
-        //     await sequelize.transaction(async t=>{
-        //         await db.chat.destory({
-        //             where: {
-        //                 gathering_id: req.body.gatheirng_id
-        //             }
-        //         })
-        //     })
-        // } catch(err){
-        //     console.log(`Error deleting chat record related certain gathering: ${err}`);
-        // }
-
     },
-    // //멤버, 그룹에 신청하는건? 요청 어케 보내. 요청 또 담아야하는거얀???////////////ㄹㄹㄹ
 
     // 모임 
     applyForGather: async(req, res)=>{
@@ -667,35 +617,46 @@ module.exports={
             console.log('This user is not logged in');
             res.redirect('/gather');
         }
-        const _memId = req.user.mem_id;
+        const _memId = req.user.mem_id; //필요없군
         
         if(!req.query.no || !req.query.aplctId){
             console.log('There is no gathering number or applicant id');
             req.redirect('/gather');
         }
+
+        // 변수 저장
         const _gatherId = req.query.no;
         const _applicantId = req.query.aplctId;
-        console.log('전달값 확인:', _memId, _gatherId, _applicantId);
+        // console.log('전달값 확인:', _memId, _gatherId, _applicantId);/
         // 서치하자. query로 하면 수정할 수 있으니까.
         // ❌ const {_leaderId, _maxCount, _curCount} = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
         const gatherInfo = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
-        const _leaderId = gatherInfo.leader_id;
-        const _maxCount = gatherInfo.maximumHeadCount;
-        const _curCount = gatherInfo.currentHeadCount;
-        console.log('쿼리값', _leaderId, _maxCount, _curCount);
-
-        if(req.user.mem_id != _leaderId){
-            res.write('<script>alert("방장 권한이 없습니다.");</script>');
-        }
-
-        if(_maxCount>_curCount){
-            // ⚠️⚠️participant update
-            // gathering update
-            // gathering에 trigger 만들어야겠다. update, create, delete하면 다 적용되게 
-            res.write('<script>alert("수락합니다");</script>');// 왜 화면 바뀜?
-
+        if(!gatherInfo || gatherInfo.length==0){
+            res.write('<script>alert("잘못된 접근입니다.");</script>');
         } else{
-            res.write('<script>alert("현재 최대인원으로 수락할 수 없습니다. 최대인원을 변경해보세요.");</script>');
+            const _leaderId = gatherInfo.leader_id;
+            const _maxCount = gatherInfo.maximumHeadCount;
+            const _curCount = gatherInfo.currentHeadCount;
+            console.log('쿼리값', _leaderId, _maxCount, _curCount);
+    
+            if(req.user.mem_id != _leaderId){
+                res.write('<script>alert("방장 권한이 없습니다.");</script>');
+            } else { // 따로 if문 하면 동시에 실행돼서 알림창 두번 뜰까봐
+                if(_maxCount>_curCount){    // 수락 가능
+                    const result = await db.participant.update(    //upsert일리 없지. 이미 있는 isapplying애들 받는거니가
+                        { state: ISMEMBER },
+                        { where: {
+                            gathering_id: _gatherId,
+                            mem_id: _applicantId,
+                        }} 
+                    )
+                    console.log('update result: ', result);
+                    res.write('<script>alert("수락했니다");</script>');// 왜 화면 바뀜?
+        
+                } else{ // 수락 불가능
+                    res.write('<script>alert("현재 최대인원으로 수락할 수 없습니다. 최대인원을 변경해보세요.");</script>');
+                }
+            }
         }
 
         // // 하고 끝나야하는데 다음 줄까지 간닪마리야
@@ -719,23 +680,34 @@ module.exports={
         }
         const _gatherId = req.query.no;
         const _applicantId = req.query.aplctId;
-        console.log('전달값 확인:', _memId, _gatherId, _applicantId);
-        // 서치하자. query로 하면 수정할 수 있으니까.
-        // ❌ const {_leaderId, _maxCount, _curCount} = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
+        // console.log('전달값 확인:', _memId, _gatherId, _applicantId);
         const gatherInfo = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
-        const _leaderId = gatherInfo.leader_id;
-        const _maxCount = gatherInfo.maximumHeadCount;
-        const _curCount = gatherInfo.currentHeadCount;
-        console.log('쿼리값', _leaderId, _maxCount, _curCount);
+        if(!gatherInfo || gatherInfo.length==0){
+            res.write('<script>alert("잘못된 접근입니다.");</script>');
+        } else{
+            const _leaderId = gatherInfo.leader_id;
+            const _maxCount = gatherInfo.maximumHeadCount;
+            const _curCount = gatherInfo.currentHeadCount;
+            console.log('쿼리값', _leaderId, _maxCount, _curCount);
+    
+            if(req.user.mem_id != _leaderId){
+                res.write('<script>alert("방장 권한이 없습니다.");</script>');
+            } else{
+                // participant 테이블에 _ISREFUSED로 변경
+                const result = await db.participant.update(    //upsert일리 없지. 이미 있는 isapplying애들 받는거니가
+                    { state: ISREFUSED },
+                    {
+                        where: {
+                            gathering_id: _gatherId,
+                            mem_id: _applicantId,
+                        }
+                    }
+                )
+                console.log('update result: ', result);
+                res.write('<script>alert("거절했습니다.");</script>');
+            }
 
-        if(req.user.mem_id != _leaderId){
-            res.write('<script>alert("방장 권한이 없습니다.");</script>');
         }
-        // participant 테이블에 _ISREFUSED로 변경
-        res.write('<script>alert("거절했습니다.");</script>');
-        
-
-
     },
 
     // // ❤️❤️❤️❤️❤️update나 delete 시, 트리거 만들기!!!

@@ -37,6 +37,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'participant',
+    hasTrigger: true,
     timestamps: true,
     indexes: [
       {

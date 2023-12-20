@@ -44,7 +44,7 @@ router.get("/acceptMember", isLoggedIn, gatheringController.acceptMember);
 router.get("/refuseMember", isLoggedIn, gatheringController.refuseMember);
 
 // 7) 밥모임 상세 페이지
-router.get("/view", storeUrl, gatheringController.showGatheringDetail);
+router.get("/view", storeUrl, gatheringController.showView);
 
 // 8) 방장의 멤버 목록  ⚠️멤버 목록을 멤버도 볼 수 있어야해. 그 컨트롤러 함수를 만들어서 여기저기 이용하는게 나을 듯
 // router.get("/memberlist", (req,res)=>{res.send(req.query.gatheringId)});

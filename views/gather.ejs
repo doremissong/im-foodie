@@ -118,7 +118,7 @@
 					</div>
 					
 					<!-- 신청 폼 -->
-					<form id="form-apply" id="joinForm" method="post" target="applyResult">
+					<form id="form-apply" method="post" onsubmit="return joinClick()" target="applyResult">
 						<!-- onsubmit="return confirm('신청하시겠습니까?')" -->
 						<!-- 인사말 박스 -->
 						<div class="gather-join-text">
@@ -160,7 +160,7 @@
 						<div class="join-btn-box">
 
 							<!-- 신청 버튼 -->
-							<button type="submit" onclick="joinClick()">신청</button>
+							<button type="submit">신청</button>
 
 							<!-- 취소 버튼 -->
 							<button type="button" id="closeBtnJoin">취소</button>
