@@ -102,11 +102,14 @@ app.get('/gather/mine', (req, res) => {
   res.render('gatherMine');
 })
 
+app.get('/gather/view', (req, res) => {
+  res.render('gatherView(n)');
+})
+
 // gather chat
 app.get('/gather/chat/list', (req, res) => {
   res.render('chatList');
 })
-
 
 app.get('/gather/chat/room', (req, res) => {
   res.render('chat(n)');

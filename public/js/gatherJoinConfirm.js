@@ -5,12 +5,12 @@ function joinClick() {
             return false;
         }
         else{
-            var joinForm = document.getElementById("joinForm");
+            var joinForm = document.getElementById("form-apply");
             joinForm.submit(); 
             modalJoin.style.display = 'none';
         }
     }
     else {
-        return;
+        return false;
     }
 }
