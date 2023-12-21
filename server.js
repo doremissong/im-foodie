@@ -99,7 +99,7 @@ app.get('/gather/create', (req, res) => {
 })
 
 app.get('/gather/mine', (req, res) => {
-  res.render('gatherMine');
+  res.render('gatherMine(n)');
 })
 
 app.get('/gather/view', (req, res) => {
