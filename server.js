@@ -102,6 +102,19 @@ app.get('/gather/mine', (req, res) => {
   res.render('gatherMine(n)');
 })
 
+app.get('/gather/imade', (req, res) => {
+  res.render('gatherImade');
+})
+
+app.get('/gather/joined', (req, res) => {
+  res.render('gatherJoined');
+})
+
+app.get('/gather/applied', (req, res) => {
+  res.render('gatherApplied');
+})
+
+
 app.get('/gather/view', (req, res) => {
   res.render('gatherView(n)');
 })

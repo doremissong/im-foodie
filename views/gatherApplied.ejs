@@ -1,0 +1,60 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/gatherApplied.css">
+
+<!--SECTION-->
+<section>
+
+	<!-- 전체 틀 -->
+    <div class="gather-section">
+
+		<!-- 밥모임 카테고리 -->
+        <div class="gather-list">
+            <div class="gather-main">
+                <a href="/gather">밥모임</a>
+            </div>
+			<div class="gather-sub">
+				<ul class="gather-sub-list">
+					<li class="gather-sub-name">
+						<a href="/gather/recruiting?countperpage=9&gsort=0">모집중</a>
+					</li>
+					<li class="gather-sub-name">
+						<a href="/gather/completed?countperpage=9&gsort=1">모집완료</a>
+					</li>
+					<li class="gather-sub-name">
+						<span class="font-bold" style="font-weight: 800;">
+							<% if(typeof user == 'undefined'){ %>
+								<a href="javascript:void(0)" onclick="alert('로그인 후에 이용하실 수 있습니다');">나의 밥모임</a>
+							<% } else { %>
+								<a href="/gather/mine">나의 밥모임</a>
+							<% } %>
+						</span>
+					</li>
+				</ul>
+			</div>
+        </div>
+
+		<!-- 신청한 모집 부분 -->
+		<div class="applied-box">
+
+			<!-- 신청한 모임과 더보기 -->
+			<div class="gathering-title">
+				<span class="text"> 내가 신청한 모임 </span>
+				<span class="more">
+					<a href="/gather/applied?countperpage=9&gsort=1">[더보기]</a>
+				</span>
+			</div>
+
+			<!-- 내가 신청한 모임이 없을 경우만 출력 -->
+
+				<div class="no-gather">
+					아직 신청한 모임이 없어요!
+				</div>
+
+			<!-- 내가 신청한 모임이 있을 경우만 -->
+
+
+		</div>
+		
+    </div>
+	
+</section>
