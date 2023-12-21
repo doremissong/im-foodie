@@ -83,45 +83,86 @@
 .slider-wrap-Imade div {
 	width: 800px;
 	height: 200px;
-
-	/* background-color: aliceblue; */
-
 }
 
 .slider-wrap-Imade div .slide-item {
-	width: 205px;
+	width: 338px;
 	height: 198px;
 
 	border: 1px solid rgb(230, 152, 152);
 	background-color: aliceblue;
-	background-image: url("/images/candy-blue.png");
-}
-
-.slide-item span {
-	display: block;
-	text-align: center;
-	/* border: 1px solid black; */
 }
 
 .gather-name {
-	height: 40px;
-	font-size: 25px;
+	display: flex;
+	height: 50px;
+	font-size: 18px;
 	font-weight: bold;
-	margin: 35px 0 12px 0;
+	margin: 15px 0 10px 0;
+	justify-content: center;
+	align-items: center;
+
+}
+
+/* 지역과 식당 */
+.gather-regionNspot {
+	display: flex;
+	justify-content: center;
+	width: 338px;
 }
 
 .gather-region {
+	display: block;
+	/* width: 165px; */
 	height: 30px;
-	font-size: 15px;
+	font-size: 16px;
 	font-weight: bold;
-	margin: 10px 0 10px 0;
+	margin: 0px 8px 10px 0;
+	/* text-align: center; */
+
+}
+
+.gather-spot {
+	display: block;
+	/* width: 170px; */
+	height: 30px;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0px 0 10px 0;
+	/* text-align: center; */
+
+}
+
+.gather-spot span {
+	font-weight: normal;
+}
+
+.gather-deadline {
+	display: block;
+	height: 30px;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0px 0 10px 0;
+	text-align: center;
+
+}
+
+.gather-deadline span {
+	font-weight: normal;
 }
 
 .gather-number {
-	height: 20px;
-	font-size: 16px;
+	display: block;
+	height: 30px;
+	font-size: 14px;
 	font-weight: bold;
 	margin: 0;
+	text-align: center;
+
+}
+
+.gather-number span {
+	font-weight: normal;
 }
 
 
@@ -158,7 +199,7 @@
 	cursor: pointer;
 }
 
-.slider-wrap-Imade div .slide-item:hover {
+/* .slider-wrap-Imade div .slide-item:hover {
 	width: 205px;
 	height: 198px;
 
@@ -169,7 +210,7 @@
 
 .slider-wrap-Imade div .slide-item:hover button {
 	display: inline-block;
-}
+} */
 
 
 /* arrow button */
@@ -241,27 +282,13 @@
 }
 
 .slider-wrap-joined div .slide-item {
-	width: 205px;
+	width: 338px;
 	height: 198px;
 
 	border: 1px solid rgb(230, 152, 152);
 	background-color: aliceblue;
-	background-image: url("/images/candy-black.png");
 }
 
-
-.slider-wrap-joined div .slide-item:hover {
-	width: 205px;
-	height: 198px;
-
-	border: 1px solid rgb(230, 152, 152);
-	background-color: rgb(122, 122, 122);
-	background-image: url("/images/candy-black.png");
-}
-
-.slider-wrap-joined div .slide-item:hover button {
-	display: inline-block;
-}
 
 .prevArrow-joined {
 	width: 19px;
@@ -315,26 +342,11 @@
 }
 
 .slider-wrap-applied div .slide-item {
-	width: 205px;
+	width: 338px;
 	height: 198px;
 
 	border: 1px solid rgb(230, 152, 152);
 	background-color: aliceblue;
-	background-image: url("/images/candy-black.png");
-}
-
-
-.slider-wrap-applied div .slide-item:hover {
-	width: 205px;
-	height: 198px;
-
-	border: 1px solid rgb(230, 152, 152);
-	background-color: rgb(122, 122, 122);
-	background-image: url("/images/candy-black.png");
-}
-
-.slider-wrap-applied div .slide-item:hover button {
-	display: inline-block;
 }
 
 .prevArrow-applied {
