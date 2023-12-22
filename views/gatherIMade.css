@@ -1,0 +1,119 @@
+/* SECTION */
+.gather-section {
+    width: 950px;
+    margin: auto;
+    position: relative;
+    /* background-color: rgb(224, 246, 255); */
+}
+
+.gather-list {
+	width: 930px;
+	padding: 40px 0px 15px 10px;
+	/* background-color: azure; */
+}
+
+.gather-main {
+  	font-size: 20pt;
+	padding: 0px 0px 10px 20px;
+  	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-color: #e3d7cf;
+	/* background-color: skyblue; */
+}
+
+.gather-sub {
+	padding: 20px 0px 5px 20px;
+}
+
+.gather-sub-list {
+    margin: 0 auto;
+    position: relative;
+	/* background-color: yellow; */
+}
+
+.gather-sub-name {
+    display: inline-block;
+    font-size: 17px;
+	margin-right: 15px;
+	/* background-color: yellowgreen; */
+}
+
+
+.gathering-title {
+    position: relative;
+    display: flex;
+    margin: 10px;
+
+    border-bottom: 1px solid #e3d7cf;
+}
+
+.gathering-title .text {
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px;
+
+}
+
+.gathering-title .more {
+    position: absolute;
+    top: 35%;
+    right: 0;
+    margin-right: 10px;
+    font-size: 17px;
+}
+
+/* 모임 없을 경우 */
+.no-gather {
+	font-size: 20px;
+	margin: 30px 0 50px 20px;
+}
+
+
+/* 내가 모집한 모임이 있을 경우 */
+.gather-imade-box {
+    margin: 30px 20px 50px 20px;
+    border-top: 1px solid rgb(223, 177, 177);
+}
+
+/* 리스트 인덱스 */
+.imade-list-index {
+    display: flex;
+    border-bottom: 1px solid rgb(223, 177, 177);
+}
+
+/* 리스트 인덱스 모임 이름 */
+.imade-index-name {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    width: 750px;
+    padding: 15px;
+}
+
+/* 리스트 인덱스 버튼 */
+.imade-index-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100px;
+    padding: 15px;
+}
+
+/* ▼ 버튼 */
+.imade-block-btn {
+    cursor: pointer;
+}
+
+/* ▼ 클릭 시 보여지는 화면 */
+.imade-contents-none {
+    display: none;
+    border: 1px solid black;
+}
+
+.imade-none-btn {
+    cursor: pointer;
+    display: none;
+}
