@@ -25,7 +25,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     unread_count: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 0
     },
     image_url: {
       type: DataTypes.BLOB,

@@ -11,6 +11,10 @@
             </div>
         </div>
     </div>
+    채팅에 클래스 두가지
+    "message"
+    "message current-user" - 클래스가 이거면 오른쪽 정렬
+
     <div class="container">
         <% if(user.mem_id) { %>
             <h1 id="chat-head">CHAT</h1>
@@ -24,13 +28,13 @@
             </div>
             <div id="chat"></div>
             <form id="chatForm" method = "POST">
-                hihi
+                <%= user.mem_id %>
                 <input id="chat-input" type="text" required>
                 <input id="chat-mem-id" value="<%= user.mem_id %>" hidden>
                 <input id="chat-gathering-id" value="<%= roomId %>" hidden>
                 <input type="submit" class="button" value="Send">
             </form>
-            <script type="text/javascript" src="/js/testChat.js"></script>
+            <script type="text/javascript" src="/js/chatClient.js"></script>
         <% } %>
     </div>
 </section>

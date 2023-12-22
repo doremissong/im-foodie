@@ -2,6 +2,7 @@
 "use strict"
 /// <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
 const {db, sequelize} = require("../models/index");
+const { Op, Sequelize } = require('sequelize');
 const cookie = require('cookie');
 // const enterRow = { // DB 테이블로 할거야.
 //                 mem_id: 'imfoodie', //imfoodie가 보내면 보내는 사람 표시 x.
@@ -37,47 +38,74 @@ module.exports = io => {
         // const url = socket.handshake.url; // /socket.io/?EIO=4&transport=polling&t=OdYhZ9b
 
         socket.onAny((event)=>{
-            console.log(`소켓 이벤트 : ${event}`);
+            console.log(`소켓 이벤트 : ${event}`, 'user: ', memId);
+            console.log(connectedClients);
+            // console.log(memId);
         })
 
-        socket.on('setSessionId', (sessionId)=>{
+        socket.on('setSessionId', (sessionId, socket)=>{
+            console.log('소켓아이디', socket.id);
             // 연결된 클라이언트 데이터를 세션  id와 연결
             connectedClients[sessionId.memId] = {
                 memId_s: sessionId.memId,
-                roomId_s: sessionId.roomId
+                roomId_s: sessionId.room_id,
+                socket_id: socket.id
             }
-            roomId = sessionId.roomId;
+            roomId = sessionId.room_id;
             console.log(`세션 ID ${sessionId.memId}로 연결된 클라이언트가 설정되었습니다.`);
         })
         // participant(접속한 유저 확인 가능)에 유저 추가하기. 첫 입장이라면 안내 문구 표시. Or, chat 테이블에서 메시지 가져와 출력
+
+        //.⚠️⚠️ 트라이문
         socket.on('join room', async (roomId, done) => {    //r거기서 room_id
+            console.log(roomId,'이게 아님?');
             socket['roomId']=roomId;
-            roomId = roomId; // 필요없나.
+            // roomId = roomId; // 필요없나.
             socket.join(roomId);
-            console.log(socket.rooms);
-            console.log(`조인룸하기 ${roomId} 룸 넘버: ${socket.roomId}`);
+            console.log(socket.rooms, '소켓룸s');
+            console.log(`조인룸하기 ${roomId} 소켓 아이디: ${socket.id}`);
             const count = await getCurrentHeadCount(io, roomId); // 채팅방 인원수 표시.
             const isParticipant = await db.participant.findOne({
-                // attributes: ['isConnected'],
+                // attributes: ['isConnected', 'createdAt'],
                 where: {mem_id: memId, gathering_id: roomId}
             })
             done(roomId);
-            io.to(roomId).emit('welcome', memId);
             // 주석 삭제
-            // if(!isParticipant.isConnected){
-            //     // false면, welcome 이벤트 emit하고, isConnected:1로 해.
-            //     io.to(socket.roomId).emit('welcome', memId);
-            // } else{
-            //     //true면, load message 호출. isConnected:2로 설정.
-            //     const data = await db.chat.findAll({
-            //         //❓ 입장 이후 글만 읽어올 수 있어야함. 어떻게 하지? 안내문구 등록한 거 찾아서 그 이후 것만? createAt이 그 이후인 것만?
-            //         // attributes: [],
-            //         where: {
-            //             gathering_id: roomId
-            //         }
-            //     })
-            //     io.to(socket.roomId).emit('load message', data);
-            // }
+            if(isParticipant.isConnected == NOT_ENTERED){
+                // 처음 입장, welcome 이벤트 emit하고, isConnected:1로 해.
+                io.to(socket.roomId).emit('welcome', memId);
+                // io.to(roomId).emit('welcome', memId);
+                await isParticipant.update({
+                    isConnected: CONNECTED
+                })
+                // imfoodie 계정 만들기
+                await db.chat.create({
+                    gathering_id: roomId,
+                    mem_id: memId,
+                    content: memId+'님이 입장하셨습니다 :)',
+                },
+                // {transaction:t}
+                )
+                await db.chat.create(messageAttributes, { transaction: t });
+
+            } else if(isParticipant.isConnected == CONNECTED) {
+                //true면, load message 호출. isConnected:2로 설정.?? 왜 2로 설정?
+                const data = await db.chat.findAll({
+                    //❓ 입장 이후 글만 읽어올 수 있어야함. 어떻게 하지? 안내문구 등록한 거 찾아서 그 이후 것만? createAt이 그 이후인 것만?
+                    // attributes: [],
+                    where: {
+                        gathering_id: roomId,
+                        createdAt: {[Op.gt]: isParticipant.createdAt},
+                    },
+                    order: [['createdAt', 'DESC']],
+                    limit:  10,
+                    raw: true,
+                    // offset: ,
+                })
+                sendMessageToUser(memId, data, socket);
+                console.log(data, 'and ', roomId, socket.roomId);
+                // io.to(sessionId).emit('load messages', data);
+            }
             // await updateParticipantState(memId, roomId, CONNECTED);
         })
 
@@ -86,19 +114,18 @@ module.exports = io => {
             //.💚`content가 null이나 내용 없으면 이벤트emit도 하지말고 디비 저장도 x
             let messageAttributes = {
                 // data에는 시간, 보내는 사람, 그룹 아이디, 있어야함.
-                roomId: data.roomId,
-                memId: data.mem_id,
+                gathering_id: data.roomId,
+                mem_id: data.mem_id,
                 content: data.content,
             };
 
-            // try {
-            //     await sequelize.transaction(t => {
-            //         db.chat.create(messageAttributes);
-            //     })
-            // } catch (err) {
-            //     console.log(`error: ${err.message}`);
-            // }   //❓캐치하면 아예 못 탈출하ㅏㄴ? 가물치가물치네
-
+            try {
+                await sequelize.transaction(async t => {
+                    await db.chat.create(messageAttributes, { transaction: t });
+                })
+            } catch (err) {
+                console.log(`error: ${err.message}`);
+            }
             io.to(socket.roomId).emit('show message', messageAttributes);
             console.log('before check message on: ',messageAttributes, " ", data.roomId);
         });
@@ -153,6 +180,20 @@ module.exports = io => {
         }
     }
 
+    const findSocketByUserId = (socket) => {
+        console.log('hi1');
+        return socket.id;//connectedClients[userId]//.socket_id;
+    }
+
+    const sendMessageToUser = (userId, data, socket) => {
+        console.log('hi2');
+        const targetSocketId = findSocketByUserId(socket);
+        if (targetSocketId){
+            io.to(targetSocketId).emit('load messages', data);
+        } else{
+            console.log(`사용자(${userId})의 소켓을 찾을 수 없습니다.`);
+        }
+    }
     // const createChat = async (data) => {
     //     try{
     //         await sequelize.transaction(async t=>{

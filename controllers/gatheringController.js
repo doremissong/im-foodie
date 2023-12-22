@@ -6,6 +6,9 @@ const participant = require('../models/participant');
 const RECRUITING = 0, COMPLETED = 1;
 const ISCREATING = 0, ISMODIFYING = 1;
 const ISLEADER = 0, ISMEMBER = 1, ISAPPLYING = 2, ISREFUSED = 3, ISNOTMEMBER =4;
+const NOT_ENTERED = 0,
+    CONNECTED = 1,
+    DISCONNECTED = 2;
 // ISACCEPTED
 
 getGatherParams = (info, isModifying, _memId)=>{
@@ -433,6 +436,7 @@ module.exports={
         // recipe 서치 참고. 아니면 공지사항 서치 참고
     },
 
+    //⚠️ 동작 확인 231223
     createGather: async(req,res)=>{
         //gather.ejs 확인       1) gathering 생성 2) participant 추가
         if(!req.body){
@@ -456,9 +460,7 @@ module.exports={
                         raw: true,
                     }
                 );
-            })
 
-            await sequelize.transaction(async t=>{
                 await db.participant.create({
                     gathering_id: result.gathering_id,
                     mem_id: _memId,
@@ -467,7 +469,17 @@ module.exports={
                     isConnected: 0,
                 },
                 {transaction: t});
+
+                //⚠️ 동작 확인
+                await db.chat.create({
+                    gathering_id: result.gathering_id,
+                    mem_id: _memId,
+                    content: `${_memId}(방장)님이 입장하셨습니다.`,
+                    isConnected: CONNECTED,
+                },
+                {transaction: t});
             })
+
             res.redirect(`/gather/view?no=${result.dataValues.gathering_id}`);
             // res.redirect('/gather');
             // res.send(result);

@@ -7,7 +7,7 @@ $(document).ready(() => {
     // roomId 값 저장받아
     const room_id=$("#chat-gathering-id").val();
     console.log('testChat:야야야야', room_id);
-    roomId=100;
+    // roomId=100;
     socket.emit('join room', room_id, (roomId)=>{
         console.log(`roomId from server: ${roomId}`);
     });
@@ -27,17 +27,17 @@ $(document).ready(() => {
     });
 
     const sessionID = { 
+        //이름 통일시켜
         memId: $("#chat-mem-id").val(),
         room_id: $("#chat-gathering-id").val()
     }
-    socket.emit('setSessionId', sessionID);
+    socket.emit('setSessionId', sessionID, socket);
+    console.log('세션아이디 객체 확인 왜,,', sessionID);
 
     //자체를 지워야하지 않을까?
     $('.roomId').on('click', (e)=>{ //addEventListenr로
         console.log(e.target.value);
-        socket['roomId']=e.target.value;    //지워
         window.name=e.target.value;
-        roomId = e.target.value;            //지워
         socket.emit('join room', room_id, (roomId)=>{
             console.log(`roomId from server: ${roomId}`);
         });
@@ -47,7 +47,7 @@ $(document).ready(() => {
     // welcome은 채팅방 첫 입장 시에만.
     socket.on('welcome', (memId)=>{
         console.log(memId, " comes in room no.", room_id," first time. - welcome client");
-        displayMessage({ memId:"imfoodie", content: memId+" comes in :)" });
+        displayMessage({ mem_id:"imfoodie", content: memId+"님이 입장하셨습니다 :)" });
     });
 
     $("#chatForm").submit((e) => {             // 폼 전달할 때, 이벤트 뿌리기
@@ -57,7 +57,7 @@ $(document).ready(() => {
         let mem_id = $("#chat-mem-id").val();       //건네짐
         let room_id=$("#chat-gathering-id").val();
         console.log(`testChat파일 - 서버에서 건네받은.'roomid': ${room_id}`);
-        console.log(`testChat파일 - socket.'roomid': ${socket[roomId]}`);
+        // console.log(`testChat파일 - socket.'roomid': ${socket[roomId]}`);
         // console.log(`text: ${text}\nmem_id: ${mem_id}`);s'
         // let gathering_id = $("#chat-gathering-id").val();   // res.render 할 때 하는 게 나을까. 아님 url에서 긁을까?
         socket.emit('message', {
@@ -80,8 +80,10 @@ $(document).ready(() => {
         }
     });
 
+
+    //언제 호출스?
     socket.on('load messages', (data)=>{
-        data.forEach(message=>{
+        data.reverse().forEach(message=>{
             displayMessage(message);
         });
     });
@@ -99,15 +101,15 @@ $(document).ready(() => {
     // 메시지 출력
     let displayMessage = (message) => {
         // message.mem_id였는데 memId로 수정함. 이후에 오류 있나 확인
-        if (message.memId === 'imfoodie') {
+        if (message.mem_id === 'imfoodie') {
             $("#chat").append(
                 $("<li>").html(`${message.content}`));
         }
         else {
             $("#chat").append(
                 $("<li>").html(`
-            <strong class="message ${getCurrentUserClass(message.memId)}">
-            ${message.memId}
+            <strong class="message ${getCurrentUserClass(message.mem_id)}">
+            ${message.mem_id}
             </strong>: ${message.content}
             `));    // 채팅박스에 서버로부터 받은 메시지 출력
         }
@@ -122,6 +124,7 @@ $(document).ready(() => {
         $("#count").empty();
         $("#count").append(count);
     }
+
 
 });
 
