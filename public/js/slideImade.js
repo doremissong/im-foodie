@@ -6,7 +6,7 @@ $( document ).ready( function() {
         appendDots: $('selector'),  //네비게이션 버튼 변경
         dotsClass: 'custom-dots',   //네비게이션 버튼 클래스 변경
         infinite: false,             //무한반복(true or false) 기본값 true
-        slidesToShow: 3,            //한번에 보여줄 슬라이드 아이템 개수
+        slidesToShow: 2,            //한번에 보여줄 슬라이드 아이템 개수
         slidesToScroll: 1,          //한번에 넘길 슬라이드 아이템 개수
         slidesPerRow: 1,            //보여질 행의 수 (한 줄, 두 줄 ... )
         // autoplay: true,             //슬라이드 자동 시작(true or false) ▶기본값 false

@@ -42,6 +42,22 @@ router.post("/apply", isLoggedIn, gatheringController.applyForGather);
 
 router.get("/acceptMember", isLoggedIn, gatheringController.acceptMember);
 router.get("/refuseMember", isLoggedIn, gatheringController.refuseMember);
+router.get("/banMember", isLoggedIn, gatheringController.banMember);
+
+router.get("/imade", (req,res)=>{
+    const obj = { dataList: ""};
+    res.render("gatherImade",obj);
+});
+
+router.get("/joined", (req, res)=>{
+    const obj = { dataList: ""};
+    res.render("gatherJoined", obj);
+});
+
+router.get("/applied", (req, res)=>{
+    const obj = { dataList: ""};
+    res.render("gatherApplied", obj);
+})
 
 // 7) 밥모임 상세 페이지
 router.get("/view", storeUrl, gatheringController.showView);

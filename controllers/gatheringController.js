@@ -256,7 +256,7 @@ module.exports={
             //     raw: true
             // });
             // console.log('2nd-------------');
-            var userStatus = await searchParticipant(['state', 'gathering_id', 'mem_id', 'createdAt', 'message'], undefined, _gatherId, _memId);
+            var userStatus = await searchParticipant(['state', 'gathering_id', 'mem_id', 'updatedAt', 'message'], undefined, _gatherId, _memId);
             if(!userStatus || userStatus.length ==0 || typeof userStatus == 'undefined'){
                 who = ISNOTMEMBER;
             } else{
@@ -470,7 +470,7 @@ module.exports={
             })
             res.redirect(`/gather/view?no=${result.dataValues.gathering_id}`);
             // res.redirect('/gather');
-            res.send(result);
+            // res.send(result);
         } catch(err){
             console.log(`Error creating gathering, participant:`, err);
             // res.redirect("/gather/create");
@@ -570,9 +570,10 @@ module.exports={
             console.log('[Uncertain Information] There is no gathering number');
         }
         const _gatherId = req.query.no;
-        const _message = req.query.message;
+        const _message = req.body.message;
         var isApplying = false;
 
+        console.log(_message, '메시이지ㅣ');
         // 해당 모임이 모집중인지 확인해야함. 아냐 화면이 이동이 없으니까 url 손대지는 못할거야
 
         // 신청 가능한지 확인(아예 없거나, ISREJECTED) / (ISLEADER, ISMEMBER는 불가능)
@@ -582,13 +583,15 @@ module.exports={
             if(!userState || userState.length==0){
                 isApplying = true
             } else{
-                if (userState.state == ISREFUSED) {
+                if (userState.state == ISREFUSED) { // 3
                     isApplying = true;            
-                } else if (userState.state == ISLEADER) {
+                } else if (userState.state == ISNOTMEMBER) {    // 4
+                    isApplying = true; 
+                } else if (userState.state == ISLEADER) {   // 0
                     res.write("<script>alert('이 밥모임의 방장입니다.');</script>");
-                } else if (userState.state == ISMEMBER) {
+                } else if (userState.state == ISMEMBER) {   // 1
                     res.write("<script>alert('이미 가입한 밥모임입니다.');</script>");
-                } else { //userState.state==ISAPPLYING){
+                } else { //userState.state==ISAPPLYING){    // 2
                     res.write("<script>alert('이미 신청한 밥모임입니다.');</script>");
                 }
             }
@@ -606,6 +609,7 @@ module.exports={
             // console.log('참가자 테이블이', (created)?'추가되었습니다.':'수정되었습니다.');
             res.write("<script>alert('신청하였습니다.');</script>");
         } 
+
         // console.log(_gatherId,'에 신청한다');
         // res.write("<script>alert('failed');</script>");
     },
@@ -630,40 +634,44 @@ module.exports={
         // console.log('전달값 확인:', _memId, _gatherId, _applicantId);/
         // 서치하자. query로 하면 수정할 수 있으니까.
         // ❌ const {_leaderId, _maxCount, _curCount} = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
-        const gatherInfo = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
-        if(!gatherInfo || gatherInfo.length==0){
-            res.write('<script>alert("잘못된 접근입니다.");</script>');
-        } else{
-            const _leaderId = gatherInfo.leader_id;
-            const _maxCount = gatherInfo.maximumHeadCount;
-            const _curCount = gatherInfo.currentHeadCount;
-            console.log('쿼리값', _leaderId, _maxCount, _curCount);
-    
-            if(req.user.mem_id != _leaderId){
-                res.write('<script>alert("방장 권한이 없습니다.");</script>');
-            } else { // 따로 if문 하면 동시에 실행돼서 알림창 두번 뜰까봐
-                if(_maxCount>_curCount){    // 수락 가능
-                    const result = await db.participant.update(    //upsert일리 없지. 이미 있는 isapplying애들 받는거니가
-                        { state: ISMEMBER },
-                        { where: {
-                            gathering_id: _gatherId,
-                            mem_id: _applicantId,
-                        }} 
-                    )
-                    console.log('update result: ', result);
-                    res.write('<script>alert("수락했니다");</script>');// 왜 화면 바뀜?
-        
-                } else{ // 수락 불가능
-                    res.write('<script>alert("현재 최대인원으로 수락할 수 없습니다. 최대인원을 변경해보세요.");</script>');
+        try {
+            const gatherInfo = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
+            if (!gatherInfo || gatherInfo.length == 0) {
+                res.write('<script>alert("잘못된 접근입니다.");</script>');
+            } else {
+                const _leaderId = gatherInfo.leader_id;
+                const _maxCount = gatherInfo.maximumHeadCount;
+                const _curCount = gatherInfo.currentHeadCount;
+                console.log('쿼리값', _leaderId, _maxCount, _curCount);
+
+                if (req.user.mem_id != _leaderId) {
+                    res.write('<script>alert("방장 권한이 없습니다.");</script>');
+                } else { // 따로 if문 하면 동시에 실행돼서 알림창 두번 뜰까봐
+                    if (_maxCount > _curCount) {    // 수락 가능
+                        const result = await db.participant.update(    //upsert일리 없지. 이미 있는 isapplying애들 받는거니가
+                            { state: ISMEMBER },
+                            {
+                                where: {
+                                    gathering_id: _gatherId,
+                                    mem_id: _applicantId,
+                                }
+                            }
+                        )
+                        console.log('update result: ', result);
+                        res.write(`<script>alert('${_applicantId}님이 멤버가 되었습니다.');</script>`);// 왜 화면 바뀜?
+
+                    } else { // 수락 불가능
+                        res.write('<script>alert("현재 최대인원으로 수락할 수 없습니다. 최대인원을 변경해보세요.");</script>');
+                    }
                 }
             }
+        } catch (err) {
+            console.log(`Error adding gathering member: ${err}`);
+            res.write('<script>alert("다시 시도해주세요");</script>');
         }
-
-        // // 하고 끝나야하는데 다음 줄까지 간닪마리야
-        // // 그러면 esle문ㅇ로해?
+        // 하고 끝나야하는데 다음 줄까지 간닪마리야
+        // 그러면 esle문ㅇ로해?
         // if(req.query.)
-
-
     },
     refuseMember: async(req, res)=>{
         // 유효성
@@ -680,68 +688,88 @@ module.exports={
         }
         const _gatherId = req.query.no;
         const _applicantId = req.query.aplctId;
-        // console.log('전달값 확인:', _memId, _gatherId, _applicantId);
-        const gatherInfo = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
-        if(!gatherInfo || gatherInfo.length==0){
-            res.write('<script>alert("잘못된 접근입니다.");</script>');
-        } else{
-            const _leaderId = gatherInfo.leader_id;
-            const _maxCount = gatherInfo.maximumHeadCount;
-            const _curCount = gatherInfo.currentHeadCount;
-            console.log('쿼리값', _leaderId, _maxCount, _curCount);
-    
-            if(req.user.mem_id != _leaderId){
-                res.write('<script>alert("방장 권한이 없습니다.");</script>');
-            } else{
-                // participant 테이블에 _ISREFUSED로 변경
-                const result = await db.participant.update(    //upsert일리 없지. 이미 있는 isapplying애들 받는거니가
-                    { state: ISREFUSED },
-                    {
-                        where: {
-                            gathering_id: _gatherId,
-                            mem_id: _applicantId,
-                        }
-                    }
-                )
-                console.log('update result: ', result);
-                res.write('<script>alert("거절했습니다.");</script>');
-            }
+        console.log('전달값 확인:', _memId, _gatherId, _applicantId);
+        try{
+            const gatherInfo = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
+            if (!gatherInfo || gatherInfo.length == 0) {
+                res.write('<script>alert("잘못된 접근입니다.");</script>');
+            } else {
+                const _leaderId = gatherInfo.leader_id;
+                const _maxCount = gatherInfo.maximumHeadCount;
+                const _curCount = gatherInfo.currentHeadCount;
+                console.log('쿼리값', _leaderId, _maxCount, _curCount);
 
+                if (req.user.mem_id != _leaderId) {
+                    res.write('<script>alert("방장 권한이 없습니다.");</script>');
+                } else {
+                    // participant 테이블에 _ISREFUSED로 변경
+                    const result = await db.participant.update(    //upsert일리 없지. 이미 있는 isapplying애들 받는거니가
+                        { state: ISREFUSED },
+                        {
+                            where: {
+                                gathering_id: _gatherId,
+                                mem_id: _applicantId,
+                            }
+                        }
+                    )
+                    console.log('update result: ', result);
+                    res.write(`<script>alert('${_applicantId}님의 신청을 거절했습니다.');</script>`);
+                }
+            }
+        }catch (err) {
+            console.log(`Error refusing gathering member: ${err}`);
+            res.write('<script>alert("다시 시도해주세요");</script>');
         }
     },
 
-    // // ❤️❤️❤️❤️❤️update나 delete 시, 트리거 만들기!!!
-    // // gathering 테이블에 currentHeadCount를 count(*) where gathering_id = 특정 아이디 일때
-    // // 그렇게 하면 allow, banMEmber 할 때 일일이 변경 안해줘도 되지.
-    // acceptMember: async(req, res)=>{
-    //     try{
-    //         await sequelize.transaction(async t=>{
-    //             await db.participant.create({
-    //                 gatheirng_id: req.body.gatheirng_id,
-    //                 mem_id: req.body.mem_id,
-    //                 join_date: sequelize.literal(`NOW()`),
-    //                 //isConnected: 0이 디폴트
-    //             })
-    //         })
-    //     } catch(err){
-    //         console.log(`Error saving new gathering member: ${err}`);
-    //     }
-    // },
+    banMember: async(req, res)=>{
+        // 유효성
+        // 1) 유저
+        if(!req.user){
+            console.log('This user is not logged in');
+            res.redirect('/gather');
+        }
+        // const leaderId = req.user.mem_id;
+        
+        if(!req.query.no || !req.query.memId){
+            console.log('There is no gathering number or member id');
+            res.redirect('/gather');
+        }
+        const _gatherId = req.query.no;
+        const _memId = req.query.memId;
+        const message = ['님을 강퇴합니다.', '님이 탈퇴하셨습니다.', '님이 신청을 취소하셨습니다.'];
+        // console.log('전달값 확인:', _memId, _gatherId, _memberId);
+        try {
+            const gatherInfo = await searchGathering(['leader_id', 'maximumHeadCount', 'currentHeadCount'], undefined, _gatherId);
+            if (!gatherInfo || gatherInfo.length == 0) {
+                res.write('<script>alert("잘못된 접근입니다.");</script>');
+            } else {
+                const _leaderId = gatherInfo.leader_id;
+                const _maxCount = gatherInfo.maximumHeadCount;
+                const _curCount = gatherInfo.currentHeadCount;
+                console.log('쿼리값', _leaderId, _maxCount, _curCount);
 
-    // banMember: async(req, res)=>{
-    //     try{
-    //         await sequelize.transaction(async t=>{
-    //             await db.participant.destory({
-    //                 where: {
-    //                     leader_id: req.body.mem_id,
-    //                     gathering_id: req.body.gatheirng_id
-    //                 }
-    //             })
-    //         })
-    //     } catch(err){
-    //         console.log(`Error deleting gathering member: ${err}`);
-    //     }
-    // },
+                // if (leaderId != _leaderId) {
+                //     res.write('<script>alert("방장 권한이 없습니다.");</script>');
+                // } else {
+                // participant 테이블에 _ISREFUSED로 변경
+                const result = await db.participant.update(    //upsert일리 없지. 이미 있는 isapplying애들 받는거니가
+                    { state: ISNOTMEMBER },
+                    {
+                        where: {
+                            gathering_id: _gatherId,
+                            mem_id: _memId,
+                        }
+                    }
+                )
+                console.log('Ban result: ', result);
+                res.write(`<script>alert("${_memId}${message[req.query.mode ? req.query.mode : 0]}");</script>`);
+            }
+        } catch(err){
+            console.log(`Error deleting gathering member: ${err}`);
+            res.write('<script>alert("다시 시도해주세요");</script>');
+        }
+    },
 
     // 방장 나갔을 때,,,,
     // 1) participant에서 방장 삭제.

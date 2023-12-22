@@ -1,5 +1,5 @@
 <!-- STYLESHEET -->
-<link rel="stylesheet" href="/css/gather.css">
+<link rel="stylesheet" href="/css/gatherMine.css">
 
 <!--SECTION-->
 <section>
@@ -34,9 +34,9 @@
         </div>
 
 		<!-- 내가 모집 부분 -->
-		<div class="recruiting-box">
+		<div class="Imade-box">
 
-			<!-- 모집중과 더보기 -->
+			<!-- 내가 모집한 밥모임과 더보기 -->
 			<div class="gathering-title">
 				<span class="text">내가 모집한 밥모임</span>
 				<span class="more">
@@ -44,29 +44,29 @@
 				</span>
 			</div>
 
-			<!-- 모집중인 모임이 없을 경우만 출력 -->
+			<!-- 내가 모집한 밥모임이 없을 경우만 출력 -->
 			<% if (listCreated == "" || listCreated == false){ %>
 				<div class="no-gather">
-					아직 모임을 만들지 않으셨네요? 밥친구들을 모집해보세요 :)
+					아직 모임을 만들지 않으셨네요? 함께 맛집을 탐방 할 친구들을 모집해보세요 :)
 				</div>
 
-			<!-- 모집중인 모임이 있을 경우만 -->
+			<!-- 내가 모집한 모임이 있을 경우만 -->
 			<% } else{ %>
 
 				<!-- 슬라이더 박스 -->
 				<div class="gathering-slide">
 
-					<!-- 이전 화살표(모집중) -->
+					<!-- 이전 화살표(내가 모집) -->
 					<div class="prevArrow-box">
-						<button class="prevArrow-recruiting">
+						<button class="prevArrow-Imade">
 							<i class="las la-chevron-left"></i>
 						</button>
 					</div>
 
-					<!-- 슬라이더(모집중 slideRecruiting.js) -->
-					<div class="slider-wrap-recruiting">
+					<!-- 슬라이더 -->
+					<div class="slider-wrap-Imade">
 					
-						<!-- 모집중인 모임 최신순으로 최대 5개 출력 -->
+						<!-- 내가 모집한 모임 최신순으로 최대 5개 출력 -->
 						<% listCreated.forEach((data, index)=>{ %>
 							<!-- 슬라이드 하나 -->
 							<div class="slide-item">
@@ -74,23 +74,33 @@
 									<!-- 모임 이름 -->
 									<%= data.name %>
 								</span>
-								<span class="gather-region">
-									<!-- 지역 -->
-									<%= data.region %>
+								<span class="gather-regionNspot">
+									<span class="gather-region">
+										<!-- 지역 -->
+										<%= data.region %>
+									</span>
+									<span class="gather-spot">
+										맛집 : 
+										<!-- 식당 데이터 이름?? -->
+										<span><%= data.place %></span>
+									</span>
+								</span>
+								<span class="gather-deadline">
+									모집 마감일 : 
+									<!-- 모집 마감일 데이터 이름?? -->
+									<span><%= data.deadline.toISOString().slice(0,10); %></span>
 								</span>
 								<span class="gather-number">
+									모임 인원 (현재인원/총원) :
 									<!-- 현인원/총원 -->
 									<%= data.currentHeadCount %> / <%= data.maximumHeadCount %>
 								</span>
 								<!-- hover시 신청, 자세히 버튼 -->
-								<div class="button-box">
-									<!-- <a href="/gather/join">
-										<button class="join-group">신청</button>
-									</a> -->
+								<!-- <div class="button-box">
 									<a href="/gather/view?no=<%= data.gathering_id%>">
 										<button class="show-group">자세히</button>
 									</a>
-								</div>
+								</div> -->
 							</div>
 						<% }) %>
 						
@@ -105,9 +115,9 @@
 
 					</div>
 
-					<!-- 다음 화살표(모집중) -->
+					<!-- 다음 화살표(내가 모집) -->
 					<div class="nextArrow-box">
-						<button class="nextArrow-recruiting">
+						<button class="nextArrow-Imade">
 							<i class="las la-chevron-right"></i>
 						</button>
 					</div>	
@@ -119,9 +129,9 @@
 		</div>
 
 		<!-- 내가 모임원  -->
-		<div class="completed-box">
+		<div class="joined-box">
 
-			<!-- 모집 완료와 더보기 -->
+			<!-- 내가 참여한 모임과 더보기 -->
 			<div class="gathering-title">
 				<span class="text"> 내가 참여한 모임 </span>
 				<span class="more">
@@ -129,29 +139,29 @@
 				</span>
 			</div>
 
-			<!-- 모집완료 모임이 없을 경우만 출력 -->
+			<!-- 내가 참여한 모임이 없을 경우만 출력 -->
 			<% if (listJoined == "" || listJoined == false){ %>
 				<div class="no-gather">
 					참여 중인 모임이 없어요!
 				</div>
 
-			<!-- 모집완료 모임이 있을 경우만 -->
+			<!-- 내가 참여한 모임이 있을 경우만 -->
 			<% } else { %>
 
 				<!-- 슬라이더 박스 -->
 				<div class="gathering-slide">
 				
-					<!-- 이전 화살표(모집완료) -->
+					<!-- 이전 화살표(내가 참여) -->
 					<div class="prevArrow-box">
-						<button class="prevArrow-completed">
+						<button class="prevArrow-joined">
 							<i class="las la-chevron-left"></i>
 						</button>
 					</div>
 
-					<!-- 슬라이더(모집완료 slideCompleted.js) -->
-					<div class="slider-wrap-completed">
+					<!-- 슬라이더 -->
+					<div class="slider-wrap-joined">
 					
-						<!-- 모집 완료된 모임 최신순으로 최대 5개 출력 -->
+						<!-- 내가 참여한 모임 최신순으로 최대 5개 출력 -->
 						<% listJoined.forEach((data, index)=>{ %>
 							<!-- 슬라이드 하나 -->
 							<div class="slide-item">
@@ -159,28 +169,38 @@
 									<!-- 모임이름 -->
 									<%= data.name %>
 								</span>
-								<span class="gather-region">
-									<!-- 서울시 노원구 공릉동 -->
-									<%= data.region %>
+								<span class="gather-regionNspot">
+									<span class="gather-region">
+										<!-- 지역 -->
+										<%= data.region %>
+									</span>
+									<span class="gather-spot">
+										맛집 : 
+										<!-- 식당 -->
+										<span><%= data.place %></span>
+									</span>
+								</span>
+								<span class="gather-deadline">
+									모집 마감일 : 
+									<!-- 모집 마감일 -->
+									<span><%= data.deadline.toISOString().slice(0,10); %></span>
 								</span>
 								<span class="gather-number">
+									모임 인원 (현재인원/총원) : 
 									<!-- 현인원/총원 -->
 									<%= data.currentHeadCount %> / <%= data.maximumHeadCount %>
 								</span>
 						
 								<!-- hover시 신청, 자세히 버튼 -->
-								<div class="button-box">
-									<!-- <a href="/gather/join">
-															<button class="join-group">신청</button>
-														</a> -->
+								<!-- <div class="button-box">
 									<a href="/gather/view?no=<%= data.gathering_id%>">
 										<button class="show-group-completed">자세히</button>
 									</a>
-								</div>
+								</div> -->
 							</div>
 						<% }) %>
 
-						<!-- 모집완료 모임이 6개 이상일 경우만 추가로 출력 -->
+						<!-- 내가 참여한 모임이 6개 이상일 경우만 추가로 출력 -->
 						<div>
 							<a href="/gather/joined?countperpage=9&gsort=1">
 								<div class="slide-item">
@@ -191,9 +211,9 @@
 
 					</div>
 
-					<!-- 다음 화살표(모집완료) -->
+					<!-- 다음 화살표(내가 참여) -->
 					<div class="nextArrow-box">
-						<button class="nextArrow-completed">
+						<button class="nextArrow-joined">
 							<i class="las la-chevron-right"></i>
 						</button>
 					</div>	
@@ -205,9 +225,9 @@
 		</div>
 
         <!-- 신청한 모집 부분 -->
-		<div class="completed-box">
+		<div class="applied-box">
 
-			<!-- 모집 완료와 더보기 -->
+			<!-- 신청한 모임과 더보기 -->
 			<div class="gathering-title">
 				<span class="text"> 내가 신청한 모임 </span>
 				<span class="more">
@@ -215,29 +235,29 @@
 				</span>
 			</div>
 
-			<!-- 모집완료 모임이 없을 경우만 출력 -->
+			<!-- 내가 신청한 모임이 없을 경우만 출력 -->
 			<% if (listApplied == "" || listApplied == false){ %>
 				<div class="no-gather">
 					아직 신청한 모임이 없어요
 				</div>
 
-			<!-- 모집완료 모임이 있을 경우만 -->
+			<!-- 내가 신청한 모임이 있을 경우만 -->
 			<% } else { %>
 
 				<!-- 슬라이더 박스 -->
 				<div class="gathering-slide">
 				
-					<!-- 이전 화살표(모집완료) -->
+					<!-- 이전 화살표(내가 신청한 모임) -->
 					<div class="prevArrow-box">
-						<button class="prevArrow-completed">
+						<button class="prevArrow-applied">
 							<i class="las la-chevron-left"></i>
 						</button>
 					</div>
 
-					<!-- 슬라이더(모집완료 slideCompleted.js) -->
-					<div class="slider-wrap-completed">
+					<!-- 슬라이더 -->
+					<div class="slider-wrap-applied">
 					
-						<!-- 모집 완료된 모임 최신순으로 최대 5개 출력 -->
+						<!-- 내가 신청한 모임 최신순으로 최대 5개 출력 -->
 						<% listApplied.forEach((data, index)=>{ %>
 							<!-- 슬라이드 하나 -->
 							<div class="slide-item">
@@ -245,28 +265,38 @@
 									<!-- 모임이름 -->
 									<%= data.name %>
 								</span>
-								<span class="gather-region">
-									<!-- 서울시 노원구 공릉동 -->
-									<%= data.region %>
+								<span class="gather-regionNspot">
+									<span class="gather-region">
+										<!-- 서울시 노원구 공릉동 -->
+										<%= data.region %>
+									</span>
+									<span class="gather-spot">
+										맛집 : 
+										<!-- 식당 -->
+										<span><%= data.place %></span>
+									</span>
+								</span>
+								<span class="gather-deadline">
+									모집 마감일 : 
+									<!-- 모집 마감일 -->
+									<span><%= data.deadline.toISOString().slice(0,10); %></span>
 								</span>
 								<span class="gather-number">
+									모임 인원 (현재인원/총원) : 
 									<!-- 현인원/총원 -->
 									<%= data.currentHeadCount %> / <%= data.maximumHeadCount %>
 								</span>
 						
 								<!-- hover시 신청, 자세히 버튼 -->
-								<div class="button-box">
-									<!-- <a href="/gather/join">
-															<button class="join-group">신청</button>
-														</a> -->
+								<!-- <div class="button-box">
 									<a href="/gather/view?no=<%= data.gathering_id%>">
 										<button class="show-group-completed">자세히</button>
 									</a>
-								</div>
+								</div> -->
 							</div>
 						<% }) %>
 
-						<!-- 모집완료 모임이 6개 이상일 경우만 추가로 출력 -->
+						<!-- 내가 신청한 모임이 6개 이상일 경우만 추가로 출력 -->
 						<div>
 							<a href="/gather/applied?countperpage=9&gsort=1">
 								<div class="slide-item">
@@ -277,12 +307,12 @@
 
 					</div>
 
-					<!-- 다음 화살표(모집완료) -->
+					<!-- 다음 화살표(내가 신청한 모임) -->
 					<div class="nextArrow-box">
-						<button class="nextArrow-completed">
+						<button class="nextArrow-applied">
 							<i class="las la-chevron-right"></i>
 						</button>
-					</div>	
+					</div>
 
 				</div>
 

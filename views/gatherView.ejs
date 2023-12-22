@@ -18,12 +18,16 @@
 					<div class="join-target">
 
 						<!-- 클릭한 밥모임의 이름 불러오기 -->
-						왕짜장 먹으러 가자~!
+						<%= gatherData.name %>
 
 					</div>
 					
 					<!-- 신청 폼 -->
-					<form method="post" id="form-apply" action = "/gather/apply?no=<%= gatherData.gathering_id %>" onsubmit="return joinClick()">
+                    이미 신청한 사람, 멤버인 사람은 안보이기
+					<form method="post" id="form-apply"
+                        action = "/gather/apply?no=<%= gatherData.gathering_id %>"
+                        onsubmit="return joinClick()"
+                        target="applyResult">
                                                         <!-- ⚠️form 태그 동작 확인하기⚠️  -->
 						<!-- 인사말 박스 -->
 						<div class="gather-join-text">
@@ -51,7 +55,7 @@
 
 								<div class="join-textarea-box">
 									<!-- 텍스트아리아 -->
-									<textarea name="gatherJoin" id="gatherJoinArea" placeholder="인사말을 적어주세요 :)"></textarea>
+									<textarea name="message" id="gatherJoinArea" placeholder="인사말을 적어주세요 :)"></textarea>
 								</div>
 								
 							</div>
@@ -70,6 +74,7 @@
 						</div>	
 
 					</form>
+					<iframe name="applyResult" style="display:none;"></iframe>
 
 				</div>
 	
@@ -130,7 +135,7 @@
 							</div>
 							<!-- 지역 불러오기 -->
 							<div class="view-region-data">
-								서울시 노원구 공릉동
+								<%= gatherData.city + ' ' + gatherData.district + ' ' +gatherData.neighborhood %>
 							</div>
 						</div>
 						<!-- 식당 -->
@@ -140,7 +145,7 @@
 							</div>
 							<!-- 맛집 불러오기 -->
 							<div class="view-restaurant-data">
-								왕짜장
+								<%= gatherData.place %>
 							</div>
 						</div>
 					</div>			
@@ -185,56 +190,82 @@
 
 					<!-- 소개글 불러오기 -->
 					<div class="view-intro-data">
-						같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!
+						<%= gatherData.description %>
 					</div>
 				</div>
             </div>
 
+            
+            <% switch(who){ 
+                case 0: %> 
+                    <div class="view-button-box">
+                        <!-- 수정 -->
+                        <div class="">
+                            <a href='/gather/update?no=<%= gatherData.gathering_id %>'>
+                                <button>수정하기</button>  
+                            </a>    
+                        </div>
+                        <!-- 삭제 -->
+                        <div class="">
+                            <a href='/gather/delete?no=<%= gatherData.gathering_id %>'>
+                                <button>삭제하기</button>  
+                            </a>   
+                        </div>
+                        <!-- 목록으로 -->
+                        <div>
+                            <a href="/gather">
+                                <button>목록으로</button>
+                            </a>
+                        </div>
+                    </div>
+                    <% break; %>
+                <% case 1: %>   
+                    <div class="view-button-box">
+                        <!-- 탈퇴 -->
+                        <div class="">
+                            <a href='/gather/banMember?no=<%= gatherData.gathering_id %>&memId=<%= user.mem_id %>&mode=1' target="blankifr">
+                                <button>탈퇴하기</button>  
+                            </a>    
+                        </div>
+                        <!-- 목록으로 -->
+                        <div>
+                            <a href="/gather">
+                                <button>목록으로</button>
+                            </a>
+                        </div>
+                    </div>
+                    <% break; %>
+                <% case 2: %>   
+                    <% break; %>
+                <% default: %>
+                <!-- 거절 당하거나, 멤버 아닌 유저 -->
+                    <div class="view-button-box">
+                        <!-- 같이먹어요 -->
+                        <div class="">
+                            <button class="join-group" onclick="gatherViewJoinClick()">같이먹어요</button>            
+                        </div>
+                        <!-- 목록으로 -->
+                        <div>
+                            <a href="/gather">
+                                <button>목록으로</button>
+                            </a>
+                        </div>
+                    </div>
+                    <% break; %>
+            <% } %>
             <!-- if 열람유저 = 작성자(모임장): 수정, 삭제, 목록 -->
-            <% if (typeof user != 'undefined' && user.mem_id == gatherData.leader_id) { %>
-                <div class="view-button-box">
-                    <!-- 수정 -->
-                    <div class="">
-                        <a href='/gather/update?no=<%= gatherData.gathering_id %>'>
-                            <button>수정하기</button>  
-                        </a>    
-                    </div>
-                    <!-- 삭제 -->
-                    <div class="">
-                        <a href='/gather/delete?no=<%= gatherData.gathering_id %>'>
-                            <button>삭제하기</button>  
-                        </a>   
-                    </div>
-                    <!-- 목록으로 -->
-                    <div>
-                        <a href="/gather">
-                            <button>목록으로</button>
-                        </a>
-                    </div>
-                </div>
-            <% } else { %>
-                <!-- else: 신청, 목록 -->
-                <div class="view-button-box">
-                    <!-- 같이먹어요 -->
-                    <div class="">
-                        <button class="join-group" onclick="gatherViewJoinClick()">같이먹어요</button>            
-                    </div>
-                    <!-- 목록으로 -->
-                    <div>
-                        <a href="/gather">
-                            <button>목록으로</button>
-                        </a>
-                    </div>
-                </div>
-            <% } %> 
         </div>
         
         <!-- 유저 상황별 보이는 화면 -->
         <div class="user-situation">
-
+            
+        <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
+        who값<%= who %>
+        <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
+        <% switch(who){ 
+            case 0: %> 
             <!-- 열람유저 = 모임장 -->
             <div class="view-user-master">
-
                 <!-- 모임원 목록 -->
                 <div class="master-member-list">
                     <span class="title">모임원 목록</span>
@@ -252,25 +283,37 @@
                         </div>
                     </div>
 
-                    <!-- 불러오기 -->
-                    <div class="user-master-member">
-                        <div class="master-mem">
-                            초코케이크
+                    <% memberList.forEach((member, index)=>{ %>
+                        <!-- 불러오기 -->
+                        <div class="user-master-member">
+                            <div class="master-mem">
+                                <% if (member.state == 0){ %>
+                                    👑
+                                <% }%>
+                                <%= member.mem_id %>
+                            </div>
+                            <div class="master-mem-intro">
+                                <%= member.message %>
+                            </div>
+                            <div class="master-mem-status">
+                                <% if (member.state == 1){ %>
+                                    <span>
+                                    <a href="/gather/banMember?no=<%= gatherData.gathering_id %>&memId=<%= member.mem_id %>&mode=0" target="blankifr">
+                                        [강퇴]
+                                    </a>
+                                    </span>
+                                <% } %>
+                            </div>
+                            <!-- <iframe name="banResult" style="display:none;"></iframe> -->
                         </div>
-                        <div class="master-mem-intro">
-                            안녕하세요 잘 부탁 드려요~~!!
-                        </div>
-                        <div class="master-mem-status">
-                            <span>[강퇴]</span>
-                        </div>
-                    </div>
+                    <% }) %>
 
                 </div>
 
+                <% if(typeof applicantList != "undefined" && applicantList != ""){ %>
                 <!-- 신청자 목록 -->
                 <div class="master-applicant-list">
                     <span class="title">신청자 목록</span>
-
                     <!-- 첫번째 인덱스 -->
                     <div class="user-master-applicant-f">
                         <div class="master-appli-f">
@@ -284,160 +327,115 @@
                         </div>
                     </div>
 
+                    <% applicantList.forEach((aplct, index)=>{ %>
                     <!-- 불러오기 -->
                     <div class="user-master-applicant">
                         <div class="master-appli">
-                            로얄밀크티
+                            <%= aplct.mem_id %>
                         </div>
                         <div class="master-appli-intro">
-                            받아주세용~
+                            <%= aplct.message %>
                         </div>
                         <div class="master-appli-status">
-                            <span>[수락]</span>
-                            <span>[거절]</span>
+                            <span>
+                                <a href="/gather/acceptMember?no=<%= gatherData.gathering_id %>&aplctId=<%= aplct.mem_id%>" target="blankifr">[수락]</a>
+                            </span>
+                            <span>
+                                <a href="/gather/refuseMember?no=<%= gatherData.gathering_id %>&aplctId=<%= aplct.mem_id%>" target="blankifr">[거절]</a>
+                            </span>
                         </div>
+                        <iframe name="blankifr" style="display:none;"></iframe> 
                     </div>
+                    <% }) %>
 
                 </div>
+                <% } %>
 
             </div>
+                <a href='/gather/update?no=<%= gatherData.gathering_id %>'>[편집]</a>
+                <a href='/gather/delete?no=<%= gatherData.gathering_id %>'>[삭제]</a>
+                <% break; %>
+            <% case 1: %>   
+            모임원
+                <!-- 열람유저 = 모임원 -->
+                <div class="view-user-member">
 
-            <!-- 열람유저 = 모임원 -->
-            <div class="view-user-member">
+                    <div class="member-group-list">
+                        <span class="title">모임 구성원 목록</span>
+                    
+                        <!-- 모임장 불러오기 -->
+                        <div class="member-group-master">
+                            <div class="group-master-index">
+                                👑모임장
+                            </div>
+                            <div class="group-master-name">
+                                <!-- 이름 불러오기 -->
+                                <%= gatherData.leader_id %>
+                            </div>
+                        </div>
 
-                <div class="member-group-list">
-                    <span class="title">모임 구성원 목록</span>
-                
-                    <!-- 모임장 불러오기 -->
-                    <div class="member-group-master">
-                        <div class="group-master-index">
-                            👑모임장
+                        <% memberList.forEach((member, index)=>{ %>
+                        <!-- 모임원 불러오기 -->
+                        <div class="member-group">
+                            <div class="group-member-index">
+                                모임원
+                            </div>
+                            <div class="group-member-name">
+                                <!-- 이름 불러오기 -->
+                                <% if(member.mem_id == user.mem_id) { %>
+                                    <span style="font-weight: 800;">
+                                        <%= member.mem_id %>
+                                        <a href='/gather/banMember?no=<%= gatherData.gathering_id %>&memId=<%= user.mem_id %>&mode=1' target="blankifr">[탈퇴]</a>
+                                    </span>
+                                <% } else { %>
+                                    <%= member.mem_id %>
+                                <% } %> 
+                            </div>
                         </div>
-                        <div class="group-master-name">
-                            <!-- 이름 불러오기 -->
-                            타로버블티
-                        </div>
+                        <% }) %>
                     </div>
-
-                    <!-- 모임원 불러오기 -->
-                    <div class="member-group">
-                        <div class="group-member-index">
-                            모임원
-                        </div>
-                        <div class="group-member-name">
-                            <!-- 이름 불러오기 -->
-                            초코케이크
-                        </div>
-                    </div>
-
-                    <div class="member-group">
-                        <div class="group-member-index">
-                            모임원
-                        </div>
-                        <div class="group-member-name">
-                            <!-- 이름 불러오기 -->
-                            초코우유
-                        </div>
-                    </div>
-
                 </div>
-            </div>
-
+                <% break; %>
+            <% case 2: %>   
+            신청한 사람
+            <% case 3: %> 
+            거절당한 사람
             <!-- 열람유저 = 신청자 -->
-            <div class="view-user-applicant">
-                <div class="user-applicant">
-                    <div class="user-applicant-cate">
-                        <span class="title">신청 상태 : </span>
-                        <!-- 상태 불러오기 -->
-                        <span class="status">요청중</span>
-                    </div>
-                    <div class="user-applicant-cate">
-                        <span class="title">가입 신청일 : </span> 
-                        <!-- 신청일 불러오기 -->
-                        <span class="status">2023년 12월 25일</span>
-                    </div>
-                    <!-- 신청 취소 박스 -->
-                    <div class="cancel-btn-box">
-                        <button>신청 취소</button>
-                    </div>
-                </div>             
-            </div>
-
-        </div>
-
-
-
-        <div class="post-section">
-
-            <div>
-                <!-- 유저가 작성자면 [수정/삭제] 버튼 -->
-                <% if (typeof user != 'undefined' && user.mem_id == gatherData.leader_id) { %>
-                    <a href='/gather/update?no=<%= gatherData.gathering_id %>'>[편집]</a>
-                    <a href='/gather/delete?no=<%= gatherData.gathering_id %>'>[삭제]</a>
+                <% if(typeof statusInfo != 'undefined' && statusInfo != ''){ %>
+                <div class="view-user-applicant">
+                    <div class="user-applicant">
+                        <div class="user-applicant-cate">
+                            <span class="title">신청 상태 : </span>
+                            <!-- 상태 불러오기 -->
+                            <% if(statusInfo.state==2){ %> 
+                                <span class="status">요청중</span>
+                            <% } else { %>
+                                <span class="status">거절됨</span>
+                            <% } %>
+                        </div>
+                        <div class="user-applicant-cate">
+                            <span class="title">가입 신청일 : </span> 
+                            <!-- 신청일 불러오기 -->
+                            <span class="status">
+                                <%= statusInfo.updatedAt.toISOString().slice(0,10); %>
+                            </span>
+                        </div>
+                        <!-- 신청 취소 박스 -->
+                        <div class="cancel-btn-box">
+                            <a href="/gather/banMember?no=<%= gatherData.gathering_id %>&memId=<%= user.mem_id %>&mode=2" target="blankifr">
+                                <button>신청 취소</button>
+                            </a>
+                        </div>
+                    </div>             
+                </div>
                 <% } %>
-                
-                <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
-                who값<%= who %>
-                <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
-                <% switch(who){ 
-                    case 0: %> 
-                        <a href='/gather/update?no=<%= gatherData.gathering_id %>'>[편집]</a>
-                        <a href='/gather/delete?no=<%= gatherData.gathering_id %>'>[삭제]</a>
-                        <% break; %>
-                    <% case 1: %>   
-                    모임원
-                        <a href="">[탈퇴]</a>
-                        <% break; %>
-                    <% case 2: %>   
-                    신청한 사람
-                        
-                        <% break; %>
-                    <% case 3: %> 
-                    거절당한 사람
-                    <% default: %>
-                        <% break; %>
-                <% } %>
-            </div>
-
+                <% break; %>
+            <% default: %>
+                <% break; %>
+        <% } %>
         </div>
     </div>
 
-
-    <!-- 이 아래는 백엔드 테스트용 -->
-    <div id="example">
-        switch(who){
-            case ISLEADER:  
-            console.log('switch');
-                // console.log('switch동작');
-                obj.memberList = await searchParticipants(undefined, [ISLEADER, ISMEMBER], _gatherId, undefined);
-                // 해당 모임의 가입신청한 유저 목록 저장
-                obj.applicantList = await searchParticipants(undefined, ISAPPLYING, _gatherId, undefined);
-            case ISMEMBER:
-                console.log('switch');
-                // 모임원 목록
-                obj.memberList = await searchParticipants(undefined, [ISLEADER, ISMEMBER], _gatherId, undefined);
-                break;
-            case ISAPPLYING:
-                obj.statusInfo = who;
-                // ✅메시지: [] | 상태 [신청중] | 신청일자: []
-                //⚠️지원자는 버튼 클릭하면 이미 신청했어요!
-                // break;
-            case ISREFUSED:
-                obj.statusInfo = who;
-                // ✅메시지: [] | 상태 [거절] | [재신청] | 신청일자: []
-            default: //ISNOTMEMBER
-                break;
-        }
-    </div>
-    <!-- user.mem_id==leader_id일 때만 -->
-    <div class="board-post-section">
-        <!-- <a href="/gather/acceptMember?no=14&aplctId=pink" target="blankifr">[수락]</a> -->
-        <a href="/gather/acceptMember?no=<data.gathering_id>&aplctId=<applicantList.mem_id>" target="blankifr">[수락]</a>
-         <!-- 모임 no, aplctId -->
-        <!-- <a href="/gather/refuseMember?no=14&aplctId=pink" target="blankifr">[거절]</a> -->
-        <a href="/gather/refuseMember?no=<data.gathering_id>&aplctId=<applicantList.mem_id>" target="blankifr">[거절]</a>
-        <!--  모임 no, aplctId -->
-    </div>
     <iframe name="blankifr" style="display:none;"></iframe> 
     <!-- ㄴ 화면 변경 방지 -->
 </section>
