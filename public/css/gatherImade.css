@@ -89,6 +89,7 @@
     font-weight: bold;
     width: 750px;
     padding: 15px;
+    /* border: 1px solid black; */
 }
 
 /* 리스트 인덱스 버튼 */
@@ -100,6 +101,7 @@
     font-weight: bold;
     width: 100px;
     padding: 15px;
+    /* border: 1px solid black; */
 }
 
 /* ▼ 버튼 */
@@ -110,10 +112,109 @@
 /* ▼ 클릭 시 보여지는 화면 */
 .imade-contents-none {
     display: none;
-    border: 1px solid black;
+    border-bottom: 1px solid rgb(223, 177, 177);
 }
 
+/* ▲ 버튼 */
 .imade-none-btn {
     cursor: pointer;
     display: none;
+}
+
+/* 불러온 정보 */
+.imade-content {
+    width: 740px;
+    padding: 20px 20px;
+    /* border: 1px solid black; */
+}
+
+.imade-region {
+    width: 366px;
+    display: inline-block;
+    /* background-color: azure; */
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.imade-region span {
+    font-weight: normal;
+}
+
+.imade-spot {
+    width: 366px;
+    display: inline-block;
+    /* background-color: rgb(223, 248, 248); */
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.imade-spot span {
+    font-weight: normal;
+}
+
+.imade-numbers {
+    width: 366px;
+    display: inline-block;
+    margin-top: 10px;
+    /* background-color: rgb(200, 246, 246); */
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.imade-numbers span {
+    font-weight: normal;
+}
+
+.imade-deadline {
+    width: 366px;
+    display: inline-block;
+    margin-top: 10px;
+    /* background-color: rgb(182, 246, 246); */
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.imade-deadline span {
+    font-weight: normal;
+}
+
+.imade-intro {
+    display: flex;
+    width: 737px;
+    margin-top: 10px;
+    font-size: 17px;
+}
+
+.imade-intro-title {
+    width: 70px;
+    font-weight: bold;
+    /* background-color: rgb(120, 251, 251); */
+}
+
+.imade-intro-text {
+    width: 667px;
+    font-weight: normal;     
+    /* background-color: rgb(63, 210, 210);    */
+}
+
+/* 채팅방으로 이동 버튼 */
+.imade-gochat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    padding: 15px;
+    /* border: 1px solid black; */
+}
+
+.imade-gochat button {
+    cursor: pointer;
+    width: 70px;
+    padding: 5px;
+    border: 1px solid gainsboro;
+    border-radius: 3px;
+}
+
+.imade-gochat button:hover {
+    background-color: rgb(194, 192, 192);
 }

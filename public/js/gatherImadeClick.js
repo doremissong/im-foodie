@@ -5,7 +5,7 @@ $(".imade-block-btn").click(function(){
     // console.log($('.imade-block-btn')[$CI]);
 
     $($('.imade-contents-none')[$CI]).css({
-        display : 'block'
+        display : 'flex'
     });
 
     $($('.imade-block-btn')[$CI]).css({
