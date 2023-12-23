@@ -69,4 +69,183 @@
 }
 
 
-/*  */
+/* 내가 신청한 모임이 있을 경우 */
+.gather-applied-box {
+    margin: 30px 20px 50px 20px;
+    border-top: 1px solid rgb(223, 177, 177);
+}
+
+/* 리스트 인덱스 */
+.applied-list-index {
+    display: flex;
+    border-bottom: 1px solid rgb(223, 177, 177);
+}
+
+/* 리스트 인덱스 모임 이름 */
+.applied-index-name {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    width: 750px;
+    padding: 15px;
+    /* border: 1px solid black; */
+}
+
+/* 리스트 인덱스 버튼 */
+.applied-index-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100px;
+    padding: 15px;
+    /* border: 1px solid black; */
+}
+
+/* ▼ 버튼 */
+.applied-block-btn {
+    cursor: pointer;
+}
+
+/* ▼ 클릭 시 보여지는 화면 */
+.applied-contents-none {
+    display: none;
+    border-bottom: 1px solid rgb(223, 177, 177);
+}
+
+/* ▲ 버튼 */
+.applied-none-btn {
+    cursor: pointer;
+    display: none;
+}
+
+/* 불러온 정보 */
+.applied-content {
+    width: 740px;
+    padding: 20px 20px;
+    /* border: 1px solid black; */
+}
+
+.applied-master {
+    width: 737px;
+    display: inline-block;
+    /* background-color: azure; */
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.applied-master span {
+    font-weight: normal;
+}
+
+.applied-region {
+    width: 366px;
+    display: inline-block;
+    margin-top: 10px;
+    /* background-color: azure; */
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.applied-region span {
+    font-weight: normal;
+}
+
+.applied-spot {
+    width: 366px;
+    display: inline-block;
+    margin-top: 10px;
+    /* background-color: rgb(223, 248, 248); */
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.applied-spot span {
+    font-weight: normal;
+}
+
+.applied-numbers {
+    width: 366px;
+    display: inline-block;
+    margin-top: 10px;
+    /* background-color: rgb(200, 246, 246); */
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.applied-numbers span {
+    font-weight: normal;
+}
+
+.applied-deadline {
+    width: 366px;
+    display: inline-block;
+    margin-top: 10px;
+    /* background-color: rgb(182, 246, 246); */
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.applied-deadline span {
+    font-weight: normal;
+}
+
+.applied-intro {
+    display: flex;
+    width: 737px;
+    margin-top: 10px;
+    font-size: 17px;
+}
+
+.applied-intro-title {
+    width: 70px;
+    font-weight: bold;
+    /* background-color: rgb(120, 251, 251); */
+}
+
+.applied-intro-text {
+    width: 667px;
+    font-weight: normal;     
+    /* background-color: rgb(63, 210, 210);    */
+}
+
+/* 채팅방으로 이동 버튼 */
+.applied-align {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.applied-others {
+    width: 100px;
+    padding: 15px;
+}
+
+.applied-status {
+    display: flex;
+    justify-content: center;
+}
+
+.applied-status span {
+    font-weight: bold;
+}
+
+.applied-cancel {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.applied-cancel button {
+    cursor: pointer;
+    width: 70px;
+    padding: 5px;
+    border: 1px solid gainsboro;
+    border-radius: 3px;
+}
+
+.applied-cancel button:hover {
+    background-color: rgb(194, 192, 192);
+}

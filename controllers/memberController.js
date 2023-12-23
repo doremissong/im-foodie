@@ -338,29 +338,45 @@ module.exports = {
             res.json({success: false, message: '다시 시도해주세요'})
         }
 
+        const reservedId = ['admin', 'imfoodie']; //*admin*, imfoodie*;
         const _memId = req.query.memId;
+        var isPassed = true;
+        var isUsable = true;
+        console.log('통과?',isPassed); 
         console.log('[checkMemberId] memId', _memId);
+        console.log('[checkMemberId] 도착', req.originalUrl);
         try{
-            console.log('[checkMemberId] 도착',req.originalUrl);
             const result = await db.member.findOne({
-                attributes: ['mem_id', 'name'],
-                where:{
+                attributes: ['mem_id'],
+                where: {
                     mem_id: _memId
-                }
+                },
+                raw: true
             });
-            
-            if(result && result.dataValues.mem_id == _memId){
-                // console.log('[checkMemberId] 사용중인 아이디입니다.');
-                res.json({success: false, message: '사용중인 아이디입니다.'});
-            } else{
-                // console.log('[checkMemberId] 사용 가능한 아이디입니다.')
-                res.json({success: true, message: '사용 가능한 아이디입니다.'})
+            console.log(result);
+            if (result && result.mem_id == _memId) {
+                isUsable = false;
+                // res.json({ success: false, message: '사용할 수 없는 아이디입니다..' });
             }
-        } catch(err){
+
+            if (isUsable) {
+                for (let i = 0; i < reservedId.length; i++) {
+                    if (_memId.includes(reservedId[i])) {
+                        return res.json({ success: false, message: '사용할 수 없는 아이디입니다..' });
+                        return;
+                    }
+                }
+    
+                // Continue with the logic after the database query
+                res.json({ success: true, message: '사용 가능한 아이디입니다.' });
+            } else {
+                res.json({ success: false, message: '사용할 수 없는 아이디입니다.' });
+            }
+            console.log('isUsable:', isUsable);
+        } catch (err) {
             // res.json({success:false, message: '다시 시도해주세요'});
-            // console.log('[checkMemberId] 왜 때문에 에러?');
             console.log('[ERROR] while checking if entered Id is already used.', err);
-            res.redirect('/');
+        // res.redirect('/');
         }
     }
     // 이게 될까ㅛ?

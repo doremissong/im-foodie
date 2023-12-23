@@ -36,23 +36,85 @@
 		<!-- 내가 모임원  -->
 		<div class="joined-box">
 
-			<!-- 내가 참여한 모임과 더보기 -->
+			<!-- 내가 참여한 모임 -->
 			<div class="gathering-title">
 				<span class="text"> 내가 참여한 모임 </span>
-				<span class="more">
+				<!-- <span class="more">
 					<a href="/gather/joined?countperpage=9&gsort=1">[더보기]</a>
-				</span>
+				</span> -->
 			</div>
 
 			<!-- 내가 참여한 모임이 없을 경우만 출력 -->
-
+			<% if (typeof dataList == 'undefined' || dataList == ""){ %>
 				<div class="no-gather">
 					참여 중인 모임이 없어요!
 				</div>
 
 			<!-- 내가 참여한 모임이 있을 경우만 -->
+			<% } else { %>
+				<div class="gather-joined-box">
+					<% dataList.forEach((data, index)=>{ %>
+						<!-- 리스트 내용 불러오기 -->
+						<div class="joined-list-index">
+							<div class="joined-index-name">
+								<!-- 해당 밥모임 view 페이지로 이동 -->
+								<a href="/gather/view?no=<%=data.gathering_id%>">
+									<%= data.name %>
+									같이 왕짜장 먹으러 갈 사람~!~!~!
+								</a>
+							</div>
+							<div class="joined-index-btn">
+								<span class="joined-block-btn">▼</span>
+								<span class="joined-none-btn">▲</span>
+							</div>
+						</div>
+						<div class="joined-contents-none">
+							<!-- 정보 불러오기 -->
+							<div class="joined-content">
+								<div class="joined-master">
+									👑모임장 : 
+									<span><%= data.leader_id %></span>
+								</div>
+								<div class="joined-region">
+									모임 지역 : 
+									<span>
+										<%= data.city + ' ' + data.district + ' ' +data.neighborhood %>
+									</span>
+								</div>
+								
+								<div class="joined-spot">
+									함께 할 맛집 : 
+									<span><%= data.place %>왕짜장</span>
+								</div>
 
+								<div class="joined-numbers">
+									모임 인원수 (현재 / 총원) : 
+									<span><%= data.currentHeadCount %> / <%= data.maximumHeadCount %> 3 / 5</span>
+								</div>
+						
+								<div class="joined-deadline">
+									모집 마감일 : 
+									<span><%= data.deadline.toISOString().slice(0,10); %>2023년 12월 31일</span>
+								</div>
 
+								<div class="joined-intro">
+									<div class="joined-intro-title">
+										소개글 : 
+									</div>
+									<div class="joined-intro-text">
+										<%= data.description %>
+									</div>
+								</div>
+							</div>
+
+							<div class="joined-gochat">
+								<button>채팅방</button>
+							</div>
+					
+						</div>
+					<% }) %>
+				</div>
+			<% } %>
 		</div>
 		
     </div>

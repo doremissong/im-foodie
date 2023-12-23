@@ -365,7 +365,12 @@
                         <tr class="row">
                             <td class="t-text">아이디*</td>
                             <td class="t-box">
-                                <input type="text" name="mem_id" placeholder="아이디" maxlength='16' value="" required>
+                                <input type="text" id="mem_id" name="mem_id" placeholder="아이디" maxlength='16' value="" required>
+                                <!-- <input type="checkbox" id="isChecked" name="isChecked"> -->
+                                <input type="number" id="isChecked" name="isChecked" required hidden>
+                                <!-- 회원가입 id 중복체크 확인하기 -->
+                                <button type="submit" name="duplicateCheck" onClick="checkDuplicate()">중복확인</button>
+                                isChecked==1이 아니면 중복체크해달라고 alert
                                 <div class="t-box-text">아이디: 4~16자 사이의 영문, 숫자만 사용 가능합니다.</div>
                             </td>
                         </tr>
