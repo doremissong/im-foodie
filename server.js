@@ -176,3 +176,9 @@ app.get('/formtest', (req, res) => {
 app.get('/test', (req, res) => {
   res.render('test');
 })
+
+
+// 마이룸
+app.get('/myroom', (req, res) => {
+  res.render('myroom');
+})

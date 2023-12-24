@@ -359,39 +359,42 @@
             <a>회원가입 정보 입력하기</a>
         </div>
         <div class="up-texttext">* 표시가 된 입력란은 필수 기입란입니다.</div>
-            <form name="signup" action="/auth/signup" method="POST">
+            <form name="signup" id="signUpForm" action="/auth/signup" method="POST" onsubmit="return signUpClick()">
                 <table class="up-form">
                     <tbody>
                         <tr class="row">
                             <td class="t-text">아이디*</td>
                             <td class="t-box">
-                                <input type="text" name="mem_id" placeholder="아이디" maxlength='16' value="" required>
-                                <div class="t-box-text">아이디: 4~16자 사이의 영문, 숫자만 사용 가능합니다.</div>
+                                <input type="text" id="mem_id" name="mem_id" placeholder="아이디" maxlength='16' value="">
+                                <!-- <input type="checkbox" id="isChecked" name="isChecked"> -->
+                                <input type="number" id="isChecked" name="isChecked" hidden>
+                                <!-- 회원가입 id 중복체크 확인하기 -->
+                                <button type="button" name="duplicateCheck" onClick="checkDuplicate()">중복확인</button>
                             </td>
                         </tr>
                         <tr class="row">
                             <td class="t-text">비밀번호*</td>
                             <td class="t-box">
-                                <input type="password" name="password" placeholder="비밀번호" maxlength='20' value="" required>
+                                <input type="password" id="upPw" name="password" placeholder="비밀번호" maxlength='20' value="">
                                 <div class="t-box-text">비밀번호: 6~20자 사이의 영문과 숫자만 사용 가능합니다.</div>
                             </td>
                         </tr>
                         <tr class="row">
                             <td class="t-text">이름*</td>
                             <td class="t-box">
-                                <input type="text" name="name" placeholder="이름" value="" required>
+                                <input type="text" id="upName" name="name" placeholder="이름" value="">
                             </td>
                         </tr>
                         <tr class="row">
                             <td class="t-text">이메일*</td>
                             <td class="t-box">
-                                <input type="email" name="email" placeholder="이메일" value="" required>
+                                <input type="email" id="upEmail" name="email" placeholder="이메일" value="" >
                             </td>
                         </tr>
                         <tr class="row">
                             <td class="t-text">연락처*</td>
                             <td class="t-box">
-                                <input type="tel" name="tel" placeholder="연락처" pattern="[0-9]{11}" value="" required>
+                                <input type="tel" id="upTel" name="tel" placeholder="연락처" pattern="[0-9]{11}" value="">
                             </td>
                         </tr>
                         <tr class="row">
@@ -410,7 +413,7 @@
                         <tr class="row">
                             <td class="t-text">생년월일*</td>
                             <td class="t-box">
-                                <input type="text" name="birthdate" placeholder="'-'없이 YYMMDD" pattern="[0-9]{6}" value="" required>
+                                <input type="text" id="birthdate" name="birthdate" placeholder="'-'없이 YYMMDD" pattern="[0-9]{6}" value="">
                             </td>
                         </tr>
                         <tr class="row">
