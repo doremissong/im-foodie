@@ -201,4 +201,15 @@ app.get('/myroom/withdraw', (req, res) => {
   res.render('myroom/myroomWithdraw');
 })
 
+app.get('/myroom/board/post', (req, res) => {
+  res.render('myroom/myroomBPost');
+})
+
+app.get('/myroom/board/comment', (req, res) => {
+  res.render('myroom/myroomBComment');
+})
+
+app.get('/myroom/board/Like', (req, res) => {
+  res.render('myroom/myroomBLike');
+})
 
