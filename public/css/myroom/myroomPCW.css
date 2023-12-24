@@ -1,0 +1,143 @@
+/* SECTION */
+.myroom-section {
+    width: 950px;
+    margin: auto;
+    position: relative;
+    /* display: flex;
+    flex-wrap: wrap; */
+}
+
+.gather-list {
+	width: 930px;
+	padding: 40px 0px 15px 10px;
+	/* background-color: azure; */
+}
+
+.gather-main {
+  	font-size: 20pt;
+	padding: 0px 0px 10px 20px;
+  	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-color: #e3d7cf;
+	/* background-color: skyblue; */
+}
+
+/* 본문 전체 박스 */
+.myroom-box {
+	width: 940px;
+	display: flex;
+	padding: 10px 5px;
+	/* border: 1px solid black; */
+}
+
+/* 카테고리 */
+.myroom-category {
+	width: 180px;
+	padding: 0 10px 0px 10px;
+	margin-bottom: 10px;
+	margin-right: 20px;
+	border-right: 1px solid rgb(190, 184, 184);
+}
+
+.myroom-category span {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.category-align {
+	display: flex;
+	align-items: center;
+}
+
+.category-align span {
+	margin-right: 7px;
+	font-size: 15px;
+	font-weight: normal;
+}
+
+
+/* 카테고리 - 내 프로필 */
+.category-profile {
+	color: black;
+	margin-bottom: 25px;
+}
+
+.category-profile span {
+	font-size: 15px;
+	font-weight: normal;
+}
+
+.category-profile li {
+	font-size: 17px;
+	margin: 10px 0 0 0;
+	/* border: 1px solid black; */
+}
+
+.category-profile a:hover {
+	font-weight: bold;
+}
+
+/* 카테고리 - 활동내역 */
+.category-activity {
+	color: black;
+	margin-bottom: 25px;
+}
+
+.category-activity li {
+	font-size: 17px;
+	margin: 10px 0 0 0;
+}
+
+/* 카테고리 - 게시판 */
+.category-activity-board {
+	margin: 0 0px 0 20px;
+}
+
+.category-activity-board li {
+	font-size: 15px;
+	margin: 5px 0 0 0;
+}
+
+.category-activity-board a:hover {
+	font-weight: bold;
+}
+
+/* 카테고리 - 레시피 */
+.category-activity-recipe {
+	margin: 0 0px 0 20px;
+}
+
+.category-activity-recipe li {
+	font-size: 15px;
+	margin: 5px 0 0 0;
+}
+
+.category-activity-recipe a:hover {
+	font-weight: bold;
+}
+
+/* 카테고리 - 밥모임 */
+.category-activity-gather {
+	margin: 0 0px 0 20px;
+}
+
+.category-activity-gather li {
+	font-size: 15px;
+	margin: 5px 0 0 0;
+}
+
+.category-activity-gather a:hover {
+	font-weight: bold;
+}
+
+.fontBold {
+    font-weight: bold;
+}
+
+
+/* 본문 내용 */
+.myroom-contents {
+	width: 710px;
+	padding: 0 5px;
+    border: 1px solid black;
+}

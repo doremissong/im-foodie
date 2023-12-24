@@ -1,0 +1,77 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/board/board.css">
+
+<!--SECTION-->
+<section>
+    <div class="board-section">
+        <div class="board-list">
+            <div class="board-main">
+                <a href="/board">전체게시판</a>
+            </div>
+			<div class="board-sub">
+				<ul class="board-sub-list">
+					<li class="board-sub-name">
+						<a href="javascript:void(0)">맛집게시판</a>
+					</li>
+					<li class="board-sub-name">
+						<a href="javascript:void(0)">자랑게시판</a>
+					</li>
+					<li class="board-sub-name">
+						<a href="javascript:void(0)">꿀팁게시판</a>
+					</li>
+					<li class="board-sub-name">
+						<a href="javascript:void(0)">자유게시판</a>
+					</li>
+					<li class="board-sub-name">
+						<a href="javascript:void(0)">나눔게시판</a>
+					</li>
+					<li class="board-sub-name">
+						<a href="javascript:void(0)">밥친구게시판</a>
+					</li>
+				</ul>
+			</div>
+        </div>
+		<div class="write-box">
+			<% if(typeof user != "undefined"){ %>
+				<!-- 로그인 상태일 시 -->
+				<a href="/board/write">
+					<button class="write-button">
+						글쓰기
+					</button>
+				</a>
+			<% } else{ %>
+				<!-- 비로그인 -->
+				<button class="write-button" onclick="alert('로그인 후 이용 가능')">
+					글쓰기
+				</button>
+			<% } %>
+		</div>
+
+		<ul class="post-index">
+			<li>
+				<div class="post-standard">
+					<p class="post-number">번호</p>
+					<p class="post-board">게시판</p>
+					<p class="post-title">제목</p>
+					<p class="post-writer">글쓴이</p>
+					<p class="post-date">작성일</p>
+					<p class="post-view">조회수</p>
+				</div>
+			</li>
+		</ul>
+        <ul class="post-list">
+            <li class="post">
+              	<div class="post-container">
+                	<p class="post-number">1</p>
+					<p class="post-board">맛집</p>
+					<p class="post-title"><a href="/board/post">제목</a></p>
+					<p class="post-writer">글쓴이</p>
+					<p class="post-date">23-01-23</p>
+					<p class="post-view">0203</p>
+              	</div>
+            </li>
+            
+        </ul>
+        
+    </div>
+</section>

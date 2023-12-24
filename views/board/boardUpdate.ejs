@@ -1,0 +1,51 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/board/boardUpdate.css">
+
+<!-- SECTION -->
+<section>
+    <div class="board-write-section">
+        <div class="board-write-wrap">
+            <div class="board-write-main">
+                게시글 수정
+            </div>
+            <form name="board-write-form" method="post">
+                <div class="board-form-box">
+                    <div class="board-write-box">
+                        <div class="board-write-category">
+                            <select name="category" required>
+                                <option value="">카테고리 선택</option>
+                                <option value="맛집" <%= (data.category == "맛집")? 'selected': '' %>>맛집</option>
+                                <option value="자랑" <%= data.category == "자랑"? 'selected': '' %>>>자랑</option>
+                                <option value="꿀팁" <%= data.category == "꿀팁"? 'selected': '' %>>>꿀팁</option>
+                                <option value="자유" <%= data.category == "자유"? 'selected': '' %>>>자유</option>
+                                <option value="나눔" <%= data.category == "나눔"? 'selected': '' %>>>나눔</option>
+                                <option value="밥친구" <%= data.category == "밥친구"? 'selected': '' %>>>밥친구</option>
+                            </select>
+                        </div>
+                        <div class="board-write-title">
+                            <input type="text" name="title" value="<%= data.title %>" value="" required />
+                        </div>
+                    </div>
+                    <div class="board-write-content">
+                        <textarea name="content" required><%= data.content %></textarea>
+                    </div>
+                    <div class="button">
+                        <!-- <script>
+                            function btn(){
+                                if(window.confirm('등록하시겠습니까?')){
+                                    document.forms['board-write-form'].submit();
+                                }
+                                else{
+                                    
+                                }
+                            }
+                            </script> -->
+
+                        <button type="submit" name="submit">등록하기</button>
+                        <!-- <button onclick="javascript:btn()">등록하기</button> -->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

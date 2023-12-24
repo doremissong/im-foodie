@@ -1,0 +1,502 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/recipe/recipeView.css">
+
+<!-- SECTION -->
+<section>
+
+    <!-- 전체 틀 -->
+    <div class="section-box">
+
+        <!-- 왼쪽 사이드바, 사실상 쓸모x -->
+        <div class="sidebar-section">
+            <div class="sidebar-box-left">
+                <a>▲</a>
+                <a>▼</a>
+                <a>🗨️</a>
+            </div>
+        </div>
+
+        <!-- 글 보여지는 가운데 화면 div -->
+        <div class="recipe-view-section">
+
+            <!-- 글 부분 -->
+            <div class="post-section">
+
+                <!-- 글 제목 부분 -->
+                <div class="post-title">
+                    <!-- 글 제목 불러오기 -->
+                    <%= data.title %>
+                </div>
+
+                <!-- 작성자 ~ 댓글 부분 -->
+                <div class="post-info-box">
+
+                    <!-- 작성자 이름과 날짜 -->
+                    <ul class="post-info-first">
+                        <li class="writer-name">
+                            <!-- 작성자 이름 불러오기 -->
+                            <%= data.writer_id %>
+                            <!--  operator_id -->
+                        </li>
+                        <li class="write-date">
+                            <!-- 작성일 불러오기 -->
+                            <%= data.createdAt.toISOString().split('T')[0] %>
+                            <%= data.createdAt.toISOString().split('T')[1].slice(0,5) %>
+                        </li>
+                    </ul>
+
+                    <!-- 조회수, 추천, 댓글 -->
+                    <ul class="post-info-second">
+                        <li class="post-views">
+                            조회
+                            <span>
+                                <!-- 조회수 불러오기 -->
+                                <%= data.viewCount %>                            
+                            </span>
+                        </li>
+                        <li class="post-ups">
+                            추천 
+                            <span id="like">
+                                <!-- 위에 아이디 삭제 ⚠️⚠️⚠️추천수 불러오기 -->
+                                <%= likeInfo.likeCount %>
+                            </span>
+                        </li>
+                        <li class="post-com-num">
+                            댓글
+                            <!-- 숫자 클릭 시 댓글 창 부분으로 이동 -->
+                            <a href="#comment">
+                                <span>
+                                    <!-- 댓글수 불러오기 -->
+                                    <%= commentInfo.count %>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            <!-- 태그 -->
+            <div class="recipe-view-tag">
+                <% tagList.forEach((name, index)=> {%> 
+                    <a a href="/recipe/list/<%= name %>">#<%=name%></a>
+                <% }) %>
+            </div>
+
+                    <!-- 쿡타임, 난이도 -->
+                    <div class="recipe-view-timelevel">
+
+                        <!-- 쿡타임 -->
+                        <div class="recipe-view-cooktime">
+                            ⏱️쿡타임 약
+                            <div class="recipe-time-on">
+                                <!-- 쿡타임 불러오기 -->
+                                <span>
+                                    <%= data.cookTime %>
+                                </span>
+                            </div>
+                            분 ,
+                        </div>
+
+                        <!-- 난이도 -->
+                        <div class="recipe-view-level">
+                            난이도 
+                            <!-- 난이도 불러오기 -->
+                            <%- Array(data.cookLevel + 1).join('⭐') %>
+                        </div>
+
+                    </div>
+
+                    <!-- 소개글과 썸네일 -->
+                    <div class="recipe-view-imgintro">
+
+                        <!-- 썸네일 -->
+                        <div class="recipe-view-thumb">
+                            <img src="/images/recipeDefault.png">
+                        </div>
+
+                        <!-- 소개글 -->
+                        <div class="recipe-view-intro">
+                            <!-- 소개글 내용 불러오기 -->
+                            <%= data.intro %>
+                        </div>
+
+                    </div>
+
+                    <!-- 재료 -->
+                    <div class="recipe-view-ingredients">
+                        
+                        <!-- 재료 타이틀 -->
+                        <div class="view-ingredients-title">
+                            재료
+                        </div>
+
+                        <!-- 재료들 -->
+                        <div class="view-ingredients-box">
+                            <% ingredientList.forEach((ingr, index)=>{ %>
+                                <!-- 재료 하나 -->
+                                <div class="view-ingredient">
+
+                                    <!-- 재료 이름 불러오기 -->
+                                    <span class="view-ingr"><%= ingr.name %></span>
+
+                                    <!-- 재료 양 불러오기 -->
+                                    <span class="view-quan"><%= ingr.amount %>, </span>
+                                </div>
+                            <% }) %>
+                        </div>
+
+                    </div>
+
+                    <!-- 단계 -->
+                    <div class="recipe-view-steps">
+
+                        <!-- 단계 타이틀 -->
+                        <div class="view-steps-title">
+                            요리
+                            <br>과정
+                        </div>
+
+                        <!-- 단계들 -->
+                        <div class="view-steps-box">
+                            <% stepList.forEach((step, index)=> { %>
+                                <!-- 단계 하나 -->
+                                <div class="view-step">
+                                    <!-- ✔️ -->
+                                    <div class="chkchk" style="font-weight: 800;"><%= step.step_no %>. </div>
+                                    
+                                    
+                                    <!-- 단계 내용 불러오기 -->
+                                    <%= step.content %>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- 추천, 스크랩하기 -->
+                <% if(typeof user != "undefined"){ %>
+                    <!-- 로그인 상태일 시 -->
+                    <div class="upscrap-box">
+                        <button id="likeButton" name="login" value="좋아요" onClick="handleLikeButtonClick();">❤️</button>
+                        <p id="likeState">  <%= likeInfo.isLiked %>  </p>
+                    </div>
+                <% } else{ %>
+                    <!-- 비로그인 -->
+                    <div class="upscrap-box">
+                        <button name="login"  onClick="alert('로그인이 필요합니다.');">🩶</button>
+                    </div>
+                <% } %>
+    
+                <!-- 글 하단 -->
+                <div class="bottom-nav">
+                    <div class="goback">
+                        <a href="/recipe/list">🔙 목록으로</a>
+                    </div>
+    
+                    <!-- 로그인한 유저가 글 작성자일때 보이기 -->
+                    <% if(typeof user != "undefined" && user.mem_id == data.writer_id) { %>
+                        <div class="editbox">
+                            <ul>
+                                <li>
+                                    <span>
+                                        <!-- 글 작성자이면 게시글 수정 페이지로 이동 -->
+                                        <a>수정</a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <!-- 글 작성자이면 게시글 삭제 -->
+                                        <a>삭제</a>
+                                        <!-- `/recipe/delete?no=${data.recipe_id}` -->
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    <% } %>
+
+                </div>       
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                menu 음식 이름; 된장찌개 등등 <br>
+                title은 '오늘의 메뉴 된장찌개!!'' 이런느김<br>
+                cooktime 조리시간<br>
+                level 음식 난이도 ⭐⭐⭐⭐⭐로 표시<br>
+            </div>
+
+        </div>
+
+        
+        <!-- 댓글 부분 -->
+        <div class="comment-section">
+            <a name="comment">
+                <div class="comment-view">
+                    <div class="comment-title">
+                        <!-- 괄호 안에 댓글수 표시 -->
+                        🗨️댓글(<%= commentInfo.count%>)
+                    </div>
+                </div>
+                <!-- 작성된 댓글이 없을 경우 -->
+                    <% if (commentInfo.dataList == ''){ %>
+                        <div class="comment-view">
+                            <div class="comment-page"></div>
+                        </div>
+                        <div class="comment-list">
+                                <div class class="com-namentime">
+                                    아직 댓글이 없어요!! 
+                                </div>
+                        </div>
+                    <% } else { %>
+                        <div class="comment-view">
+                            <div class="comment-page">
+                                <!-- 댓글 페이지, 댓글이 20개 이상일 때 1,2... 페이지 나타나기. 아래는 예시 -->
+                                <% if(commentInfo.pagination.pageNo!=1){ %>
+                                    <a id="prev-a" href="javascript:void(0);" data-page="<%= commentInfo.pagination.pageNo-1 %>" onclick="comPageClick(this.dataset.page)" >&nbsp;&lt;&nbsp;</a>
+                                <% } %>
+                                <% for (var i = commentInfo.pagination.startPage; i < commentInfo.pagination.endPage + 1; i++){ %>
+                                        <% if (commentInfo.pagination.pageNo == i){ %> 
+                                            <a href="javascript:void(0);"class="number-button" data-page="<%= i %>" style="font-weight: 800;" onclick="comPageClick(this.dataset.page)">&nbsp;<%= i %>&nbsp;</a>
+                                        <% } else { %>
+                                            <a href="javascript:void(0);"class="number-button" data-page="<%= i %>" onclick="comPageClick(this.dataset.page)">&nbsp;<%= i %>&nbsp;</a>
+                                        <% } %>
+                                <% } %>
+                                <% if (commentInfo.pagination.pageNo != commentInfo.pagination.totalPage){ %>
+                                    <a id="next-a" href="javascript:void(0);" data-page="<%= commentInfo.pagination.startPage-1 %>" onclick="comPageClick(this.dataset.page)">&nbsp;&gt;&nbsp;</a>
+                                <% } %>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-list">
+                            <% commentInfo.dataList.forEach((comment, index)=>{ %>
+                                <div class="com-namentime">
+                                    <div class="com-name">
+                                        <!-- 댓글 작성자 이름 -->
+                                        <%= comment.mem_id %>
+                                    </div>
+                                    <div class="com-time">
+                                        <!-- 댓글이 작성된 시간 -->
+                                        (<%= comment.createdAt.toISOString().split('T')[0] %>
+                                        <%= comment.createdAt.toISOString().split('T')[1].slice(0,5) %>)
+                                    </div>
+
+                                    <!-- 글 열람 유저 = 댓글 작성자이면 보이기 -->
+                                    <div class="com-editbox">
+                                        <span>수정</span>
+                                        <span>삭제</span>
+                                    </div>
+                                    
+                                </div>
+                                <div class="com-text">
+                                    <!-- 댓글 내용 -->
+                                    <%= comment.content %>
+                                </div>
+                                <% }); %>
+                        </div>
+                    <% } %>
+
+
+                <!-- 댓글 달기 -->
+                <% if(typeof user != "undefined"){ %>
+                    <!-- 로그인 상태일 시 -->
+                    <div class="comment-write">
+                        <div class="comment-write-form">    
+                            <!--  ⚠️⚠️ 폼 태그 바꿈. 231109 -->
+                            <div class="commenter">
+                                <!-- 유저 닉네임 -->
+                                <%= user.mem_id %>
+                            </div>
+                            <form id="commentForm">
+                                <div class="comment-write-section">
+                                    <div class="write-comment">
+                                        <textarea id="comment-textarea" name="content" placeholder="고운말 댓글 달기" required></textarea>
+                                    </div>
+                                    <div class="submit-button">
+                                        <button type="submit" name="submit">등록</button>
+                                    </div>
+                                </div>
+                            </form> 
+                        </div>
+                    </div>
+                <% } else{ %>
+                    <!-- 비로그인 -->
+                    <div class="non-user-comment">
+                        <textarea onclick="confirm('로그인 후 이용 가능합니다!');" placeholder="로그인하고 댓글을 달아보세요!" required></textarea>
+                    </div>
+                <% } %>
+
+                <!-- 하단 -->
+                <div class="box">
+                    <button onclick="location.href='/recipe/list'">글목록</button>
+                </div>
+            </a>
+        </div>
+        <!-- 오른쪽 사이드바 -->
+        <div class="sidebar-section">
+            <div class="sidebar-box-right">
+                <!-- header로 -->
+                <a href="#up-scroll">▲</a>
+                <!-- footer로 -->
+                <a href="#down-scroll">▼</a>
+                <!-- 댓글로 -->
+                <a href="#comment">🗨️</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<script>
+    const _recipeId = JSON.parse('<%= data.recipe_id %>');
+    if ('<%= likeInfo.isLiked %>'){
+        var isLiked = JSON.parse('<%= likeInfo.isLiked %>');
+        console.log(isLiked,'대체 왜');
+    }  
+    const numberWrapper = document.getElementsByClassName('number-button-wrapper')[0];
+    
+    function handleLikeButtonClick() {
+        console.log('recipeId: ', _recipeId, isLiked);
+        console.log(isLiked, '좋아요 누름 상태');  
+        // console.log('좋아요 버튼 클릭');
+        if(isLiked){
+            isLiked--;
+        } else{
+            isLiked++;
+        } 
+        // //AJAX 요청
+        // const likeButton = document.getElementById("likeButton").a
+        fetch(`/recipe/like`, {   //`/recipe/view?no=${_recipeId}`
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({recipeId: _recipeId, isLiked: isLiked}) // postid를 서버로 전송
+        })
+        .then(response => response.json())
+        .then(data=>{
+            console.log('서버 응답-유저 좋아요 상태: ', data.isLiked);
+            console.log('서버 응답-좋아요 수 : ', data.likeCount);
+            document.getElementById('like').innerHTML=data.likeCount;
+            document.getElementById('likeState').innerHTML = data.isLiked;
+            // data.
+            
+            //서버에서 받은 응답에 따라 클라이언트 측 처ㅣㄹ
+            if(data.success){
+                // 좋아요 반영 성공 => 이미지 변경
+                console.log('좋아요 success..!', data.isLiked);
+                if(data.isLiked)
+                    alert(data.message);
+                else
+                    alert('좋아요를 취소했습니다!');
+            } else {
+                //실패
+                console.log('failed..!');
+            }
+
+        })
+        .catch((error)=>{
+            console.error('에러발생: ', error.message);
+        });
+    }
+
+    document.getElementById("commentForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // a, submit 태그 클릭 시, 창 이동, 새로고침 실행됨. 그 동작 방지.
+        const formData = new FormData(event.target);
+        const content = formData.get("content");
+        // console.log('[recipeView.ejs] recipeId랑 content', _recipeId, content);
+        
+        fetch(`/recipe/newComment?no=<%= data.recipe_id %>&sort=earliest`, {   //`/recipe/view?no=${_recipeId}`
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({recipeId: _recipeId, content: content}) // postid를 서버로 전송
+        })
+        .then(response=> response.json())
+        .then(data=>{
+            document.getElementById("comment-textarea").value ="";
+            // fetchData 호출하기
+            fetchCommentData(data.page);    ///댓글 마지막 페이지만 가져와서 전달
+            // console.log('[서버 응답]: ',data);
+        })
+        .catch(error=>{
+            console.log('[Error]: While fetching newComment', error);
+            document.getElementById("comment-textarea").value ="";
+        })
+    })
+
+    
+        // getElementsByClassName("")[index]. 로 각 페이지 버튼 접근하자
+    // 하하, 이걸 참 어떻게 해야할지. 댓글 작성하고 댓글 페이지네이션 업데이트하면 좀 중복이잖아
+    async function fetchCommentData(page){
+        // test 페이지네이션이랑 데이터 목록 변경 확인
+        try{
+            const response = await fetch(`/recipe/getComment?no=${_recipeId}&pageno=${page}&sort=earliest`);
+            const data = await response.json();
+            const pagination = data.commentInfo.pagination;
+            const dataList = data.commentInfo.dataList;
+            const comPageDiv = document.getElementsByClassName("comment-page")[0];
+            const comListDiv = document.getElementsByClassName("comment-list")[0];
+            var contentPage = '';
+            var contentComment = '';
+            //💚 <  > 표시 확인.
+            
+            if(pagination.pageNo>1){  // 1페이지 제외 < 표시
+                contentPage += `<a id="prev-a" href="javascript:void(0);" data-page="${pagination.pageNo-1}" onclick="comPageClick(this.dataset.page)" >&nbsp;&lt;&nbsp;</a>`;
+            }
+            for (var i= pagination.startPage; i<pagination.endPage + 1; i++){
+                if (pagination.pageNo == i){
+                    contentPage += `<a href="javascript:void(0);"class="number-button" data-page="${i}" style="font-weight: 800;" onclick="comPageClick(this.dataset.page)">&nbsp;${i}&nbsp;</a>`;
+                } else{
+                    contentPage += `<a href="javascript:void(0);"class="number-button" data-page="${i}" onclick="comPageClick(this.dataset.page)">&nbsp;${i}&nbsp;</a>`;
+                }
+            }
+            if(pagination.pageNo<pagination.totalPage){
+                contentPage += `<a id="next-a" href="javascript:void(0);" data-page="${pagination.pageNo+1}" onclick="comPageClick(this.dataset.page)">&nbsp;&gt;&nbsp;</a>`;
+            }
+            comPageDiv.innerHTML = contentPage;
+
+            // 🗨️ 댓글 표시
+            try{
+                    comListDiv.innerText="";    //이거 순서랑 시간 날짜 때문에 안됐었다ㅏㅏ앙 시간 날짜 땜에 댓글이 아이디만 표시됨
+            // div.comment-list>div.com-namentime>div.com-name + div.com-time
+            //                  div.com-content
+                dataList.forEach((data, index)=>{
+                    // contentComment = 
+                    let nameNTimeDiv = document.createElement('div');
+                    nameNTimeDiv.setAttribute("class", "com-namentime");
+
+                    let nameDiv = document.createElement('div');
+                    nameDiv.setAttribute("class", "com-name");
+                    let timeDiv = document.createElement('div');
+                    timeDiv.setAttribute("class", "com-time");
+
+                    let textDiv = document.createElement('div');
+                    textDiv.setAttribute("class", "com-text");
+
+                    // div 합체!!!
+                    nameNTimeDiv.append(nameDiv, timeDiv);
+                    comListDiv.append(nameNTimeDiv, textDiv);
+
+                    nameDiv.innerText = data.mem_id;
+                    timeDiv.innerText = '('+data.createdAt.slice(0,10) + ' ' + data.createdAt.slice(11,16)+')';//'(' + data.createdAt.toISOString().split('T')[0] + data.createdAt.toISOString().split('T')[1].slice(0,5) + ')';
+                    textDiv.innerText = data.content;
+                    // comListDiv.appendChild
+            })
+        } catch(err){
+            console.log('Error: while updating comments list', err.message);
+        }
+
+        } catch (err){
+            console.log('[Error]: boardPost.ejs-fetchData and Pagination', err);
+        }
+    }
+
+    function comPageClick(page){
+        // fetch 함수에 현재 페이지 값 전송
+        fetchCommentData(page);
+    }
+
+</script>

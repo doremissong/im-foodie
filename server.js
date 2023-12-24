@@ -64,59 +64,59 @@ app.get('/changePw', (req, res) => {
 
 // board
 app.get('/board', (req, res) => {
-  res.render('board(n)');
+  res.render('board/board(n)');
 })
 
 app.get('/board/write', (req, res) => {
-  res.render('boardWrite');
+  res.render('board/boardWrite');
 })
 
 app.get('/board/update', (req, res) => {
-  res.render('boardUpdate');
+  res.render('board/boardUpdate');
 })
 
 app.get('/board/post', (req, res) => {
-  res.render('boardPost(n)');
+  res.render('board/boardPost(n)');
 })
 
 
 // gather
 app.get('/gather', (req, res) => {
-  res.render('gather(n)');
+  res.render('gather/gather(n)');
 })
 
 
 app.get('/gather/recruiting', (req, res) => {
-  res.render('gatherRecruiting(n)');
+  res.render('gather/gatherRecruiting(n)');
 })
 
 app.get('/gather/completed', (req, res) => {
-  res.render('gatherCompleted(n)');
+  res.render('gather/gatherCompleted(n)');
 })
 
 app.get('/gather/create', (req, res) => {
-  res.render('gatherCreate');
+  res.render('gather/gatherCreate');
 })
 
 app.get('/gather/mine', (req, res) => {
-  res.render('gatherMine(n)');
+  res.render('gather/gatherMine(n)');
 })
 
 app.get('/gather/imade', (req, res) => {
-  res.render('gatherImade(n)');
+  res.render('gather/gatherImade(n)');
 })
 
 app.get('/gather/joined', (req, res) => {
-  res.render('gatherJoined(n)');
+  res.render('gather/gatherJoined(n)');
 })
 
 app.get('/gather/applied', (req, res) => {
-  res.render('gatherApplied(n)');
+  res.render('gather/gatherApplied(n)');
 })
 
 
 app.get('/gather/view', (req, res) => {
-  res.render('gatherView(n)');
+  res.render('gather/gatherView(n)');
 })
 
 // gather chat
@@ -131,41 +131,41 @@ app.get('/gather/chat/room', (req, res) => {
 
 // notice
 app.get('/notice', (req, res) => {
-  res.render('notice(n)');
+  res.render('notice/notice(n)');
 })
 
 app.get('/notice/update', (req, res) => {
-  res.render('noticeUpdate');
+  res.render('notice/noticeUpdate');
 })
 
 app.get('/notice/view', (req, res) => {
-  res.render('noticeView(n)');
+  res.render('notice/noticeView(n)');
 })
 
 app.get('/notice/write', (req, res) => {
-  res.render('noticeWrite');
+  res.render('notice/noticeWrite');
 })
 
 
 // recipe
 app.get('/recipe', (req, res) => {
-  res.render('recipe');
+  res.render('recipe/recipe');
 })
 
 app.get('/recipe/list', (req, res) => {
-  res.render('recipeList(n)');
+  res.render('recipe/recipeList(n)');
 })
 
 app.get('/recipe/write', (req, res) => {
-  res.render('recipeWrite');
+  res.render('recipe/recipeWrite');
 })
 
 app.get('/recipe/view', (req, res) => {
-  res.render('recipeView(n)');
+  res.render('recipe/recipeView(n)');
 })
 
 app.get('/recipe/update', (req, res) => {
-  res.render('recipeUpdate');
+  res.render('recipe/recipeUpdate');
 })
 
 
@@ -180,5 +180,23 @@ app.get('/test', (req, res) => {
 
 // 마이룸
 app.get('/myroom', (req, res) => {
-  res.render('myroom');
+  res.render('myroom/myroom');
 })
+
+app.get('/myroom/pwcheckM', (req, res) => {
+  res.render('myroom/myroomPCM');
+})
+
+app.get('/myroom/modify', (req, res) => {
+  res.render('myroom/myroomModify');
+})
+
+app.get('/myroom/pwcheckW', (req, res) => {
+  res.render('myroom/myroomPCW');
+})
+
+app.get('/myroom/withdraw', (req, res) => {
+  res.render('myroom/myroomWithdraw');
+})
+
+
