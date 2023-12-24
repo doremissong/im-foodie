@@ -18,39 +18,17 @@
             <!-- 태그 카테고리 -->
             <div class="recipeList-sub">
 				<ul class="recipeList-sub-list">
-					<li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#초보자</a>
-					</li>
-					<li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#간단</a>
-					</li>
-					<li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#야식</a>
-					</li>
-					<li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#홈파티</a>
-					</li>
-					<li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#도시락</a>
-					</li>
-                    <li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#건강식</a>
-					</li>
-					<li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#안주</a>
-					</li>
-					<li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#디저트</a>
-					</li>
-					<li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#한식</a>
-					</li>
-					<li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#중식</a>
-					</li>
-                    <li class="recipeList-sub-name">
-						<a href="javascript:void(0)">#양식</a>
-					</li>
+                    <% tagNameList.forEach((name, index)=> { %> 
+                        <li class="recipeList-sub-name">
+                            <% if(name===curTag){ %>
+                                <a href="/recipe/list/<%= name %>" style="font-weight: 800;">#<%= name %></a>
+                            <%} else { %>
+                                <a href="/recipe/list/<%= name %>">#<%= name %></a>
+                            <% } %>
+                            <!-- <%= tagIdList[index]%> 가 tagid -->
+                        </li>
+                    <% }) %>
+                    <!-- <%= (curTag)? '/' + curTag : '🐰' %>/ -->
 				</ul>
 			</div>
 
@@ -77,7 +55,7 @@
         <div class="recipeList-content">
             
             <!-- 레시피 하나, 3번 반복하기 -->
-            <% for(var i = 0; i < 3; i++) { %>
+            <% dataList.forEach((data, index)=>{ %>
                 <div class="recipe-box">
 
                     <!-- 이미지와 태그 박스 -->
@@ -93,12 +71,10 @@
                         <div class="recipe-tag-box">
                             <!-- 태그 불러오기 -->
                             <!-- checkbox 값 전부 불러오기 -->
-                            <span>
-                                #집밥
-                            </span> 
-                            <span>
-                                #초보자
-                            </span>
+                            <!-- 현재 req.params.tag랑 같으면 bold -->
+                            <% tagList[index].tags.forEach((tag, index2)=>{ %>
+                                <span> #<%=tag%></span>
+                            <% }) %>
                         </div>
 
                     </div>
@@ -112,13 +88,15 @@
                             <!-- 제목 박스 -->
                             <div class="recipe-title-box">
                                 <!-- 제목 불러오기 -->
-                                맛있는 닭볶음탕 만들기~!
+                                <%= data.title %>
                             </div>
 
                             <!-- 날짜 박스 -->
                             <div class="recipe-date-box">
                                 <!-- 날짜 불러오기 -->
-                                2023년 11월 30일
+                                <%= data.createdAt.toISOString().slice(0,4) %>년
+                                <%= data.createdAt.toISOString().slice(5,7) %>월
+                                <%= data.createdAt.toISOString().slice(8,10) %>일
                             </div>
 
                         </div>
@@ -126,8 +104,7 @@
                         <!-- 소개글 박스 -->
                         <div class="recipe-intro-box">
                             <!-- 소개글 불러오기 -->
-                            초보자도 만들 수 있는 닭볶음탕~!
-                            치킨 말고 닭볶음탕 해 드세용
+                            <%= data.intro %>
                         </div>
 
                         <!-- 쿡타임, 난이도, 자세히보기 박스 -->
@@ -137,7 +114,7 @@
                                 ⏱️쿡타임 약
                                 <div class="recipe-time-on">
                                     <!-- 쿡타임 불러오기 -->
-                                    45
+                                    <%= data.cookTime %>
                                 </div>
                                 분 ,
                             </div>
@@ -145,25 +122,58 @@
                             <div class="recipe-level-box">
                                 난이도
                                 <div class="recipe-level-on">
-                                    ⭐⭐⭐⭐⭐
+                                    <%- Array(data.cookLevel + 1).join('⭐') %>
                                 </div>
                             </div>
 
                             <div class="recipe-details-box">
-                                <a href="recipe/view">자세히 보기 ></a>
+                                <a href="/recipe/view?no=<%= data.recipe_id %>&sort=earliest">자세히 보기 ></a>
                             </div>
                         </div>
 
                     </div>
 
                 </div>
-            <% } %>
+            <% }) %>
 
 
             <!-- 페이지네이션 -->
-            <div class="recipe-page-box">
-                1 2 3
-            </div>
+
+            <% if (dataList == ''){ %>
+                <!-- <ul class="post-list"> -->
+                    아직 레시피가 없어요. 푸디들을 위해 레시피를 공유해주세요 :D
+                    ⚠️위치 바꿔야할 거 같음. 위로
+                <!-- </ul> -->
+            <% } else { %>
+                <div class="recipe-page-box">
+                    <% if (pagination.curSet > 1){ %>
+                        /recipe/list/현재태그  
+                        <div class="prev-set-button"><a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= pagination.startPage-1%>&countperpage=10">&lt;&lt;&nbsp; </a></div>
+                    <% } %>
+                    <% if (pagination.pageNo!=1){ %>    
+                        <div class="prev-button"><a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= pagination.pageNo-1%>&countperpage=10">&nbsp;이전&nbsp;</a></div>
+                    <% } %>
+                    <div class="number-button-wrapper">
+                        <% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
+                            <span class="number-button"> 
+                                <% if (pagination.pageNo==i){ %>
+                                    <% console.log(i, pagination.pageNo); %>
+                                    <a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= i %>&countperpage=10" style="font-weight: 800;"><%= i %></a>
+                                <% } else{ %>
+                                    <a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= i %>&countperpage=10"><%= i %></a>
+                                <% } %>
+                            </span>
+                        <% } %>
+                    </div>
+                    <% if (pagination.pageNo != pagination.totalPage){ %>
+                        <div class="next-button"><a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= pagination.pageNo+1%>&countperpage=10"> &nbsp;이후&nbsp;</a></div>
+                    <% }%>
+                    <% if (pagination.curSet < pagination.totalSet){ %>
+                        <div class="next-set-button"><a href="/recipe/list<%= (curTag)? '/' + curTag : '' %>?pageno=<%= pagination.endPage+1%>&countperpage=10">&nbsp;&gt;&gt;</a></div>
+                    <% }%>
+                </div>
+            <% } %>
+
         </div>
 
     </div>

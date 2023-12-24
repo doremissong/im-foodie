@@ -153,7 +153,7 @@ app.get('/recipe', (req, res) => {
 })
 
 app.get('/recipe/list', (req, res) => {
-  res.render('recipeList');
+  res.render('recipeList(n)');
 })
 
 app.get('/recipe/write', (req, res) => {
@@ -161,7 +161,7 @@ app.get('/recipe/write', (req, res) => {
 })
 
 app.get('/recipe/view', (req, res) => {
-  res.render('recipeView');
+  res.render('recipeView(n)');
 })
 
 app.get('/recipe/update', (req, res) => {
