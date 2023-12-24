@@ -33,32 +33,34 @@ app.get('/', (req, res) => {
   res.render('index');
 })
 
+
+// member
 app.get('/signup', (req, res) => {
-  res.render('signup');
+  res.render('member/signup');
 })
 
 app.get('/login', (req, res) => {
-  res.render('login(n)');
+  res.render('member/login(n)');
 })
 
 
 // id
 app.get('/findId', (req, res) => {
-  res.render('findId');
+  res.render('member/findId');
 })
 
 app.get('/showId', (req, res) => {
-  res.render('showId(n)');
+  res.render('member/showId(n)');
 })
 
 
 // pw
 app.get('/findPw', (req, res) => {
-  res.render('findPw');
+  res.render('member/findPw');
 })
 
 app.get('/changePw', (req, res) => {
-  res.render('changePw');
+  res.render('member/changePw');
 })
 
 
