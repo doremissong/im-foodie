@@ -15,54 +15,54 @@ function signUpClick() {
 
     if(confirm("가입하시겠습니까?") == true ) {
         if (signUpId.length == 0 || signUpId.value == '') {
-            alert("아이디 입력");
+            alert("아이디를 입력해주세요!");
             signUpId.focus();
             return false;
         }
         else if (document.getElementById("isChecked").value != 1) {
-            alert("아이디 중복체크 해주세요!");
+            alert("아이디의 중복체크를 확인해주세요!");
             return false;
         }
         else if (signUpPw.length == 0 || signUpPw.value == '') {
-            alert("비밀번호 입력");
+            alert("비밀번호 입력해주세요!");
             signUpPw.focus();
             return false;
         }
         else if (signUpName.length == 0 || signUpName.value == '') {
-            alert("이름 입력");
+            alert("이름을 입력해주세요!");
             signUpName.focus();
             return false;
         }
         else if (signUpEmail.length == 0 || signUpEmail.value == '') {
-            alert("이메일 입력");
+            alert("이메일을 입력해주세요!");
             signUpEmail.focus();
             return false;
         }
         else if (signUpTel.length == 0 || signUpTel.value == '') {
-            alert("연락처 입력");
+            alert("연락처를 입력해주세요!");
             signUpTel.focus();
             return false;
         }
         else if (signUpNeighbor.length == 0 || signUpNeighbor.value == '') {
-            alert("주소 확인");
+            alert("주소를 확인해주세요!");
             // signUpNeighbor.focus();
             return false;
         }
         else if (signUpBirth.length == 0 || signUpBirth.value == '') {
-            alert("생년월일 입력");
+            alert("생년월일을 입력해주세요!");
             signUpBirth.focus();
             return false;
         }
         else if (signUpAM != 1) {
-            alert("이용약관 동의하기");
+            alert("이용약관에 동의하셔야 가입하실 수 있습니다!");
             return false;
         }
         else if (signUpPN != 1) {
-            alert("개인정보 처리방침 동의하기");
+            alert("개인정보 처리방침에 동의하셔야 가입하실 수 있습니다!");
             return false;
         }
         else if (signUpEI != 1 && signUpEI != 0 ) {
-            alert("이메일 수신 확인");
+            alert("이메일 수신 여부에 대해 동의/비동의 해주세요!");
             return false;
         }
 
