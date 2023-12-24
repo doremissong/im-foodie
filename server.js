@@ -103,15 +103,15 @@ app.get('/gather/mine', (req, res) => {
 })
 
 app.get('/gather/imade', (req, res) => {
-  res.render('gatherImade');
+  res.render('gatherImade(n)');
 })
 
 app.get('/gather/joined', (req, res) => {
-  res.render('gatherJoined');
+  res.render('gatherJoined(n)');
 })
 
 app.get('/gather/applied', (req, res) => {
-  res.render('gatherApplied');
+  res.render('gatherApplied(n)');
 })
 
 
