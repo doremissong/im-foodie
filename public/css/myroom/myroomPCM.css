@@ -140,5 +140,41 @@
 .myroom-contents {
 	width: 710px;
 	padding: 0 5px;
-    border: 1px solid black;
+	display: flex;
+	justify-content: center;
+}
+
+.myroom-pw-check {
+	margin-top: 35px;
+}
+
+.myroom-pw-check span {
+	font-size: 18px;
+	font-weight: bold;
+	color: black;
+}
+
+.pw-check-box {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.pw-check-box input[type="password"] {
+	width: 200px;
+	height: 30px;
+	padding: 10px 15px;
+	margin-right: 20px;
+}
+
+.pw-check-box button {
+	cursor: pointer;
+	width: 110px;
+	padding: 5px;
+	border: 1px solid gainsboro;
+	border-radius: 2px;
+}
+
+.pw-check-box button:hover {
+	background-color: rgb(194, 184, 184);
 }

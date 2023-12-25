@@ -185,6 +185,10 @@ app.get('/myroom', (req, res) => {
   res.render('myroom/myroom');
 })
 
+app.get('/myroom/changePw', (req, res) => {
+  res.render('myroom/myroomCPW');
+})
+
 app.get('/myroom/pwcheckM', (req, res) => {
   res.render('myroom/myroomPCM');
 })

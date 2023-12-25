@@ -1,5 +1,5 @@
 <!-- STYLESHEET -->
-<link rel="stylesheet" href="/css/myroom/myroomBLike.css">
+<link rel="stylesheet" href="/css/myroom/myroomCPW.css">
     
 <!-- SECTION -->
 <section>
@@ -20,7 +20,7 @@
                 <span>내 프로필</span>
                 <ul class="category-profile">
                     <li class="category-align"><span>◆</span>
-                        <a href="/myroom/changePW">
+                        <a class="fontBold" href="/myroom/changePW">
                             비밀번호 변경
                         </a>
                     </li>
@@ -48,7 +48,7 @@
                                 <a href="/myroom/board/comment">등록한 댓글</a>
                             </li>
                             <li>- 
-                                <a class="fontBold" href="/myroom/board/like">좋아요 누른 게시글</a>
+                                <a href="/myroom/board/like">좋아요 누른 게시글</a>
                             </li>
                         </ul>
                     <li class="category-align"><span>◆</span> 레시피</li>
@@ -66,7 +66,7 @@
                     <li class="category-align"><span>◆</span> 밥모임</li>
                         <ul class="category-activity-gather">
                             <li>- 
-                                <a href="/myroom/gather/my">나의 밥모임?</a>
+                                <a href="/gather/mine">나의 밥모임</a>
                             </li>
                             <li>- 
                                 <a href="/myroom/chat/list">채팅 목록</a>
@@ -76,7 +76,19 @@
             </div>
             <!-- 내용 -->
             <div class="myroom-contents">
-                
+                <div class="in-text">
+                    <span class="material-icons">person</span>
+                    <div>비밀번호 변경하기</div>
+                </div>
+                <div class="change-pw-box">
+                    <form name="change-pw" method="post">
+                        <span>기존 비밀번호</span>
+                        <input type="password" name="old_password" placeholder="기존 비밀번호" required>
+                        <span>새로운 비밀번호</span>
+                        <input type="password" name="new_password" placeholder="새로운 비밀번호" required>
+                        <button type="submit" name=", change-pw">비밀번호 변경</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

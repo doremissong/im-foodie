@@ -20,6 +20,11 @@
                 <span>내 프로필</span>
                 <ul class="category-profile">
                     <li class="category-align"><span>◆</span>
+                        <a href="/myroom/changePW">
+                            비밀번호 변경
+                        </a>
+                    </li>
+                    <li class="category-align"><span>◆</span>
                         <a class="fontBold" href="/myroom/pwcheckM">
                             회원정보 수정
                         </a>
@@ -71,7 +76,78 @@
             </div>
             <!-- 내용 -->
             <div class="myroom-contents">
-                내용
+                <div class="up-text">
+                    <span class="material-icons">badge</span>
+                    <div>회원정보 수정하기</div>
+                </div>
+                <div class="up-texttext">* 표시가 된 입력란은 필수 기입란입니다.</div>
+                    <form name="" action="" method="POST" onsubmit="return confirm('수정하시겠습니까?')">
+                        <table class="up-form">
+                            <tbody>
+                                <tr class="row">
+                                    <td class="t-text">아이디*</td>
+                                    <td class="t-box-none">
+                                        qwer1234
+                                    </td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="t-text">이름*</td>
+                                    <td class="t-box-none">
+                                        초코케이크
+                                    </td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="t-text">이메일*</td>
+                                    <td class="t-box">
+                                        <input type="email" id="upEmail" name="email" placeholder="이메일" value="" required >
+                                    </td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="t-text">연락처*</td>
+                                    <td class="t-box">
+                                        <input type="tel" id="upTel" name="tel" placeholder="연락처" pattern="[0-9]{11}" value="" required>
+                                    </td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="t-text">주소*</td>
+                                    <td class="t-box">
+                                        <div class="up-region">
+                                            <div class="region_box">
+                                                <select name="city" id="city1"></select>
+                                                <select name="district" id="district1"></select>
+                                                <select name="neighborhood" id="neighborhood1"></select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="t-text">생년월일*</td>
+                                    <td class="t-box">
+                                        <input type="text" id="birthdate" name="birthdate" placeholder="'-'없이 YYMMDD" pattern="[0-9]{6}" value="" required>
+                                    </td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="t-text">프로필 이미지</td>
+                                    <td class="t-box">
+                                        <input type="url" name="profile_image" placeholder="프로필 이미지 주소" value="">
+                                    </td>
+                                </tr>
+                                <!-- <tr class="row">
+                                    <td class="t-text">이메일 수신 동의*</td>
+                                    <td class="t-box">
+                                        <label><input type="radio" name="notification_flag" value="1">동의</label>
+                                        <label><input type="radio" name="notification_flag" value="0">비동의</label>
+                                        <div class="t-box-text">이메일로 정보 알림을 받으실 수 있습니다.</div>
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                        <div class="button">
+                            <input type="submit" name="submit" value="수정하기">
+                            <a href="/myroom">취소</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

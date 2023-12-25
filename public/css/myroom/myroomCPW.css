@@ -135,45 +135,54 @@
 }
 
 
+
 /* 본문 내용 */
 .myroom-contents {
 	width: 710px;
 	padding: 0 5px;
+}
+
+.in-text {
 	display: flex;
 	justify-content: center;
+    width: 100%;
+    margin-top: 35px;
+	padding-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+	border-bottom: 1px solid #e6e6e6;
 }
 
-.myroom-pw-check {
-	margin-top: 35px;
+.in-text span {
+	margin-right: 10px;
 }
 
-.myroom-pw-check span {
-	font-size: 18px;
-	font-weight: bold;
-	color: black;
+.change-pw-box {
+    margin: auto;
+    display: block;
+    padding: 50px 0 0 0;
+    width: 500px;
 }
 
-.pw-check-box {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
+.change-pw-box input[name="old_password"],
+.change-pw-box input[name="new_password"] {
+    width: 100%;
+    padding: 20px;
+    border: none;
+    border: 1px solid #dddddd;
+    margin-bottom: 20px;
+    box-sizing:border-box;
+    background-color: rgba(255, 228, 196, 0.218);
 }
 
-.pw-check-box input[type="password"] {
-	width: 200px;
-	height: 30px;
-	padding: 10px 15px;
-	margin-right: 20px;
-}
-
-.pw-check-box button {
-	cursor: pointer;
-	width: 110px;
-	padding: 5px;
-	border: 1px solid gainsboro;
-	border-radius: 2px;
-}
-
-.pw-check-box button:hover {
-	background-color: rgb(194, 184, 184);
+button {
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    display: block;
+    border: none;
+    width: 500px;
+    height: 80px;
+    cursor: pointer;
+    background-color: rgba(250, 172, 37, 0.712);
 }

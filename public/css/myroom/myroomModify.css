@@ -140,5 +140,134 @@
 .myroom-contents {
 	width: 710px;
 	padding: 0 5px;
-    border: 1px solid black;
+}
+
+.up-text {
+    display: flex;
+	justify-content: center;
+    width: 100%;
+    margin-top: 35px;
+	padding-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.up-text span {
+	margin-right: 10px;
+}
+
+.up-texttext {
+    margin: 10px;
+    font-size: 13px;
+}
+
+.up-form {
+    width: 100%;
+    padding-top: 20px;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+.row {
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.t-text {
+    width: 230px;
+    padding-left: 20px;
+    vertical-align: middle;
+    background-color: #F6F5F0;
+}
+
+.t-box {
+    padding: 10px;
+}
+
+.t-box-none {
+    padding: 15px;
+    font-size: 15px;
+}
+
+.t-box-text {
+    padding: 10px 0px 0px 2px;
+    font-size: 13px;
+    color: #777;
+}
+
+.t-text a {
+    color: #777;
+    font-size: 14px;
+    margin: 0px 5px;
+    text-decoration-line: underline;
+}
+
+.up-form input[name="mem_id"],
+.up-form input[name="password"],
+.up-form input[name="name"],
+.up-form input[name="nickname"],
+.up-form input[name="email"],
+.up-form input[name="tel"],
+.up-form input[name="birthdate"], 
+.up-form input[name="profile_image"] {
+    width: 250px;
+    height: 40px;
+    padding: 15px;
+    border: 1px solid #dddddd;
+    box-sizing:border-box;
+}
+
+.t-box label {
+    color: #777;
+    font-size: 14px;
+    margin-right: 20px;
+}
+
+input[name="submit"] {
+    width: 100px;
+    padding: 15px;
+    margin: 0px 20px;
+    background-color: #dddddd;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: bold;   
+}
+
+
+.button {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.button a {
+    width: 100px;
+    padding: 15px;
+    margin: 0px 20px;
+    background-color: #535b63;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* 지역 */
+.up-region select {
+    width: 90px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    background: url('/images/arrow.jpg') no-repeat 105% 50%;
+    background-color: white;
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    font-size: 13px;
+    color: #6c6c6c;
+}
+
+select:focus {
+    outline: none;
 }

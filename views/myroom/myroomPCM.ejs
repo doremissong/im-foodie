@@ -20,6 +20,11 @@
                 <span>내 프로필</span>
                 <ul class="category-profile">
                     <li class="category-align"><span>◆</span>
+                        <a href="/myroom/changePW">
+                            비밀번호 변경
+                        </a>
+                    </li>
+                    <li class="category-align"><span>◆</span>
                         <a class="fontBold" href="/myroom/pwcheckM">
                             회원정보 수정
                         </a>
@@ -71,10 +76,18 @@
             </div>
             <!-- 내용 -->
             <div class="myroom-contents">
-                개인정보 수정을 위해 비밀번호를 다시 한번 확인해주세요. 
-                <input type="password" name="password" placeholder="비밀번호" maxlength='20' value="">
-                <!-- 입력한 비밀번호가 현재 회원의 비밀번호가 맞으면 /myroom/modify로 이동 -->
-                <button type="button">비밀번호 확인</button>
+
+                <div class="myroom-pw-check">
+                    <span>개인정보 수정을 위해 비밀번호를 다시 한 번 입력해주세요❗</span>
+
+                    <div class="pw-check-box">
+                        <input type="password" name="password" placeholder="비밀번호" maxlength='20' value="">
+                        <!-- 입력한 비밀번호가 현재 회원의 비밀번호가 맞으면 /myroom/modify로 이동 -->
+                        <button type="button">비밀번호 확인</button>
+                    </div>
+                    
+                </div>
+                
             </div>
         </div>
     </div>
