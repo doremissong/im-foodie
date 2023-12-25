@@ -106,7 +106,7 @@ module.exports = {
     },
 
     showSignupPage: (req, res) => {
-        res.render("signUp");
+        res.render("member/signUp");
         // res.sendFile(path.join(__dirname, "../public/html/signup.html"));
     },
 
@@ -143,7 +143,7 @@ module.exports = {
     },
 
     login: (req,res)=>{
-        res.render("login");
+        res.render("member/login");
         // res.sendFile(path.join(__dirname, "../public/html/login.html"));
     },
 
@@ -221,7 +221,7 @@ module.exports = {
     },
 
     showFindIdPage: (req, res)=>{
-        res.render("findId");
+        res.render("member/findId");
         // res.sendFile(path.join(__dirname, "../public/html/find-id.html"));
     },
 
@@ -237,12 +237,12 @@ module.exports = {
             where: { name: name, email: email }
         });
         // res.send(foundId.mem_id);
-        res.render("showId", {mem_id: foundId.mem_id});
+        res.render("member/showId", {mem_id: foundId.mem_id});
         // }
     },
 
     showFindPwPage: (req, res)=>{
-        res.render("findPw");
+        res.render("member/findPw");
         // res.sendFile(path.join(__dirname, "../public/html/find-pw.html"));
     },
 
@@ -303,7 +303,7 @@ module.exports = {
 
     showChangePwPage: (req, res)=>{
         //❗‼변경 페이지 받기
-        res.render("changePw", {user: req.user});
+        res.render("member/changePw", {user: req.user});
     },
 
     changePw: async(req, res)=>{

@@ -14,7 +14,7 @@ module.exports = {
                 obj.dataList = res.locals.dataList;
                 // console.log(`[TEST] SHOWMAINPAGE`, obj);
                 // obj.operator = req.operator;
-                res.render('notice', obj);
+                res.render('notice/notice', obj);
             // } catch (err){
             //     console.log(`[ERROR] showMainPage check getPaginationInfo ${err}`);
             //     res.redirect('/');
@@ -30,7 +30,7 @@ module.exports = {
             }
             obj.noticeId = req.query.ntc_no;
             // obj.operator_id = req.operator.id;
-            res.render('noticeWrite', obj);
+            res.render('notice/noticeWrite', obj);
         } catch (err) {
             res.redirect('/notice');
             console.log(`[Error]: There's no ntc_no in url - showWritePage - notice`, err);
@@ -63,7 +63,7 @@ module.exports = {
 
             // 관리자 아이디 obj에 너허어
             // obj.operator_id = req.operator.id;
-            res.render('noticeUpdate', obj);
+            res.render('notice/noticeUpdate', obj);
         } else{
             res.redirect('/notice');
             console.log(`[Error]: There's no ntc_no in url - showUpdatePage`);
@@ -101,7 +101,7 @@ module.exports = {
                     // attributes : [], 관리자 id 빼고, 제목, 내용, 시간, 
                     where: { notice_id: noticeId }});
                 console.log(`showNotice컨트롤러:`, obj.dataList);
-                res.render('noticeView', obj);
+                res.render('notice/noticeView', obj);
             } catch (err){
                 console.log(`[ERROR] select a notice - showNotice`);
                 res.redirect('/notice', );

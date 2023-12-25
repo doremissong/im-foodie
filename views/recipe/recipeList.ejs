@@ -1,5 +1,5 @@
 <!-- STYLESHEET -->
-<link rel="stylesheet" href="/css/recipeList.css">
+<link rel="stylesheet" href="/css/recipe/recipeList.css">
 
 <!--SECTION-->
 <section>
@@ -109,6 +109,15 @@
 
                         <!-- 쿡타임, 난이도, 자세히보기 박스 -->
                         <div class="time-level-details">
+
+                            <div class="recipe-menu-box">
+                                📑메뉴 :
+                                <div class="recipe-menu-on">
+                                    <!-- 쿡타임 불러오기 -->
+                                    <%= data.menu %>
+                                </div>
+                                ,
+                            </div>
 
                             <div class="recipe-time-box">
                                 ⏱️쿡타임 약

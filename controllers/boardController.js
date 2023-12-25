@@ -132,7 +132,7 @@ module.exports = {
             obj.dataList = res.locals.dataList;
             obj.pathname = req.params.category? '/'+req.params.category: '';
             // storeUrl(req,res);
-            res.render('board', obj);
+            res.render('board/board', obj);
         } else {
             res.send("문제: 게시판 showPage");
             res.redirect("/board");
@@ -179,7 +179,7 @@ module.exports = {
             }
             // storeUrl(req,res);
             console.log(obj);
-            res.render("boardPost", obj);// { user: req.user, post: data, likeCount: likeCount,  });
+            res.render("board/boardPost", obj);// { user: req.user, post: data, likeCount: likeCount,  });
 
         } catch (err) {
             // res.redirect(err)
@@ -191,7 +191,7 @@ module.exports = {
     showWritePage: (req, res)=>{
         try{
             // storeUrl(req,res);
-            res.render("boardWrite", { user: req.user });
+            res.render("board/boardWrite", { user: req.user });
         } catch(err){
             redirect(req,res);
         }
@@ -228,7 +228,7 @@ module.exports = {
         obj.data = data;
         console.log('updatePost-data보내기전: ', obj);
 
-        res.render("boardUpdate", obj);
+        res.render("board/boardUpdate", obj);
         // res.send('hi working?');
     },
 

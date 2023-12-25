@@ -41,7 +41,7 @@ module.exports={
     //     res.json(err);
     // }
 
-        res.render("recipeMain", obj);
+        res.render("recipe/recipeMain", obj);
     },
 
     showRecipeListPage: async(req, res)=>{
@@ -148,7 +148,7 @@ module.exports={
         }
         obj.curTag = req.params.tag;
         console.log(obj.curTag);
-        res.render('recipeList', obj);
+        res.render('recipe/recipeList', obj);
         // console.log('tagList 값 확인////', obj);
     },
 
@@ -180,7 +180,7 @@ module.exports={
         try {
             obj.recipeId = req.query.recipe_no;
             // obj.operator_id = req.operator.id;
-            res.render('recipeWrite', obj);
+            res.render('recipe/recipeWrite', obj);
         } catch (err) {
             res.redirect('/recipe');
             console.log(`[Error]: There's no recipe_no in url - showWritePage - recipe`, err);
@@ -263,7 +263,7 @@ module.exports={
         console.log('따로국밥: ', obj);
         // 관리자 아이디 obj에 너허어
         // obj.operator_id = req.operator.id;
-        res.render('recipeUpdate', obj);
+        res.render('recipe/recipeUpdate', obj);
     },
 
     showRecipe: async (req, res)=>{
@@ -353,7 +353,7 @@ module.exports={
             console.log(`[ERROR] select a recipe - showRecipe`, err);
             res.redirect('/recipe',);
         }
-            res.render('recipeView', obj);
+            res.render('recipe/recipeView', obj);
     },
 
     // # 해시태그로 검색은??❓

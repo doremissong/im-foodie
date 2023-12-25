@@ -180,7 +180,7 @@ module.exports={
         obj.recruitingList = recruitingList;
         obj.completedList = completedList;
         
-        res.render("gather", obj);
+        res.render("gather/gather", obj);
     },
 
     showCreatePage: (req, res)=>{
@@ -189,7 +189,7 @@ module.exports={
             obj.user = req.user;
         }
         // res.render("createGather", obj);
-        res.render("gatherCreate", obj);
+        res.render("gather/gatherCreate", obj);
     },
 
     showUpdatePage: async (req, res)=>{
@@ -223,7 +223,7 @@ module.exports={
             // res.redirect('/recipe');
             res.send(err);
         }
-        res.render("gatherUpdate", obj);
+        res.render("gather/gatherUpdate", obj);
     },
 
      // /gather/view?id나 no=gathering_id 화면
@@ -310,7 +310,7 @@ module.exports={
         // 작성자면 => [수정/삭제]
         // 모임원이면 => [탈퇴]
         console.log('obj test:', obj);
-        res.render("gatherView", obj);
+        res.render("gather/gatherView", obj);
 
     },
     showCertainList: async(req, res)=>{
@@ -330,19 +330,19 @@ module.exports={
         const mode = req.url.split('?',1).join('').slice(1);    // 배열 -> 문자열
         switch (mode) {
             case 'completed':
-                certainName = 'gatherCompleted';
+                certainName = 'gather/gatherCompleted';
                 break;
             case 'recruiting':
-                certainName = 'gatherRecruiting';
+                certainName = 'gather/gatherRecruiting';
                 break;
             case 'imade':
-                certainName = 'gatherImade';
+                certainName = 'gather/gatherImade';
                 break;
             case 'joined':
-                certainName ='gatherJoined';
+                certainName ='gather/gatherJoined';
                 break;
             case 'applied':
-                certainName = 'gatherApplied';
+                certainName = 'gather/gatherApplied';
                 // console.log('신청한 거:', obj.dataList[0].dataValues.participants[0].dataValues.state);
                 const stateList = obj.dataList.map(data => data.participants[0].dataValues.state);
                 // console.log('test', stateList);
@@ -365,7 +365,7 @@ module.exports={
         obj.listJoined = await getGatherListAsMember(req,res);
         obj.listApplied = await getGatherListOfApply(req,res);
         // res.send(obj);
-        res.render("gatherMine", obj);
+        res.render("gather/gatherMine", obj);
     },
 
     showIAppliedPage: async (req, res) => {   // 페이지네이션 필요
@@ -383,7 +383,7 @@ module.exports={
         //아니,, 신청중, 거절됨은 state도 participant state가 필요함.
         obj.pagination = res.locals.paginationInfo;
         obj.dataList = res.locals.dataList;
-        res.render("gatherApplied", obj);
+        res.render("gather/gatherApplied", obj);
 
     },
         
