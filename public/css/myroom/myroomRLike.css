@@ -205,7 +205,7 @@
 }
 
 .post-title {
-	width: 380px;
+	width: 330px;
 	padding: 7px 10px;
 	font-size: 15px;
 	text-align: center;
@@ -225,8 +225,8 @@
 	background-color: #d7d7d7;
 }
 
-/* .post-writer {
-	width: 110px;
+.post-writer {
+	width: 105px;
 	padding: 7px 5px;
 	font-size: 15px;
 	text-align: center;
@@ -240,7 +240,7 @@
 	padding: 10px 5px;
 	font-size: 17px;
 	font-weight: bold;
-} */
+}
 
 .post-date {
 	width: 100px;

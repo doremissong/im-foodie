@@ -165,7 +165,7 @@
     display: flex;
     align-items: center;
 	margin: auto;
-    border-bottom: 2px solid #d7d7d7;
+    border-bottom: 1px solid #d7d7d7;
 }
 
 .post-container {
@@ -173,6 +173,7 @@
     display: flex;
     align-items: center;
 	margin: auto;
+	border-top: 1px solid #d7d7d7;
     border-bottom: 1px solid #d7d7d7;
 }
 
@@ -205,7 +206,7 @@
 }
 
 .post-title {
-	width: 380px;
+	width: 330px;
 	padding: 7px 10px;
 	font-size: 15px;
 	text-align: center;
@@ -225,8 +226,8 @@
 	background-color: #d7d7d7;
 }
 
-/* .post-writer {
-	width: 110px;
+.post-writer {
+	width: 105px;
 	padding: 7px 5px;
 	font-size: 15px;
 	text-align: center;
@@ -240,7 +241,7 @@
 	padding: 10px 5px;
 	font-size: 17px;
 	font-weight: bold;
-} */
+}
 
 .post-date {
 	width: 100px;
@@ -267,4 +268,19 @@
 	padding: 10px 5px;
 	font-size: 17px;
 	font-weight: bold;
+}
+
+/* comment */
+.my-comment-box {
+	display: flex;
+	margin: 10px 10px 15px 10px;
+	padding-left: 37px;
+}
+
+.my-comment {
+	width: 602px;
+	margin: 0px 0 0 5px;
+	padding: 5px 7px;
+	border: 1px dashed rgb(0, 0, 0);
+	border-radius: 3px;
 }

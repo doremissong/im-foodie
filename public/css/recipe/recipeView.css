@@ -184,11 +184,26 @@
     /* border: 1px solid black; */
 }
 
+/* 메뉴 */
+.recipe-view-menu {
+    display: flex;
+    width: 250px;
+    justify-content: end;
+    align-items: center;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.recipe-view-menu span {
+    font-weight: bold;
+    margin: 0 5px;
+}
+
 /* 쿡타임 */
 .recipe-view-cooktime {
     display: flex;
-    width: 190px;
-    justify-content: end;
+    width: 160px;
+    justify-content: center;
     align-items: center;
     font-size: 18px;
     margin-right: 10px;

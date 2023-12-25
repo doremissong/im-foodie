@@ -220,3 +220,11 @@ app.get('/myroom/board/Like', (req, res) => {
 app.get('/myroom/recipe/post', (req, res) => {
   res.render('myroom/myroomRPost');
 })
+
+app.get('/myroom/recipe/comment', (req, res) => {
+  res.render('myroom/myroomRComment');
+})
+
+app.get('/myroom/recipe/Like', (req, res) => {
+  res.render('myroom/myroomRLike');
+})

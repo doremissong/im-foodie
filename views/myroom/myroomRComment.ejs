@@ -1,5 +1,5 @@
 <!-- STYLESHEET -->
-<link rel="stylesheet" href="/css/myroom/myroomRPost.css">
+<link rel="stylesheet" href="/css/myroom/myroomRComment.css">
     
 <!-- SECTION -->
 <section>
@@ -54,10 +54,10 @@
                     <li class="category-align"><span>◆</span> 레시피</li>
                         <ul class="category-activity-recipe">
                             <li>- 
-                                <a class="fontBold" href="/myroom/recipe/post">작성한 레시피</a>
+                                <a href="/myroom/recipe/post">작성한 레시피</a>
                             </li>
                             <li>- 
-                                <a href="/myroom/recipe/comment">등록한 댓글</a>
+                                <a class="fontBold" href="/myroom/recipe/comment">등록한 댓글</a>
                             </li>
                             <li>- 
                                 <a href="/myroom/recipe/like">좋아요 누른 레시피</a>
@@ -76,10 +76,10 @@
             </div>
             <!-- 내용 -->
             <div class="myroom-contents">
-
+                
                 <div class="up-text">
-                    <span class="material-symbols-outlined">contract_edit</span>
-                    <div>내가 작성한 레시피</div>
+                    <span class="material-symbols-outlined">comment</span>
+                    <div>내가 등록한 댓글</div>
                 </div>
 
                 <ul class="post-index">
@@ -87,6 +87,7 @@
                         <div class="post-standard">
                             <p class="post-board">메뉴</p>
                             <p class="post-title">제목</p>
+                            <p class="post-writer">작성자</p>
                             <p class="post-date">작성일</p>
                             <p class="post-view">조회수</p>
                         </div>
@@ -95,48 +96,62 @@
 
                 <ul class="post-list">
 
-                    <!-- 리스트 불러오기 -->
+                    <!-- 리스트 불러오기(내가 등록한 댓글의 레시피 정보) -->
                     <li class="post">
                         <div class="post-container">
                             <p class="post-board">된장찌개</p>
-                            <p class="post-title"><a href="/recipe/view">맛있는 된장찌개</a></p>
+                            <p class="post-title"><a href="/recipe/view">맛있는 된장찌개~!</a></p>
+                            <p class="post-writer">초코케이크</p>
                             <p class="post-date">2023-12-25</p>
                             <p class="post-view">203</p>
                         </div>
                     </li>
+                    <li class="my-comment-box">
+                        <span class="material-symbols-outlined">subdirectory_arrow_right</span>
+                        <div class="my-comment">
+                            <!-- 내가 등록한 댓글 -->
+                            덕분에 맛있는 된장찌개 해먹었어요~!덕분에 맛있는 된장찌개 해먹었어요~!덕분에 맛있는 된장찌개 해먹었어요~!덕분에 맛있는 된장찌개 해먹었어요~!덕분에 맛있는 된장찌개 해먹었어요~!
+                        </div>
+                    </li>
 
-                    <!-- 리스트 불러오기 -->
+                    <!-- 리스트 불러오기(내가 등록한 댓글의 레시피 정보) -->
                     <li class="post">
                         <div class="post-container">
                             <p class="post-board">고추장찌개</p>
-                            <p class="post-title"><a href="/recipe/view">나는 고추장찌개가 좋아</a></p>
+                            <p class="post-title"><a href="/recipe/view">고추장찌개</a></p>
+                            <p class="post-writer">초코케이크</p>
                             <p class="post-date">2023-12-25</p>
                             <p class="post-view">203</p>
                         </div>
                     </li>
+                    <li class="my-comment-box">
+                        <span class="material-symbols-outlined">subdirectory_arrow_right</span>
+                        <div class="my-comment">
+                            <!-- 내가 등록한 댓글 -->
+                            굿
+                        </div>
+                    </li>
 
-                    <!-- 리스트 불러오기 -->
+                    <!-- 리스트 불러오기(내가 등록한 댓글의 레시피 정보) -->
                     <li class="post">
                         <div class="post-container">
-                            <p class="post-board">소불고기</p>
-                            <p class="post-title"><a href="/recipe/view">소불고기 소불고기 소불고기</a></p>
+                            <p class="post-board">닭볶음탕탕탕</p>
+                            <p class="post-title"><a href="/recipe/view">초보 닭볶음탕</a></p>
+                            <p class="post-writer">초코케이크</p>
                             <p class="post-date">2023-12-25</p>
                             <p class="post-view">203</p>
                         </div>
                     </li>
-
-                    <!-- 리스트 불러오기 -->
-                    <li class="post">
-                        <div class="post-container">
-                            <p class="post-board">닭볶음탕탕탕탕</p>
-                            <p class="post-title"><a href="/recipe/view">아주 쉬운 닭볶음탕~~!</a></p>
-                            <p class="post-date">2023-12-25</p>
-                            <p class="post-view">203</p>
+                    <li class="my-comment-box">
+                        <span class="material-symbols-outlined">subdirectory_arrow_right</span>
+                        <div class="my-comment">
+                            <!-- 내가 등록한 댓글 -->
+                            ㅎㅎ
                         </div>
                     </li>
 
                 </ul>
-                
+
             </div>
         </div>
     </div>
