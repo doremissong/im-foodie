@@ -1,0 +1,267 @@
+/* SECTION */
+.myroom-section {
+    width: 950px;
+    margin: auto;
+    position: relative;
+    /* display: flex;
+    flex-wrap: wrap; */
+}
+
+.gather-list {
+	width: 930px;
+	padding: 40px 0px 15px 10px;
+	/* background-color: azure; */
+}
+
+.gather-main {
+  	font-size: 20pt;
+	padding: 0px 0px 10px 20px;
+  	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-color: #e3d7cf;
+	/* background-color: skyblue; */
+}
+
+/* 본문 전체 박스 */
+.myroom-box {
+	width: 940px;
+	display: flex;
+	padding: 10px 5px;
+	/* border: 1px solid black; */
+}
+
+/* 카테고리 */
+.myroom-category {
+	width: 180px;
+	padding: 0 10px 0px 10px;
+	margin-bottom: 10px;
+	margin-right: 20px;
+	border-right: 1px solid rgb(190, 184, 184);
+}
+
+.myroom-category span {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.category-align {
+	display: flex;
+	align-items: center;
+}
+
+.category-align span {
+	margin-right: 7px;
+	font-size: 15px;
+	font-weight: normal;
+}
+
+
+/* 카테고리 - 내 프로필 */
+.category-profile {
+	color: black;
+	margin-bottom: 25px;
+}
+
+.category-profile span {
+	font-size: 15px;
+	font-weight: normal;
+}
+
+.category-profile li {
+	font-size: 17px;
+	margin: 10px 0 0 0;
+	/* border: 1px solid black; */
+}
+
+.category-profile a:hover {
+	font-weight: bold;
+}
+
+/* 카테고리 - 활동내역 */
+.category-activity {
+	color: black;
+	margin-bottom: 25px;
+}
+
+.category-activity li {
+	font-size: 17px;
+	margin: 10px 0 0 0;
+}
+
+/* 카테고리 - 게시판 */
+.category-activity-board {
+	margin: 0 0px 0 20px;
+}
+
+.category-activity-board li {
+	font-size: 15px;
+	margin: 5px 0 0 0;
+}
+
+.category-activity-board a:hover {
+	font-weight: bold;
+}
+
+/* 카테고리 - 레시피 */
+.category-activity-recipe {
+	margin: 0 0px 0 20px;
+}
+
+.category-activity-recipe li {
+	font-size: 15px;
+	margin: 5px 0 0 0;
+}
+
+.category-activity-recipe a:hover {
+	font-weight: bold;
+}
+
+/* 카테고리 - 밥모임 */
+.category-activity-gather {
+	margin: 0 0px 0 20px;
+}
+
+.category-activity-gather li {
+	font-size: 15px;
+	margin: 5px 0 0 0;
+}
+
+.category-activity-gather a:hover {
+	font-weight: bold;
+}
+
+.fontBold {
+    font-weight: bold;
+}
+
+
+/* 본문 내용 */
+.myroom-contents {
+	width: 710px;
+	padding: 0 5px;
+}
+
+.up-text {
+    display: flex;
+	justify-content: center;
+    width: 100%;
+    margin-top: 35px;
+	padding-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.up-text span {
+	margin-right: 10px;
+}
+
+.post {
+  	list-style-type: none;
+}
+
+.post-standard {
+	width: 680px;
+    display: flex;
+    align-items: center;
+	margin: auto;
+    border-bottom: 2px solid #d7d7d7;
+}
+
+.post-container {
+	width: 680px;
+    display: flex;
+    align-items: center;
+	margin: auto;
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.post-index {
+	width: 680px;
+	margin: auto;
+	border-top: 2px solid #d7d7d7;
+	margin-top: 30px;
+}
+
+.post-list {
+	margin-bottom: 30px;
+}
+
+.post-board {
+	width: 75px;
+	padding: 7px 5px;
+	font-size: 15px;
+	text-align: center;
+	border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-board {
+	padding: 10px 5px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.post-title {
+	width: 380px;
+	padding: 7px 10px;
+	font-size: 15px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-title {
+	padding: 10px 10px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.post-container .post-title:hover {
+	background-color: #d7d7d7;
+}
+
+/* .post-writer {
+	width: 110px;
+	padding: 7px 5px;
+	font-size: 15px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-writer {
+	padding: 10px 5px;
+	font-size: 17px;
+	font-weight: bold;
+} */
+
+.post-date {
+	width: 115px;
+	padding: 7px 5px;
+	font-size: 15px;
+	text-align: center;
+	border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-date {
+	padding: 10px 5px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.post-view {
+	width: 60px;
+	padding: 7px 5px;
+	font-size: 15px;
+	text-align: center;
+}
+
+.post-standard .post-view {
+	padding: 10px 5px;
+	font-size: 17px;
+	font-weight: bold;
+}

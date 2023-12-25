@@ -217,3 +217,6 @@ app.get('/myroom/board/Like', (req, res) => {
   res.render('myroom/myroomBLike');
 })
 
+app.get('/myroom/recipe/post', (req, res) => {
+  res.render('myroom/myroomRPost');
+})

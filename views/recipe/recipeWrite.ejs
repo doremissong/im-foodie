@@ -71,6 +71,14 @@
                     <!-- 쿡타임과 난이도 별표시 -->
                     <div class="timenstar">
 
+                        <!-- 메뉴 -->
+                        <div class="menu-label">
+                            📑메뉴
+                            <div class="menu-box">
+                                <input type="text" name="menu" placeholder="ex) 된장찌개" requird>
+                            </div>
+                        </div>
+
                         <!-- 쿡타임 -->
                         <div class="cooktime-label">
                             ⏱️쿡타임 약 
@@ -79,7 +87,7 @@
                             </div>
                             분
                         </div>
-                            
+
                         <!-- 난이도 별표시 -->
                         <div class="levelstar-label">
                             난이도
@@ -146,7 +154,7 @@
                         <!-- 재료 타이틀 -->
                         <div class="ingredients-title">
                             <span>재료 입력하기</span>
-                            <INPUT type="button" value="추가하기" onclick="addBox(this.form)">
+                            <INPUT type="button" value="추가하기" onclick="addBox()">
                         </div>
 
                         <!-- 재료 입력란 -->
@@ -174,7 +182,7 @@
                         <!-- 단계 타이틀 -->
                         <div class="content-title">
                             <span>단계 입력하기</span>
-                            <INPUT type="button" value="추가하기" onclick="addStepBox(this.form)">
+                            <INPUT type="button" value="추가하기" onclick="addStepBox()">
                         </div>
 
                         <!-- 단계 입력란 -->

@@ -134,14 +134,38 @@
     font-weight: bold;
 }
 
-/* 쿡타임 */
-.cooktime-label {
-    width: 455px;
+/* 메뉴 */
+.menu-label {
+    width: 294px;
     height: 45px;
     display: flex;
     align-items: center;
-    padding-left: 10px;
+    padding-left: 15px;
+    /* font-size: 18px; */
 
+}
+.menu-box {
+    margin: 0 5px;
+}
+
+.menu-box input[name="menu"] {
+    width: 200px;
+    height: 32px;
+    padding: 6px 8px;
+    margin-left: 5px;
+    font-size: 13px;
+    border: 1px solid #dddddd;
+    box-sizing:border-box;
+}
+
+/* 쿡타임 */
+.cooktime-label {
+    width: 297px;
+    height: 45px;
+    border-left: 2px dashed gray;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
 }
 
 .cooktime-box {
@@ -159,7 +183,7 @@
 
 /* 난이도 */
 .levelstar-label {
-    width: 50px;
+    width: 52px;
     height: 45px;
     border-left: 2px dashed gray;
     display: flex;
@@ -169,7 +193,7 @@
 }
 
 .levelstar-box {
-    width: 400px;
+    width: 240px;
     height: 45px;
     display: flex;
     align-items: center;
