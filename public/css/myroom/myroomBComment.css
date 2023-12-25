@@ -139,5 +139,145 @@
 .myroom-contents {
 	width: 710px;
 	padding: 0 5px;
-    border: 1px solid black;
+}
+
+.up-text {
+    display: flex;
+	justify-content: center;
+    width: 100%;
+    margin-top: 35px;
+	padding-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.up-text span {
+	margin-right: 10px;
+}
+
+.post {
+  	list-style-type: none;
+}
+
+.post-standard {
+	width: 680px;
+    display: flex;
+    align-items: center;
+	margin: auto;
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.post-container {
+	width: 680px;
+    display: flex;
+    align-items: center;
+	margin: auto;
+	border-top: 1px solid #d7d7d7;
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.post-index {
+	width: 680px;
+	margin: auto;
+	border-top: 2px solid #d7d7d7;
+	margin-top: 30px;
+}
+
+.post-list {
+	margin-bottom: 30px;
+}
+
+.post-board {
+	width: 75px;
+	padding: 7px 5px;
+	font-size: 15px;
+	text-align: center;
+	border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-board {
+	padding: 10px 5px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.post-title {
+	width: 330px;
+	padding: 7px 10px;
+	font-size: 15px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-title {
+	padding: 10px 10px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.post-container .post-title:hover {
+	background-color: #d7d7d7;
+}
+
+.post-writer {
+	width: 110px;
+	padding: 7px 5px;
+	font-size: 15px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-writer {
+	padding: 10px 5px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.post-date {
+	width: 110px;
+	padding: 7px 5px;
+	font-size: 15px;
+	text-align: center;
+	border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-date {
+	padding: 10px 5px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.post-view {
+	width: 60px;
+	padding: 7px 5px;
+	font-size: 15px;
+	text-align: center;
+}
+
+.post-standard .post-view {
+	padding: 10px 5px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+/* comment */
+.my-comment-box {
+	display: flex;
+	margin: 10px 10px 15px 10px;
+	padding-left: 37px;
+}
+
+.my-comment {
+	width: 602px;
+	margin: 0px 0 0 5px;
+	padding: 5px 7px;
+	border: 1px dashed rgb(0, 0, 0);
+	border-radius: 3px;
 }
