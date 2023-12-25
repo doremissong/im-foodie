@@ -11,7 +11,6 @@ const NOT_ENTERED = 0,
     CONNECTED = 1,
     DISCONNECTED = 2;
 // ISACCEPTED
-
 getGatherParams = (info, isModifying, _memId)=>{
     // 작성자 추출. req.session.user? 아니면 req.user에서 id 가져와야하ㅁ.
     var result = {};
@@ -142,6 +141,16 @@ searchParticipants = async (_cols, _state, _gatherId, _memId, _condition)=> {
     //columns 는 필요한 컬럼 object 가입한 목록은,
     return list;
 };
+// testInclude = async()=>{    // INCLUDE는 undefined로 해야 안됨
+//     const result = await db.gathering.findAll({
+//         where: {
+//             leader_id: 'brown'
+//         },
+//         include:undefined
+//     });
+//     console.log('include result:', result);
+// }
+// testInclude();
 
 // 얘네 호출 전에는 isLoggedIn 확인
 module.exports={
@@ -239,8 +248,10 @@ module.exports={
             if (!data || data.length == 0) { // 검색어 없으면 
                 console.log('[ERROR] WRONG ACCESS');
                 res.redirect('/gather');
+                // return;
+            } else{
+                obj.gatherData = data;
             }
-            obj.gatherData = data;
             // console.log('obj test:', obj);
         } catch(err){
             console.log('[ERROR] While getting data on gathering from DB ', err);
@@ -302,34 +313,49 @@ module.exports={
         res.render("gatherView", obj);
 
     },
-    showRecruitingList: async (req, res, next) => {
+    showCertainList: async(req, res)=>{
+        var certainName = '';
         const obj = {};
-        if(req.user){
-            obj.user=req.user;
+        if (req.user) {
+            obj.user = req.user;
         }
-        if(!res.locals.paginationInfo || !res.locals.dataList){
+        if (!res.locals.paginationInfo || !res.locals.dataList) {
             console.log('[ERROR] check pagination data.');
             // res.redirect(res.locals.history);
             res.redirect('/gather');
         }
         obj.pagination = res.locals.paginationInfo;
         obj.dataList = res.locals.dataList;
-        res.render("gatherRecruiting", obj);
-    },
-    showCompletedList: async (req, res) => {
-        const obj = {};
-        if(req.user){
-            obj.user=req.user;
+
+        const mode = req.url.split('?',1).join('').slice(1);    // 배열 -> 문자열
+        switch (mode) {
+            case 'completed':
+                certainName = 'gatherCompleted';
+                break;
+            case 'recruiting':
+                certainName = 'gatherRecruiting';
+                break;
+            case 'imade':
+                certainName = 'gatherImade';
+                break;
+            case 'joined':
+                certainName ='gatherJoined';
+                break;
+            case 'applied':
+                certainName = 'gatherApplied';
+                // console.log('신청한 거:', obj.dataList[0].dataValues.participants[0].dataValues.state);
+                const stateList = obj.dataList.map(data => data.participants[0].dataValues.state);
+                // console.log('test', stateList);
+                obj.stateList = stateList;
+                // console.log('스테이트', ptctList);
+                break;
+            default:
+                res.redirect('/gather');
+                break;
         }
-        if(!res.locals.paginationInfo || !res.locals.dataList){
-            console.log('[ERROR] check pagination data.');
-            // res.redirect(res.locals.history);
-            res.redirect('/gather');
-        }
-        obj.pagination = res.locals.paginationInfo;
-        obj.dataList = res.locals.dataList;
-        res.render("gatherCompleted", obj);
+        res.render(certainName, obj);
     },
+    
     showMyGatherList: async(req, res)=>{
         const obj = {};
         if(req.user){
@@ -342,37 +368,6 @@ module.exports={
         res.render("gatherMine", obj);
     },
 
-    showIMadePage: async (req, res) => { // 페이지네이션 필요
-        const obj = {};
-        if(req.user){
-            obj.user=req.user;
-        }
-        if(!res.locals.paginationInfo || !res.locals.dataList){
-            console.log('[ERROR] check pagination data.');
-            // res.redirect(res.locals.history);
-            res.redirect('/gather');
-        }
-        obj.pagination = res.locals.paginationInfo;
-        obj.dataList = res.locals.dataList;
-        res.render("gatherImade", obj);
-    },
-    // 💚show completed, recruiting, joined, applied, imade 다 또같음. url 잘라서 swtich문하자!!!!
-    showJoinedPage: async (req, res) => {   //페이지네이션 필요
-        const obj = {};
-        if(req.user){
-            obj.user=req.user;
-        }
-        if(!res.locals.paginationInfo || !res.locals.dataList){
-            console.log('[ERROR] check pagination data.');
-            // res.redirect(res.locals.history);
-            res.redirect('/gather');
-        }
-        obj.pagination = res.locals.paginationInfo;
-        obj.dataList = res.locals.dataList;
-        res.render("gatherjoined", obj);
-    },
-
-
     showIAppliedPage: async (req, res) => {   // 페이지네이션 필요
         const obj = {};
         if(req.user){
@@ -383,6 +378,9 @@ module.exports={
             // res.redirect(res.locals.history);
             res.redirect('/gather');
         }
+        console.log(res.locals.dataList);
+        
+        //아니,, 신청중, 거절됨은 state도 participant state가 필요함.
         obj.pagination = res.locals.paginationInfo;
         obj.dataList = res.locals.dataList;
         res.render("gatherApplied", obj);
@@ -391,7 +389,7 @@ module.exports={
         
 
 
-    findGatheringId: (req, res, next)=>{
+    findGatheringId: async (req, res, next)=>{
         // recipe 서치 참고. 아니면 공지사항 서치 참고
         
         if(!req.user){
@@ -402,29 +400,51 @@ module.exports={
         // res.locals.condition={};
         const obj = { mem_id: memId };
         res.locals.condition = {};
-        res.locals.condition.mem_id= memId;
+        // res.locals.condition.mem_id= memId;
         const mode = req.url.split('?',1).join('').slice(1);    // 배열 -> 문자열
         switch (mode) {
             case 'imade':
-                res.locals.condition = ISLEADER;
+                // res.locals.condition.state = ISLEADER;
                 obj.state = ISLEADER;
                 break;
             case 'joined':
-                res.locals.condition = ISMEMBER;
+                // res.locals.condition.state = ISMEMBER;
                 obj.state = ISMEMBER;
                 break;
             case 'applied':
-                res.locals.condition = [ISAPPLYING, ISREFUSED];
+                // res.locals.condition.state = [ISAPPLYING, ISREFUSED];
                 obj.state = [ISAPPLYING, ISREFUSED];
+                res.locals.includeCondition = {
+                    model: db.participant,
+                    attributes: ['state', 'state'],
+                    where: { 
+                        mem_id: memId,
+                        state: [ISAPPLYING, ISREFUSED] 
+                    },
+                    as: "participants",
+                }
                 break;
             default:
                 res.redirect('/gather');
                 break;
         }
         // res.locals.condition = obj;
-        console.log(obj, 'gctl');
-        console.log(res.locals.condition, 'gctl');
-        res.locals.condition = obj;
+        const gatherData = await searchParticipants(['gathering_id', 'state'], obj.state, undefined, memId);
+        console.log('검색한 모임 아이디 결과:', gatherData);
+        // console.log(obj, 'gctl');
+        if (gatherData && gatherData.length != 0) {
+            res.locals.condition.gathering_id = gatherData.map(data => data.gathering_id);
+            // if(mode=='applied'){
+            //     const arr = [];
+            //     for (let i = 0; i < gatherData.length;){
+            //         arr[gatherData[i].gathering_id].push(gatherData[i].state);
+            //     }
+            //     console.log('아이디랑 state짝짓기', arr);
+            // }
+            
+        }
+        // console.log(res.locals.condition, 'gctl');
+        // res.locals.condition = obj;
         console.log(res.locals.condition, 'gctl');
 
         next();
@@ -578,7 +598,7 @@ module.exports={
         const _gatherId = req.query.no;
         const _message = req.body.message;
         var isApplying = false;
-
+        console.log(req.body);
         console.log(_message, '메시이지ㅣ');
         // 해당 모임이 모집중인지 확인해야함. 아냐 화면이 이동이 없으니까 url 손대지는 못할거야
 
@@ -897,19 +917,18 @@ module.exports={
         const _memId = req.user.mem_id;
         console.log('roomId: ', res.locals.roomId, 'mem_id: ', _memId);
 
-        const isMember= await searchParticipant(['mem_id'], [ISLEADER, ISMEMBER], _gatherId, _memId);
-        // const isMember2 = await db.participant.findOne({
-        //     attribute: ['mem_id'],
-        //     where:{ 
-        //         gathering_id: res.locals.roomId,
-        //         mem_id: req.user.mem_id,
-        //         state: { [Op.or]: [ISLEADER, ISMEMBER] }
-        //     }
-        // });
-        // console.log('isMember- findOne한 결과값이 없으면 false가 나올까?, null 나옴.)',!isMember);
+        try{
+            const isMember = await searchParticipant(['mem_id'], [ISLEADER, ISMEMBER], _gatherId, _memId);
+            if (!isMember) { res.redirect('/gather/chat/list'); }
+            else { 
+                next();
+            }
+        } catch(err){
+            console.log('[ERROR] While searching participant table', err);
+            next(err);
+        }
         // res.locals.roomId = _gatherId;   <-- 그럼 왜한거지? selectroomd에서 필요벗느데
-        if (!isMember) { res.redirect('/gather/chat/list'); }
-        next();
+        // next();
     },
 
 

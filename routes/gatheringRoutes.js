@@ -22,9 +22,11 @@ router.get("/delete", isLoggedIn, gatheringController.deleteGather);
 
 // countperpage=9. state=0 모집중, state=1 모집 완료
 // 2) 모집중 목록
-router.get("/completed", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCompletedList);
+// router.get("/completed", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCompletedList);
+router.get("/completed", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
 // 3) 모집완료 목록
-router.get("/recruiting", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showRecruitingList);
+// router.get("/recruiting", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showRecruitingList);
+router.get("/recruiting", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
 
 // 4) 나의 밥모임 목록
 router.get("/mine", storeUrl, isLoggedIn, /*밥모임설정스 */gatheringController.showMyGatherList);
@@ -33,23 +35,17 @@ router.get("/mine", storeUrl, isLoggedIn, /*밥모임설정스 */gatheringContro
                                         // ㄴ state로 group . group에 limit 가능??
                                         //  ( group by로 묶어서 5개씩만 가져올 수 있나?) 안됨 따로 따로 가져와야함.
 // 4) - 내가 만든 모임
-router.get("/imade", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showIMadePage);
-// (req,res)=>{
-//     const obj = { dataList: ""};
-//     res.render("gatherImade",obj);
-// });
+// router.get("/imade", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showIMadePage);
+router.get("/imade", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
+
 // 4) - 내가 참여한 모임
-router.get("/joined", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showJoinedPage);
-// (req, res)=>{
-//     const obj = { dataList: ""};
-//     res.render("gatherJoined", obj);
-// });
+// router.get("/joined", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showJoinedPage);
+router.get("/joined", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
+
 // 4) - 신청한 모임
-router.get("/applied", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showIAppliedPage);
-// (req, res)=>{
-//     const obj = { dataList: ""};
-//     res.render("gatherApplied", obj);
-// })
+// router.get("/applied", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showIAppliedPage);
+router.get("/applied", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
+
 
 // 7) 밥모임 상세 페이지
 router.get("/view", storeUrl, gatheringController.showView);

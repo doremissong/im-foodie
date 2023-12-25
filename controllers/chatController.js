@@ -84,9 +84,9 @@ module.exports = io => {
                     mem_id: memId,
                     content: memId+'님이 입장하셨습니다 :)',
                 },
-                // {transaction:t}
+                {transaction:t}
                 )
-                await db.chat.create(messageAttributes, { transaction: t });
+                // await db.chat.create(messageAttributes, { transaction: t });
 
             } else if(isParticipant.isConnected == CONNECTED) {
                 //true면, load message 호출. isConnected:2로 설정.?? 왜 2로 설정?

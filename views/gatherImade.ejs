@@ -59,7 +59,7 @@
 						<div class="imade-list-index">
 							<div class="imade-index-name">
 								<!-- 해당 밥모임 view 페이지로 이동 -->
-								<a href="/gather/view?no=<%= data.gahtering_id %>">
+								<a href="/gather/view?no=<%= data.gathering_id %>">
 									<%= data.name %>
 								</a>
 							</div>
@@ -74,23 +74,31 @@
 								<div class="imade-region">
 									모임 지역 : 
 									<span>
-										<%= data.city + ' ' + data.district + ' ' +data.neighborhood %>
+										<%= data.city%>
+										<%= data.district? data.district: ''%>
+										<%= data.neighborhood?data.neighborhood: ''%>
 									</span>
 								</div>
 	
 								<div class="imade-spot">
 									함께 할 맛집 : 
-									<span><%= data.place %>왕짜장</span>
+									<span><%= data.place %></span>
 								</div>
 								
 								<div class="imade-numbers">
 									모임 인원수 (현재 / 총원) : 
-									<span><%= data.currentHeadCount %> / <%= data.maximumHeadCount %> 3 / 5</span>
+									<span>
+										<%= data.currentHeadCount %> / <%= data.maximumHeadCount %>
+									</span>
 								</div>
 							
 								<div class="imade-deadline">
 									모집 마감일 : 
-									<span><%= data.deadline.toISOString().slice(0,10); %>2023년 12월 31일</span>
+									<span>
+										<%= data.createdAt.toISOString().slice(0,4) %>년
+										<%= data.createdAt.toISOString().slice(5,7) %>월
+										<%= data.createdAt.toISOString().slice(8,10) %>일
+									</span>
 								</div>
 
 								<div class="imade-intro">
@@ -98,57 +106,25 @@
 										소개글 : 
 									</div>
 									<div class="imade-intro-text">
-										안녕하세요~ 소개글 내용! 안녕하세요~ 소개글 내용! 안녕하세요~ 소개글 내용! 안녕하세요~ 소개글 내용! 
+										<%= data.description %>
 									</div>
 								</div>
 							</div>
 	
 							<div class="imade-gochat">
-								<button>채팅방</button>
+								<!-- <button>채팅방</button> -->
+								<form action="/gather/chat/room" method="get">
+									<input type="text" name="roomId" value="<%= data.gathering_id %>" hidden>
+									<input type="text" name="name" value="<%= data.name %>"hidden>
+									<button type="submit">입장하기</button>
+								</form>
 							</div>
-						
 						</div>
                     <% }) %>
                 </div>
 			<% } %>
 		</div>
 		
-    </div>
-        <ul class="post-list">
-			<!-- 어디서 온 코드지?? -->
-            <% dataList.forEach((data, index)=>{ %>
-                <li class="post">
-                    <div class="post-container">
-						<!-- 페이지네이션수정 -->
-                        <p class="post-number"><%= dataList.gathering_id %></p>
-                        <p class="post-title"><a href="/gather/details?id=<%= data.gathering_id %>"><%= data.name %></a></p>
-                        <p class="post-writer"><%= data.leader_id %></p>
-                        <p class="post-date"><%= data.deadline.toISOString().slice(0,10) %></p>
-						<% if(data.state==0){ %>
-							<p class="post-date">모집중</p>
-						<% } else if(data.state==1) { %>
-							<p class="post-date">모집마감 (2)수정</p>
-						<% } %>
-						<p class="post-date">
-							<!-- /gather/edit?id=<%= data.gathering_id %>-->
-							<% if (data.leader_id == user.mem_id){ %>
-								<a href="">
-									<button class="write-button">
-										관리
-									</button>
-								</a>
-							<% } else{ %>
-								<a href="">
-									<button class="write-button">
-										어떤 버튼으로 할까
-									</button>
-								</a>
-							<% } %>
-						</p>
-                    </div>
-                </li>
-            <% }); %>
-        </ul>
     </div>
 	
 </section>

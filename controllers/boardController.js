@@ -178,6 +178,7 @@ module.exports = {
                 // console.log('obj 값 확인 : ', obj.commentInfo);
             }
             // storeUrl(req,res);
+            console.log(obj);
             res.render("boardPost", obj);// { user: req.user, post: data, likeCount: likeCount,  });
 
         } catch (err) {

@@ -68,8 +68,8 @@ exports.setDBModel = (modelType) => {
     return (req, res, next) => {
         res.locals.model = modelType;
         console.log(modelType, "'s model type is", typeof modelType);
-        res.locals.condition = res.locals.condtion? res.locals.condition : {};
-        console.log(res.locals.condtion, 'mw');
+        console.log(res.locals.condition, 'mw');
+        res.locals.condition = res.locals.condition? res.locals.condition : {};
 
         // gathering
         if(req.query.gsort){
@@ -148,6 +148,7 @@ exports.setDBModel = (modelType) => {
 exports.getPaginationInfo = async (req, res, next)=>{
     // ❤️ condition을 req.query로 받아도 되지 않을까? 라우터가 넘 번잡해
 
+    // console.log('include 값:', res.locals.includeCondition);
     // res.locals에 model, condition이 저장되지 않았으면 에러 페이지 이동하게 해야함.
     const model = res.locals.model;
     if(this.isEmpty(model)){
@@ -212,11 +213,12 @@ exports.getPaginationInfo = async (req, res, next)=>{
     //위에 카운트에서도 되던게 여기선 안되는매직
     try {
         const dataList = await model.findAll({
-            // include:
+            include: res.locals.includeCondition?res.locals.includeCondition:undefined,
             where: condition,
             order: res.locals.sort? res.locals.sort: [["createdAt", "DESC"]],
             limit: countPerPage,
-            offset: startItemNo
+            offset: startItemNo,
+            // raw:true
         });
         res.locals.dataList = dataList;
         // console.log('middleware - pagination - dataList 값 확인:', dataList, typeof dataList);

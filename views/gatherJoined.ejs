@@ -60,7 +60,6 @@
 								<!-- 해당 밥모임 view 페이지로 이동 -->
 								<a href="/gather/view?no=<%=data.gathering_id%>">
 									<%= data.name %>
-									같이 왕짜장 먹으러 갈 사람~!~!~!
 								</a>
 							</div>
 							<div class="joined-index-btn">
@@ -78,23 +77,31 @@
 								<div class="joined-region">
 									모임 지역 : 
 									<span>
-										<%= data.city + ' ' + data.district + ' ' +data.neighborhood %>
+										<%= data.city%>
+										<%= data.district? data.district: ''%>
+										<%= data.neighborhood?data.neighborhood: ''%>
 									</span>
 								</div>
 								
 								<div class="joined-spot">
 									함께 할 맛집 : 
-									<span><%= data.place %>왕짜장</span>
+									<span><%= data.place %></span>
 								</div>
 
 								<div class="joined-numbers">
 									모임 인원수 (현재 / 총원) : 
-									<span><%= data.currentHeadCount %> / <%= data.maximumHeadCount %> 3 / 5</span>
+									<span>
+										<%= data.currentHeadCount %> / <%= data.maximumHeadCount %>
+									</span>
 								</div>
 						
 								<div class="joined-deadline">
 									모집 마감일 : 
-									<span><%= data.deadline.toISOString().slice(0,10); %>2023년 12월 31일</span>
+									<span>
+										<%= data.createdAt.toISOString().slice(0,4) %>년
+										<%= data.createdAt.toISOString().slice(5,7) %>월
+										<%= data.createdAt.toISOString().slice(8,10) %>일
+									</span>
 								</div>
 
 								<div class="joined-intro">
@@ -108,7 +115,11 @@
 							</div>
 
 							<div class="joined-gochat">
-								<button>채팅방</button>
+								<form action="/gather/chat/room" method="get">
+									<input type="text" name="roomId" value="<%= data.gathering_id %>" hidden>
+									<input type="text" name="name" value="<%= data.name %>"hidden>
+									<button type="submit">입장하기</button>
+								</form>
 							</div>
 					
 						</div>
