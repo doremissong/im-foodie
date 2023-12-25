@@ -7,8 +7,18 @@ const errorController = require('../controllers/errorController');
 const { isNotLoggedIn, isLoggedIn, setDBModel, getPaginationInfo, storeUrl } = require('./middlewares');
 const { get } = require('../config/email');
 
-// 1) 밥모임 메인
+// 1) 밥모임 메인 ✅
 router.get("/", gatheringController.showMainGatherPage);
+
+// 2) 밥모임 C_UD ✅
+router.get("/create", isLoggedIn, gatheringController.showCreatePage);
+router.post("/create", isLoggedIn, gatheringController.createGather);
+// ⚠️지역 기본값 설정 안됨
+router.get("/update", isLoggedIn, gatheringController.showUpdatePage);
+router.post("/update", isLoggedIn, gatheringController.updateGather);
+
+router.get("/delete", isLoggedIn, gatheringController.deleteGather);
+
 
 // countperpage=9. state=0 모집중, state=1 모집 완료
 // 2) 모집중 목록
@@ -22,55 +32,34 @@ router.get("/mine", storeUrl, isLoggedIn, /*밥모임설정스 */gatheringContro
                                         // ㄴ order: ['updateAt', 'ASC']
                                         // ㄴ state로 group . group에 limit 가능??
                                         //  ( group by로 묶어서 5개씩만 가져올 수 있나?) 안됨 따로 따로 가져와야함.
-// //test
-// router.get("/test", gatheringController.checkMember);
-
-// router.get("/test2", gatheringController.test2);
-
-// 5) 밥모임 생성
-router.get("/create", isLoggedIn, gatheringController.showCreatePage);
-router.post("/create", isLoggedIn, gatheringController.createGather);
-
-router.get("/update", isLoggedIn, gatheringController.showUpdatePage);
-router.post("/update", isLoggedIn, gatheringController.updateGather);
-
-router.get("/delete", isLoggedIn, gatheringController.deleteGather);
-
-// 6) 밥모임 신청하기
-// router.get("/apply", isLoggedIn, gatheringController.showGatherApplyPage);
-router.post("/apply", isLoggedIn, gatheringController.applyForGather);
-
-router.get("/acceptMember", isLoggedIn, gatheringController.acceptMember);
-router.get("/refuseMember", isLoggedIn, gatheringController.refuseMember);
-router.get("/banMember", isLoggedIn, gatheringController.banMember);
-
-router.get("/imade", (req,res)=>{
-    const obj = { dataList: ""};
-    res.render("gatherImade",obj);
-});
-
-router.get("/joined", (req, res)=>{
-    const obj = { dataList: ""};
-    res.render("gatherJoined", obj);
-});
-
-router.get("/applied", (req, res)=>{
-    const obj = { dataList: ""};
-    res.render("gatherApplied", obj);
-})
+// 4) - 내가 만든 모임
+router.get("/imade", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showIMadePage);
+// (req,res)=>{
+//     const obj = { dataList: ""};
+//     res.render("gatherImade",obj);
+// });
+// 4) - 내가 참여한 모임
+router.get("/joined", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showJoinedPage);
+// (req, res)=>{
+//     const obj = { dataList: ""};
+//     res.render("gatherJoined", obj);
+// });
+// 4) - 신청한 모임
+router.get("/applied", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showIAppliedPage);
+// (req, res)=>{
+//     const obj = { dataList: ""};
+//     res.render("gatherApplied", obj);
+// })
 
 // 7) 밥모임 상세 페이지
 router.get("/view", storeUrl, gatheringController.showView);
 
-// 8) 방장의 멤버 목록  ⚠️멤버 목록을 멤버도 볼 수 있어야해. 그 컨트롤러 함수를 만들어서 여기저기 이용하는게 나을 듯
-// router.get("/memberlist", (req,res)=>{res.send(req.query.gatheringId)});
-router.get("/memberlist", gatheringController.showMemberOfGathering);
+// 6) 밥모임 신청하기
+router.post("/apply", isLoggedIn, gatheringController.applyForGather);
+router.get("/acceptMember", isLoggedIn, gatheringController.acceptMember);
+router.get("/refuseMember", isLoggedIn, gatheringController.refuseMember);
+router.get("/banMember", isLoggedIn, gatheringController.banMember);
 
-// /chat 채팅
-// router.get("/chat", (req, res) => {
-//     console.log(req.query.roomId, '는 roomId');
-//     res.render("chat", { currentUser: req.user.mem_id, roomId: req.query.roomId });//ㅆ발 post로 했는데 왜 getdmfh rksirh
-// })
 
 // 1) 채팅 목록
 router.get("/chat/list", isLoggedIn, gatheringController.showChatList);
@@ -81,6 +70,11 @@ router.get("/chat/room", isLoggedIn, gatheringController.checkMember, gatheringC
 // router.get("/room", isLoggedIn, gatheringController.checkMember, gatheringController.showChatRoom);
 // post로만 들어오게
 // router.post("/chat/room", isLoggedIn, gatheringController.checkMember, gatheringController.selectRoom);
+
+// //test
+// router.get("/test", gatheringController.checkMember);
+
+// router.get("/test2", gatheringController.test2);
 
 router.use(errorController.pageNotFoundError);
 router.use(errorController.internalServerError);

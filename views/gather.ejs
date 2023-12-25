@@ -175,7 +175,7 @@
 			</div>
 		</div>
 		
-
+ '자세히' 모달창/ view로 어떻게 넘어갈지
 		<!-- 밥모임 카테고리 -->
         <div class="gather-list">
             <div class="gather-main">
@@ -243,7 +243,9 @@
 								</span>
 								<span class="gather-region">
 									<!-- 지역 -->
-									<%= data.city + ' ' + data.district + ' ' +data.neighborhood %>
+									<%= data.city%>
+									<%= data.district? data.district: ''%>
+									<%= data.neighborhood?data.neighborhood: ''%>
 								</span>
 								<span class="gather-number">
 									<!-- 현인원/총원 -->
@@ -334,7 +336,9 @@
 								</span>
 								<span class="gather-region">
 									<!-- 서울시 노원구 공릉동 -->
-									<%= data.city + ' ' + data.district + ' ' +data.neighborhood %>
+									<%= data.city%>
+									<%= data.district? data.district: ''%>
+									<%= data.neighborhood?data.neighborhood: ''%>
 								</span>
 								<span class="gather-number">
 									<!-- 현인원/총원 -->

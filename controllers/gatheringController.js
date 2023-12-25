@@ -2,6 +2,7 @@ const gathering = require('../models/gathering');
 const {db, sequelize,} = require('../models/index');
 const { Op, Sequelize } = require('sequelize');
 const participant = require('../models/participant');
+const recipe_step = require('../models/recipe_step');
 // const { getPaginationInfo } = require('./middlewares');
 const RECRUITING = 0, COMPLETED = 1;
 const ISCREATING = 0, ISMODIFYING = 1;
@@ -35,7 +36,7 @@ getGatherParams = (info, isModifying, _memId)=>{
             city: info.city,
             district: info.district,
             neighborhood: info.neighborhood,
-            place: info.place,
+            place: info.place?info.place:'미정',
             description: info.description,
             deadline: info.deadline,
             state: (info.deadline > new Date())? RECRUITING: COMPLETED,
@@ -158,14 +159,14 @@ module.exports={
             limit: limit,
             raw: true,
         });
-        console.log('recruiting list result:', recruitingList);
+        // console.log('recruiting list result:', recruitingList);
 
         const completedList = await searchGatherings(undefined, undefined, undefined, undefined, {
             where: { state: COMPLETED },
             order: [['createdAt', 'DESC']],
             limit: limit,
         });
-        console.log('모집완료 글 없나?', completedList =="");
+        // console.log('모집완료 검색결과?', completedList =="");
 
         obj.recruitingList = recruitingList;
         obj.completedList = completedList;
@@ -302,17 +303,6 @@ module.exports={
 
     },
     showRecruitingList: async (req, res, next) => {
-        // //searchGathering (state, gatherId, leaderId)
-        // const list = await searchGathering(state = 0);
-        // console.log('모집중인 그룹리스트 ', list);
-        // if(list==""){
-        //     res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?"});
-        //     // res.send("아직 모집하고 있는 밥모임이 없네요!! 밥모임을 한번 만들어보시겠어요?");
-        // } else{
-        //     // res.json(list);
-        //     res.render("mainGather", {user: req.user, dataList: list});
-        // }
-
         const obj = {};
         if(req.user){
             obj.user=req.user;
@@ -339,21 +329,8 @@ module.exports={
         obj.pagination = res.locals.paginationInfo;
         obj.dataList = res.locals.dataList;
         res.render("gatherCompleted", obj);
-        // searchGathering (state, gatherId, leaderId)
-        // const list = await searchGathering(state = 1);
-        // console.log('모집완료된 그룹리스트 ', list);
-        // if(list==""){
-        //     // res.send("아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?");
-        //     res.render("mainGather", {user: req.user, dataList: list, msg: "아직 모집 완료된 밥모임이 없네요!! 모집중인 밥모임을 구경해보시겠어요?"});
-        // } else{
-        //     // res.json(list);
-        //     res.render("mainGather", {user: req.user, dataList: list});
-        // }
-        // // console.log('빈 데이터베이스 서칭 결과는 null일까? undefined일까/', typeof list);
-        
     },
     showMyGatherList: async(req, res)=>{
-        
         const obj = {};
         if(req.user){
             obj.user=req.user;
@@ -365,75 +342,93 @@ module.exports={
         res.render("gatherMine", obj);
     },
 
-    /*💚가입한 목록, 만든 목록
-        showJoinedPage: async (req, res) => {   //페이지네이션 필요
-            //participant ==>
-            const memId = req.user.mem_id;
-            // function searchParticipant(columns, id, state)
-            console.time('쿼리 따로 따로');
-            try {
-                var partList = await db.participant.findAll({
-                    attributes: ['gathering_id'],
-                    where: {
-                        mem_id: memId
-                    }
-                });
-                partList = partList.map(i => i.dataValues); // 그러면 key 값이 없이 그냥 1,2만 나옴
-
-                var gatherList = await db.gathering.findAll({
-                    // attributes: ['gathering_id', 'leader_id'], // gathering 테이블의 열을 선택
-                    where: { [Op.or]: partList }
-                });
-                // gatherList = list.map(i => i.dataValues);
-                console.log(gatherList);
-                // res.send(gatherList);
-
-                res.render("iMadeGather", { user: req.user, dataList: gatherList });
-                console.timeEnd('쿼리 따로 따로');
-            } catch (err) {
-                console.log(err);
-            }
-        },
-
-        showIMadePage: async (req, res) => { // 페이지네이션 필요
-            const memId = req.user.mem_id;
-            // searchGathering (state, gatherId, leaderId)
-            const list = await searchGathering(undefined, undefined, memId);
-            if (list == "") {
-                res.render("mainGather", { user: req.user, dataList: list, msg: "직접 만든 밥모임이 아직 없네요? 방장이 되어보세요!" });
-                // res.send("직접 만든 밥모임이 아직 없네요? 방장이 되어보세요!");
-            } else {
-                console.log('내가 만든 그룹리스트 ', list);
-                // res.json(list);
-                res.render("iMadeGather", { user: req.user, dataList: list });
-            }
-
-        },
-
-        showIAppliedPage: async (req, res)=>{   // 페이지네이션 필요
-
-        },
-        */
-
-    // 팀장이 볼 때, 조원 어떻게 있는지 확인
-    showMemberOfGathering: async (req, res) => {
-        // 💚 query로 받음.
-        if(!req.query.no){
-            console('There is no gathering number');
+    showIMadePage: async (req, res) => { // 페이지네이션 필요
+        const obj = {};
+        if(req.user){
+            obj.user=req.user;
+        }
+        if(!res.locals.paginationInfo || !res.locals.dataList){
+            console.log('[ERROR] check pagination data.');
+            // res.redirect(res.locals.history);
             res.redirect('/gather');
         }
-        const _gatherId = req.query.no;
-        var members;
-        try{
-            members = await searchParticipants(undefined, undefined, _gatherId);
-            res.json(members);
-        } catch(err){
-            console.log(err, 'gatheringController-showMemberOfGathering');
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        res.render("gatherImade", obj);
+    },
+    // 💚show completed, recruiting, joined, applied, imade 다 또같음. url 잘라서 swtich문하자!!!!
+    showJoinedPage: async (req, res) => {   //페이지네이션 필요
+        const obj = {};
+        if(req.user){
+            obj.user=req.user;
         }
+        if(!res.locals.paginationInfo || !res.locals.dataList){
+            console.log('[ERROR] check pagination data.');
+            // res.redirect(res.locals.history);
+            res.redirect('/gather');
+        }
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        res.render("gatherjoined", obj);
     },
 
-    searchGather: (req, res)=>{
+
+    showIAppliedPage: async (req, res) => {   // 페이지네이션 필요
+        const obj = {};
+        if(req.user){
+            obj.user=req.user;
+        }
+        if(!res.locals.paginationInfo || !res.locals.dataList){
+            console.log('[ERROR] check pagination data.');
+            // res.redirect(res.locals.history);
+            res.redirect('/gather');
+        }
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        res.render("gatherApplied", obj);
+
+    },
+        
+
+
+    findGatheringId: (req, res, next)=>{
         // recipe 서치 참고. 아니면 공지사항 서치 참고
+        
+        if(!req.user){
+            console.log('This user is not logged In');
+            res.redirect('/auth/login');
+        }
+        const memId = req.user.mem_id;
+        // res.locals.condition={};
+        const obj = { mem_id: memId };
+        res.locals.condition = {};
+        res.locals.condition.mem_id= memId;
+        const mode = req.url.split('?',1).join('').slice(1);    // 배열 -> 문자열
+        switch (mode) {
+            case 'imade':
+                res.locals.condition = ISLEADER;
+                obj.state = ISLEADER;
+                break;
+            case 'joined':
+                res.locals.condition = ISMEMBER;
+                obj.state = ISMEMBER;
+                break;
+            case 'applied':
+                res.locals.condition = [ISAPPLYING, ISREFUSED];
+                obj.state = [ISAPPLYING, ISREFUSED];
+                break;
+            default:
+                res.redirect('/gather');
+                break;
+        }
+        // res.locals.condition = obj;
+        console.log(obj, 'gctl');
+        console.log(res.locals.condition, 'gctl');
+        res.locals.condition = obj;
+        console.log(res.locals.condition, 'gctl');
+
+        next();
+        // res.send(obj); //0은 빈배열 리턴
     },
 
     //⚠️ 동작 확인 231223
@@ -475,12 +470,11 @@ module.exports={
                     gathering_id: result.gathering_id,
                     mem_id: _memId,
                     content: `${_memId}(방장)님이 입장하셨습니다.`,
-                    isConnected: CONNECTED,
                 },
                 {transaction: t});
             })
 
-            res.redirect(`/gather/view?no=${result.dataValues.gathering_id}`);
+            res.redirect(`/gather/view?no=${result.gathering_id}`);
             // res.redirect('/gather');
             // res.send(result);
         } catch(err){

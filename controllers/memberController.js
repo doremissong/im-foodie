@@ -353,7 +353,7 @@ module.exports = {
                 },
                 raw: true
             });
-            console.log(result);
+            // console.log('memberCtrl- checkMemberId', result);
             if (result && result.mem_id == _memId) {
                 isUsable = false;
                 // res.json({ success: false, message: '사용할 수 없는 아이디입니다..' });
@@ -362,7 +362,7 @@ module.exports = {
             if (isUsable) {
                 for (let i = 0; i < reservedId.length; i++) {
                     if (_memId.includes(reservedId[i])) {
-                        return res.json({ success: false, message: '사용할 수 없는 아이디입니다..' });
+                        return res.json({ success: false, message: '사용할 수 없는 아이디입니다.' });
                         return;
                     }
                 }

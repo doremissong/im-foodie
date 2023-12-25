@@ -219,3 +219,15 @@ select:focus {
     font-size: 14px;
 }
 
+button[name="duplicateCheck"] {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid gainsboro;
+    border-radius: 2px;
+    color: #313336;
+}
+
+button[name="duplicateCheck"]:hover {
+    background-color: #cbc6c5;
+    color: black;
+}

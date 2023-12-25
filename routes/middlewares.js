@@ -68,7 +68,8 @@ exports.setDBModel = (modelType) => {
     return (req, res, next) => {
         res.locals.model = modelType;
         console.log(modelType, "'s model type is", typeof modelType);
-        res.locals.condition = {};
+        res.locals.condition = res.locals.condtion? res.locals.condition : {};
+        console.log(res.locals.condtion, 'mw');
 
         // gathering
         if(req.query.gsort){
