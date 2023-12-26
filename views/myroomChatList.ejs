@@ -1,0 +1,92 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/myroom/myroomChatList.css">
+    
+<!-- SECTION -->
+<section>
+    <div class="myroom-section">
+
+        <!-- 마이룸 -->
+        <div class="gather-list">
+            <div class="gather-main">
+                <a href="/myroom">마이룸</a>
+            </div>
+        </div>
+
+        <!-- 본문 -->
+        <div class="myroom-box">
+            <!-- 카테고리 -->
+            <%-include('myroomSideBar.ejs') %>
+            <!-- 내용 -->
+            <div class="myroom-contents">
+                <div class="in-text">
+                    <span class="material-symbols-outlined">forum</span>
+                    <div>나의 채팅방 목록</div>
+                </div>
+
+                <ul class="post-index">
+                    <li>
+                        <div class="post-standard">
+                            <p class="post-number">번호</p>
+                            <p class="post-title">밥모임이름</p>
+                            <p class="post-date">인원수</p>
+                            <p class="post-button"></p>
+                        </div>
+                    </li>
+                </ul>
+        
+                <ul class="post-list">
+
+                        <!-- 데이터 불러오기 -->
+                        <li class="post">
+                            <div class="post-container">
+                                <p class="post-number">id</p>
+                                <p class="post-title"><a href="/gather/view">name</a></p>
+                                <p class="post-date">3명</p>
+                                <div class="post-button">
+                                    <form action="/gather/chat/room" method="get">
+                                        <input type="text" name="roomId" value="id" hidden>
+                                        <input type="text" name="name" value="name" hidden>
+                                        <button type="submit">입장하기</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- 데이터 불러오기 -->
+                        <li class="post">
+                            <div class="post-container">
+                                <p class="post-number">id</p>
+                                <p class="post-title"><a href="/gather/view">name</a></p>
+                                <p class="post-date">3명</p>
+                                <div class="post-button">
+                                    <form action="/gather/chat/room" method="get">
+                                        <input type="text" name="roomId" value="id" hidden>
+                                        <input type="text" name="name" value="name" hidden>
+                                        <button type="submit">입장하기</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- 데이터 불러오기 -->
+                        <li class="post">
+                            <div class="post-container">
+                                <p class="post-number">id</p>
+                                <p class="post-title"><a href="/gather/view">name</a></p>
+                                <p class="post-date">3명</p>
+                                <div class="post-button">
+                                    <form action="/gather/chat/room" method="get">
+                                        <input type="text" name="roomId" value="id" hidden>
+                                        <input type="text" name="name" value="name" hidden>
+                                        <button type="submit">입장하기</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+

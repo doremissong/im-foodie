@@ -135,7 +135,6 @@
 }
 
 
-
 /* 본문 내용 */
 .myroom-contents {
 	width: 710px;
@@ -157,44 +156,124 @@
 	margin-right: 10px;
 }
 
-.change-pw-box {
-    margin: auto;
-    display: block;
-    padding: 30px 0 0 0;
-    width: 300px;
+.post {
+    list-style-type: none;
 }
 
-.change-pw-box input[name="new_password"],
-.change-pw-box input[name="check_password"] {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border: 1px solid #dddddd;
-    margin-bottom: 20px;
-    box-sizing:border-box;
-    background-color: rgba(255, 228, 196, 0.218);
+.post-standard {
+    width: 680px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    border-bottom: 2px solid #d7d7d7;
 }
 
-button {
+.post-container {
+    width: 680px;
+    display: flex;
+    align-items: center;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 50px;
-    display: block;
-    border: 1px solid rgb(253, 195, 181);
-	border-radius: 2px;
-    width: 300px;
-    height: 50px;
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.post-index {
+    width: 680px;
+    margin: auto;
+    border-top: 2px solid #d7d7d7;
+    margin-top: 30px;
+}
+
+.post-list {
+    margin-bottom: 30px;
+}
+
+.post-number {
+    width: 75px;
+    padding: 12px 5px;
+    font-size: 15px;
+    text-align: center;
+    border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-number {
+    padding: 10px 5px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.post-title {
+    width: 380px;
+    padding: 12px 10px;
+    font-size: 15px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-title {
+    padding: 10px 10px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.post-container .post-title:hover {
+    background-color: #d7d7d7;
+}
+
+/* .post-writer {
+    width: 110px;
+    padding: 7px 5px;
+    font-size: 15px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-writer {
+    padding: 10px 5px;
+    font-size: 17px;
+    font-weight: bold;
+} */
+
+.post-date {
+    width: 75px;
+    padding: 12px 5px;
+    font-size: 15px;
+    text-align: center;
+    border-right: 1px solid gainsboro;
+}
+
+.post-standard .post-date {
+    padding: 10px 5px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.post-button {
+    width: 100px;
+    padding:7px 5px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.post-standard .post-button {
+    padding: 10px 5px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.post-button button {
     cursor: pointer;
-    background-color: rgb(252, 206, 194);
+    padding: 5px;
+    border: 1px solid rgb(235, 226, 226);
+    border-radius: 2px;
 }
 
-button:hover {
-	border: 1px solid rgb(235, 181, 168);
-	background-color: rgb(253, 195, 181);
-}
-
-#notAccord {
-	font-weight: bold;
-	color: rgb(224, 0, 0);
-	display: none;
+.post-button button:hover {
+    border: 1px solid rgb(208, 203, 203);
+    background-color: rgb(233, 219, 219);
 }
