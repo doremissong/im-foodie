@@ -19,7 +19,11 @@
 						<a href="/gather/completed?countperpage=9&gsort=1">모집완료</a>
 					</li>
 					<li class="gather-sub-name">
-						<a href="/gather/mine">나의 밥모임</a>
+						<% if(typeof user == 'undefined'){ %>
+							<a href="javascript:void(0)" onclick="alert('로그인 후에 이용하실 수 있습니다');">나의 밥모임</a>
+						<% } else { %>
+							<a href="/gather/mine">나의 밥모임</a>
+						<% } %>
 					</li>
 				</ul>
 			</div>

@@ -39,25 +39,28 @@
 			<!-- 내가 모집한 밥모임 -->
 			<div class="gathering-title">
 				<span class="text">내가 모집한 밥모임</span>
+				<!-- <span class="more">
+					<a href="/gather/imade?countperpage=9&gsort=0">[더보기]</a>
+				</span> -->
 			</div>
 
 			<!-- 내가 모집한 밥모임이 없을 경우만 출력 -->
-			<% if (listCreated == "" || listCreated == false){ %>
+			<% if (typeof dataList == 'undefined' || dataList == ""){ %>
 				<div class="no-gather">
 					아직 모임을 만들지 않으셨네요? 함께 맛집을 탐방 할 친구들을 모집해보세요 :)
 				</div>
 
 			<!-- 내가 모집한 모임이 있을 경우만 -->
 			<% } else{ %>
+
                 <div class="gather-imade-box">
-					<% listCreated.forEach((data, index)=>{ %>
-	                    <!-- 리스트 내용 불러오기 -->
-    	                <div class="imade-list-index">
+					<% dataList.forEach((data, index)=>{ %>
+						<!-- 리스트 내용 불러오기 -->
+						<div class="imade-list-index">
 							<div class="imade-index-name">
 								<!-- 해당 밥모임 view 페이지로 이동 -->
-								<a href="/gather/view">
+								<a href="/gather/view?no=<%= data.gathering_id %>">
 									<%= data.name %>
-									같이 왕짜장 먹으러 갈 사람~!~!~!
 								</a>
 							</div>
 							<div class="imade-index-btn">
@@ -70,22 +73,32 @@
 							<div class="imade-content">
 								<div class="imade-region">
 									모임 지역 : 
-									<span><%= data.region %>서울시 노원구 공릉동</span>
+									<span>
+										<%= data.city%>
+										<%= data.district? data.district: ''%>
+										<%= data.neighborhood?data.neighborhood: ''%>
+									</span>
 								</div>
 	
 								<div class="imade-spot">
 									함께 할 맛집 : 
-									<span><%= data.restaurant %>왕짜장</span>
+									<span><%= data.place %></span>
 								</div>
 								
 								<div class="imade-numbers">
 									모임 인원수 (현재 / 총원) : 
-									<span><%= data.currentHeadCount %> / <%= data.maximumHeadCount %> 3 / 5</span>
+									<span>
+										<%= data.currentHeadCount %> / <%= data.maximumHeadCount %>
+									</span>
 								</div>
 							
 								<div class="imade-deadline">
 									모집 마감일 : 
-									<span><%= data.deadline %>2023년 12월 31일</span>
+									<span>
+										<%= data.createdAt.toISOString().slice(0,4) %>년
+										<%= data.createdAt.toISOString().slice(5,7) %>월
+										<%= data.createdAt.toISOString().slice(8,10) %>일
+									</span>
 								</div>
 
 								<div class="imade-intro">
@@ -93,15 +106,19 @@
 										소개글 : 
 									</div>
 									<div class="imade-intro-text">
-										안녕하세요~ 소개글 내용! 안녕하세요~ 소개글 내용! 안녕하세요~ 소개글 내용! 안녕하세요~ 소개글 내용! 
+										<%= data.description %>
 									</div>
 								</div>
 							</div>
 	
 							<div class="imade-gochat">
-								<button>채팅방</button>
+								<!-- <button>채팅방</button> -->
+								<form action="/gather/chat/room" method="get">
+									<input type="text" name="roomId" value="<%= data.gathering_id %>" hidden>
+									<input type="text" name="name" value="<%= data.name %>"hidden>
+									<button type="submit">입장하기</button>
+								</form>
 							</div>
-						
 						</div>
                     <% }) %>
                 </div>

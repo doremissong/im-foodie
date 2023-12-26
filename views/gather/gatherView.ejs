@@ -23,7 +23,7 @@
 					</div>
 					
 					<!-- 신청 폼 -->
-                    <!-- 이미 신청한 사람, 멤버인 사람은 안보이기 -->
+                    <!-- ⚠️이미 신청한 사람, 멤버인 사람은 안보이기 -->
 					<form method="post" id="form-apply"
                         action = "/gather/apply?no=<%= gatherData.gathering_id %>"
                         onsubmit="return joinClick()"
@@ -106,15 +106,14 @@
                         <%= gatherData.createdAt.toISOString().slice(0,10) %>
                     </li>
                 </ul>
-                <ul class="post-info-second">
+                <!-- <ul class="post-info-second">
                     <li class="post-views">
                         조회
                         <span>
-                            <!-- 조회수 column만들기 -->
                             <%= gatherData.viewCount %>
                         </span>
                     </li>
-                </ul>
+                </ul> -->
             </div>
 
             <!-- 이미지, 지역, 식당, 인원, 마감일, 소개글 -->

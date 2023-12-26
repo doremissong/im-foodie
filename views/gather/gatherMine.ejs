@@ -40,7 +40,7 @@
 			<div class="gathering-title">
 				<span class="text">내가 모집한 밥모임</span>
 				<span class="more">
-					<a href="/gather/imade?countperpage=9&gsort=0">[더보기]</a>
+					<a href="/gather/imade">[더보기]</a>
 				</span>
 			</div>
 
@@ -82,13 +82,13 @@
 									<span class="gather-spot">
 										맛집 : 
 										<!-- 식당 데이터 이름?? -->
-										<span><%= data.restaurant %></span>
+										<span><%= data.place %></span>
 									</span>
 								</span>
 								<span class="gather-deadline">
 									모집 마감일 : 
 									<!-- 모집 마감일 데이터 이름?? -->
-									<span><%= data.deadline %></span>
+									<span><%= data.deadline.toISOString().slice(0,10); %></span>
 								</span>
 								<span class="gather-number">
 									모임 인원 (현재인원/총원) :
@@ -106,7 +106,7 @@
 						
 						<!-- 모집중인 모임이 6개 이상일 경우에만 추가로 출력 -->
 						<div>
-							<a href="/gather/imade?countperpage=9&gsort=0">
+							<a href="/gather/imade">
 								<div class="slide-item">
 									더보기
 								</div>
@@ -135,7 +135,7 @@
 			<div class="gathering-title">
 				<span class="text"> 내가 참여한 모임 </span>
 				<span class="more">
-					<a href="/gather/joined?countperpage=9&gsort=1">[더보기]</a>
+					<a href="/gather/joined">[더보기]</a>
 				</span>
 			</div>
 
@@ -177,13 +177,13 @@
 									<span class="gather-spot">
 										맛집 : 
 										<!-- 식당 -->
-										<span><%= data.restaurant %></span>
+										<span><%= data.place %></span>
 									</span>
 								</span>
 								<span class="gather-deadline">
 									모집 마감일 : 
 									<!-- 모집 마감일 -->
-									<span><%= data.deadline %></span>
+									<span><%= data.deadline.toISOString().slice(0,10); %></span>
 								</span>
 								<span class="gather-number">
 									모임 인원 (현재인원/총원) : 
@@ -202,7 +202,7 @@
 
 						<!-- 내가 참여한 모임이 6개 이상일 경우만 추가로 출력 -->
 						<div>
-							<a href="/gather/joined?countperpage=9&gsort=1">
+							<a href="/gather/joined">
 								<div class="slide-item">
 									더 많은 모임을 확인해보세요!
 								</div>
@@ -231,7 +231,7 @@
 			<div class="gathering-title">
 				<span class="text"> 내가 신청한 모임 </span>
 				<span class="more">
-					<a href="/gather/applied?countperpage=9&gsort=1">[더보기]</a>
+					<a href="/gather/applied">[더보기]</a>
 				</span>
 			</div>
 
@@ -273,13 +273,13 @@
 									<span class="gather-spot">
 										맛집 : 
 										<!-- 식당 -->
-										<span><%= data.restaurant %></span>
+										<span><%= data.place %></span>
 									</span>
 								</span>
 								<span class="gather-deadline">
 									모집 마감일 : 
 									<!-- 모집 마감일 -->
-									<span><%= data.deadline %></span>
+									<span><%= data.deadline.toISOString().slice(0,10); %></span>
 								</span>
 								<span class="gather-number">
 									모임 인원 (현재인원/총원) : 
@@ -298,7 +298,7 @@
 
 						<!-- 내가 신청한 모임이 6개 이상일 경우만 추가로 출력 -->
 						<div>
-							<a href="/gather/applied?countperpage=9&gsort=1">
+							<a href="/gather/applied">
 								<div class="slide-item">
 									더 많은 모임을 확인해보세요!
 								</div>
