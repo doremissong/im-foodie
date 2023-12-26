@@ -860,7 +860,7 @@ module.exports={
             console.log('innerjoin한 모임목록: ', gatherList[0]['participants.mem_id']);
             // join한 attriubte는 ['']로 접근해야함!!!
             // DATA가 DB에서 검색하고 없으면 NON -CHAT LIST 띄위ㅓ.
-            res.render("chatList", {user: req.user, dataList: gatherList, msg: '가입한 밥모임이 없어요'});
+            res.render("gather/chatList", {user: req.user, dataList: gatherList, msg: '가입한 밥모임이 없어요'});
 
         } catch(err){
             console.log(err);
@@ -897,7 +897,7 @@ module.exports={
         // console.log('DELETE: name ',res.locals.name, '가 GET방식으로 전달 받은 값이다.- gController-selectRoom');
         obj.user= user;
         obj.roomId = _gatherId;
-        res.render("chat", obj); //{user: req.user, roomId: res.locals.roomId, gatherName: res.locals.name});
+        res.render("gather/chat", obj); //{user: req.user, roomId: res.locals.roomId, gatherName: res.locals.name});
         // res.redirect("/chat/room");
         // roomId값을 어케 전달하누
     },

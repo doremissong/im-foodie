@@ -46,36 +46,62 @@
                         <li class="post">
                             <div class="post-container">
                                 <p class="post-board"><%= data.menu %></p>
-                                <a href="/recipe/view?no=<%= data.recipe_id %>&sort=earliest">
-                                    <%= data.title %>
-                                </a>
+                                <p class="post-title">
+                                    <a href="/recipe/view?no=<%= data.recipe_id %>&sort=earliest">
+                                        <%= data.title %>
+                                    </a>
                                 </p>
                                 <p class="post-writer"><%=data.writer_id %></p>
                                 <p class="post-date"><%= data.createdAt.toISOString().slice(2,10);%></p>
                                 <p class="post-view"><%= data.viewCount%></p>
                             </div>
                         </li>
-                        <% commentList[index].forEach((comment, index2)=>{ %>
-                            <li class="my-comment-box">
-                                <span class="material-symbols-outlined">subdirectory_arrow_right</span>
-                                <div class="my-comment">
-                                    <!-- 내가 등록한 댓글 -->
-                                    <%= comment %>
-                                </div>
-                                <!-- omit과 my-comment-numbers 는 해당 게시물의 내 댓글수가 총 2개 이상일때 표시 -->
-                                <div class="omit">⋮</div>
-                                <div class="my-comment-numbers">
-                                    위 댓글 등 해당 게시물의 나의 댓글 수 총 ( 6 ) 
-                                </div>
-                            </li>
-                        <% }) %>
+                        <li class="my-comment-box">
+                            <span class="material-symbols-outlined">subdirectory_arrow_right</span>
+                            <div class="my-comment">
+                                <!-- 내가 등록한 댓글 -->
+                                <%= commentList[index].firstComment %>    
+                            </div>
+                            <!-- omit과 my-comment-numbers 는 해당 게시물의 내 댓글수가 총 2개 이상일때 표시 -->
+                            <div class="omit">⋮</div>
+                            <div class="my-comment-numbers">
+                                위 댓글 등 해당 게시물의 나의 댓글 수 총 ( <%= commentList[index].count %> ) 
+                            </div>
+                        </li>
                     <% }) %>
 
                 </ul>
 
                 <!-- 페이지네이션 -->
                 <div class="myroom-page-box">
-                    < 1 2 3 >
+                    <% if (dataList !== ''){ %>
+                        <div class="paginationInfo-container">
+                            <% if (pagination.curSet > 1){ %>    
+                                <div class="prev-set-button"><a href="/myroom/recipe/comment?pageno=<%= pagination.startPage-1%>&countperpage=10">&lt;&lt;&nbsp; </a></div>
+                            <% } %>
+                            <% if (pagination.pageNo!=1){ %>    
+                                <div class="prev-button"><a href="/myroom/recipe/comment?pageno=<%= pagination.pageNo-1%>&countperpage=10">&nbsp;이전&nbsp;</a></div>
+                            <% } %>
+                            <div class="number-button-wrapper">
+                                <% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
+                                    <span class="number-button"> 
+                                        <% if (pagination.pageNo==i){ %>
+                                            <% console.log(i, pagination.pageNo); %>
+                                            <a href="/myroom/recipe/comment?pageno=<%= i %>&countperpage=10" style="font-weight: 800;"><%= i %></a>
+                                        <% } else{ %>
+                                            <a href="/myroom/recipe/comment?pageno=<%= i %>&countperpage=10"><%= i %></a>
+                                        <% } %>
+                                    </span>
+                                <% } %>
+                            </div>
+                            <% if (pagination.pageNo != pagination.totalPage){ %>
+                                <div class="next-button"><a href="/myroom/recipe/comment?pageno=<%= pagination.pageNo+1%>&countperpage=10"> &nbsp;이후&nbsp;</a></div>
+                            <% }%>
+                            <% if (pagination.curSet < pagination.totalSet){ %>
+                                <div class="next-set-button"><a href="/myroom/recipe/comment?pageno=<%= pagination.endPage+1%>&countperpage=10">&nbsp;&gt;&gt;</a></div>
+                            <% }%>
+                        </div>
+                    <% } %>
                 </div>
 
             </div>

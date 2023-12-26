@@ -164,6 +164,17 @@
     width: 300px;
 }
 
+.change-pw-box input[name="new_pw"],
+.change-pw-box input[name="conf_pw"] {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border: 1px solid #dddddd;
+    margin-bottom: 20px;
+    box-sizing:border-box;
+    background-color: rgba(255, 228, 196, 0.218);
+}
+
 .change-pw-box input[name="new_password"],
 .change-pw-box input[name="check_password"] {
     width: 100%;

@@ -1,5 +1,6 @@
 // myRoom Controller
 const { db, sequelize } = require("../models/index");
+const { Op, Sequelize } = require('sequelize');
 
 module.exports={
     //
@@ -145,11 +146,16 @@ module.exports={
         obj.dataList = res.locals.dataList;
         const commentList = [];
         for (let i=0; i<obj.dataList.length; i++){
-            commentList[i] = obj.dataList[i].post_comments.map(comment=>comment.content);
+            commentList[i] = {
+                firstComment: obj.dataList[i].post_comments[0].content,
+                count: obj.dataList[i].post_comments.length
+            };
+            //obj.dataList[i].post_comments.map(comment=>comment.content);
+            console.log(i, obj.dataList[i].post_comments[0].content, obj.dataList[i].post_comments.length);
             // console.log(i, commentList[i]);
         }
         // console.log(obj.dataList[0].post_comments[0].content);
-        console.log('commentList', commentList);
+        // console.log('commentList', commentList);
         obj.commentList = commentList;
         // console.log('내가 쓴 글 목록:', obj);
         res.render('myroom/myroomBComment', obj);
@@ -243,13 +249,16 @@ module.exports={
         //   res.send(obj);
         const commentList = [];
         for (let i = 0; i < obj.dataList.length; i++) {
-            commentList[i] = obj.dataList[i].recipe_comments.map(comment => comment.content);
+            commentList[i] = {
+                firstComment: obj.dataList[i].recipe_comments[0].content,
+                count: obj.dataList[i].recipe_comments.length
+            };
+            //obj.dataList[i].post_comments.map(comment=>comment.content);
             // console.log(i, commentList[i]);
+            // console.log(i, obj.dataList[i].post_comments[0].content, obj.dataList[i].post_comments.length);
         }
-        // console.log(obj.dataList[0].post_comments[0].content);
-        console.log('commentList', commentList);
         obj.commentList = commentList;
-        console.log('내가 쓴 글 목록:', obj);
+        // console.log('내가 쓴 글 목록:', obj);
         res.render('myroom/myroomRComment', obj);
     },
     setMyRecipeLike: (req, res, next) => {

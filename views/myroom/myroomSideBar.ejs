@@ -1,27 +1,20 @@
 
 <div class="myroom-category">
     <!-- 내 프로필 -->
-    서버에서 url 넘기고 그 값 같으면 bold
     <span>내 프로필</span>
     <ul class="category-profile">
-        if(typeof curPage!= 'undefined && curPage = 'changePw')
-            bold
         <li class="category-align"><span>◆</span>
-            <a href="/myroom/changePw/check">
+            <a href="/myroom/changePw/check" class=<%= typeof curPage!= 'undefined' && curPage =='changePw'? "fontBold":''%>>
                 비밀번호 변경
             </a>
         </li>
-        if(typeof curPage!= 'undefined && curPage = 'modify')
-            bold
         <li class="category-align"><span>◆</span>
-            <a href="/myroom/modify/check">
+            <a href="/myroom/modify/check" class=<%= typeof curPage!= 'undefined' && curPage =='modify'? "fontBold":''%>>
                 회원정보 수정
             </a>
         </li>
-        if(typeof curPage!= 'undefined && curPage = 'withdraw')
-            bold
         <li class="category-align"><span>◆</span>
-            <a href="/myroom/withdraw/check">
+            <a href="/myroom/withdraw/check" class=<%= typeof curPage!= 'undefined' && curPage =='withdraw'? "fontBold":''%>>
                 탈퇴
             </a>
         </li>
@@ -32,39 +25,29 @@
     <ul class="category-activity">
         <li class="category-align"><span>◆</span> 게시판</li>
             <ul class="category-activity-board">
-                if(typeof curPage!= 'undefined && curPage = 'boardPost')
-                    bold
                 <li>- 
-                    <a href="/myroom/board/post">작성한 게시글</a>
+                    <a  href="/myroom/board/post?countperpage=10" class=<%= typeof curPage!= 'undefined' && curPage =='boardPost'? "fontBold":''%>>
+                        작성한 게시글
+                    </a>
                 </li>
-                if(typeof curPage!= 'undefined && curPage = 'boardComment')
-                    bold
                 <li>- 
                     <!-- class="fontBold" -->
-                    <a  href="/myroom/board/comment">등록한 댓글</a>
+                    <a  href="/myroom/board/comment?countperpage=10" class=<%= typeof curPage!= 'undefined' && curPage =='boardComment'? "fontBold":''%>>등록한 댓글</a>
                 </li>
-                if(typeof curPage!= 'undefined && curPage = 'boardLike')
-                    bold
                 <li>- 
-                    <a href="/myroom/board/like">좋아요 누른 게시글</a>
+                    <a href="/myroom/board/like?countperpage=10" class=<%= typeof curPage!= 'undefined' && curPage =='boardLike'? "fontBold":''%>>좋아요 누른 게시글</a>
                 </li>
             </ul>
         <li class="category-align"><span>◆</span> 레시피</li>
             <ul class="category-activity-recipe">
-                if(typeof curPage!= 'undefined && curPage = 'recipePost')
-                    bold
                 <li>- 
-                    <a href="/myroom/recipe/post">작성한 레시피</a>
+                    <a href="/myroom/recipe/post?countperpage=10" class=<%= typeof curPage!= 'undefined' && curPage =='recipePost'? "fontBold":''%>>작성한 레시피</a>
                 </li>
-                if(typeof curPage!= 'undefined && curPage = 'recipeComment')
-                    bold
                 <li>- 
-                    <a href="/myroom/recipe/comment">등록한 댓글</a>
+                    <a href="/myroom/recipe/comment?countperpage=10" class=<%= typeof curPage!= 'undefined' && curPage =='recipeComment'? "fontBold":''%>>등록한 댓글</a>
                 </li>
-                if(typeof curPage!= 'undefined && curPage = 'recipeLike')
-                    bold
                 <li>- 
-                    <a href="/myroom/recipe/like">좋아요 누른 레시피</a>
+                    <a href="/myroom/recipe/like?countperpage=10" class=<%= typeof curPage!= 'undefined' && curPage =='recipeLike'? "fontBold":''%>>좋아요 누른 레시피</a>
                 </li>
             </ul>
         <li class="category-align"><span>◆</span> 밥모임</li>

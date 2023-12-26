@@ -156,7 +156,7 @@ exports.getPaginationInfo = async (req, res, next)=>{
     }
     const condition = res.locals.condition;
 
-    //res.redirect("/board/" + 1);
+    //res.redirect("/board/" + 1);countperpage=2
     // 한페이지에 보여질 포스트 개수
     var countPerPage = req.query.countperpage;
     // 페이지 번호
@@ -175,11 +175,20 @@ exports.getPaginationInfo = async (req, res, next)=>{
     setSize = this.setPagingVar(setSize, 10);
 
     // 특정 게시판도 글 개수 세기
-    var totalPost = await model.count({
+    var totalPost = await model.findAll({
+        include: res.locals.includeCondition?res.locals.includeCondition:undefined,
         where: condition,
     }).catch((err) => {
-        console.log(`ERROR: while counting post. ${err.message}`);
+    console.log(`ERROR: while counting post. ${err.message}`);
     });
+    totalPost = totalPost.length;
+    // console.log(totalPost2.length, '조인결과');
+    // var totalPost = await model.count({
+    //         include: res.locals.includeCondition?res.locals.includeCondition:undefined,
+    //         where: condition,
+    // }).catch((err) => {
+    //     console.log(`ERROR: while counting post. ${err.message}`);
+    // });
     if (totalPost < 0) {
         totalPost = 0;
     }
@@ -245,7 +254,7 @@ exports.getPaginationInfo = async (req, res, next)=>{
     // console.log('middleware - paginationinfo 값 확인:', paginationInfo);    //, typeof paginationInfo
     res.locals.paginationInfo = paginationInfo;
     // console.log('middleware - paginationinfo 값 확인:', res.locals.paginationInfo); 
-    // console.log('middleware - datalist chck ', res.locals.dataList);
+    // console.log('middleware - datalist chck ', res.locals.dataList.length);
     return next();
 }
 
