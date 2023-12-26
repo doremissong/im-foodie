@@ -23,10 +23,10 @@
                     <div>새로운 비밀번호를 입력해주세요</div>
                 </div>
                 <div class="change-pw-box">
-                    <form name="change-pw" method="post">
-                        new_pw(새 비밀번호)랑 conf_pw(새 비번 재입력) 다르면
+                    <form name="change-pw"  id="changePwForm" method="post" onsubmit="return checkPW ()">
+                        <!-- new_pw(새 비밀번호)랑 conf_pw(새 비번 재입력) 다르면
                         경고 문구 빨간색으로.
-                        /member/changePw.ejs 도 수정해야함.
+                        /member/changePw.ejs 도 수정해야함. -->
                         <span>새로운 비밀번호</span>
                         <input type="password" name="new_pw" placeholder="새로운 비밀번호" minlenght='6' maxlength='20' required>
                         <span>새로운 비밀번호</span>

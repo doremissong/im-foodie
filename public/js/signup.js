@@ -1,9 +1,10 @@
+var isChecked = document.getElementById("isChecked").value;
 
 // const form = document.getElementById("duplicateCheck");
 // const idInput = document.getElementById("input-memId");
 function checkDuplicate(){
     var memId = document.getElementById("mem_id").value;
-    var isChecked = document.getElementById("isChecked").value;
+    
     // form.addEventListener("submit", function(event){
     //     event.preventDefault();
     //     const formData = new FormData(event.target);
@@ -16,7 +17,7 @@ function checkDuplicate(){
         // console.log(data.message);
         if(data.success){
             alert(data.message);
-            isChecked=1;
+            isChecked =1 ;
             console.log(document.getElementById("isChecked").value);
         } else{
             memId = '';
