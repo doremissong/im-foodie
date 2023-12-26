@@ -4,30 +4,34 @@
 <!-- SECTION -->
 <section>
     <div class="chat-section">
-        <div class="chat-title">
-            모임 이름
-        </div>
-
-        <div class="container">
-
-            <h1 id="chat-head">CHAT</h1>
-            <div id="info">
-                <table>
-                    <tr>
-                        <th><img src="/images/person.png" alt="현재 접속 인원: " style="margin: 3px; width: 15px;height: 15px;"></th>
-                        <th><strong id="count"></strong></th>
-                    </tr>
-                </table>
+        <div class="chat-border">
+            <div class="chat-title">
+                왕짜장 갈 사람 모여라~!~!~!
             </div>
-            <div id="chat"></div>
-            <form id="chatForm" method = "POST">
-                <input id="chat-input" type="text" required>
-                <input id="chat-mem-id" value="user.mem_id" hidden>
-                <input id="chat-gathering-id" value="roomId" hidden>
-                <input type="submit" class="button" value="Send">
-            </form>
-            <script type="text/javascript" src="/js/testChat.js"></script>
+    
+            <div class="container">
+    
+                <h1 id="chat-head">CHAT</h1>
+                <div id="info">
+                    <table>
+                        <tr>
+                            <th><img src="/images/person.png" alt="현재 접속 인원: " style="margin: 3px; width: 15px;height: 15px;"></th>
+                            <th><strong id="count"></strong></th>
+                        </tr>
+                    </table>
+                </div>
+                <div id="chat"></div>
+                <form id="chatForm" method = "POST">
+                    <input id="chat-input" type="text" required>
+                    <input id="chat-mem-id" value="user.mem_id" hidden>
+                    <input id="chat-gathering-id" value="roomId" hidden>
+                    <input type="submit" class="button" value="Send">
+                </form>
+                <script type="text/javascript" src="/js/testChat.js"></script>
+    
+            </div>
 
-    </div>
+        </div>
+        
     </div>
 </section>
