@@ -281,3 +281,9 @@
 	border: 1px dashed rgb(0, 0, 0);
 	border-radius: 3px;
 }
+
+.myroom-page-box {
+	margin: 30px 0;
+	padding-top: 20px;
+	text-align: center;
+}
