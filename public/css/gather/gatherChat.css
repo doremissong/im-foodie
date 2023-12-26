@@ -1,0 +1,26 @@
+.chat-section {
+    width: 950px;
+    margin: auto;
+    position: relative;
+}
+
+.chat-border {
+    width: 600px;
+    height: 800px;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 2px solid rgb(69, 58, 58);
+    border-radius: 5px;
+}
+
+.chat-title {
+    width: 600px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px 0;
+    border-bottom: 1px solid black;
+}

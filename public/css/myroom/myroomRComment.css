@@ -272,9 +272,12 @@
 
 /* comment */
 .my-comment-box {
-	display: flex;
 	margin: 10px 10px 15px 10px;
 	padding-left: 37px;
+}
+
+.my-comment-align {
+	display: flex;
 }
 
 .my-comment {
@@ -283,4 +286,23 @@
 	padding: 5px 7px;
 	border: 1px dashed rgb(0, 0, 0);
 	border-radius: 3px;
+}
+
+.omit {
+	display: flex;
+	justify-content: center;
+	font-size: 22px;
+}
+
+.my-comment-numbers {
+	display: flex;
+	justify-content: center;
+	font-size: 14px;
+	/* border: 1px solid black; */
+}
+
+.myroom-page-box {
+	margin: 30px 0;
+	padding-top: 20px;
+	text-align: center;
 }
