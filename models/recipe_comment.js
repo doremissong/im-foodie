@@ -9,7 +9,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     recipe_id: {
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'recipe',
+        key: 'recipe_id'
+      }
     },
     mem_id: {
       type: DataTypes.STRING(20),
@@ -50,6 +54,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "recipe_comment_id" },
+        ]
+      },
+      {
+        name: "fk_rcomment_recipe_id_idx",
+        using: "BTREE",
+        fields: [
+          { name: "recipe_id" },
         ]
       },
     ]

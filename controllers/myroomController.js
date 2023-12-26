@@ -43,7 +43,7 @@ module.exports={
         res.render('myroom/myroomModify', obj);
 
     },
-    // 1-c) 계정 탈퇴
+    // ⚠️1-c) 계정 탈퇴
     showWithdrawPage: (req, res)=>{
         const obj = {};
         obj.curPage = 'withdraw';
@@ -89,12 +89,205 @@ module.exports={
         res.render('myroom/myroomCheckPw', obj);
     },
 
+    setMyPost: (req, res, next) => {
+        res.locals.condition = { writer_id: req.user.mem_id }
+        console.log('setMyPostpage', res.locals.condition);
+        next();
+        // res.send('setMyPostpage');
+    },
+    showMyPost: (req, res) => {
+        const obj = {};
+        obj.curPage = 'boardPost';
+        if (req.user) {
+          obj.user = req.user;
+        }
+        if (!res.locals.paginationInfo || !res.locals.dataList) {
+          console.log('[ERROR] check pagination data.');
+          // res.redirect(res.locals.history);
+          // res.redirect('/myroom');
+        } 
+        // else{
+          obj.pagination = res.locals.paginationInfo;
+          obj.dataList = res.locals.dataList;
+          console.log('내가 쓴 글 목록:', obj);
+        //   res.send(obj);
+          res.render('myroom/myroomBPost', obj);
+        // }
+    },
 
-    // obj.curPage = 'boardPost';
-    // obj.curPage = 'boardComment';
-    // obj.curPage = 'boardLike';
-    // obj.curPage = 'recipePost';
-    // obj.curPage = 'recipeComment';
+    setMyPostComment: (req, res, next)=>{
+        const memId = req.user.mem_id;
+        // res.locals.condition = { writer_id: req.user.mem_id };
+        res.locals.includeCondition ={
+            model: db.post_comment,
+            attributes: ['post_id', 'content'],
+            where: {
+                mem_id: memId,
+            },
+            as: 'post_comments'
+        }
+        // console.log('setMyPostpage', res.locals.condition);
+        console.log('setMyPostpage', res.locals.includeCondition);
+        // res.send(res.locals.includeCondition);
+        next();
+
+    },
+    showMyPostComment: (req, res)=>{
+        const obj = {};
+        obj.curPage = 'boardComment';
+        if (req.user) {
+          obj.user = req.user;
+        }
+        if (!res.locals.paginationInfo || !res.locals.dataList) {
+          console.log('[ERROR] check pagination data.');
+        } 
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        const commentList = [];
+        for (let i=0; i<obj.dataList.length; i++){
+            commentList[i] = obj.dataList[i].post_comments.map(comment=>comment.content);
+            // console.log(i, commentList[i]);
+        }
+        // console.log(obj.dataList[0].post_comments[0].content);
+        console.log('commentList', commentList);
+        obj.commentList = commentList;
+        // console.log('내가 쓴 글 목록:', obj);
+        res.render('myroom/myroomBComment', obj);
+    },
+    setMyPostLike: (req, res, next)=>{
+        const memId = req.user.mem_id;
+        // res.locals.condition = { writer_id: req.user.mem_id }
+        res.locals.includeCondition ={
+            model: db.post_like,
+            attributes: ['post_id', 'isLiked'],
+            where: {
+                mem_id: memId,
+                isLiked: 1    //isLiked
+            },
+            as: 'post_likes'
+        }
+        console.log('setMyPostpage', res.locals.condition);
+        console.log('setMyPostpage', res.locals.includeCondition);
+        next();
+    },
+    showMyPostLike: (req, res)=>{
+        const obj = {};
+        obj.curPage = 'boardLike';
+        if (req.user) {
+          obj.user = req.user;
+        }
+        if (!res.locals.paginationInfo || !res.locals.dataList) {
+          console.log('[ERROR] check pagination data.');
+          // res.redirect(res.locals.history);
+          // res.redirect('/myroom');
+        } 
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        console.log('내가 쓴 글 목록:', obj);
+
+        res.render('myroom/myroomBLike', obj);
+    },
+    setMyRecipe: (req, res, next) => {
+        res.locals.condition = { writer_id: req.user.mem_id }
+        console.log('setMyRecipepage', res.locals.condition);
+        next();
+        // res.send('setMyRecipepage');
+    },
+    showMyRecipe: (req, res) => {
+        const obj = {};
+        obj.curPage = 'recipePost';
+        if (req.user) {
+          obj.user = req.user;
+        }
+        if (!res.locals.paginationInfo || !res.locals.dataList) {
+          console.log('[ERROR] check pagination data.');
+          // res.redirect(res.locals.history);
+          // res.redirect('/myroom');
+        } 
+        // else{
+          obj.pagination = res.locals.paginationInfo;
+          obj.dataList = res.locals.dataList;
+          console.log('내가 쓴 글 목록:', obj);
+        //   res.send(obj);
+          res.render('myroom/myroomRPost', obj);
+        // }
+    },
+    setMyRecipeComment: (req, res, next) => {
+        const memId = req.user.mem_id;
+        // res.locals.condition = { writer_id: req.user.mem_id }
+        res.locals.includeCondition ={
+            model: db.recipe_comment,
+            attributes: ['recipe_id', 'content'],
+            where: {
+                mem_id: memId,
+            },
+            as: 'recipe_comments'
+        }
+        console.log('setMyRecipepage', res.locals.condition);
+        console.log('setMyRecipepage', res.locals.includeCondition);
+        next();
+    },
+    showMyRecipeComment: (req, res) => {
+        const obj = {};
+        obj.curPage = 'recipeComment';
+        if (req.user) {
+          obj.user = req.user;
+        }
+        if (!res.locals.paginationInfo || !res.locals.dataList) {
+          console.log('[ERROR] check pagination data.');
+          // res.redirect(res.locals.history);
+          // res.redirect('/myroom');
+        }
+        obj.pagination = res.locals.paginationInfo;
+        obj.dataList = res.locals.dataList;
+        //   res.send(obj);
+        const commentList = [];
+        for (let i = 0; i < obj.dataList.length; i++) {
+            commentList[i] = obj.dataList[i].recipe_comments.map(comment => comment.content);
+            // console.log(i, commentList[i]);
+        }
+        // console.log(obj.dataList[0].post_comments[0].content);
+        console.log('commentList', commentList);
+        obj.commentList = commentList;
+        console.log('내가 쓴 글 목록:', obj);
+        res.render('myroom/myroomRComment', obj);
+    },
+    setMyRecipeLike: (req, res, next) => {
+        const memId = req.user.mem_id;
+        // res.locals.condition = { writer_id: req.user.mem_id }
+        res.locals.includeCondition ={
+            model: db.recipe_like,
+            attributes: ['recipe_id', 'isLiked'],
+            where: {
+                mem_id: memId,
+                isLiked: 1    //isLiked
+            },
+            as: 'recipe_likes'
+        }
+        console.log('setMyRecipepage', res.locals.condition);
+        console.log('setMyRecipepage', res.locals.includeCondition);
+        next();
+    },
+    showMyRecipeLike: (req, res) => {
+        const obj = {};
+        obj.curPage = 'recipeLike';
+        if (req.user) {
+          obj.user = req.user;
+        }
+        if (!res.locals.paginationInfo || !res.locals.dataList) {
+          console.log('[ERROR] check pagination data.');
+          // res.redirect(res.locals.history);
+          // res.redirect('/myroom');
+        } 
+        // else{
+          obj.pagination = res.locals.paginationInfo;
+          obj.dataList = res.locals.dataList;
+          console.log('내가 쓴 글 목록:', obj);
+        //   res.send(obj);
+          res.render('myroom/myroomRLike', obj);
+        // }
+    },
+
     // obj.curPage = 'recipeLike';
 
     // getCurrentUrl: (req, res, next)=>{

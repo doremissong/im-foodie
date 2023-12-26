@@ -5,13 +5,14 @@ function signUpClick() {
     var signUpName = document.getElementById("upName");
     var signUpEmail = document.getElementById("upEmail");
     var signUpTel = document.getElementById("upTel");
-    // var signUpCity = document.getElementById("city1")
+    var signUpCity = document.getElementById("city1")
     // var signUpDistrict = document.getElementById("district1");
-    var signUpNeighbor = document.getElementById("neighborhood1");
+    // var signUpNeighbor = document.getElementById("neighborhood1");
     var signUpBirth = document.getElementById("birthdate");
     var signUpAM = $('input[name=tos_flag]:checked').val();
     var signUpPN = $('input[name=pip_flag]:checked').val();
     var signUpEI = $('input[name=notification_flag]:checked').val();
+    const isChecked = document.getElementById("isChecked").value;
 
     if(confirm("가입하시겠습니까?") == true ) {
         if (signUpId.length == 0 || signUpId.value == '') {
@@ -19,10 +20,11 @@ function signUpClick() {
             signUpId.focus();
             return false;
         }
-        else if (document.getElementById("isChecked").value != 1) {
-            alert("아이디의 중복체크를 확인해주세요!");
-            return false;
-        }
+        // else if (document.getElementById("isChecked").value != 1) {
+        // else if (isChecked != 1) {
+        //     alert("아이디의 중복체크를 확인해주세요!");
+        //     return false;
+        // }
         else if (signUpPw.length == 0 || signUpPw.value == '') {
             alert("비밀번호 입력해주세요!");
             signUpPw.focus();
@@ -43,7 +45,7 @@ function signUpClick() {
             signUpTel.focus();
             return false;
         }
-        else if (signUpNeighbor.length == 0 || signUpNeighbor.value == '') {
+        else if (signUpCity.length == 0 || signUpCity.value == '') {
             alert("주소를 확인해주세요!");
             // signUpNeighbor.focus();
             return false;

@@ -9,7 +9,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     post_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'post',
+        key: 'post_id'
+      }
     },
     mem_id: {
       type: DataTypes.STRING(20),
@@ -65,6 +69,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "mem_id" },
+        ]
+      },
+      {
+        name: "fk_pcomment_post_id_idx",
+        using: "BTREE",
+        fields: [
+          { name: "post_id" },
         ]
       },
     ]

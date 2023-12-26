@@ -54,29 +54,29 @@ const passport = require('passport');
 //     고객센터
 
 // 마이룸 main
-router.get("/", myroomController.showMainPage);
+router.get("/", isLoggedIn, myroomController.showMainPage);
 
 // 1) 프로필
 //  1- a) 비밀번호 변경
-router.get('/changePw', myroomController.showChangePwPage);
+router.get('/changePw', isLoggedIn, myroomController.showChangePwPage);
 router.post("/changePw", isLoggedIn, memberController.changePw);
-router.get('/changePw/check', myroomController.showCheckPwPage);
+router.get('/changePw/check', isLoggedIn, myroomController.showCheckPwPage);
 router.post('/changePw/check', passport.authenticate('local', {
   successRedirect: '/myroom/changePw',
   failureRedirect: '/myroom/changePw/check',
 }));
 
 // 1-b) 프로필 수정
-router.get('/modify', myroomController.showModifyPage);
+router.get('/modify', isLoggedIn, myroomController.showModifyPage);
 router.post('/modify', isLoggedIn, memberController.updateMemberInfo);
-router.get('/modify/check', myroomController.showCheckPwPage);
+router.get('/modify/check', isLoggedIn, myroomController.showCheckPwPage);
 router.post('/modify/check',  passport.authenticate('local', {
   successRedirect: '/myroom/modify',
   failureRedirect: '/myroom/modify/check',
 }));
 // 1-c) 계정 탈퇴
-router.get('/withdraw', myroomController.showWithdrawPage);
-router.get('/withdraw/check', myroomController.showCheckPwPage);
+router.get('/withdraw', isLoggedIn, myroomController.showWithdrawPage);
+router.get('/withdraw/check', isLoggedIn, myroomController.showCheckPwPage);
 router.post('/withdraw/check', passport.authenticate('local', {
   successRedirect: '/myroom/withdraw',
   failureRedirect: '/myroom/withdraw/check',
@@ -84,25 +84,30 @@ router.post('/withdraw/check', passport.authenticate('local', {
 // myroomCPW
 
 
-router.get('/pwcheckW', (req, res) => {
-  res.render('myroom/myroomPCW');
-})
+// router.get('/pwcheckW', (req, res) => {
+//   res.render('myroom/myroomPCW');
+// })
 
-router.get('/board/post', (req, res) => {
-  res.render('myroom/myroomBPost');
-})
+// 2-1) 내가 쓴 게시글 보여주기
+router.get('/board/post', isLoggedIn, myroomController.setMyPost, setDBModel(db.post), getPaginationInfo, myroomController.showMyPost);
+// 2-2) 내가 쓴 댓글 보여주기
+/// 댓글 접근하는 게 문제네. 다시 dataList에 배열로 저장해야겟찌?
+router.get('/board/comment', isLoggedIn, myroomController.setMyPostComment, setDBModel(db.post), getPaginationInfo, myroomController.showMyPostComment);
+// 2-3) 내가 좋아요 한 게시글
+router.get('/board/like', isLoggedIn, myroomController.setMyPostLike, setDBModel(db.post), getPaginationInfo, myroomController.showMyPostLike);
 
-router.get('/board/comment', (req, res) => {
-  res.render('myroom/myroomBComment');
-})
+// 3-1) 내가 쓴 레시피
+router.get('/recipe/post', isLoggedIn, myroomController.setMyRecipe, setDBModel(db.recipe), getPaginationInfo, myroomController.showMyRecipe);
 
-router.get('/board/Like', (req, res) => {
-  res.render('myroom/myroomBLike');
-})
 
-router.get('/recipe/post', (req, res) => {
-  res.render('myroom/myroomRPost');
-});
+// 3-2) 내가 댓글 단 레시피
+router.get('/recipe/comment', isLoggedIn, myroomController.setMyRecipeComment, setDBModel(db.recipe), getPaginationInfo, myroomController.showMyRecipeComment);
+
+//3-3) 내가 좋아요 누른 레시피
+router.get('/recipe/like', isLoggedIn, myroomController.setMyRecipeLike, setDBModel(db.recipe), getPaginationInfo, myroomController.showMyRecipeLike);
+
+
+// router.get('/recipe/comment', isLoggedIn, myroomController.setMyRecipe, setDBModel(db.recipe), getPaginationInfo, myroomController.showMyRecipe);
 
 // // 레시피 - 1) 작성한 레시피 2) 좋아요 누른 레시피 3) 댓글 단 레시피 // [추후] 4) 최근 본 레시피
 // router.get("/recipe", isLoggedIn, myroomController.showRecipeDetail);

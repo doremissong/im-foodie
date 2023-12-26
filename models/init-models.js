@@ -60,10 +60,14 @@ function initModels(sequelize) {
   member.hasMany(recipe_like, { as: "recipe_likes", foreignKey: "mem_id"});
   post_clip.belongsTo(post, { as: "post", foreignKey: "post_id"});
   post.hasMany(post_clip, { as: "post_clips", foreignKey: "post_id"});
+  post_comment.belongsTo(post, { as: "post", foreignKey: "post_id"});
+  post.hasMany(post_comment, { as: "post_comments", foreignKey: "post_id"});
   post_image.belongsTo(post, { as: "post", foreignKey: "post_id"});
   post.hasMany(post_image, { as: "post_images", foreignKey: "post_id"});
   post_like.belongsTo(post, { as: "post", foreignKey: "post_id"});
   post.hasMany(post_like, { as: "post_likes", foreignKey: "post_id"});
+  recipe_comment.belongsTo(recipe, { as: "recipe", foreignKey: "recipe_id"});
+  recipe.hasMany(recipe_comment, { as: "recipe_comments", foreignKey: "recipe_id"});
   recipe_ingredient.belongsTo(recipe, { as: "recipe", foreignKey: "recipe_id"});
   recipe.hasMany(recipe_ingredient, { as: "recipe_ingredients", foreignKey: "recipe_id"});
   recipe_like.belongsTo(recipe, { as: "recipe", foreignKey: "recipe_id"});

@@ -47,7 +47,9 @@ getMemberParams = async (body, isModifying) => {
             name: body.name,
             email: body.email,  //email 양식 확인. naver.coim 이렇게 하면 안되니까
             tel: body.tel,
-            address: body.address,
+            city: body.city,
+            district: body.district,
+            neighborhood: body.neighborhood,
             birthdate: body.birthdate,
             profile_image: body.profile_image,
             state: 1, // state는 뭐지??????
@@ -218,6 +220,13 @@ module.exports = {
         var memId = req.body.mem_id;
         try{
             sequelize.transaction(async t => {
+                // await db.member.update(
+                //     { state: 2 }, {
+                //     where: { mem_id: memId },
+                //     transaction: t,
+                // });
+                // ㄴ 업데이트하면, 검색할 때, 다 state=0인 애들만 해야함.
+                // 아마 foreign key 땜에 안될 거 같은데
                 await db.member.destroy({
                     where : {mem_id:memId},
                     transaction: t,

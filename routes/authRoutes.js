@@ -21,42 +21,6 @@ router.post("/login", isNotLoggedIn, (
     successRedirect: "/"//req.session.previousUrl || "/",
   })
 ));
-// router.post('/login', passport.authenticate('local', {
-//     failureRedirect: "/auth/login",
-//     successRedirect: (req, res) => {
-//       const redirectTo = req.session.previousUrl || '/';
-//       delete req.session.previousUrl; //clear the url
-//       res.redirect(redirectTo);
-//     }
-//   })
-//   );
-
-// router.post("/login", isNotLoggedIn, (req, res) => {
-//   passport.authenticate("local", (err, user, info) => {
-//       if (err) {
-//           return next(err);
-//       }
-//       if (!user) {
-//           // Authentication failed
-//           return res.redirect("/auth/login");
-//       }
-
-//       // Authentication succeeded
-//       req.logIn(user, (loginErr) => {
-//           if (loginErr) {
-//               return res.redirect("/auth/login");
-//           }
-
-//           // Redirect to the previous URL or the default "/"
-//           return res.redirect(req.session.previousUrl || "/");
-//       });
-//   })(req, res);
-// });
-
-// router.post("/login", isNotLoggedIn, passport.authenticate("local", {
-//   failureRedirect: "/auth/login",
-//   successRedirect: req.session.previousUrl || "/",
-// }));
 router.get("/logout", isLoggedIn, memberController.logout);
 router.get("/findId", isNotLoggedIn, memberController.showFindIdPage);
 router.post("/findId", isNotLoggedIn, memberController.showFoundId);
