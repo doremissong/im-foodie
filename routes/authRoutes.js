@@ -1,11 +1,11 @@
 // 로그인 회원가입 authenticate를 auth.js로 라우터를 만드는게낭르까
 const express = require('express');
-const router = express.Router();
 const memberController = require('../controllers/memberController');
 const errorController = require('../controllers/errorController');
 const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
 const passport = require('passport');
 const member = require('../models/member');
+const router = express.Router();
 
 router.get("/test", (req, res)=>{
   res.render("testCheckMemberId");

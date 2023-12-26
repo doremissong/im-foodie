@@ -11,69 +11,10 @@
                 <a href="/myroom">마이룸</a>
             </div>
         </div>
-
         <!-- 본문 -->
         <div class="myroom-box">
             <!-- 카테고리 -->
-            <div class="myroom-category">
-                <!-- 내 프로필 -->
-                <span>내 프로필</span>
-                <ul class="category-profile">
-                    <li class="category-align"><span>◆</span>
-                        <a href="/myroom/changePW">
-                            비밀번호 변경
-                        </a>
-                    </li>
-                    <li class="category-align"><span>◆</span>
-                        <a href="/myroom/pwcheckM">
-                            회원정보 수정
-                        </a>
-                    </li>
-                    <li class="category-align"><span>◆</span>
-                        <a href="/myroom/pwcheckW">
-                            탈퇴
-                        </a>
-                    </li>
-                </ul>
-                   
-                <!-- 활동 내역 -->
-                <span>활동 내역</span>
-                <ul class="category-activity">
-                    <li class="category-align"><span>◆</span> 게시판</li>
-                        <ul class="category-activity-board">
-                            <li>- 
-                                <a href="/myroom/board/post">작성한 게시글</a>
-                            </li>
-                            <li>- 
-                                <a href="/myroom/board/comment">등록한 댓글</a>
-                            </li>
-                            <li>- 
-                                <a href="/myroom/board/like">좋아요 누른 게시글</a>
-                            </li>
-                        </ul>
-                    <li class="category-align"><span>◆</span> 레시피</li>
-                        <ul class="category-activity-recipe">
-                            <li>- 
-                                <a href="/myroom/recipe/post">작성한 레시피</a>
-                            </li>
-                            <li>- 
-                                <a href="/myroom/recipe/comment">등록한 댓글</a>
-                            </li>
-                            <li>- 
-                                <a href="/myroom/recipe/like">좋아요 누른 레시피</a>
-                            </li>
-                        </ul>
-                    <li class="category-align"><span>◆</span> 밥모임</li>
-                        <ul class="category-activity-gather">
-                            <li>- 
-                                <a href="/gather/mine">나의 밥모임</a>
-                            </li>
-                            <li>- 
-                                <a href="/myroom/chat/list">채팅 목록</a>
-                            </li>
-                        </ul>
-                </ul>
-            </div>
+            <%-include('myroomSideBar.ejs') %>
             <!-- 내용 -->
             <div class="myroom-contents">
                 

@@ -164,8 +164,8 @@
     width: 500px;
 }
 
-.change-pw-box input[name="old_password"],
-.change-pw-box input[name="new_password"] {
+.change-pw-box input[name="new_pw"],
+.change-pw-box input[name="conf_pw"] {
     width: 100%;
     padding: 20px;
     border: none;

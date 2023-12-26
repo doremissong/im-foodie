@@ -307,10 +307,21 @@ module.exports = {
     },
 
     changePw: async(req, res)=>{
-        const oldPassword = req.body.old_password;
-        const hashedPassword = await hashPassword(req.body.new_password);
-        const result = await bcrypt.compare(oldPassword, req.user.password);
-        if (result) {
+        const newPw = req.body.new_pw;
+        const confPw = req.body.conf_pw;
+        const curUrl = req.originalUrl;
+        const isUsed = await bcrypt.compare(newPw, req.user.password);
+        // console.log('새로운 비번:', newPw, '새 비번 재확인: ', confPw, '비교결과:',isUsed, '리디렉션:', curUrl);
+        if (isUsed){
+            res.send('<script>alert("기존 비밀번호로는 변경하실 수 없습니다."); window.location.href="' + curUrl + '";</script>');
+        } else if(newPw != confPw) {
+            // res.write('<script>alert("다른 비밀번호를 입력해주세요.");</script>');
+            // res.redirect(curUrl);
+            res.send('<script>alert("새 비밀번호와 재입력한 비밀번호가 다릅니다. 다시 확인해주세요."); window.location.href="' + curUrl + '";</script>');
+        } else{
+            const hashedPassword = await hashPassword(req.body.new_pw);
+            console.log(hashedPassword, '해쉬한 새 비번');
+            // // 팝업창 띄우기 
             try {
                 await sequelize.transaction(async t => {
                     await db.member.update(
@@ -323,12 +334,7 @@ module.exports = {
             } catch (err) {
                 console.log(`Error updating pw: ${err.message}`);
             }
-            res.redirect("/");
-            //res.redirect(res.locals.history);
-            // res.send(req.body.newPassword);
-        } else{
-            // 팝업창 띄우기 
-            res.redirect("/auth/changePw");
+            res.send('<script>alert("홈화면으로 이동합니다."); window.location.href="' + curUrl + '";</script>');
         }
     },
 

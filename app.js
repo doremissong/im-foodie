@@ -17,7 +17,8 @@ const sharedSession = require('express-socket.io-session');
 const passport = require('passport');
 // const expressValidator = require('express-validator');
 const router     = require('./routes/index');
-require('./config/passport')(passport);
+require('./config/passport')(passport); //  Passport 설정을 포함하는 파일을 로드하고 해당 파일에 passport를 전달하는 코드
+                                        // 이 코드는 주로 애플리케이션의 진입점 또는 서버를 시작하기 전에 실행되는 파일에 위치
 
 app.set("port", process.env.PORT || 3000);  //전역변수 등록
 app.set('view engine', 'ejs');              // 전역변수 등록 app.set

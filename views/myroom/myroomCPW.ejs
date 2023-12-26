@@ -15,78 +15,23 @@
         <!-- 본문 -->
         <div class="myroom-box">
             <!-- 카테고리 -->
-            <div class="myroom-category">
-                <!-- 내 프로필 -->
-                <span>내 프로필</span>
-                <ul class="category-profile">
-                    <li class="category-align"><span>◆</span>
-                        <a class="fontBold" href="/myroom/changePW">
-                            비밀번호 변경
-                        </a>
-                    </li>
-                    <li class="category-align"><span>◆</span>
-                        <a href="/myroom/pwcheckM">
-                            회원정보 수정
-                        </a>
-                    </li>
-                    <li class="category-align"><span>◆</span>
-                        <a href="/myroom/pwcheckW">
-                            탈퇴
-                        </a>
-                    </li>
-                </ul>
-                   
-                <!-- 활동 내역 -->
-                <span>활동 내역</span>
-                <ul class="category-activity">
-                    <li class="category-align"><span>◆</span> 게시판</li>
-                        <ul class="category-activity-board">
-                            <li>- 
-                                <a href="/myroom/board/post">작성한 게시글</a>
-                            </li>
-                            <li>- 
-                                <a href="/myroom/board/comment">등록한 댓글</a>
-                            </li>
-                            <li>- 
-                                <a href="/myroom/board/like">좋아요 누른 게시글</a>
-                            </li>
-                        </ul>
-                    <li class="category-align"><span>◆</span> 레시피</li>
-                        <ul class="category-activity-recipe">
-                            <li>- 
-                                <a href="/myroom/recipe/post">작성한 레시피</a>
-                            </li>
-                            <li>- 
-                                <a href="/myroom/recipe/comment">등록한 댓글</a>
-                            </li>
-                            <li>- 
-                                <a href="/myroom/recipe/like">좋아요 누른 레시피</a>
-                            </li>
-                        </ul>
-                    <li class="category-align"><span>◆</span> 밥모임</li>
-                        <ul class="category-activity-gather">
-                            <li>- 
-                                <a href="/gather/mine">나의 밥모임</a>
-                            </li>
-                            <li>- 
-                                <a href="/myroom/chat/list">채팅 목록</a>
-                            </li>
-                        </ul>
-                </ul>
-            </div>
+            <%-include('myroomSideBar.ejs') %>
             <!-- 내용 -->
             <div class="myroom-contents">
                 <div class="in-text">
                     <span class="material-symbols-outlined">person</span>
-                    <div>비밀번호 변경하기</div>
+                    <div>새로운 비밀번호를 입력해주세요</div>
                 </div>
                 <div class="change-pw-box">
                     <form name="change-pw" method="post">
-                        <span>기존 비밀번호</span>
-                        <input type="password" name="old_password" placeholder="기존 비밀번호" required>
+                        new_pw(새 비밀번호)랑 conf_pw(새 비번 재입력) 다르면
+                        경고 문구 빨간색으로.
+                        /member/changePw.ejs 도 수정해야함.
                         <span>새로운 비밀번호</span>
-                        <input type="password" name="new_password" placeholder="새로운 비밀번호" required>
-                        <button type="submit" name=", change-pw">비밀번호 변경</button>
+                        <input type="password" name="new_pw" placeholder="새로운 비밀번호" minlenght='6' maxlength='20' required>
+                        <span>새로운 비밀번호</span>
+                        <input type="password" name="conf_pw" placeholder="새로운 비밀번호 확인" minlenght='6' maxlength='20' required>
+                        <button type="submit" change-pw">비밀번호 변경</button>
                     </form>
                 </div>
             </div>

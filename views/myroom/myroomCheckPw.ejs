@@ -1,0 +1,39 @@
+<!-- STYLESHEET -->
+<link rel="stylesheet" href="/css/myroom/myroomPCM.css">
+    
+<!-- SECTION -->
+<section>
+    <div class="myroom-section">
+
+        <!-- 마이룸 -->
+        <div class="gather-list">
+            <div class="gather-main">
+                <a href="/myroom">마이룸</a>
+            </div>
+        </div>
+
+        <!-- 본문 -->
+        <div class="myroom-box">
+            <!-- 카테고리 -->
+            <%-include('myroomSideBar.ejs') %>
+            <!-- 내용 -->
+            <div class="myroom-contents">
+
+                <div class="myroom-pw-check">
+                    <span><%= phrase %></span>
+
+                    <div class="pw-check-box">
+                        <form method="POST">
+                            <input type="text" name="mem_id" value="<%=user.mem_id %>" hidden>
+                            <input type="password" name="password" placeholder="비밀번호" maxlength='20' value="" required>
+                            <button type="submit">비밀번호 확인</button>
+                        </form>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+

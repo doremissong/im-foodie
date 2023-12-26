@@ -7,15 +7,18 @@
         <div>
             <div class="in-text">
                 <span class="material-icons">person</span>
-                <a>비밀번호 변경</a>
+                <a>새로운 비밀번호를 입력해주세요</a>
             </div>
             <div class="change-pw-box">
                 <form name="change-pw" method="post">
-                    <span>이전 비밀번호</span>
-                    <input type="password" name="old_password" placeholder="이전 비밀번호" required>
+                    new_pw(새 비밀번호)랑 conf_pw(새 비번 재입력) 다르면
+                    경고 문구 빨간색으로.
+                    /member/changePw.ejs 도 수정해야함.
                     <span>새로운 비밀번호</span>
-                    <input type="password" name="new_password" placeholder="새로운 비밀번호" required>
-                    <button type="submit" name=", change-pw">비밀번호 변경</button>
+                    <input type="password" name="new_pw" placeholder="새로운 비밀번호" minlenght='6' maxlength='20' required>
+                    <span>새로운 비밀번호</span>
+                    <input type="password" name="conf_pw" placeholder="새로운 비밀번호 확인" minlenght='6' maxlength='20' required>
+                    <button type="submit" change-pw">비밀번호 변경</button>
                 </form>
             </div>
         </div>
