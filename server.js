@@ -121,10 +121,8 @@ app.get('/gather/view', (req, res) => {
   res.render('gather/gatherView(n)');
 })
 
-// gather chat
-app.get('/gather/chat/list', (req, res) => {
-  res.render('chatList');
-})
+
+
 
 app.get('/gather/chat/room', (req, res) => {
   res.render('chat(n)');
@@ -227,4 +225,8 @@ app.get('/myroom/recipe/comment', (req, res) => {
 
 app.get('/myroom/recipe/Like', (req, res) => {
   res.render('myroom/myroomRLike');
+})
+
+app.get('/myroom/chat/list', (req, res) => {
+  res.render('myroom/myroomChatList');
 })

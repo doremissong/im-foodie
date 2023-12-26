@@ -81,12 +81,13 @@
                     <div>비밀번호 변경하기</div>
                 </div>
                 <div class="change-pw-box">
-                    <form name="change-pw" id="changePwForm" method="post" onsubmit="return checkPW ()">
-                        <span>기존 비밀번호</span>
-                        <input type="password" name="old_password" id="newPW" placeholder="새로운 비밀번호" required>
+                    <form name="change-pw" id="changePwForm" method="post" onsubmit="return checkPW()">
                         <span>새로운 비밀번호</span>
-                        <input type="password" name="new_password" id="checkNewPW" placeholder="비밀번호 확인" required>
-                        <button type="submit" name=", change-pw">비밀번호 변경</button>
+                        <input type="password" name="new_password" id="newPW" placeholder="새로운 비밀번호" required>
+                        <span>새로운 비밀번호 확인</span>
+                        <input type="password" name="check_password" id="checkNewPW" oninput="checkAccord()" placeholder="새로운 비밀번호 확인" required>
+                        <div id="notAccord">입력하신 비밀번호가 일치하지 않습니다!</div>
+                        <button type="submit" name="change-pw">비밀번호 변경</button>
                     </form>
                 </div>
             </div>
