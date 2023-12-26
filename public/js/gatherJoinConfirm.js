@@ -7,13 +7,13 @@ function joinClick() {
         else{
             var joinForm = document.getElementById("form-apply");
             joinForm.submit(); 
-            // modalJoin.style.display = 'none';
-            // modalViewJoin.style.display = 'none';
-            if (document.getElementById('modalWrapJoin')) {
-                modalJoin.style.display = 'none';
-            }else if (document.getElementById('modalWrapViewJoin')) {
-                modalViewJoin.style.display = 'none';
-            }
+            modalJoin.style.display = 'none';
+            modalViewJoin.style.display = 'none';
+            // if (document.getElementById('modalWrapJoin')) {
+            //     modalJoin.style.display = 'none';
+            // }else if (document.getElementById('modalWrapViewJoin')) {
+            //     modalViewJoin.style.display = 'none';
+            // }
             document.getElementById("gatherJoinArea").value='';
         }
     }

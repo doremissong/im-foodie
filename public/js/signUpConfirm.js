@@ -19,7 +19,7 @@ function signUpClick() {
             signUpId.focus();
             return false;
         }
-        else if (document.getElementById("isChecked").value != 1) {
+        else if (isChecked != 1) {
             alert("아이디의 중복체크를 확인해주세요!");
             return false;
         }
