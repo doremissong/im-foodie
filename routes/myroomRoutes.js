@@ -3,7 +3,7 @@ const router = express.Router();
 
 const myroomController = require('../controllers/myroomController');
 const memberController = require('../controllers/memberController');
-// const boardController = require('../controllers/boardController');
+const boardController = require('../controllers/boardController');
 // const gatherController = require('../controllers/gatheringController');
 // const recipeController = require('../controllers/recipeController');
 
@@ -68,6 +68,7 @@ router.post('/changePw/check', passport.authenticate('local', {
 
 // 1-b) 프로필 수정
 router.get('/modify', myroomController.showModifyPage);
+router.post('/modify', isLoggedIn, memberController.updateMemberInfo);
 router.get('/modify/check', myroomController.showCheckPwPage);
 router.post('/modify/check',  passport.authenticate('local', {
   successRedirect: '/myroom/modify',

@@ -29,25 +29,25 @@
                                 <tr class="row">
                                     <td class="t-text">아이디*</td>
                                     <td class="t-box-none">
-                                        qwer1234
+                                        <%= user.mem_id %>
                                     </td>
                                 </tr>
                                 <tr class="row">
                                     <td class="t-text">이름*</td>
                                     <td class="t-box-none">
-                                        초코케이크
+                                        <%= user.name %>
                                     </td>
                                 </tr>
                                 <tr class="row">
                                     <td class="t-text">이메일*</td>
                                     <td class="t-box">
-                                        <input type="email" id="upEmail" name="email" placeholder="이메일" value="" required >
+                                        <input type="email" id="upEmail" name="email" placeholder="이메일" value="<%= user.email %>" required >
                                     </td>
                                 </tr>
                                 <tr class="row">
                                     <td class="t-text">연락처*</td>
                                     <td class="t-box">
-                                        <input type="tel" id="upTel" name="tel" placeholder="연락처" pattern="[0-9]{11}" value="" required>
+                                        <input type="tel" id="upTel" name="tel" placeholder="연락처" pattern="[0-9]{11}" value="<%= user.tel %>" required>
                                     </td>
                                 </tr>
                                 <tr class="row">
@@ -55,7 +55,11 @@
                                     <td class="t-box">
                                         <div class="up-region">
                                             <div class="region_box">
-                                                <select name="city" id="city1"></select>
+                                                <select name="city" id="city1">
+                                                    <% if (user.city) { %>
+                                                        <option value="<%= user.city %>" selected><%= user.city %></option>
+                                                    <% } %>
+                                                </select>
                                                 <select name="district" id="district1"></select>
                                                 <select name="neighborhood" id="neighborhood1"></select>
                                             </div>
@@ -63,15 +67,15 @@
                                     </td>
                                 </tr>
                                 <tr class="row">
-                                    <td class="t-text">생년월일*</td>
+                                    <td class="t-text">생년월일* '-'없이YYMMDD</td>
                                     <td class="t-box">
-                                        <input type="text" id="birthdate" name="birthdate" placeholder="'-'없이 YYMMDD" pattern="[0-9]{6}" value="" required>
+                                        <input type="text" id="birthdate" name="birthdate" pattern="[0-9]{6}" value="<%= user.birthdate %>" required>
                                     </td>
                                 </tr>
                                 <tr class="row">
                                     <td class="t-text">프로필 이미지</td>
                                     <td class="t-box">
-                                        <input type="url" name="profile_image" placeholder="프로필 이미지 주소" value="">
+                                        <input type="url" name="profile_image" value="<%= user.profile_image %>">
                                     </td>
                                 </tr>
                                 <!-- <tr class="row">

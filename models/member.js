@@ -25,10 +25,17 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: "uc_mem_tel"
     },
-    address: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-      defaultValue: "0"
+    city: {
+      type: DataTypes.STRING(10),
+      allowNull: false
+    },
+    district: {
+      type: DataTypes.STRING(10),
+      allowNull: true
+    },
+    neighborhood: {
+      type: DataTypes.STRING(10),
+      allowNull: true
     },
     birthdate: {
       type: DataTypes.STRING(6),

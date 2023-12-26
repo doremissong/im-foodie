@@ -62,7 +62,7 @@ module.exports={
         const obj = {};
         const url = req.url.split('/',2).join('');
         obj.curPage = url;
-        console.log(url, '확인', 'curPage확인', obj.curPage);
+        // console.log(url, '확인', 'curPage확인', obj.curPage);
         if(!req.user){
             next(err);
         } else{
@@ -84,7 +84,7 @@ module.exports={
                 obj.phrase = '비밀번호를 다시 한 번 입력해주세요';
                 break;
         }
-        console.log(obj);
+        // console.log(obj);
         res.locals.obj = obj;
         res.render('myroom/myroomCheckPw', obj);
     },

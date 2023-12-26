@@ -6,6 +6,7 @@ const path = require('path');
 const bcrypt = require('bcryptjs');
 const { isEmpty, redirect } = require('../routes/middlewares');
 const transporter = require('../config/email');
+const ISCREATING = 0, ISMODIFYING =1;
 
 // __dirname === C:\Users\zelly\Desktop\imfoodie\im-foodie\controllers
 
@@ -33,24 +34,39 @@ hashPassword = async (password) => {
     const hashedPW = await bcrypt.hash(password, salt);
     return hashedPW;
 }
-getMemberParams = async (body) => {
+
+getMemberParams = async (body, isModifying) => {
     // const salt = await bcrypt.genSalt(10);
     // const hashPassword = await bcrypt.hash(body.password, salt);
-    const hashedPassword = await hashPassword(body.password);
-    return {
-        mem_id: body.mem_id,
-        password: hashedPassword,
-        name: body.name,
-        email: body.email,  //email 양식 확인. naver.coim 이렇게 하면 안되니까
-        tel: body.tel,
-        address: body.address,
-        birthdate: body.birthdate,
-        profile_image: body.profile_image,
-        state: 1, //
-        tos_flag: body.tos_flag,
-        pip_flag: body.pip_flag,
-        notification_flag: body.notification_flag
+    var result = {};
+    if(!isModifying){    // 생성
+        const hashedPassword = await hashPassword(body.password);
+        result =  {
+            mem_id: body.mem_id,
+            password: hashedPassword,
+            name: body.name,
+            email: body.email,  //email 양식 확인. naver.coim 이렇게 하면 안되니까
+            tel: body.tel,
+            address: body.address,
+            birthdate: body.birthdate,
+            profile_image: body.profile_image,
+            state: 1, // state는 뭐지??????
+            tos_flag: body.tos_flag,
+            pip_flag: body.pip_flag,
+            notification_flag: body.notification_flag
+        }
+    } else{
+        result = {
+            email: body.email,
+            tel: body.tel,
+            city: body.city,
+            district: body.district,
+            neighborhood: body.neighborhood,
+            birthdate: body.birthdate,
+            profile_image: body.profile_image,
+        }
     }
+    return result;
 }
 
 
@@ -114,7 +130,7 @@ module.exports = {
         //const { mem_id, password, name, email, tel, address, birthdate, profile_image, tos_flag, pip_flag, notification_flag } = req.body;
         if(req.skip) next();    // create액션 건너뛰고 바ㅗ 뷰로 되돌아감
 
-        var memberData = await getMemberParams(req.body);
+        var memberData = await getMemberParams(req.body, ISCREATING);
         console.log(memberData);
 
         try {
@@ -165,22 +181,19 @@ module.exports = {
         });
     },
 
-    // 화면 변경 화면 보여주기
-    //     //memId는 session이나 로그인 정보에서 가져와야한다.
-    edit: (req,res)=>{
-        //여기서 데이터 불러와서 브라우저에 띄워줘야함
-        res.sendFile(path.join(__dirname, "../public/html/myroom/edit.html"));
-    },
+    // // 화면 변경 화면 보여주기
+    // //     //memId는 session이나 로그인 정보에서 가져와야한다.
+    // edit: (req,res)=>{
+    //     //여기서 데이터 불러와서 브라우저에 띄워줘야함
+    //     res.sendFile(path.join(__dirname, "../public/html/myroom/edit.html"));
+    // },
 
-    // 값 수정. 정보 다 보여주지 말고. email, 전화번호, 이름, 이런 것만 변경하게.
-    //                              시간 같은 거, 약관동의 같은 거 빼고. 그러면 뷰를 만들어야하나
-    update: async (req, res, next)=>{
-        // update_date는 알아서 됨?????
-        var memId = req.body.mem_id;
-        var updatedMemberData = getMemberParams(req.body);
+    updateMemberInfo: async (req, res)=>{
+        const memId = req.user.mem_id;
+        var updatedMemberData = await getMemberParams(req.body, ISMODIFYING);
+        // res.send(updatedMemberData);
+        // console.log(updatedMemberData);
         //✅멤버 조회해서 보여줄 때, 저장해야함.
-        res.locals.members = memId; 
-
         try {
             await sequelize.transaction(async t => {
                 await db.member.update(updatedMemberData, {
@@ -188,23 +201,20 @@ module.exports = {
                     transaction: t
                 })
             });
-            next();
+            res.redirect('/myroom');
         } catch (err) {
             console.log(`Error updating member: ${err.message}`);
-            next(err);
+            res.redirect(req.originalUrl); // /myroom/modify
         }
     },
 
-    updateView: (req, res)=>{
-        res.send("update is complete");
-    },
 
     //삭제? 또는 이름 바꾸기
-    showDelete: (req, res)=>{
-        res.sendFile(path.join(__dirname, "../public/html/delete.html"));
-    },
+    // showDelete: (req, res)=>{
+    //     res.sendFile(path.join(__dirname, "../public/html/delete.html"));
+    // },
 
-    delete: async(req, res, next)=>{
+    deleteMember: async(req, res, next)=>{
         var memId = req.body.mem_id;
         try{
             sequelize.transaction(async t => {
@@ -318,6 +328,7 @@ module.exports = {
             // res.write('<script>alert("다른 비밀번호를 입력해주세요.");</script>');
             // res.redirect(curUrl);
             res.send('<script>alert("새 비밀번호와 재입력한 비밀번호가 다릅니다. 다시 확인해주세요."); window.location.href="' + curUrl + '";</script>');
+                                                                                                                            // 그냥 curUrl만 하면 안되나?
         } else{
             const hashedPassword = await hashPassword(req.body.new_pw);
             console.log(hashedPassword, '해쉬한 새 비번');

@@ -29,10 +29,10 @@ router.get("/", (req, res) => {
 });
 
 router.get("/members", memberController.show, memberController.showView);
-router.get("/myroom/edit", memberController.edit);   //controller에서 update 수정
-router.post("/myroom/edit", memberController.update, memberController.showView);//showView
-router.get("/delete", memberController.showDelete);
-router.post("/delete", memberController.delete, memberController.show, memberController.showView);
+// router.get("/myroom/edit", memberController.edit);   //controller에서 update 수정
+// router.post("/myroom/edit", memberController.updateMemberInfo, memberController.showView);//showView
+// router.get("/delete", memberController.showDelete);
+// router.post("/delete", memberController.deleteMember, memberController.show, memberController.showView);
 
 
 // 라우터 분리
