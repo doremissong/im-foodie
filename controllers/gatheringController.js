@@ -21,7 +21,7 @@ getGatherParams = (info, isModifying, _memId)=>{
             city: info.city,
             district: info.district,
             neighborhood: info.neighborhood,
-            place: info.place,
+            place: info.place? info.place: '미정',
             description: info.description,
             deadline: info.deadline,
             state: RECRUITING,
@@ -168,6 +168,9 @@ module.exports={
             limit: limit,
             raw: true,
         });
+        recruitingList.forEach((gather, index)=>{
+            gather.description = gather.description.replaceAll(/\r\n/g, '\\n');
+        })
         // console.log('recruiting list result:', recruitingList);
 
         const completedList = await searchGatherings(undefined, undefined, undefined, undefined, {
@@ -175,11 +178,15 @@ module.exports={
             order: [['createdAt', 'DESC']],
             limit: limit,
         });
+        completedList.forEach((gather, index)=>{
+            gather.description = gather.description.replaceAll(/\r\n/g, '\\n');
+        })
         // console.log('모집완료 검색결과?', completedList =="");
 
         obj.recruitingList = recruitingList;
         obj.completedList = completedList;
-        obj.previousUrl = req.session.previousUrl?req.session.previousUrl:'/';
+        console.log(obj.recruitingList);
+        // obj.previousUrl = req.session.previousUrl?req.session.previousUrl:'/';
         res.render("gather/gather", obj);
     },
 

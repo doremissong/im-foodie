@@ -29,7 +29,10 @@ module.exports = (passport) => {
         // console.log(`[ID]: ${mem_id}\n[Password]: ${password}`);
         // try {
             // console.log(req.session.previousUrl, '기존 url');
-            var member = await db.member.findOne({ where: { mem_id: mem_id, state: 0} });
+            var member = await db.member.findOne({
+                // attributes: ['mem_id', 'name'],
+                where: { mem_id: mem_id, state: 0} 
+            });
             if (!(member)){
                 console.log('ID not found');
                 return done(null, false, { message: 'ID not found' });// if user was not found, return false for member and pass an err message
@@ -37,8 +40,8 @@ module.exports = (passport) => {
             // console.log("[db에서 가져온 PASSWORD]: ", member.password);
             // console.log("[입력받은 pw]: ", password);
             var result = await bcrypt.compare(password, member.password)// compareSync로 return 값이 boolean인듯함
-            // // var result=member.password===password;
             // console.log("비밀번호 일치여부: ",result);
+            // 여기서 보낼 값 data = { mem_id: , name: }
             if (result) {   // if match return user
                 console.log('Login success..!', member.mem_id);
                 return done(null, member); 

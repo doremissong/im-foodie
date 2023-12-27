@@ -9,7 +9,13 @@ closeBtnUpAM.onclick = function() {
     modalUpAM.style.display = 'none';
 }
 
-
+// "details-title"
+// "details-region"
+// "details-restaurant"
+// "details-numbers"
+// "details-deadline"
+// "details-intro"
+// "details-img"
 const btnUpPN = document.getElementById('popupBtnUpPN');
 const modalUpPN = document.getElementById('modalWrapUpPN');
 const closeBtnUpPN = document.getElementById('closeBtnUpPN');

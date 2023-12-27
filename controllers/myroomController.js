@@ -32,14 +32,25 @@ module.exports={
         res.render('myroom/myroomCPW', obj);  
     },
     // 1-b) 프로필 수정
-    showModifyPage: (req, res)=>{
+    showModifyPage: async (req, res)=>{
         const obj = {};
         obj.curPage = 'modify';
         if(!req.user){
             next(err);
         } else{
             var memId = req.user.mem_id;
-            obj.user = req.user;
+            try{
+                const result = await db.member.findOne({
+                    where: { mem_id: memId },
+                    raw: true
+                });
+                obj.user = result;
+
+            } catch(err){
+                console.log('[ERROR] While searching member data', err);
+                res.redirect('/gather');
+            }
+            // obj.user = req.user;
         }
         res.render('myroom/myroomModify', obj);
 
