@@ -60,7 +60,7 @@
                 
                 <!-- 페이지네이션 -->
                 <div class="myroom-page-box">
-                    <% if (dataList !== ''){ %>
+                    <% if (dataList !== '' && pagination.totalPost !=0){ %>
                         <div class="paginationInfo-container">
                             <% if (pagination.curSet > 1){ %>    
                                 <div class="prev-set-button"><a href="/myroom/board/post?pageno=<%= pagination.startPage-1%>&countperpage=10">&lt;&lt;&nbsp; </a></div>

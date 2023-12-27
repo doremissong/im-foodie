@@ -7,13 +7,12 @@
 		<div class="board-list">
 			<div class="write-box">
 				<a href="/notice/write">
-					<button class="write-button">
-						글쓰기
-					</button>
+					<% if(typeof admin != "undefined"){ %>
+						<button class="write-button">
+							글쓰기
+						</button>
+					<% } %>
 				</a>
-				<!-- <% if(typeof operator != "undefined"){ %> -->
-					<!-- 로그인 상태일 시 -->
-				<!-- <% } %> -->
 			</div>
 		</div>
 		<ul class="post-index">

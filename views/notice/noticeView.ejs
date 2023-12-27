@@ -12,10 +12,17 @@
             <div class="post-info-box">
                 <ul class="post-info-first">
                     <li class="writer-name">
-                        <!-- 작성자 이름 불러오기 -->
                         작성자
-                        관리자
+                    </li>
+
+                    <li class="writer-name" style="font-weight: 800;">
+                        <!-- 작성자 이름 불러오기 -->
+                        <%= dataList.operator_id %>
                         <!--  operator_id -->
+                    </li>
+                    <li class="write-date">
+                        <!-- 작성일 불러오기 -->
+                        등록일시
                     </li>
                     <li class="write-date">
                         <!-- 작성일 불러오기 -->
@@ -39,8 +46,31 @@
             </div>
         </div>
         <!-- 하단 -->
-        <div class="box">
-            <button onclick="location.href='/notice'">목록으로</button>
-        </div>
+        <!-- 글 하단 -->
+        <div class="bottom-nav">
+            <div class="goback">
+                <a href="/board">🔙 목록으로</a>
+            </div>
+
+            <!-- 로그인한 유저가 글 작성자일때 보이기 -->
+            <% if(typeof admin != 'undefined'){ %>
+                <div class="editbox">
+                    <ul>
+                        <li>
+                            <span>
+                                <!-- 글 작성자이면 게시글 수정 페이지로 이동 -->
+                                <a href="/notice/update?ntc_no=<%= dataList.notice_id %>">수정</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <!-- 글 작성자이면 게시글 삭제 -->
+                                <a href="/notice/delete?ntc_no=<%= dataList.notice_id %>">삭제</a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            <% } %>
+        </div>      
     </div>
 </section>

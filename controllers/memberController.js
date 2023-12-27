@@ -83,6 +83,7 @@ module.exports = {
     // 통계용. 
     // app.get("/members", memberController.index, memberController.indexView);
     
+    // 관리자 체크하기
     show: async (req, res, next) => {
         try{
             console.log("loading members");
@@ -329,7 +330,15 @@ module.exports = {
         const newPw = req.body.new_pw;
         const confPw = req.body.conf_pw;
         const curUrl = req.originalUrl;
-        const isUsed = await bcrypt.compare(newPw, req.user.password);
+        const memId = req.user.mem_id;
+        const temp = await db.member.findOne({
+            attributes: ['password'],
+            where: {mem_id: memId},
+            raw: true
+        });
+        const oldPw = temp.password;
+        // const isUsed = await bcrypt.compare(newPw, req.user.password);
+        const isUsed = await bcrypt.compare(newPw, oldPw);
         // console.log('새로운 비번:', newPw, '새 비번 재확인: ', confPw, '비교결과:',isUsed, '리디렉션:', curUrl);
         if (isUsed){
             res.send('<script>alert("기존 비밀번호로는 변경하실 수 없습니다."); window.location.href="' + curUrl + '";</script>');

@@ -258,6 +258,25 @@ exports.getPaginationInfo = async (req, res, next)=>{
     return next();
 }
 
+exports.checkAdmin = (req, res, next)=>{
+    const memId = req.user.mem_id;
+    const reservedId = ['admin', 'imfoodie']; //*admin*, imfoodie*;
+    for (let i = 0; i < reservedId.length; i++) {
+        if (memId.includes(reservedId[i])) {
+            res.locals.result = { success: true, message: '관리자 접근 가능' };
+            next();
+            // res.send(res.locals.result);
+            console.log(res.locals.result);
+        }
+    }
+    if(!res.locals.result){
+        res.locals.result = { success: false, message: '접근 권한이 없습니다.' };
+        console.log(res.locals.result);
+        // res.send(res.locals.result);
+        next();
+    }
+}
+
 // create, update, delete 에는 두지 말고, / myroom은 로그인 안하면 못보고. 근데 이전페이지로 돌아가는게 로그인한 상황에서 필요할까ㅓ?
 exports.storeUrl = (req, res, next)=>{
     req.session.previousUrl = req.originalUrl;
