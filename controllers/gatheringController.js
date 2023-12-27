@@ -327,6 +327,8 @@ module.exports={
         }
         obj.pagination = res.locals.paginationInfo;
         obj.dataList = res.locals.dataList;
+        console.log('[페이지네이션', obj.pagination);
+        console.log('[밥모임 목록]', obj.dataList);
 
         const mode = req.url.split('?',1).join('').slice(1);    // 배열 -> 문자열
         switch (mode) {

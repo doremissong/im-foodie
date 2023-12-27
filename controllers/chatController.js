@@ -75,17 +75,20 @@ module.exports = io => {
                 // 처음 입장, welcome 이벤트 emit하고, isConnected:1로 해.
                 io.to(socket.roomId).emit('welcome', memId);
                 // io.to(roomId).emit('welcome', memId);
-                await isParticipant.update({
-                    isConnected: CONNECTED
+                await sequelize.transaction(async t=>{
+                    await isParticipant.update({
+                        isConnected: CONNECTED
+                    },
+                    {transaction:t})
+                    // imfoodie 계정 만들기
+                    await db.chat.create({
+                        gathering_id: roomId,
+                        mem_id: memId,
+                        content: memId+'님이 입장하셨습니다 :)',
+                    },
+                    {transaction:t}
+                    )
                 })
-                // imfoodie 계정 만들기
-                await db.chat.create({
-                    gathering_id: roomId,
-                    mem_id: memId,
-                    content: memId+'님이 입장하셨습니다 :)',
-                },
-                {transaction:t}
-                )
                 // await db.chat.create(messageAttributes, { transaction: t });
 
             } else if(isParticipant.isConnected == CONNECTED) {
@@ -102,7 +105,11 @@ module.exports = io => {
                     raw: true,
                     // offset: ,
                 });
-                data.content = data.content.replace(/\r\n/g, '<br>');
+                // console.log('replace할', data);
+                data.forEach((chat, index)=>{
+                    chat.content = chat.content.replaceAll(/\r\n/g, '<br>');
+                    // console.log(chat.content, '내용',index);
+                })
                 sendMessageToUser(memId, data, socket);
                 console.log(data, 'and ', roomId, socket.roomId);
                 // io.to(sessionId).emit('load messages', data);

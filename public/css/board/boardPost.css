@@ -6,8 +6,6 @@
     display: flex;
     position: relative;
     justify-content: center;
-
-    /* border: 1px solid blue; */
 }
 
 .board-post-section {
@@ -160,25 +158,41 @@
 
 /* up & scrap */
 .upscrap-box {
-    /* background-color: #edebeb; */
     position: relative;
     display: flex;
+    align-items: center;
     margin: auto;
     justify-content: center;
+    padding-top: 20px;
     padding-bottom: 40px;
 }
 
 .upscrap-box button {
-    background-color: #fefac8;
-    border: 1px solid rgb(255, 198, 198);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(253, 232, 232);
+    /* border: none; */
+    border: 1px solid rgb(252, 207, 207);
     border-radius: 50px;
-    margin: 20px;
-    padding: 10px;
-    width: 65px;
+    width: 60px;
+    height: 60px;
+    font-size: 40px;
 }
 
 .upscrap-box button:hover {
-    cursor: pointer;
+    background-color: rgb(252, 207, 207);
+}
+
+.like-box {
+    text-align: center;
+}
+
+.like-title {
+    margin-top: 5px;
+    margin-right: 5px;
+    font-weight: bold;
 }
 
 
@@ -340,6 +354,12 @@ textarea:focus {
     background-color: rgb(255, 255, 255);
 }
 
+.box button:hover {
+    font-weight: bold;
+    border: 1px solid rgb(203, 198, 198);
+    background-color: rgb(254, 248, 248);
+}
+
 
 
 /* botton navigation */
@@ -414,9 +434,7 @@ textarea:focus {
     right: 50px; */
 
     width: 100px;
-    padding-right: 30px;
-    /* border: 1px solid gainsboro; */
-
+    padding-left: 20px;
     display: flex;
     position: relative;
 }
@@ -429,23 +447,33 @@ textarea:focus {
     top: 50%;
     left: 0;
     align-items: center;
-
-    border: 1px solid black;
 }
 
 .sidebar-box-right {
     width: 20px;
-    height: 80px;
+    height: 90px;
     display: block;
     position: sticky;
-    top: 75%;
+    top: 70%;
     left: 0;
     align-items: center;
-
-    border: 1px solid black;
+    background-color: #fff9f9;
+    border: 1px solid rgb(230, 221, 221);
     border-radius: 2px;
 }
 
+.sidebar-box-right a {
+    margin: 0;
+    font-size: 15px;
+}
+.sidebar-box-right a:hover {
+    text-decoration-line: underline;
+}
+
+.sidebar-box-right div {
+    margin: 5px 3px 1px 3px;
+    font-size: 17px;
+}
 
 /* 댓글 수정 삭제 */
 .com-editbox {

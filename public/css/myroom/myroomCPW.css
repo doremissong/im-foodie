@@ -186,7 +186,7 @@
     background-color: rgba(255, 228, 196, 0.218);
 }
 
-button {
+.change-pw-box button {
     margin: auto;
     margin-top: 10px;
     margin-bottom: 50px;
@@ -199,7 +199,7 @@ button {
     background-color: rgb(252, 206, 194);
 }
 
-button:hover {
+.change-pw-box button:hover {
 	border: 1px solid rgb(235, 181, 168);
 	background-color: rgb(253, 195, 181);
 }

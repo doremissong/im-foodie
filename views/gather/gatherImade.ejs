@@ -123,6 +123,39 @@
                     <% }) %>
                 </div>
 			<% } %>
+
+			<!-- 페이지네이션 -->
+			<div class="gather-page-box">
+				<% if (dataList !== '' && pagination.totalPost !=0){ %>
+					<div class="paginationInfo-container">
+						<% if (pagination.curSet > 1){ %>    
+							<div class="prev-set-button"><a href="/gather/imade?pageno=<%= pagination.startPage-1%>&countperpage=10">&lt;&lt;&nbsp; </a></div>
+						<% } %>
+						<% if (pagination.pageNo!=1){ %>    
+							<div class="prev-button"><a href="/gather/imade?pageno=<%= pagination.pageNo-1%>&countperpage=10">&nbsp;이전&nbsp;</a></div>
+						<% } %>
+						<div class="number-button-wrapper">
+							<% for (var i=pagination.startPage; i < pagination.endPage+1; i++){ %>
+								<span class="number-button"> 
+									<% if (pagination.pageNo==i){ %>
+										<% console.log(i, pagination.pageNo); %>
+										<a href="/gather/imade?pageno=<%= i %>&countperpage=10" style="font-weight: 800;"><%= i %></a>
+									<% } else{ %>
+										<a href="/gather/imade?pageno=<%= i %>&countperpage=10"><%= i %></a>
+									<% } %>
+								</span>
+							<% } %>
+						</div>
+						<% if (pagination.pageNo != pagination.totalPage){ %>
+							<div class="next-button"><a href="/gather/imade?pageno=<%= pagination.pageNo+1%>&countperpage=10"> &nbsp;이후&nbsp;</a></div>
+						<% }%>
+						<% if (pagination.curSet < pagination.totalSet){ %>
+							<div class="next-set-button"><a href="/gather/imade?pageno=<%= pagination.endPage+1%>&countperpage=10">&nbsp;&gt;&gt;</a></div>
+						<% }%>
+					</div>
+				<% } %>
+			</div>
+			
 		</div>
 		
     </div>

@@ -1,36 +1,64 @@
-
 <!-- STYLESHEET -->
-<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/gather/gatherChat.css">
 
-<!--SECTION-->
+<!-- SECTION -->
 <section>
-    <div class="board-section">
-        <div class="board-list">
-            <div class="board-main">
-                <%= gatherName %>
+    <div class="chat-section">
+        <div class="chat-border">
+            <div class="chat-border-top">
+                <div class="chat-border3"></div>
+                <div class="chat-border4"></div>
             </div>
+            <div class="chat-border2">
+                <div class="chat-title">
+                    <span class="material-symbols-outlined">forum</span>
+                    <%= gatherName %>
+                </div>
+                <div class="container">
+                    <% if(user.mem_id) { %>
+                    <!-- <h1 id="chat-head">CHAT</h1> -->
+                        <div id="info">
+                            <table>
+                                <tr>
+                                    <th><img src="/images/person.png" alt="현재 접속 인원: "></th>
+                                    <th><strong id="count"></strong></th>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="chat-contents" id="chat"></div>
+
+                        <form id="chatForm" method = "POST">
+                            <div class="chatForm-box">
+                                <input id="chat-input" type="text" required>
+                                <input id="chat-mem-id" value="<%= user.mem_id %>" hidden>
+                                <input id="chat-gathering-id" value="<%= roomId %>" hidden>
+                                <div class="submit-box">
+                                    <input type="submit" class="button" value="보내기">
+                                </div>
+                            </div>
+                        </form>
+                        <script type="text/javascript" src="/js/chatClient.js"></script>
+                    <% } %>
+                </div>
+    
+            </div>
+
+            <div class="border-bottom">
+                <a href="/">
+                    <div class="home-circle">
+                        <span class="material-symbols-outlined">home</span>
+                    </div>
+                </a>
+
+                <a href="/myroom/chat/list">
+                    <div class="black-circle">
+                        <span class="material-symbols-outlined">keyboard_return</span>
+                    </div>
+                </a>
+            </div>
+
         </div>
-    </div>
-    <div class="container">
-        <% if(user.mem_id) { %>
-            <h1 id="chat-head">CHAT</h1>
-            <div id="info">
-                <table>
-                    <tr>
-                        <th><img src="/images/person.png" alt="현재 접속 인원: " style="margin: 3px; width: 15px;height: 15px;"></th>
-                        <th><strong id="count"></strong></th>
-                    </tr>
-                </table>
-            </div>
-            <div id="chat"></div>
-            <form id="chatForm" method = "POST">
-                <%= user.mem_id %>
-                <input id="chat-input" type="text" required>
-                <input id="chat-mem-id" value="<%= user.mem_id %>" hidden>
-                <input id="chat-gathering-id" value="<%= roomId %>" hidden>
-                <input type="submit" class="button" value="Send">
-            </form>
-            <script type="text/javascript" src="/js/chatClient.js"></script>
-        <% } %>
+        
     </div>
 </section>
