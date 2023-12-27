@@ -10,9 +10,6 @@
         <!-- 왼쪽 사이드바, 사실상 쓸모x -->
         <div class="sidebar-section">
             <div class="sidebar-box-left">
-                <a>▲</a>
-                <a>▼</a>
-                <a>🗨️</a>
             </div>
         </div>
 
@@ -53,7 +50,7 @@
                             </span>
                         </li>
                         <li class="post-ups">
-                            추천 
+                            좋아요
                             <span id="like">
                                 <!-- 위에 아이디 삭제 ⚠️⚠️⚠️추천수 불러오기 -->
                                 33
@@ -227,33 +224,22 @@
                 <% if(typeof user != "undefined"){ %>
                     <!-- 로그인 상태일 시 -->
                     <div class="upscrap-box">
-                        <!-- 추천 -->
-                        <button class="up-bt" onclick="alert('추천되었습니다')">
-                            👍<br>
-                            추천
-                        </button>
-                        <!-- 스크랩 -->
-                        <button class="scrap-bt" onclick="alert('스크랩되었습니다')">
-                            ⭐<br>
-                            스크랩
-                        </button>
-                        <button id="likeButton" name="login" value="좋아요" onClick="handleLikeButtonClick();">♡좋아요</button>
-                        <p id="likeState"> <%= likeInfo.isLiked %> </p>
+                        <div class="like-box">
+                            <button id="likeBTN" name="login" onClick="handleLikeButtonClick();">🤍</button>
+                            <div id="likeState" class="like-title"> 
+                                ❤️<%= likeInfo.likeCount %>
+                            </div>
+                        </div>   
                     </div>
                 <% } else{ %>
                     <!-- 비로그인 -->
                     <div class="upscrap-box">
-                        <!-- 추천 -->
-                        <button class="up-bt" onclick="alert('로그인 후 추천 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
-                            👍<br>
-                            추천
-                        </button>
-                        <!-- 스크랩 -->
-                        <button class="scrap-bt" onclick="alert('로그인 후 스크랩 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
-                            ⭐<br>
-                            스크랩
-                        </button>
-                        <button name="login"  onClick="handleLikeButtonClick();">♡좋아요</button>
+                        <div class="like-box">
+                            <button id="likeButton" name="login" value="좋아요" onClick="goLogin()">🤍</button>
+                            <div class="like-title">
+                                ❤️23
+                            </div>
+                        </div>
                     </div>
                 <% } %>
     
@@ -301,9 +287,9 @@
                             <div class="comment-page"></div>
                         </div>
                         <div class="comment-list">
-                                <div class class="com-namentime">
-                                    아직 댓글이 없어요!! 
-                                </div>
+                            <div class class="com-namentime">
+                                아직 댓글이 없어요!! 
+                            </div>
                         </div>
 
                         <div class="comment-view">
@@ -318,11 +304,11 @@
                                 <div class="com-namentime">
                                     <div class="com-name">
                                         <!-- 댓글 작성자 이름 -->
-
+                                        고구마케이크
                                     </div>
                                     <div class="com-time">
                                         <!-- 댓글이 작성된 시간 -->
-
+                                        (2023-10-18 19:23)
                                     </div>
 
                                     <!-- 글 열람 유저 = 댓글 작성자이면 보이기 -->
@@ -334,7 +320,51 @@
                                 </div>
                                 <div class="com-text">
                                     <!-- 댓글 내용 -->
-                                    댓글 내용
+                                    부드럽고 달콤한 고구마와 담백한 생크림이 어우러진 포근한 생크림 케이크입니다!
+                                </div>
+
+                                <div class="com-namentime">
+                                    <div class="com-name">
+                                        <!-- 댓글 작성자 이름 -->
+                                        고구마케이크
+                                    </div>
+                                    <div class="com-time">
+                                        <!-- 댓글이 작성된 시간 -->
+                                        (2023-10-18 19:23)
+                                    </div>
+
+                                    <!-- 글 열람 유저 = 댓글 작성자이면 보이기 -->
+                                    <div class="com-editbox">
+                                        <span>수정</span>
+                                        <span>삭제</span>
+                                    </div>
+                                    
+                                </div>
+                                <div class="com-text">
+                                    <!-- 댓글 내용 -->
+                                    부드럽고 달콤한 고구마와 담백한 생크림이 어우러진 포근한 생크림 케이크입니다!
+                                </div>
+
+                                <div class="com-namentime">
+                                    <div class="com-name">
+                                        <!-- 댓글 작성자 이름 -->
+                                        고구마케이크
+                                    </div>
+                                    <div class="com-time">
+                                        <!-- 댓글이 작성된 시간 -->
+                                        (2023-10-18 19:23)
+                                    </div>
+
+                                    <!-- 글 열람 유저 = 댓글 작성자이면 보이기 -->
+                                    <div class="com-editbox">
+                                        <span>수정</span>
+                                        <span>삭제</span>
+                                    </div>
+                                    
+                                </div>
+                                <div class="com-text">
+                                    <!-- 댓글 내용 -->
+                                    부드럽고 달콤한 고구마와 담백한 생크림이 어우러진 포근한 생크림 케이크입니다!
                                 </div>
 
                         </div>
@@ -365,7 +395,7 @@
                     <% } else{ %>
                         <!-- 비로그인 -->
                         <div class="non-user-comment">
-                            <textarea onclick="confirm('로그인 후 이용 가능합니다!');" placeholder="로그인하고 댓글을 달아보세요!" required></textarea>
+                            <textarea onclick="goLogin()" placeholder="로그인하고 댓글을 달아보세요!" required></textarea>
                         </div>
                     <% } %>
     
@@ -375,18 +405,20 @@
                     </div>
                 </a>
             </div>
+            
         </div>
 
         <!-- 오른쪽 사이드바 -->
-        <div class="sidebar-section">
-            <div class="sidebar-box-right">
-                <!-- header로 -->
-                <a href="#up-scroll">▲</a>
-                <!-- footer로 -->
-                <a href="#down-scroll">▼</a>
-                <!-- 댓글로 -->
-                <a href="#comment">🗨️</a>
-            </div>
+        <div class="sidebar-box-right">
+            <a href="#up-scroll">
+                <div>▲</div>
+            </a>
+            <a href="#down-scroll">
+                <div>▼</div>
+            </a>
+            <a href="#comment">
+                🗨️
+            </a>
         </div>
 
     </div>

@@ -242,7 +242,7 @@
                                     <!-- 유저 닉네임 -->
                                     <%= user.mem_id %>
                                 </div>
-                                <form id="commentForm">
+                                <form id="commentForm" onsubmit="return confirm('댓글을 등록하시겠습니까?')">
                                     <div class="comment-write-section">
                                         <div class="write-comment">
                                             <textarea id="comment-textarea" name="content" placeholder="고운말 댓글 달기" required></textarea>
@@ -257,7 +257,7 @@
                     <% } else{ %>
                         <!-- 비로그인 -->
                         <div class="non-user-comment">
-                            <textarea onclick="confirm('로그인 후 이용 가능합니다!');" placeholder="로그인하고 댓글을 달아보세요!" required></textarea>
+                            <textarea onclick="goLogin()" placeholder="로그인하고 댓글을 달아보세요!" required></textarea>
                         </div>
                     <% } %>
     
