@@ -75,6 +75,7 @@
     margin-right: 3px;
 }
 
+/* 채팅 내역 */
 .chat-contents {
     width: 570px;
     height: 450px;
@@ -82,6 +83,28 @@
     border: 1px solid black;
     border-radius: 2px;
 	overflow-y: auto;
+}
+
+.chat-contents li {
+    width: 530px;
+    list-style: none;
+    margin: 20px;
+}
+
+.chat-contents li strong {
+    font-weight: bold;
+}
+
+.chat-contents li::before {
+    content: "♥️";
+}
+
+.chat-contents li div {
+    width: fit-content;
+    border: 1px solid rgb(101, 99, 99);
+    margin: 2px 0;
+    padding: 6px;
+    border-radius: 3px;
 }
 
 .chatForm-box {

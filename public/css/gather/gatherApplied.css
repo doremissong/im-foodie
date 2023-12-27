@@ -249,3 +249,8 @@
 .applied-cancel button:hover {
     background-color: rgb(194, 192, 192);
 }
+
+.gather-page-box {
+    margin: 50px 0;
+    text-align: center;
+}
