@@ -162,7 +162,9 @@ module.exports = {
     },
 
     login: (req,res)=>{
-        res.render("member/login");
+        const obj={};
+        obj.previousUrl = req.session.previousUrl?req.session.previousUrl:'/';
+        res.render("member/login", obj);
         // res.sendFile(path.join(__dirname, "../public/html/login.html"));
     },
 

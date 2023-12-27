@@ -13,6 +13,7 @@
             <form name="login" action="/auth/login" method="POST">
                 <input type="text" name="mem_id" placeholder="아이디" required>
                 <input type="password" name="password" placeholder="비밀번호" required>
+                <input type="text" name="previous_url" value="<%= previousUrl %>"> hidden할것
                 <input type="submit" name="login" value="로그인">
             </form>
             <div class="option">

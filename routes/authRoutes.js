@@ -15,12 +15,50 @@ router.get("/signup", isNotLoggedIn, memberController.showSignupPage);
 router.post("/signup", isNotLoggedIn, memberController.createMember);
 router.get("/login", isNotLoggedIn, memberController.login);
 //로그인 리디렉션 실패 231201
-router.post("/login", isNotLoggedIn, (
-  passport.authenticate("local", {
-    failureRedirect: "/auth/login",
-    successRedirect: "/"//req.session.previousUrl || "/",
-  })
-));
+// router.post("/login", isNotLoggedIn, (
+//   passport.authenticate("local", {
+//     failureRedirect: "/auth/login"},
+//     // successRedirect: "/"//req.session.previousUrl || "/",
+//     (req,res)=>{
+//       // function savePreviousUrl(req, res, next) {
+//       //   if (!req.isAuthenticated()) {
+//       //     req.session.previousUrl = req.originalUrl;
+//       //   }
+//       //   next();
+//       // }
+//       console.log(`hihi`);
+//       res.redirect(`/`); //${previousUrl}
+//       // const redirectTo = req.session.previousUrl || "/";
+//       // delete req.session.previousUrl;
+//       // res.redirect(decodeURIComponent(req.pre));
+//   })
+// ));
+router.post("/login", isNotLoggedIn, (req, res) => {
+  // req.session.previousUrl 
+  // console.log('query value', req.query.prevUrl);
+  // console.log(req.body.previous_url, '이전주소');
+  
+  passport.authenticate("local", (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.redirect("/auth/login"); // 인증 실패 시 로그인 페이지로 리다이렉트
+    }
+    return req.login(user, (loginError) => {// 성공적 인증되면 세션에 user 등록
+      // const tmp = '/board';
+      // console.log(req.body.previous_url, '이전주소2');
+      if (loginError) {
+        console.error(loginError);
+        return next(loginError);
+      }
+      return req.body.previous_url ? res.redirect(req.body.previous_url) : res.redirect('/');
+      // return tmp ? res.redirect(tmp) : res.redirect('/gather');
+    });
+  })(req, res);
+});
+
+
 router.get("/logout", isLoggedIn, memberController.logout);
 router.get("/findId", isNotLoggedIn, memberController.showFindIdPage);
 router.post("/findId", isNotLoggedIn, memberController.showFoundId);

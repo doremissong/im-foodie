@@ -179,7 +179,7 @@ module.exports={
 
         obj.recruitingList = recruitingList;
         obj.completedList = completedList;
-        
+        obj.previousUrl = req.session.previousUrl?req.session.previousUrl:'/';
         res.render("gather/gather", obj);
     },
 

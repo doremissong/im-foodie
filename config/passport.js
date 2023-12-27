@@ -24,10 +24,11 @@ module.exports = (passport) => {
 
     passport.use(new LocalStrategy({
         usernameField: 'mem_id',
-        passwordField: 'password'
+        passwordField: 'password',
     }, async (mem_id, password, done) => {
         // console.log(`[ID]: ${mem_id}\n[Password]: ${password}`);
         // try {
+            // console.log(req.session.previousUrl, '기존 url');
             var member = await db.member.findOne({ where: { mem_id: mem_id, state: 0} });
             if (!(member)){
                 console.log('ID not found');

@@ -16,7 +16,7 @@ const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, setCondition, 
 
 router.get("/",storeUrl, setDBModel(db.post), getPaginationInfo, boardController.showBoardPage); //, storeUrl,);
 
-router.get("/test", boardController.checkWriter);
+// router.get("/test", boardController.checkWriter);
 
 router.get("/post", storeUrl, setDBModel(db.post_comment), getPaginationInfo, boardController.getCommentInfo, boardController.showPost);
 // router.post("/post", isLoggedIn, boardController.setLike);//test 좋아요 누르면 해당 처리 페이지로 갔다가 이전 페이지로 리디렉션

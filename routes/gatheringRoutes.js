@@ -8,7 +8,7 @@ const { isNotLoggedIn, isLoggedIn, setDBModel, getPaginationInfo, storeUrl } = r
 const { get } = require('../config/email');
 
 // 1) 밥모임 메인 ✅
-router.get("/", gatheringController.showMainGatherPage);
+router.get("/", storeUrl, gatheringController.showMainGatherPage);
 
 // 2) 밥모임 C_UD ✅
 router.get("/create", isLoggedIn, gatheringController.showCreatePage);
@@ -29,22 +29,22 @@ router.get("/completed", storeUrl, setDBModel(db.gathering), getPaginationInfo, 
 router.get("/recruiting", storeUrl, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
 
 // 4) 나의 밥모임 목록
-router.get("/mine", storeUrl, isLoggedIn, /*밥모임설정스 */gatheringController.showMyGatherList);
+router.get("/mine", isLoggedIn, storeUrl, /*밥모임설정스 */gatheringController.showMyGatherList);
                                         // ㄴ participant에서 memId로 검색해서, recipe_id랑 state를 가져와
                                         // ㄴ order: ['updateAt', 'ASC']
                                         // ㄴ state로 group . group에 limit 가능??
                                         //  ( group by로 묶어서 5개씩만 가져올 수 있나?) 안됨 따로 따로 가져와야함.
 // 4) - 내가 만든 모임
 // router.get("/imade", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showIMadePage);
-router.get("/imade", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
+router.get("/imade", isLoggedIn, storeUrl, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
 
 // 4) - 내가 참여한 모임
 // router.get("/joined", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showJoinedPage);
-router.get("/joined", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
+router.get("/joined", isLoggedIn, storeUrl, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
 
 // 4) - 신청한 모임
 // router.get("/applied", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showIAppliedPage);
-router.get("/applied", isLoggedIn, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
+router.get("/applied", isLoggedIn, storeUrl, gatheringController.findGatheringId, setDBModel(db.gathering), getPaginationInfo, gatheringController.showCertainList);
 
 
 // 7) 밥모임 상세 페이지
