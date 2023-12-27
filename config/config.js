@@ -14,18 +14,22 @@ const development = {
   "dialect": "mysql",
   "port": port,
   // "timezone": "+00:00"
-  "timezone": "+09:00"
+  "timezone": "+09:00",
+  "charset": 'utf8mb4',
+  "collation": 'utf8mb4_unicode_ci',
 };
 
 const test = {
   "username": user,
-  "password": password,
+  "password": password, 
   "database": database,
   "host": host,
   "dialect": "mysql",
   "port": port,
   // "timezone": "+00:00"
-  "timezone": "+09:00"
+  "timezone": "+09:00",
+  "charset": 'utf8mb4',
+  "collation": 'utf8mb4_unicode_ci',
 };
 
 const production = {
@@ -36,7 +40,9 @@ const production = {
   "dialect": "mysql",
   "port": port,
   // "timezone": "+00:00"
-  "timezone": "+09:00"
+  "timezone": "+09:00",
+  "charset": 'utf8mb4',
+  "collation": 'utf8mb4_unicode_ci',
 };
 
 

@@ -161,6 +161,11 @@ module.exports = {
                 where: { post_id: postId }
             });
 
+            obj.post.content = obj.post.content.replaceAll(/\r\n/g, '<br>');
+            
+            // 개행 문자를 <br> 태그로 변환
+            // const formattedText = mysqlText.replace(/\r\n/g, '<br>');
+
             obj.likeInfo = {};
             // 개수도 필요한데, 유저 정보도 필요해. 이사람이 추천, 스크랩 했는지 안했는지
             if (req.user) {

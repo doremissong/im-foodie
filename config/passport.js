@@ -28,7 +28,7 @@ module.exports = (passport) => {
     }, async (mem_id, password, done) => {
         // console.log(`[ID]: ${mem_id}\n[Password]: ${password}`);
         // try {
-            var member = await db.member.findOne({ where: { mem_id: mem_id} });
+            var member = await db.member.findOne({ where: { mem_id: mem_id, state: 0} });
             if (!(member)){
                 console.log('ID not found');
                 return done(null, false, { message: 'ID not found' });// if user was not found, return false for member and pass an err message

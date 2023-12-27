@@ -98,7 +98,7 @@ module.exports = {
             } else if(req.user && !isAdmin.success){    // 일반 유저면
                 obj.user = req.user;
             }
-            console.log(obj, 'here');
+            // console.log(obj, 'here');
 
             // 글 정보 가져오기
             try{
@@ -111,14 +111,18 @@ module.exports = {
                         }
                     )
                 })
-
                 obj.dataList = await db.notice.findOne({
                     // attributes : [], 관리자 id 빼고, 제목, 내용, 시간, 
-                    where: { notice_id: noticeId }});
-                console.log(`showNotice컨트롤러:`, obj);
+                    where: { notice_id: noticeId },
+                    raw: true
+                });
+                // 개행
+                obj.dataList.content = obj.dataList.content.replaceAll(/\r\n/g, '<br>');
+
+                // console.log(`showNotice컨트롤러:`, obj.dataList);
                 res.render('notice/noticeView', obj);
             } catch (err){
-                console.log(`[ERROR] select a notice - showNotice`);
+                console.log(`[ERROR] select a notice - showNotice`, err);
                 res.redirect('/notice', );
             }
         } else{

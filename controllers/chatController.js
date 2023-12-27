@@ -101,7 +101,8 @@ module.exports = io => {
                     limit:  10,
                     raw: true,
                     // offset: ,
-                })
+                });
+                data.content = data.content.replace(/\r\n/g, '<br>');
                 sendMessageToUser(memId, data, socket);
                 console.log(data, 'and ', roomId, socket.roomId);
                 // io.to(sessionId).emit('load messages', data);

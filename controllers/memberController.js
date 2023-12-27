@@ -52,7 +52,7 @@ getMemberParams = async (body, isModifying) => {
             neighborhood: body.neighborhood,
             birthdate: body.birthdate,
             profile_image: body.profile_image,
-            state: 1, // state는 뭐지??????
+            state: 0, // state는 뭐지??????
             tos_flag: body.tos_flag,
             pip_flag: body.pip_flag,
             notification_flag: body.notification_flag

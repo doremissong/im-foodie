@@ -74,6 +74,16 @@ module.exports={
             //페이지네이션
             obj.pagination = res.locals.paginationInfo;
             obj.dataList = res.locals.dataList;         //index==>0~
+            // obj.dataList.map(data=>{data.map(recipe => {
+            //     recipe.content.replaceAll(/\r\n/g, '<br>');
+            //     })});
+            for(let i =0; i<obj.dataList.length; i++){
+                // console.log(obj.dataList[i].dataValues.intro,i,'번째');
+                obj.dataList[i].dataValues.intro = obj.dataList[i].dataValues.intro.replaceAll(/\r\n/g, '<br>');
+            }
+            // const content  = obj.dataList.map(recipe=> recipe);//.replaceAll(/\r\n/g, '<br>'));
+            // console.log(content, '여기야,');
+            // obj.dataList.content = obj.dataList.content.replaceAll(/\r\n/g, '<br>');
             // 태그 종류 표시
             obj.tagNameList = res.locals.tagNameList;
             obj.tagIdList = res.locals.tagIdList;
@@ -147,7 +157,7 @@ module.exports={
             // res.redirect('/');
         }
         obj.curTag = req.params.tag;
-        console.log(obj.curTag);
+        // console.log(obj.curTag);
         res.render('recipe/recipeList', obj);
         // console.log('tagList 값 확인////', obj);
     },
@@ -320,6 +330,7 @@ module.exports={
                 where: { recipe_id: recipeId },
                 raw: true,
             });
+            obj.data.intro = obj.data.intro.replaceAll(/\r\n/g, '<br>');
 
             // 재료
             // ❓dataValues 해야하나?
@@ -332,6 +343,10 @@ module.exports={
                 where: { recipe_id: recipeId },
                 raw: true,
             });
+            obj.stepList.forEach((step, index)=>{
+                // console.log(step.content);
+                step.content = step.content.replaceAll(/\r\n/g, '<br>');
+            })
 
             // 태그
             const temp = await db.tag.findAll({

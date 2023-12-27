@@ -251,6 +251,7 @@ module.exports={
                 // return;
             } else{
                 obj.gatherData = data;
+                obj.gatherData.description = obj.gatherData.description.replaceAll(/\r\n/g, '<br>');
             }
             // console.log('obj test:', obj);
         } catch(err){
