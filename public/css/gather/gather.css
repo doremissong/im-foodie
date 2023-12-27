@@ -38,6 +38,10 @@
 	/* background-color: yellowgreen; */
 }
 
+.gather-sub-name a:hover {
+	font-weight: bold;
+}
+
 /* .write-box {
 	text-align: right;
 	margin-bottom: 15px;
@@ -85,6 +89,10 @@
     font-size: 17px;
 }
 
+.more a:hover {
+	font-weight: bold;
+}
+
 
 /* slider */
 .slick-slide {
@@ -112,12 +120,13 @@
 }
 
 .slider-wrap-recruiting div .slide-item {
-	width: 205px;
-	height: 198px;
+	width: 203px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: aliceblue;
-	background-image: url("/images/candy-blue.png");
+	border: 2px dashed rgb(164, 163, 163);
+	border-radius: 3px;
+	background-color: rgb(249, 249, 249);
+	/* background-image: url("/images/spoonfork-color.png"); */
 }
 
 .slide-item span {
@@ -127,10 +136,14 @@
 }
 
 .gather-name {
+	padding: 0 20px;
 	height: 40px;
 	font-size: 25px;
 	font-weight: bold;
 	margin: 35px 0 12px 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .gather-region {
@@ -174,16 +187,20 @@
 }
 
 .slider-wrap-recruiting div .slide-item:hover {
-	width: 205px;
-	height: 198px;
+	width: 203px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: rgb(122, 122, 122);
-	background-image: url("/images/candy-blue.png");
+	border: 2px dashed rgb(153, 140, 140);
+	background-color: rgb(194, 188, 188);
+	/* background-image: url("/images/candy-blue.png"); */
 }
 
 .slider-wrap-recruiting div .slide-item:hover button {
 	display: inline-block;
+}
+
+.slider-wrap-recruiting div .slide-item:hover button:hover {
+	font-weight: bold;
 }
 
 
@@ -206,7 +223,12 @@
 	background-color: white;
 	border: none;
 
+	color: rgb(87, 87, 87);
 	cursor: pointer;
+}
+
+.prevArrow-recruiting:hover {
+	color: black;
 }
 
 .la-chevron-left {
@@ -231,7 +253,12 @@
 	background-color: white;
 	border: none;
 
+	color: rgb(87, 87, 87);
 	cursor: pointer;
+}
+
+.nextArrow-recruiting:hover {
+	color: black;
 }
 
 .la-chevron-right {
@@ -256,26 +283,30 @@
 }
 
 .slider-wrap-completed div .slide-item {
-	width: 205px;
-	height: 198px;
+	width: 203px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: aliceblue;
-	background-image: url("/images/candy-black.png");
+	border: 2px dashed rgb(164, 163, 163);
+	border-radius: 3px;
+	background-color: rgb(237, 237, 237);
+	/* background-image: url("/images/spoonfork-gray.png"); */
 }
 
 
 .slider-wrap-completed div .slide-item:hover {
-	width: 205px;
-	height: 198px;
+	width: 203px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: rgb(122, 122, 122);
-	background-image: url("/images/candy-black.png");
+	border: 2px dashed rgb(153, 140, 140);
+	background-color: rgb(194, 188, 188);
 }
 
 .slider-wrap-completed div .slide-item:hover button {
 	display: inline-block;
+}
+
+.slider-wrap-completed div .slide-item:hover button:hover {
+	font-weight: bold;
 }
 
 .prevArrow-completed {
@@ -290,7 +321,12 @@
 	background-color: white;
 	border: none;
 
+	color: rgb(87, 87, 87);
 	cursor: pointer;
+}
+
+.prevArrow-completed:hover {
+	color: black;
 }
 
 .nextArrow-completed {
@@ -305,7 +341,12 @@
 	background-color: white;
 	border: none;
 
+	color: rgb(87, 87, 87);
 	cursor: pointer;
+}
+
+.nextArrow-completed:hover {
+	color: black;
 }
 
 
@@ -354,15 +395,133 @@
 
 /* 모달 내용물 */
 .gather-details-contents {
-    border: 1px solid black;
     margin-top: 50px;
+}
+
+/* 모임 이름 */
+.details-name {
+	border-bottom: 1px dashed rgb(230, 96, 96);
+	margin: 10px 10px 5px 10px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 22px;
+	font-weight: 900;
+	/* padding: 10px; */
+	/* font-size: 17px; */
+	/* font-weight: bold; */
+	/* border-bottom: 1px solid black; */
+}
+
+/* 이미지와 지역, 식당 */
+.details-imgNothers {
+	display: flex;
+	justify-content: center;
+	align-items: end;
+	margin: 25px 10px 10px 10px;
 }
 
 /* 대표 이미지 */
 .details-img {
-	border: 1px dashed black;
-
+	border: 1px dotted black;
+	width: 128px;
+	height: 128px;
 }
+
+/* 이미지 */
+.details-img img {
+	width: 128px;
+	height: 128px;
+}
+
+/* 지역과 식당 */
+.details-regionNrest {
+	margin: 0 0 20px 20px;
+}
+
+/* 모임 지역 */
+.details-region {
+	display: flex;
+	margin: 10px 0 10px 0;
+}
+
+.details-region-title {
+	width: 80px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.details-region-data {
+	width: 250px;
+}
+
+/* 모임 식당 */
+.details-restaurant {
+	display: flex;
+}
+
+.details-restaurant-title {
+	width: 80px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.details-restaurant-data {
+	width: 250px;
+}
+
+
+/* 모임 인원 */
+.details-numbers {
+	display: flex;
+	margin: 20px 10px 10px 10px;
+}
+
+.details-numbers-title {
+	width: 100px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.details-numbers-data {
+	width: 380px;
+}
+
+
+/* 모임 마감일 */
+.details-deadline {
+	display: flex;
+	margin: 15px 10px 10px 10px;
+}
+
+.details-deadline-title {
+	width: 100px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.details-deadline-data {
+	width: 380px;
+}
+
+
+/* 모임 소개글 */
+.details-intro {
+	display: flex;
+	margin: 15px 10px 10px 10px;
+}
+
+.details-intro-title {
+	width: 100px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.details-intro-data {
+	width: 380px;
+}
+
 
 
 /* 신청 모달 */
@@ -402,7 +561,7 @@
 
 .join-target {
 	border-bottom: 1px dashed rgb(230, 96, 96);
-	margin: 10px 10px 0 10px;
+	margin: 10px 10px 5px 10px;
 	height: 50px;
 	display: flex;
 	justify-content: center;
@@ -517,3 +676,11 @@
     cursor: pointer;
 
 } */
+
+.more-gather {
+	font-size: 18px;
+	font-weight: bold;
+	padding: 72px 0;
+	margin: auto;
+	width: 120px;
+}

@@ -53,20 +53,21 @@
 }
 
 .write-button {
+	cursor: pointer;
 	width: 150px;
 	height: 40px;
 	color: rgb(26, 67, 109);
 	font-family: 'Gowun Dodum', sans-serif;
 	font-size: 18px;
 	/* font-weight: bold; */
-	border: 1px solid rgb(230, 195, 173);
+	border: 1px solid rgb(202, 202, 202);
 	border-radius: 5px;
-	background-color: rgb(255, 245, 240);
+	background-color: rgb(248, 248, 248);
 }
 
 .write-button:hover {
-	cursor: pointer;
-	background-color: rgb(244, 232, 226);
+	font-weight: bold;
+	background-color: rgb(233, 233, 233);
 }
 
 

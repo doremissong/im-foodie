@@ -62,6 +62,10 @@
     font-size: 17px;
 }
 
+.gathering-title .more:hover {
+	font-weight: bold;
+}
+
 
 /* slider */
 .slick-slide {
@@ -86,11 +90,12 @@
 }
 
 .slider-wrap-Imade div .slide-item {
-	width: 338px;
-	height: 198px;
+	width: 336px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: aliceblue;
+	border: 2px dashed rgb(164, 163, 163);
+	border-radius: 3px;
+	background-color: rgb(253, 253, 253);
 }
 
 .gather-name {
@@ -199,19 +204,6 @@
 	cursor: pointer;
 }
 
-/* .slider-wrap-Imade div .slide-item:hover {
-	width: 205px;
-	height: 198px;
-
-	border: 1px solid rgb(230, 152, 152);
-	background-color: rgb(122, 122, 122);
-	background-image: url("/images/candy-blue.png");
-}
-
-.slider-wrap-Imade div .slide-item:hover button {
-	display: inline-block;
-} */
-
 
 /* arrow button */
 .prevArrow-box {
@@ -282,11 +274,12 @@
 }
 
 .slider-wrap-joined div .slide-item {
-	width: 338px;
-	height: 198px;
+	width: 336px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: aliceblue;
+	border: 2px dashed rgb(164, 163, 163);
+	border-radius: 3px;
+	background-color: rgb(253, 253, 253);
 }
 
 
@@ -342,11 +335,12 @@
 }
 
 .slider-wrap-applied div .slide-item {
-	width: 338px;
-	height: 198px;
+	width: 336px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: aliceblue;
+	border: 2px dashed rgb(164, 163, 163);
+	border-radius: 3px;
+	background-color: rgb(253, 253, 253);
 }
 
 .prevArrow-applied {
@@ -377,4 +371,17 @@
 	border: none;
 
 	cursor: pointer;
+}
+
+.more-gather {
+	margin: auto;
+	text-align: center;
+	padding: 72px 0;
+	width: 150px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.more-gather a:hover {
+	text-decoration: underline;
 }

@@ -9,7 +9,7 @@
 
 		<!-- 자세히 모달 창 -->
 		<div id="modalWrapDetails">
-			ㅎㅎㅎ
+
 			<!-- 모달 -->
 			<div id="modalBodyDetails">
 
@@ -66,8 +66,8 @@
 						</div>					
 
 						<!-- 인원수 불러오기 -->
-						<div class="details-numbers-data" id="details-numbers">
-							<!-- 3/5 -->
+						<div class="details-numbers-data">
+							3/5
 						</div>
 					</div>
 					<!-- 마감일 -->
@@ -77,8 +77,8 @@
 						</div>
 
 						<!-- 마감일 불러오기 -->
-						<div class="details-deadline-data" id="details-deadline">
-							<!-- 2023년 12월 31일 -->
+						<div class="details-deadline-data">
+							2023년 12월 31일
 						</div>
 					</div>
 					<!-- 소개글 -->
@@ -88,8 +88,8 @@
 						</div>
 
 						<!-- 소개글 불러오기 -->
-						<div class="details-intro-data" id="details-intro">
-							<!-- 같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~! -->
+						<div class="details-intro-data">
+							같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!같이 왕짜장 먹으러 가요~~!
 						</div>
 					</div>
 
@@ -119,7 +119,7 @@
 					</div>
 					
 					<!-- 신청 폼 -->
-					<form id="form-apply" method="post" onsubmit="return joinClick()" target="applyResult">
+					<form method="post" id="form-apply" onsubmit="return joinClick()" target="applyResult">
 						<!-- onsubmit="return confirm('신청하시겠습니까?')" -->
 						<!-- 인사말 박스 -->
 						<div class="gather-join-text">
@@ -147,8 +147,7 @@
 
 								<div class="join-textarea-box">
 									<!-- 텍스트아리아 -->
-									<textarea name="message" id="gatherJoinArea" placeholder="인사말을 적어주세요 :)" required></textarea>
-									
+									<textarea name="message" id="gatherJoinArea" placeholder="인사말을 적어주세요 :)" required></textarea>							
 								</div>
 								
 							</div>
@@ -191,7 +190,7 @@
 					</li>
 					<li class="gather-sub-name">
 						<% if(typeof user == 'undefined'){ %>
-							<a href="javascript:void(0)" onclick="alert('로그인 후에 이용하실 수 있습니다');">나의 밥모임</a>
+							<a onclick="goLogin()">나의 밥모임</a>
 						<% } else { %>
 							<a href="/gather/mine">나의 밥모임</a>
 						<% } %>
@@ -273,7 +272,7 @@
 						<div>
 							<a href="/gather/recruiting?countperpage=9&gsort=0">
 								<div class="slide-item">
-									더 많은 모임을 확인해보세요!
+									<span class="more-gather"></span>더 많은 모임을 확인해보세요!</span>
 								</div>
 							</a>
 						</div>
@@ -358,7 +357,7 @@
 						<div>
 							<a href="/gather/completed?countperpage=9&gsort=1">
 								<div class="slide-item">
-									더 많은 모임을 확인해보세요!
+									<span class="more-gather"></span>더 많은 모임을 확인해보세요!</span>
 								</div>
 							</a>
 						</div>
