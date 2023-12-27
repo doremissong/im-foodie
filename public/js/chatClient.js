@@ -110,7 +110,8 @@ $(document).ready(() => {
                 $("<li>").html(`
             <strong class="message ${getCurrentUserClass(message.mem_id)}">
             ${message.mem_id}
-            </strong>: <div>${message.content}</div>
+            </strong> 
+            <div>${message.content}</div>
             `));    // 채팅박스에 서버로부터 받은 메시지 출력
         }
     };// mesage current-user면 색 다른색

@@ -45,6 +45,7 @@
 }
 
 .write-button {
+	cursor: pointer;
 	width: 75px;
 	height: 40px;
 	color: rgb(26, 67, 109);
@@ -57,7 +58,7 @@
 }
 
 .write-button:hover {
-	cursor: pointer;
+	font-weight: bold;
 	background-color: rgb(244, 232, 226);
 }
 

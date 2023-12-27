@@ -16,12 +16,16 @@
     font-size: 20px;
     font-weight: bold;
     border-bottom: 1px solid gainsboro;
-    padding: 25px 0px 10px 10px;
+    padding: 30px 0px 10px 10px;
 }
 
 .board-form-box {
-    background-color: rgba(248, 239, 244, 0.5);
-    padding: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: rgba(251, 247, 249, 0.5);
+    padding: 20px;
+    border: 2px solid rgb(245, 227, 227);
+    border-radius: 2px;
 }
 
 .board-write-box {
@@ -38,16 +42,19 @@
 }
 
 select {
+    cursor: pointer;
     width: 150px;
     height: 55px;
     padding: 18px;
     border: none;
-    background: url('../images/arrow.jpg') no-repeat 95% 50%;
+    background: url('/images/arrow.jpg') no-repeat 95% 50%;
     background-color: white;
     border-radius: 0px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    border: 1px dashed pink;
+    border-radius: 2px;
 }
 
 select:focus {
@@ -55,12 +62,15 @@ select:focus {
 }
 
 .board-write-box input[name="title"] {
-    width: 765px;
+    width: 741px;
     height: 55px;
     padding: 15px;
-    border: none;
     box-sizing: border-box;
     border-width: 0;
+    font-size: 17px;
+    letter-spacing: 1px;
+    border: 1px dashed pink;
+    border-radius: 2px;
 }	
 
 .board-write-box input[name="title"]:focus {
@@ -72,11 +82,14 @@ select:focus {
 }
 
 textarea {
-    width: 100%;
+    width: 863px;
     height: 500px;
     resize: none;
     border: none;
-    padding: 15px;
+    padding: 20px;
+    line-height: 18px;
+    border: 1px dashed pink;
+    border-radius: 2px;
 }
 
 textarea:focus {
@@ -92,5 +105,13 @@ textarea:focus {
     width: 100px;
     height: 40px;
     cursor: pointer;
+    border: 1px solid rgb(255, 218, 224);
+    border-radius: 2px;
+}
+
+.button button:hover {
+    font-weight: bold;
+    border: 1px solid rgb(235, 204, 209);
+    background-color: rgb(238, 233, 234);
 }
 

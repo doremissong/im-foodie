@@ -10,9 +10,6 @@
         <!-- 왼쪽 사이드바, 사실상 쓸모x -->
         <div class="sidebar-section">
             <div class="sidebar-box-left">
-                <a>▲</a>
-                <a>▼</a>
-                <a>🗨️</a>
             </div>
         </div>
 
@@ -91,7 +88,7 @@
                             </span>
                         </li>
                         <li class="post-ups">
-                            추천 
+                            좋아요 
                             <span id="like">
                                 <!-- 위에 아이디 삭제 ⚠️⚠️⚠️추천수 불러오기 -->
                                 <%= likeInfo.likeCount %>
@@ -120,33 +117,22 @@
                 <% if(typeof user != "undefined"){ %>
                     <!-- 로그인 상태일 시 -->
                     <div class="upscrap-box">
-                        <!-- 추천 -->
-                        <button class="up-bt" onclick="alert('추천되었습니다')">
-                            👍<br>
-                            추천
-                        </button>
-                        <!-- 스크랩 -->
-                        <button class="scrap-bt" onclick="alert('스크랩되었습니다')">
-                            ⭐<br>
-                            스크랩
-                        </button>
-                        <button id="likeButton" name="login" value="좋아요" onClick="handleLikeButtonClick();">♡좋아요</button>
-                        <p id="likeState"> <%= likeInfo.isLiked %> </p>
+                        <div class="like-box">
+                            <button id="likeBTN" name="login" onClick="handleLikeButtonClick();">🤍</button>
+                            <div id="likeState" class="like-title"> 
+                                ❤️<%= likeInfo.likeCount %>
+                            </div>
+                        </div>   
                     </div>
                 <% } else{ %>
                     <!-- 비로그인 -->
                     <div class="upscrap-box">
-                        <!-- 추천 -->
-                        <button class="up-bt" onclick="alert('로그인 후 추천 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
-                            👍<br>
-                            추천
-                        </button>
-                        <!-- 스크랩 -->
-                        <button class="scrap-bt" onclick="alert('로그인 후 스크랩 가능\n이것도 confirm 써서 페이지 이동하고싶당...')">
-                            ⭐<br>
-                            스크랩
-                        </button>
-                        <button name="login"  onClick="handleLikeButtonClick();">♡좋아요</button>
+                        <div class="like-box">
+                            <button id="likeButton" name="login" value="좋아요" onClick="goLogin()">🤍</button>
+                            <div class="like-title">
+                                ❤️<%= likeInfo.likeCount %>
+                            </div>
+                        </div>
                     </div>
                 <% } %>
     
@@ -287,11 +273,17 @@
         <div class="sidebar-section">
             <div class="sidebar-box-right">
                 <!-- header로 -->
-                <a href="#up-scroll">▲</a>
+                <a href="#up-scroll">
+                    <div>▲</div>
+                </a>
                 <!-- footer로 -->
-                <a href="#down-scroll">▼</a>
+                <a href="#down-scroll">
+                    <div>▼</div>
+                </a>
                 <!-- 댓글로 -->
-                <a href="#comment">🗨️</a>
+                <a href="#comment">
+                    🗨️
+                </a>
             </div>
         </div>
 
@@ -315,8 +307,12 @@
         // console.log('좋아요 버튼 클릭');
         if(isLiked){
             isLiked--;
+            var likeBTN = document.getElementById("likeBTN");
+            likeBTN.innerHTML = '🤍';
         } else{
             isLiked++;
+            var likeBTN = document.getElementById("likeBTN");
+            likeBTN.innerHTML = '❤️';
         }
         console.log(isLiked, '좋아요 누름 상태');   
         // //AJAX 요청
