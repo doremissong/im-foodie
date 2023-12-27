@@ -9,7 +9,7 @@
                 게시판 글쓰기
             </div>
             
-            <form name="board-write-form" method="post">
+            <form name="board-write-form" method="post" onsubmit="return confirm('게시글을 등록하시겠습니까?')">
                 <div class="board-form-box">
                     <div class="board-write-box">
                         <div class="board-write-category">
@@ -31,19 +31,7 @@
                         <textarea name="content" placeholder="본문 내용을 입력하세요." required></textarea>
                     </div>
                     <div class="button">
-                        <!-- <script>
-                            function btn(){
-                                if(window.confirm('등록하시겠습니까?')){
-                                    document.forms['board-write-form'].submit();
-                                }
-                                else{
-                                    
-                                }
-                            }
-                            </script> -->
-
                         <button type="submit" name="submit">등록하기</button>
-                        <!-- <button onclick="javascript:btn()">등록하기</button> -->
                     </div>
                 </div>
             </form>

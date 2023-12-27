@@ -38,6 +38,10 @@
 	/* background-color: yellowgreen; */
 }
 
+.gather-sub-name a:hover {
+	font-weight: bold;
+}
+
 /* .write-box {
 	text-align: right;
 	margin-bottom: 15px;
@@ -85,6 +89,10 @@
     font-size: 17px;
 }
 
+.more a:hover {
+	font-weight: bold;
+}
+
 
 /* slider */
 .slick-slide {
@@ -112,12 +120,13 @@
 }
 
 .slider-wrap-recruiting div .slide-item {
-	width: 205px;
-	height: 198px;
+	width: 203px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: aliceblue;
-	background-image: url("/images/candy-blue.png");
+	border: 2px dashed rgb(164, 163, 163);
+	border-radius: 3px;
+	background-color: rgb(249, 249, 249);
+	/* background-image: url("/images/spoonfork-color.png"); */
 }
 
 .slide-item span {
@@ -127,10 +136,14 @@
 }
 
 .gather-name {
+	padding: 0 20px;
 	height: 40px;
 	font-size: 25px;
 	font-weight: bold;
 	margin: 35px 0 12px 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .gather-region {
@@ -174,16 +187,20 @@
 }
 
 .slider-wrap-recruiting div .slide-item:hover {
-	width: 205px;
-	height: 198px;
+	width: 203px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: rgb(122, 122, 122);
-	background-image: url("/images/candy-blue.png");
+	border: 2px dashed rgb(153, 140, 140);
+	background-color: rgb(194, 188, 188);
+	/* background-image: url("/images/candy-blue.png"); */
 }
 
 .slider-wrap-recruiting div .slide-item:hover button {
 	display: inline-block;
+}
+
+.slider-wrap-recruiting div .slide-item:hover button:hover {
+	font-weight: bold;
 }
 
 
@@ -206,7 +223,12 @@
 	background-color: white;
 	border: none;
 
+	color: rgb(87, 87, 87);
 	cursor: pointer;
+}
+
+.prevArrow-recruiting:hover {
+	color: black;
 }
 
 .la-chevron-left {
@@ -231,7 +253,12 @@
 	background-color: white;
 	border: none;
 
+	color: rgb(87, 87, 87);
 	cursor: pointer;
+}
+
+.nextArrow-recruiting:hover {
+	color: black;
 }
 
 .la-chevron-right {
@@ -256,26 +283,30 @@
 }
 
 .slider-wrap-completed div .slide-item {
-	width: 205px;
-	height: 198px;
+	width: 203px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: aliceblue;
-	background-image: url("/images/candy-black.png");
+	border: 2px dashed rgb(164, 163, 163);
+	border-radius: 3px;
+	background-color: rgb(237, 237, 237);
+	/* background-image: url("/images/spoonfork-gray.png"); */
 }
 
 
 .slider-wrap-completed div .slide-item:hover {
-	width: 205px;
-	height: 198px;
+	width: 203px;
+	height: 196px;
 
-	border: 1px solid rgb(230, 152, 152);
-	background-color: rgb(122, 122, 122);
-	background-image: url("/images/candy-black.png");
+	border: 2px dashed rgb(153, 140, 140);
+	background-color: rgb(194, 188, 188);
 }
 
 .slider-wrap-completed div .slide-item:hover button {
 	display: inline-block;
+}
+
+.slider-wrap-completed div .slide-item:hover button:hover {
+	font-weight: bold;
 }
 
 .prevArrow-completed {
@@ -290,7 +321,12 @@
 	background-color: white;
 	border: none;
 
+	color: rgb(87, 87, 87);
 	cursor: pointer;
+}
+
+.prevArrow-completed:hover {
+	color: black;
 }
 
 .nextArrow-completed {
@@ -305,7 +341,12 @@
 	background-color: white;
 	border: none;
 
+	color: rgb(87, 87, 87);
 	cursor: pointer;
+}
+
+.nextArrow-completed:hover {
+	color: black;
 }
 
 
@@ -635,3 +676,11 @@
     cursor: pointer;
 
 } */
+
+.more-gather {
+	font-size: 18px;
+	font-weight: bold;
+	padding: 72px 0;
+	margin: auto;
+	width: 120px;
+}

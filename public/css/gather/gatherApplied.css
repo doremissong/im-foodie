@@ -92,6 +92,10 @@
     /* border: 1px solid black; */
 }
 
+.applied-index-name a:hover {
+    text-decoration: underline;
+}
+
 /* 리스트 인덱스 버튼 */
 .applied-index-btn {
     display: flex;
@@ -247,7 +251,7 @@
 }
 
 .applied-cancel button:hover {
-    background-color: rgb(194, 192, 192);
+    background-color: rgb(233, 233, 233);
 }
 
 .gather-page-box {

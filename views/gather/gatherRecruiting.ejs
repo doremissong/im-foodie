@@ -20,7 +20,7 @@
 					</li>
 					<li class="gather-sub-name">
 						<% if(typeof user == 'undefined'){ %>
-							<a href="javascript:void(0)" onclick="alert('로그인 후에 이용하실 수 있습니다');">나의 밥모임</a>
+							<a onclick="goLogin()">나의 밥모임</a>
 						<% } else { %>
 							<a href="/gather/mine">나의 밥모임</a>
 						<% } %>
@@ -30,33 +30,41 @@
         </div>
 
         <div class="create-group-button">
-			<a href="/gather/create">
-				<button class="create-button">밥모임 만들기</button>
-			</a>
+			<% if(typeof user == 'undefined'){ %>
+				<a>
+					<button class="create-button" onclick="goLogin()">밥모임 만들기</button>
+				</a>
+			<% } else { %>
+				<a href="/gather/create">
+					<button class="create-button">밥모임 만들기</button>
+				</a>
+			<% } %>
         </div>
 
 		<div class="gather-list-box">
 			<% dataList.forEach((data, index)=>{ %>
-				<div class="gather-content-box">
-					<div class="group-image">
-						<img src="/images/candy-blue.png">
-					</div>
-					<div class="group-name">
-						<%= data.name %>
-					</div>
-					<div class="group-region">
-						<span><%= data.region %></span>
-					</div>
-					<div class="numberndeadline">
-						<div class="group-number">
-							<div><%= data.currentHeadCount %>/<%= data.maximumHeadCount %> 명</div>
+				<a href="/gather/view">
+					<div class="gather-content-box">
+						<div class="group-image">
+							<img src="/images/candy-blue.png">
 						</div>
-						<div class="group-deadline">
-							<div><%= data.deadline.toISOString().slice(5,7); %>월
-								<%= data.deadline.toISOString().slice(8,10); %>일 모집 마감</div>
+						<div class="group-name">
+							<%= data.name %>
+						</div>
+						<div class="group-region">
+							<span><%= data.region %></span>
+						</div>
+						<div class="numberndeadline">
+							<div class="group-number">
+								<div><%= data.currentHeadCount %>/<%= data.maximumHeadCount %> 명</div>
+							</div>
+							<div class="group-deadline">
+								<div><%= data.deadline.toISOString().slice(5,7); %>월
+									<%= data.deadline.toISOString().slice(8,10); %>일 모집 마감</div>
+							</div>
 						</div>
 					</div>
-				</div>
+				</a>
 			<% }) %>
         </div>
 		

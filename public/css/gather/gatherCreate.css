@@ -129,6 +129,7 @@ input:focus {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    cursor: pointer;
 
     font-size: 13px;
     color: #6c6c6c;
@@ -239,14 +240,13 @@ input[name="submit"] {
     border: 0;
     box-sizing: border-box;
     cursor: pointer;
-    font-weight: bold;   
+    border: 1px solid white;
+    border-radius: 3px;
 }
 
-
-.button {
-    padding: 30px;
-    display: flex;
-    justify-content: center;
+input[name="submit"]:hover {
+    border: 1px solid #8e9092;
+    font-weight: bold;  
 }
 
 .button-box a {
@@ -255,94 +255,13 @@ input[name="submit"] {
     margin: 0px 20px;
     background-color: #535b63;
     box-sizing: border-box;
-    font-weight: bold;
     color: #ffffff;
     text-align: center;
+    border: 1px solid white;
+    border-radius: 3px;
 }
 
-
-
-/* .up-form {
-    width: 100%;
-    padding-top: 20px;
-    font-family: Tahoma, Geneva, sans-serif;
-}
-
-.row {
-    border-bottom: 1px solid #e6e6e6;
-}
-
-.t-text {
-    width: 230px;
-    padding-left: 20px;
-    vertical-align: middle;
-    background-color: #F6F5F0;
-}
-
-.t-box {
-    padding: 10px;
-}
-
-.t-box-text {
-    padding: 10px 0px 0px 2px;
-    font-size: 13px;
-    color: #777;
-}
-
-.t-text a {
-    color: #777;
-    font-size: 14px;
-    margin: 0px 5px;
-    text-decoration-line: underline;
-}
-
-.up-form input[name="mem_id"],
-.up-form input[name="password"],
-.up-form input[name="name"],
-.up-form input[name="nickname"],
-.up-form input[name="email"],
-.up-form input[name="tel"],
-.up-form input[name="address"], 
-.up-form input[name="birthdate"], 
-.up-form input[name="profile_image"] {
-    width: 250px;
-    height: 40px;
-    padding: 15px;
+.button-box a:hover {
+    font-weight: bold;
     border: 1px solid #dddddd;
-    box-sizing:border-box;
 }
-
-.t-box label {
-    color: #777;
-    font-size: 14px;
-    margin-right: 20px;
-}
-
-input[name="submit"] {
-    width: 100px;
-    padding: 15px;
-    margin: 0px 20px;
-    background-color: #dddddd;
-    border: 0;
-    box-sizing: border-box;
-    cursor: pointer;
-    font-weight: bold;   
-}
-
-
-.button {
-    padding: 30px;
-    display: flex;
-    justify-content: center;
-}
-
-.button a {
-    width: 100px;
-    padding: 15px;
-    margin: 0px 20px;
-    background-color: #535b63;
-    box-sizing: border-box;
-    font-weight: bold;
-    color: #ffffff;
-    text-align: center;
-} */

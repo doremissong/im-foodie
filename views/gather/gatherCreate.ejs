@@ -13,7 +13,7 @@
         <div class="form-box">
 
             <!-- 폼 작성 -->
-            <form name="createGather" action="/gather/create" method="POST">
+            <form name="createGather" action="/gather/create" method="POST" onsubmit="return confirm('밥모임 모집을 시작하시겠습니까?')">
 
                 <!-- 폼 작성 테이블 -->
                 <table class="form-table">
@@ -99,7 +99,7 @@
                 <!-- 폼 등록 혹은 취소 -->
                 <div class="button-box">
                     <input type="submit" name="submit" value="만들기">
-                    <a href="/">취소</a>
+                    <a href="/gather">취소</a>
                 </div>
             </form>    
 

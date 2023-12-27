@@ -12,6 +12,7 @@
     margin-bottom: 30px;
     border: 2px solid rgb(69, 58, 58);
     border-radius: 40px;
+    background-color: rgba(243, 243, 243, 0.562);
 }
 
 .chat-border2 {
@@ -20,6 +21,7 @@
     margin: auto;
     border: 2px solid rgb(69, 58, 58);
     border-radius: 8px;
+    background-color: rgb(253, 253, 253);
 }
 
 .chat-border-top {
@@ -35,6 +37,7 @@
     border: 1px solid black;
     border-radius: 50px;
     margin-right: 15px;
+    background-color: rgb(131, 131, 131);
 }
 
 .chat-border4 {
@@ -43,6 +46,7 @@
     border: 1px solid black;
     border-radius: 50px;
     margin-right: 27px; 
+    background-color:  rgb(131, 131, 131);
 }
 
 .chat-title {
@@ -83,10 +87,11 @@
     border: 1px solid black;
     border-radius: 2px;
 	overflow-y: auto;
+    background-color: rgb(240, 250, 255);
 }
 
 .chat-contents li {
-    width: 530px;
+    width: 505px;
     list-style: none;
     margin: 20px;
 }
@@ -105,6 +110,7 @@
     margin: 2px 0;
     padding: 6px;
     border-radius: 3px;
+    background-color: white;
 }
 
 .chatForm-box {
@@ -131,6 +137,15 @@
     cursor: pointer;
     width: 90px;
     height: 48px;
+    border: 1px solid gainsboro;
+    border-radius: 2px;
+}
+
+.submit-box input[type="submit"]:hover {
+    font-weight: bold;
+    border: 1px solid rgb(199, 193, 193);
+    border-radius: 2px;
+    background-color: rgb(228, 221, 222);
 }
 
 .border-bottom {
@@ -150,15 +165,20 @@
     height: 70px;
     border: 1px solid black;
     border-radius: 50px;
-    background-color: rgb(246, 246, 246);
+    background-color: rgb(252, 252, 252);
 }
 
 .home-circle:hover {
-    background-color: rgb(240, 239, 239);
+    background-color: rgb(220, 219, 219);
 }
 
 .home-circle span {
-    font-size: 40px
+    font-size: 40px;
+    color: rgb(89, 89, 89);
+}
+
+.home-circle:hover span {
+    color: rgb(0, 0, 0);
 }
 
 .black-circle {
@@ -174,7 +194,7 @@
 
 .black-circle span {
     font-size: 60px;
-    color: gray;
+    color: rgb(89, 89, 89);
 }
 
 .black-circle span:hover {

@@ -91,6 +91,11 @@
     /* border: 1px solid black; */
 }
 
+.joined-index-name a:hover {
+    text-decoration: underline;
+}
+
+
 /* 리스트 인덱스 버튼 */
 .joined-index-btn {
     display: flex;
@@ -229,7 +234,7 @@
 }
 
 .joined-gochat button:hover {
-    background-color: rgb(194, 192, 192);
+    background-color: rgb(233, 233, 233);
 }
 
 .gather-page-box {
