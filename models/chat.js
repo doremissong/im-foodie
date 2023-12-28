@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: 0
     },
     image_url: {
-      type: DataTypes.BLOB,
+      type: DataTypes.TEXT,
       allowNull: true
     }
   }, {

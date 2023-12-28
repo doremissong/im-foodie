@@ -11,7 +11,7 @@ const NOT_ENTERED = 0,
     CONNECTED = 1,
     DISCONNECTED = 2;
 // ISACCEPTED
-getGatherParams = (info, isModifying, _memId)=>{
+getGatherParams = (info, isModifying, _memId, img_url)=>{
     // 작성자 추출. req.session.user? 아니면 req.user에서 id 가져와야하ㅁ.
     var result = {};
     if(!isModifying){    // 생성
@@ -26,7 +26,7 @@ getGatherParams = (info, isModifying, _memId)=>{
             deadline: info.deadline,
             state: RECRUITING,
             maximumHeadCount: info.number,
-            //image_url: 
+            image_url: img_url,
             viewCount: 0,
         }
     } else{
@@ -41,7 +41,7 @@ getGatherParams = (info, isModifying, _memId)=>{
             state: (info.deadline > new Date())? RECRUITING: COMPLETED,
             // state 테스트 필요.
             maximumHeadCount: info.number,
-            //image_url: 
+            image_url: img_url
         }
     }
     return result;
@@ -261,6 +261,7 @@ module.exports={
                 obj.gatherData.description = obj.gatherData.description.replaceAll(/\r\n/g, '<br>');
             }
             // console.log('obj test:', obj);
+            console.log('url tet', obj.img_url);
         } catch(err){
             console.log('[ERROR] While getting data on gathering from DB ', err);
             res.redirect('/gather');
@@ -472,8 +473,12 @@ module.exports={
             res.redirect('/auth/login');
         }
         const _memId = req.user.mem_id;
+        const img_url = req.fileUrl?req.fileUrl:'';
         // 왜 gatherData로 하면 안된느겨,,
-        const gatherData = getGatherParams(req.body, ISCREATING, _memId);
+        const gatherData = getGatherParams(req.body, ISCREATING, _memId, img_url);
+        if(req.success){
+            console.log(req.message);
+        }
         console.log('[createGather] 전달받은 값 확인: ', req.body, 'gatherData 확인: ', gatherData);
         // // 모임 데이터 생성
         try{
@@ -530,8 +535,11 @@ module.exports={
         }
         const _memId = req.user.mem_id;
         const _gatherId = req.query.no;
-
-        const gatherData = getGatherParams(req.body, ISMODIFYING, _memId);
+        const img_url = req.fileUrl?req.fileUrl:'';
+        const gatherData = getGatherParams(req.body, ISMODIFYING, _memId, img_url);
+        if(req.success){
+            console.log(req.message);
+        }
         console.log('[createGather] 전달받은 값 확인: ', req.body, 'gatherData 확인: ', gatherData);
         // // 모임 데이터 생성
         try{

@@ -35,7 +35,7 @@ hashPassword = async (password) => {
     return hashedPW;
 }
 
-getMemberParams = async (body, isModifying) => {
+getMemberParams = async (body, isModifying, img_url) => {
     // const salt = await bcrypt.genSalt(10);
     // const hashPassword = await bcrypt.hash(body.password, salt);
     var result = {};
@@ -51,11 +51,11 @@ getMemberParams = async (body, isModifying) => {
             district: body.district,
             neighborhood: body.neighborhood,
             birthdate: body.birthdate,
-            profile_image: body.profile_image,
-            state: 0, // state는 뭐지??????
+            image_url: img_url?img_url:'',
+            state: 0, // 1 휴면 2탈퇴
             tos_flag: body.tos_flag,
             pip_flag: body.pip_flag,
-            notification_flag: body.notification_flag
+            notification_flag: body.notification_flag,
         }
     } else{
         result = {
@@ -65,7 +65,7 @@ getMemberParams = async (body, isModifying) => {
             district: body.district,
             neighborhood: body.neighborhood,
             birthdate: body.birthdate,
-            profile_image: body.profile_image,
+            image_url: img_url?img_url:''
         }
     }
     return result;
@@ -132,8 +132,12 @@ module.exports = {
     createMember: async (req, res) => {
         //const { mem_id, password, name, email, tel, address, birthdate, profile_image, tos_flag, pip_flag, notification_flag } = req.body;
         if(req.skip) next();    // create액션 건너뛰고 바ㅗ 뷰로 되돌아감
-
-        var memberData = await getMemberParams(req.body, ISCREATING);
+        const img_url = req.fileUrl?req.fileUrl:'';
+        console.log('hi',img_url);
+        if(req.success){
+            console.log(req.message);
+        }
+        var memberData = await getMemberParams(req.body, ISCREATING, img_url);
         console.log(memberData);
 
         try {
@@ -195,7 +199,11 @@ module.exports = {
 
     updateMemberInfo: async (req, res)=>{
         const memId = req.user.mem_id;
-        var updatedMemberData = await getMemberParams(req.body, ISMODIFYING);
+        const img_url = req.fileUrl?req.fileUrl:'';
+        var updatedMemberData = await getMemberParams(req.body, ISMODIFYING, img_url);
+        if(req.success){
+            console.log(req.message);
+        }
         // res.send(updatedMemberData);
         // console.log(updatedMemberData);
         //✅멤버 조회해서 보여줄 때, 저장해야함.

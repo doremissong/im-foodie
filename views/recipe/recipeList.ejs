@@ -64,7 +64,7 @@
                         <!-- 대표이미지 박스 -->
                         <div class="recipe-img-box">
                             <!-- 대표이미지 불러오기 -->
-                            <img src="/images/recipeDefault.png">
+                            <img src="<%= data.image_url? data.image_url: '/images/recipeDefault.png' %>">
                         </div>
 
                         <!-- 태그 박스 -->

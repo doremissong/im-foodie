@@ -359,7 +359,9 @@
             <a>회원가입 정보 입력하기</a>
         </div>
         <div class="up-texttext">* 표시가 된 입력란은 필수 기입란입니다.</div>
-            <form name="signup" id="signUpForm" action="/auth/signup" method="POST" onsubmit="return signUpClick()">
+            <form name="signup" id="signUpForm" action="/auth/signup" 
+            method="POST" onsubmit="return signUpClick()"
+            enctype="multipart/form-data">
                 <table class="up-form">
                     <tbody>
                         <tr class="row">
@@ -420,7 +422,14 @@
                         <tr class="row">
                             <td class="t-text">프로필 이미지</td>
                             <td class="t-box">
-                                <input type="url" name="profile_image" placeholder="프로필 이미지 주소" value="">
+                                <input type="file" name="image" id="file" accept="image/*" value="" onchange="readURL(this);"> 
+                                <!-- <label for="file">
+                                    <div class="btn-upload">업로드</div>
+                                </label> -->
+                                <div class="thumbnail-box-right">
+                                    <!-- 이미지 미리보기 박스 -->
+                                    <img class="image-box" id="preview" />
+                                </div>
                             </td>
                         </tr>
                         <tr class="row">

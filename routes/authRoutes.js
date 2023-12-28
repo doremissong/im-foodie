@@ -2,7 +2,7 @@
 const express = require('express');
 const memberController = require('../controllers/memberController');
 const errorController = require('../controllers/errorController');
-const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
+const { isNotLoggedIn, isLoggedIn, uploadImageToS3 } = require('./middlewares');
 const passport = require('passport');
 const member = require('../models/member');
 const router = express.Router();
@@ -12,7 +12,7 @@ router.get("/test", (req, res)=>{
 })
 router.get("/duplicateCheck", memberController.checkMemberId);
 router.get("/signup", isNotLoggedIn, memberController.showSignupPage);
-router.post("/signup", isNotLoggedIn, memberController.createMember);
+router.post("/signup", isNotLoggedIn, uploadImageToS3, memberController.createMember);
 router.get("/login", isNotLoggedIn, memberController.login);
 //로그인 리디렉션 실패 231201
 // router.post("/login", isNotLoggedIn, (

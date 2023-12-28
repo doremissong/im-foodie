@@ -1,6 +1,5 @@
 <!-- STYLESHEET -->
 <link rel="stylesheet" href="/css/gather/gatherCreate.css">
-2) update에서 '지역' 기본값 가져오기 안됨. select 태그
 <!-- SECTION -->
 <section class="create-gather">
     <div class="content">
@@ -13,7 +12,9 @@
         <div class="form-box">
 
             <!-- 폼 작성 -->
-            <form name="createGather" method="POST">
+            <form name="createGather" method="POST"
+                onsubmit="return confirm('밥모임 수정하시겠습니까?')"
+                enctype="multipart/form-data">  
                 <!-- action="/gather/update?no=<%= data.gathering_id %>" -->
 
                 <!-- 폼 작성 테이블 -->
@@ -33,12 +34,13 @@
                         <td rowspan="2" class="g-image">
                             <div class="t-box-title">대표 이미지 128x128 픽셀</div>
                             <!-- 이미지 미리보기 박스 -->
-                            <img class="image-box" id="preview" />
+                            <img class="image-box" id="preview" src="<%= data.img_url? 'data.img_url': '' %>"/>
                             <!-- 이미지 불러오기 버튼 -->
                             <label for="file">
                                 <div class="btn-upload">이미지 불러오기</div>
                             </label>
-                            <input type="file" name="image_url" id="file" accept="image/*" value="" onchange="readURL(this);"> 
+                            <input type="file" name="image" id="file" accept="image/*" value="" onchange="readURL(this);"> 
+                            <!-- <input type="file" name="image_url" id="file" accept="image/*" value="" onchange="readURL(this);">  -->
                         </td>
                     </tr>
 
@@ -48,6 +50,12 @@
                         <td class="g-region">
                             <div class="t-box-title">지역</div>
                             <div class="gather-region">
+                                <div class="t-box-text">
+                                    기존 주소 : 
+                                    <%= data.city %>
+                                    <%= data.district %>
+                                    <%= data.neighborhood %>
+                                </div>
                                 <div class="region_box">
                                     <!-- 시/도 -->
                                     <select name="city" id="city1"><%= data.city %></select>
@@ -57,7 +65,6 @@
                                     <select name="neighborhood" id="neighborhood1"><%= data.neighborhood %></select>
                                 </div>
                             </div>
-                            디비 저장된 값 가져오기
                             <div class="t-box-text">모임 지역을 선택해주세요.</div>
                         </td>
                         <!-- 인원수 선택, 숫자를 직접 입력하거나 업다운 버튼 이용 -->

@@ -41,9 +41,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(6),
       allowNull: false
     },
-    profile_image: {
-      type: DataTypes.BLOB,
-      allowNull: false
+    image_url: {
+      type: DataTypes.TEXT,
+      allowNull: true
     },
     state: {
       type: DataTypes.INTEGER,
@@ -65,6 +65,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'member',
+    hasTrigger: true,
     timestamps: true,
     indexes: [
       {

@@ -29,8 +29,8 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 0
     },
-    imageURL: {
-      type: DataTypes.BLOB,
+    image_url: {
+      type: DataTypes.TEXT,
       allowNull: true
     }
   }, {

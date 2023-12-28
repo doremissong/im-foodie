@@ -123,7 +123,9 @@
 				<div class="view-imgNothers">
 					<!-- 이미지 -->
 					<div class="view-img">
-						<img src="/images/candy-blue.png">
+						<!-- <img src="/images/candy-blue.png"> -->
+                        <img name ='img' src="<%= gatherData.image_url? gatherData.image_url: '/images/candy-blue.png'%>">
+                        <!-- "https://s3.ap-northeast-2.amazonaws.com/im-foodie.com/buzz.png" -->
 					</div>
 					<!-- 지역과 식당 -->
 					<div class="view-regionNrest">

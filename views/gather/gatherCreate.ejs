@@ -13,7 +13,9 @@
         <div class="form-box">
 
             <!-- 폼 작성 -->
-            <form name="createGather" action="/gather/create" method="POST" onsubmit="return confirm('밥모임 모집을 시작하시겠습니까?')">
+            <form name="createGather" action="/gather/create" method="POST"
+             onsubmit="return confirm('밥모임 모집을 시작하시겠습니까?')"
+             enctype="multipart/form-data">
 
                 <!-- 폼 작성 테이블 -->
                 <table class="form-table">
@@ -37,7 +39,8 @@
                             <label for="file">
                                 <div class="btn-upload">이미지 불러오기</div>
                             </label>
-                            <input type="file" name="image_url" id="file" accept="image/*" value="" onchange="readURL(this);"> 
+                            <!-- image/*-> jpeg. jpeg만 다운로드 안한다고 -->
+                            <input type="file" name="image" id="file" accept="image/*" value="" onchange="readURL(this);"> 
                         </td>
                     </tr>
 

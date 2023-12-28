@@ -271,3 +271,17 @@ input[name="submit"] {
 select:focus {
     outline: none;
 }
+
+.thumbnail-box-right {
+    /* 부모 요소의 크기를 지정하거나 필요에 따라 조절합니다. */
+    width: 200px;
+    height: 200px;
+    /* 다른 스타일 속성들을 필요에 따라 추가합니다. */
+}
+
+.image-box {
+    /* 이미지를 원하는 크기로 고정합니다. */
+    width: 100%; /* 부모 요소에 대한 100% 너비 */
+    height: 100%; /* 부모 요소에 대한 100% 높이 */
+    object-fit: cover; /* 이미지가 요소에 맞게 잘리지 않도록 설정 */
+}

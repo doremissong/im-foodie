@@ -22,6 +22,11 @@ function viewDetailsClick(g_name, g_region, g_place, g_numbers, g_deadline, g_in
     divDNumbers.innerText = g_numbers;
     divDDeadline.innerText = g_deadline;
     divDIntro.innerText = g_intro;
+    if(g_img){
+        divDImg.innerHTML = `<img src="${g_img}">`;
+    }else{
+        divDImg.innerHTML = `<img src="/images/candy-blue.png">`;
+    }
     // 
 }
 // const divDTitle = document.getElementById("details-title");

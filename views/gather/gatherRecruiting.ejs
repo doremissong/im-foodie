@@ -46,7 +46,7 @@
 				<a href="/gather/view?no=<%= data.gathering_id %>">
 					<div class="gather-content-box">
 						<div class="group-image">
-							<img src="/images/candy-blue.png">
+							<img src="<%= data.image_url? data.image_url: '/images/candy-blue.png'%>">
 						</div>
 						<div class="group-name">
 							<%= data.name %>

@@ -23,8 +23,8 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(45),
       allowNull: true
     },
-    imageURL: {
-      type: DataTypes.BLOB,
+    image_url: {
+      type: DataTypes.TEXT,
       allowNull: true
     }
   }, {

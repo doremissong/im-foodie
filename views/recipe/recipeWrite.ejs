@@ -16,7 +16,9 @@
             </div>
 
             <!-- 레시피 작성 폼 -->
-            <form name="recipe-write-form" method="post" onsubmit="return confirm('레시피를 등록할까요?')">
+            <form name="recipe-write-form" method="post" 
+            onsubmit="return confirm('레시피를 등록할까요?')"
+            enctype="multipart/form-data">
 
                 <!-- 레시피 작성 div -->
                 <div class="recipe-form-box">
@@ -47,7 +49,6 @@
                                     <input type="checkbox" id="<%= tagIdList[index] %>" name="tag" value="<%= tagIdList[index] %>">
                                     <label for="<%= tagIdList[index] %>">#<%= name %></label>
                                 <% }) %>
-                                서버에선 어떻게 나오려나, value를 받으려나?
                             </div>
 
                         </div>
@@ -108,10 +109,12 @@
 
                                 <!-- 이미지 업로드 -->
                                 <div class="thumbnail-prev-btn">
+                                    <!-- 이미지 미리보기 박스 -->
+                                    <!-- <img class="image-box" id="preview" /> -->
+                                    <input type="file" name="image" id="file" accept="image/*" value="" onchange="readURL(this);"> 
                                     <label for="file">
                                         <div class="btn-upload">업로드</div>
                                     </label>
-                                    <input type="file" name="image_thumbnail" id="file" accept="image/*" value="" onchange="readURL(this);"> 
                                 </div>
 
                             </div>

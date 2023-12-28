@@ -4,7 +4,7 @@ const { db, sequelize } = require("../models/index");
 const gatheringController = require('../controllers/gatheringController');
 const chatController = require('../controllers/chatController');
 const errorController = require('../controllers/errorController');
-const { isNotLoggedIn, isLoggedIn, setDBModel, getPaginationInfo, storeUrl } = require('./middlewares');
+const { isNotLoggedIn, isLoggedIn, setDBModel, getPaginationInfo, storeUrl, uploadImageToS3 } = require('./middlewares');
 const { get } = require('../config/email');
 
 // 1) 밥모임 메인 ✅
@@ -12,10 +12,10 @@ router.get("/", storeUrl, gatheringController.showMainGatherPage);
 
 // 2) 밥모임 C_UD ✅
 router.get("/create", isLoggedIn, gatheringController.showCreatePage);
-router.post("/create", isLoggedIn, gatheringController.createGather);
+router.post("/create", isLoggedIn, uploadImageToS3, gatheringController.createGather);
 // ⚠️지역 기본값 설정 안됨
 router.get("/update", isLoggedIn, gatheringController.showUpdatePage);
-router.post("/update", isLoggedIn, gatheringController.updateGather);
+router.post("/update", isLoggedIn, uploadImageToS3, gatheringController.updateGather);
 
 router.get("/delete", isLoggedIn, gatheringController.deleteGather);
 

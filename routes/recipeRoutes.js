@@ -4,11 +4,13 @@ const { db, sequelize } = require('../models/index');
 
 const recipeController = require('../controllers/recipeController');
 const errorController = require('../controllers/errorController');
-const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, storeUrl } = require('./middlewares');
+const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, storeUrl, uploadImageToS3 } = require('./middlewares');
 
 // ⚠️1) 메인 레시피, 5위까지 + 추천
 // router.get("/", recipeController.showMainPage);
-router.get("/", storeUrl, recipeController.showMainPage);
+router.get("/", (req, res)=>{
+    res.redirect('/recipe/list?countperpage=10');
+});
 
 router.get("/test", async(req, res)=>{
     db.recipe.findAll({
@@ -35,7 +37,7 @@ router.get("/search", storeUrl, recipeController.checkSearchValue, recipeControl
 
 // 5) recipe write
 router.get("/write", isLoggedIn, recipeController.getTagNameNIdList, recipeController.showWritePage);
-router.post("/write", isLoggedIn, recipeController.createRecipe);
+router.post("/write", isLoggedIn, uploadImageToS3, recipeController.createRecipe);
 
 // 6) recipe update
 // router.get("/update", isLoggedIn, /*작성자 체크*/ recipeController.getTagNameNIdList, recipeController.showUpdatePage);
@@ -47,7 +49,7 @@ router.get("/delete", isLoggedIn, /*작성자 체크*/recipeController.deleteRec
 
 // ⚠️2) 전체 레시피 목록 - ✅최신순, ✅조회수순, 좋아요순, + 페이지네이션
 // 🚩 pagination 함수 따로 만들고 기존 함수랑 바꾸기
-// router.get("/list", storeUrl, setDBModel(db.recipe), getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
+// /list
 router.get("/list", storeUrl, recipeController.getPaginationInfo, recipeController.getTagNameNIdList, recipeController.showRecipeListPage);
     // 좋아요 순을 여기에 넣어야할까/
 // ⚠️3) 특정 상황별 레시피 목록 ; 상황(category)별 전체, 시간, 인기순, + 페이지네이션

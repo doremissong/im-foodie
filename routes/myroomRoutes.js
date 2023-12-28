@@ -8,7 +8,7 @@ const boardController = require('../controllers/boardController');
 // const recipeController = require('../controllers/recipeController');
 
 const errorController = require('../controllers/errorController');
-const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel } = require('./middlewares');
+const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, uploadImageToS3 } = require('./middlewares');
 
 const { db, sequelize } = require('../models/index');
 const passport = require('passport');
@@ -68,7 +68,7 @@ router.post('/changePw/check', passport.authenticate('local', {
 
 // 1-b) 프로필 수정
 router.get('/modify', isLoggedIn, myroomController.showModifyPage);
-router.post('/modify', isLoggedIn, memberController.updateMemberInfo);
+router.post('/modify', isLoggedIn, uploadImageToS3, memberController.updateMemberInfo);
 router.get('/modify/check', isLoggedIn, myroomController.showCheckPwPage);
 router.post('/modify/check',  passport.authenticate('local', {
   successRedirect: '/myroom/modify',

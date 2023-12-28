@@ -1,6 +1,15 @@
+require('dotenv').config();
 const { db, sequelize } = require('../models/index');
 const { Op } = require('sequelize');
 const post_comment = require('../models/post_comment');
+
+const AWS = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const uuid = require('uuid');
+const path = require('path');
+const fs = require('fs');
+
 
 const RECRUITING = 0;
 const COMPLETED = 1;
@@ -9,6 +18,84 @@ const ISLEADER = 0;
 // ISAPPLYING 
 // ISACCEPTED
 // ISREFUSED
+
+// ++
+
+// ID, SECRET, BUCKET_NAME은 버킷을 식별하고 접근하기 위한 것.
+const ID = process.env.AWS_ACCESS_KEY_ID;
+const SECRET = process.env.AWS_SECRET_ACCESS_KEY;
+const BUCKET_NAME = 'im-foodie.com';
+
+// 액세스키들을 주고 s3 객체 초기화 및 생성
+const s3 = new AWS.S3({
+    accessKeyId: ID,
+    secretAccessKey: SECRET
+});
+
+// const allowedExtensions = ['.png', '.jpg', '.jpeg', '.bmp']
+
+// const filePath = "C:/Users/zelly/Desktop";
+const s3Bucket = 'im-foodie.com';
+const key = 'hi.txt';
+
+const upload = multer().single('image');
+exports.uploadImageToS3 = (req, res, next)=>{
+    upload(req, res, (err)=>{
+        // const obj = {};
+        if(err){
+            console.log('[ERROR] uploading file: ', err);
+            req.success= false;
+            req.message = '[ERROR] uploading file';
+            next(err);
+            // return res.status(500).json({ message: '[ERROR] uploading file' });
+        }
+        if(!req.file){
+            req.success= true;
+            req.message = 'No file uploaded';
+            next();
+            // return res.status(400).json({ message: ' No file uploaded' });
+        } else {
+            const params = {
+                Bucket: s3Bucket,
+                Key: `${Date.now()}-` + req.file.originalname,
+                Body: req.file.buffer,
+            };
+
+
+            s3.upload(params, (s3Err, data) => {
+                if (s3Err) {
+                    console.log('[ERROR] uploading file to S3:', s3Err);
+                    req.message = '[ERROR] uploading file to S3';
+                    req.success = false;
+                    // return res.status(500).json({message: '[ERROR] uploding file to S3'});
+                    next(err);
+                }
+                // 성공적 업로드된 경우 여기에 로직 추가
+                console.log('File uploaded to S3 successfully:', data.Location);
+                req.fileUrl = data.Location;
+                req.success = true;
+                req.message = 'upload image success';
+                // console.log(req.fileUrl, '파이팅');
+                next();
+            });
+        }
+    })
+}
+/* 기본 방식으로는 이미지 url하면 저장만 됨 */
+// const storage = multer.diskStorage({
+//     filename: (req, file, cb)=>{
+//         // 파일명 고유하게 생성
+//         const uniqueFileName=`${Date.now()}-${file.originalname}`;
+//         cb(null, uniqueFileName)
+//     }
+// });
+
+// const upload = multer({storage});
+
+// exports.imgUploader = upload.single('imag');
+//   downloadFile('.//public/images/todo231228.txt'); 
+
+// ++
 
 exports.isLoggedIn = (req, res, next) => {
     if(req.isAuthenticated()) {

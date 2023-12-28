@@ -33,8 +33,8 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 3
     },
-    imageURL: {
-      type: DataTypes.BLOB,
+    image_url: {
+      type: DataTypes.TEXT,
       allowNull: true
     },
     viewCount: {

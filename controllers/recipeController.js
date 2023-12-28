@@ -409,6 +409,9 @@ module.exports={
             console.log(`[ERROR] Req.params are not sent. - createRecipe`);
             res.redirect('/recipe');
         }
+        if(req.success){
+            console.log(req.message);
+        }
 
         console.log(req.body);
         // 값 전달 잘 되면
@@ -419,7 +422,7 @@ module.exports={
             intro: req.body.intro,
             cookTime: req.body.cooktime,
             cookLevel: req.body.cookLevel,
-            // imageURL: req.body.imageURL,
+            image_url: req.fileUrl?req.fileUrl:'',
             viewCount: 0,
         }
         // recipe 생성
@@ -623,7 +626,7 @@ module.exports={
         }
         const memId = req.user.mem_id;
         // query no있는지 체크
-        if (!res.query.no) {
+        if (!req.query.no) {
             console.log("There's no number of recipe to delete");
             res.redirect('/recipe');
             // res.redirect(res.locals.history);
@@ -636,10 +639,11 @@ module.exports={
             await sequelize.transaction(async t => {
                 //
                 await db.recipe.destroy({
-                    where: { recipe_no: recipeNo },
+                    where: { recipe_id: recipeNo },
                     transaction: t,
                 })
             })
+            res.redirect('/recipe');
         } catch (err) {
             console.log('[ERROR] While deleting recipe.', err);
             res.redirect('/recipe');

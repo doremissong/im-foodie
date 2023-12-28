@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     image_url: {
-      type: DataTypes.BLOB,
+      type: DataTypes.TEXT,
       allowNull: false
     }
   }, {
