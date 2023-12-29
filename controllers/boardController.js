@@ -307,6 +307,7 @@ module.exports = {
 
     deletePost: async(req, res)=>{
         //
+        console.log('목아파 왜 안되는거야시');
         if (!req.user) {
             // 로그인 상태 아니면
             // res.redirect(res.locals.history);

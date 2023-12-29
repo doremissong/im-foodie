@@ -14,22 +14,17 @@ const { isNotLoggedIn, isLoggedIn, getPaginationInfo, setDBModel, setCondition, 
     // const previousUrl = req.session.previousUrl || '/';
     // res.redirect(previousUrl);
 
-router.get("/",storeUrl, setDBModel(db.post), getPaginationInfo, boardController.showBoardPage); //, storeUrl,);
+router.get("/",storeUrl, setDBModel(db.post), getPaginationInfo, boardController.showBoardPage);
 
-// router.get("/test", boardController.checkWriter);
 
 router.get("/post", storeUrl, setDBModel(db.post_comment), getPaginationInfo, boardController.getCommentInfo, boardController.showPost);
-// router.post("/post", isLoggedIn, boardController.setLike);//test 좋아요 누르면 해당 처리 페이지로 갔다가 이전 페이지로 리디렉션
 //⚠️
 router.get("/write", isLoggedIn, boardController.showWritePage);
 router.post("/write", isLoggedIn, boardController.writePost);
 
-// 작성자 체크
-// router.get("/update", isLoggedIn, boardController.showUpdatePage);
 router.get("/update", isLoggedIn, boardController.checkWriter, boardController.showUpdatePage);
 router.post("/update", isLoggedIn, boardController.updatePost);
-// 작성자 체크
-router.get("/delete", isLoggedIn, boardController.checkWriter, boardController.deletePost);
+router.get("/delete", isLoggedIn, boardController.deletePost);
 
 router.post("/like", isLoggedIn, boardController.setLike);
 // router.post("/newComment", isLoggedIn, boardController.getCommentInfo, );
