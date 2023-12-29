@@ -244,9 +244,11 @@
                 <!-- 거절 당하거나, 멤버 아닌 유저 -->
                     <div class="view-button-box">
                         <!-- 같이먹어요 -->
+                        <% if(gatherData.state ==0){ %>
                         <div class="">
                             <button class="join-group" onclick="gatherViewJoinClick()">같이먹어요</button>            
                         </div>
+                        <% } %>
                         <!-- 목록으로 -->
                         <div>
                             <a href="/gather">
@@ -263,7 +265,6 @@
         <div class="user-situation">
             
         <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
-        who값<%= who %>
         <!-- 유저가 모임원이면 [탈퇴] 버튼  -->
         <% switch(who){ 
             case 0: %> 
