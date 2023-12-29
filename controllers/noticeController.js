@@ -18,14 +18,7 @@ module.exports = {
             // try{
                 obj.pagination = res.locals.paginationInfo;
                 obj.dataList = res.locals.dataList;
-                // console.log(`[TEST] SHOWMAINPAGE`, obj);
-                // obj.operator = req.operator;
                 res.render('notice/notice', obj);
-            // } catch (err){
-            //     console.log(`[ERROR] showMainPage check getPaginationInfo ${err}`);
-            //     res.redirect('/');
-            // }
-        // }
     },
     showWritePage: (req, res)=>{
         // 관리자 확인
@@ -33,14 +26,14 @@ module.exports = {
         const isAdmin = res.locals.result;
         if(!isAdmin.success){
             res.send(`<script>alert('${isAdmin.message}'); window.location.href="/notice";</script>`);
-            console.log(`[USER] ${req.user.mem_id} - `, isAdmin.message);
+            // console.log(`[USER] ${req.user.mem_id} - `, isAdmin.message);
             // res.send('<script>alert("기존 비밀번호로는 변경하실 수 없습니다."); window.location.href="' + curUrl + '";</script>');
         } else {
             if (req.user) { // admin
                 obj.user = req.user;
                 obj.admin = req.user;
             }
-            console.log(`[ADMIN] ${req.user.mem_id} - `, isAdmin.message);
+            // console.log(`[ADMIN] ${req.user.mem_id} - `, isAdmin.message);
             try {
                 // obj.noticeId = req.query.ntc_no;
                 res.render('notice/noticeWrite', obj);
@@ -60,14 +53,14 @@ module.exports = {
         // 관리자 체크
         if(!isAdmin.success){
             res.send(`<script>alert('${result.message}'); window.location.href="/notice";</script>`);
-            console.log(`[USER] ${req.user.mem_id} - `, result.message);
+            // console.log(`[USER] ${req.user.mem_id} - `, result.message);
             // res.send('<script>alert("기존 비밀번호로는 변경하실 수 없습니다."); window.location.href="' + curUrl + '";</script>');
         } else {
             if (req.user) { // admin
                 obj.user = req.user;
                 obj.admin = req.user;
             }
-            console.log(`[ADMIN] ${req.user.mem_id} - `, isAdmin.message);
+            // console.log(`[ADMIN] ${req.user.mem_id} - `, isAdmin.message);
             try {
                 const notice_id = req.query.ntc_no;
                 await sequelize.transaction(async t => {
@@ -77,7 +70,7 @@ module.exports = {
                     })
                 })
                 obj.dataList = temp.dataValues;
-                console.log(obj.dataList, '값확인');
+                // console.log(obj.dataList, '값확인');
                 res.render('notice/noticeUpdate', obj);
             } catch (err) {
                 res.redirect('/notice');

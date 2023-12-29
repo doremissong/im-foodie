@@ -103,7 +103,7 @@ module.exports={
 
     setMyPost: (req, res, next) => {
         res.locals.condition = { writer_id: req.user.mem_id }
-        console.log('setMyPostpage', res.locals.condition);
+        // console.log('setMyPostpage', res.locals.condition);
         next();
         // res.send('setMyPostpage');
     },
@@ -121,7 +121,7 @@ module.exports={
         // else{
           obj.pagination = res.locals.paginationInfo;
           obj.dataList = res.locals.dataList;
-          console.log('내가 쓴 글 목록:', obj);
+        //   console.log('내가 쓴 글 목록:', obj);
         //   res.send(obj);
           res.render('myroom/myroomBPost', obj);
         // }
@@ -139,7 +139,7 @@ module.exports={
             as: 'post_comments'
         }
         // console.log('setMyPostpage', res.locals.condition);
-        console.log('setMyPostpage', res.locals.includeCondition);
+        // console.log('setMyPostpage', res.locals.includeCondition);
         // res.send(res.locals.includeCondition);
         next();
 
@@ -183,8 +183,8 @@ module.exports={
             },
             as: 'post_likes'
         }
-        console.log('setMyPostpage', res.locals.condition);
-        console.log('setMyPostpage', res.locals.includeCondition);
+        // console.log('setMyPostpage', res.locals.condition);
+        // console.log('setMyPostpage', res.locals.includeCondition);
         next();
     },
     showMyPostLike: (req, res)=>{
@@ -200,13 +200,13 @@ module.exports={
         } 
         obj.pagination = res.locals.paginationInfo;
         obj.dataList = res.locals.dataList;
-        console.log('내가 쓴 글 목록:', obj);
+        // console.log('내가 쓴 글 목록:', obj);
 
         res.render('myroom/myroomBLike', obj);
     },
     setMyRecipe: (req, res, next) => {
         res.locals.condition = { writer_id: req.user.mem_id }
-        console.log('setMyRecipepage', res.locals.condition);
+        // console.log('setMyRecipepage', res.locals.condition);
         next();
         // res.send('setMyRecipepage');
     },
@@ -224,7 +224,7 @@ module.exports={
         // else{
           obj.pagination = res.locals.paginationInfo;
           obj.dataList = res.locals.dataList;
-          console.log('내가 쓴 글 목록:', obj);
+        //   console.log('내가 쓴 글 목록:', obj);
         //   res.send(obj);
           res.render('myroom/myroomRPost', obj);
         // }
@@ -240,8 +240,8 @@ module.exports={
             },
             as: 'recipe_comments'
         }
-        console.log('setMyRecipepage', res.locals.condition);
-        console.log('setMyRecipepage', res.locals.includeCondition);
+        // console.log('setMyRecipepage', res.locals.condition);
+        // console.log('setMyRecipepage', res.locals.includeCondition);
         next();
     },
     showMyRecipeComment: (req, res) => {
@@ -284,8 +284,8 @@ module.exports={
             },
             as: 'recipe_likes'
         }
-        console.log('setMyRecipepage', res.locals.condition);
-        console.log('setMyRecipepage', res.locals.includeCondition);
+        // console.log('setMyRecipepage', res.locals.condition);
+        // console.log('setMyRecipepage', res.locals.includeCondition);
         next();
     },
     showMyRecipeLike: (req, res) => {
@@ -302,19 +302,11 @@ module.exports={
         // else{
           obj.pagination = res.locals.paginationInfo;
           obj.dataList = res.locals.dataList;
-          console.log('내가 쓴 글 목록:', obj);
+        //   console.log('내가 쓴 글 목록:', obj);
         //   res.send(obj);
           res.render('myroom/myroomRLike', obj);
         // }
     },
-
-    // obj.curPage = 'recipeLike';
-
-    // getCurrentUrl: (req, res, next)=>{
-    //     console.log('오리지널 url', req.originalUrl);
-    //     res.locals.redirect = req.originalUrl;
-    //     // res.redirect(res.locals.redirect);
-    // },
 
     
 }

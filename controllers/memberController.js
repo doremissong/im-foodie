@@ -231,15 +231,9 @@ module.exports = {
         var memId = req.body.mem_id;
         try{
             sequelize.transaction(async t => {
-                // await db.member.update(
-                //     { state: 2 }, {
-                //     where: { mem_id: memId },
-                //     transaction: t,
-                // });
-                // ㄴ 업데이트하면, 검색할 때, 다 state=0인 애들만 해야함.
-                // 아마 foreign key 땜에 안될 거 같은데
-                await db.member.destroy({
-                    where : {mem_id:memId},
+                await db.member.update(
+                    { state: 2 }, {
+                    where: { mem_id: memId },
                     transaction: t,
                 });
                 next();
@@ -252,28 +246,20 @@ module.exports = {
 
     showFindIdPage: (req, res)=>{
         res.render("member/findId");
-        // res.sendFile(path.join(__dirname, "../public/html/find-id.html"));
     },
 
     showFoundId: async(req, res)=>{
-        // req에서 이름 + 휴대폰 번호 / 이름 + 이메일 받아서
         var {name, email} = req.body;
         console.log(req.body);
-        // // 어떻게 하지? input 태그 라디오 태그에 담아서 올 수 있나?
-        // // hidden으로 하면 할 수 있을 거 같은데
-        // // if(type==="tel"){
         const foundId = await db.member.findOne({
             attributes: ['mem_id'],
             where: { name: name, email: email }
         });
-        // res.send(foundId.mem_id);
         res.render("member/showId", {mem_id: foundId.mem_id});
-        // }
     },
 
     showFindPwPage: (req, res)=>{
         res.render("member/findPw");
-        // res.sendFile(path.join(__dirname, "../public/html/find-pw.html"));
     },
 
     findPw: async (req, res, next)=>{
@@ -299,7 +285,6 @@ module.exports = {
             } catch (err) {
                 console.log(`Error updating pw while find pw: ${err.message}`);
             }
-            //💚얘네를 try 안에 넣어야할까? 여기다 둬야할까?
             res.locals.member_info = {
                 password: newPassword,
                 email: email
@@ -314,8 +299,8 @@ module.exports = {
     sendPw: (req, res)=>{
         const eamilOptions = {
             from: "I'm Foodie",
-            to: "zelly1020@naver.com",
-            //to: res.locals.member_info.email, //locals.email,
+            // to: "zelly1020@naver.com",
+            to: res.locals.member_info.email, //locals.email,
             subject: "[I'm Foodie] 비밀번호 찾기",
             text: "안녕하세요 아임푸디입니다.\n 변경된 비밀번호는 다음과 같습니다.\n" 
             + res.locals.member_info.password + "\n개인정보 보호를 위해 반드시 비밀번호를 변경해주세요 🍽️"
@@ -359,7 +344,7 @@ module.exports = {
                                                                                                                             // 그냥 curUrl만 하면 안되나?
         } else{
             const hashedPassword = await hashPassword(req.body.new_pw);
-            console.log(hashedPassword, '해쉬한 새 비번');
+            // console.log(hashedPassword, '해쉬한 새 비번');
             // // 팝업창 띄우기 
             try {
                 await sequelize.transaction(async t => {
@@ -387,9 +372,9 @@ module.exports = {
         const _memId = req.query.memId;
         var isPassed = true;
         var isUsable = true;
-        console.log('통과?',isPassed); 
-        console.log('[checkMemberId] memId', _memId);
-        console.log('[checkMemberId] 도착', req.originalUrl);
+        // console.log('통과?',isPassed); 
+        // console.log('[checkMemberId] memId', _memId);
+        // console.log('[checkMemberId] 도착', req.originalUrl);
         try{
             const result = await db.member.findOne({
                 attributes: ['mem_id'],
@@ -417,37 +402,11 @@ module.exports = {
             } else {
                 res.json({ success: false, message: '사용할 수 없는 아이디입니다.' });
             }
-            console.log('isUsable:', isUsable);
+            // console.log('isUsable:', isUsable);
         } catch (err) {
             // res.json({success:false, message: '다시 시도해주세요'});
             console.log('[ERROR] while checking if entered Id is already used.', err);
         // res.redirect('/');
         }
     }
-    // 이게 될까ㅛ?
-    // validate: (req, res, next)=>{
-    //     req.santizeBody("email").normalizeEmail({
-    //         all_lowercase: true
-    //     }).trim();  // 다 소문자로, whitespace 공백 제거
-    //     req.check("email", "Email is invalid.").isEmail();
-    //     req.check("zipCode", "Zip code is invalid.")
-    //     .notEmpty().isInt().isLength({
-    //         min:5,
-    //         max:5
-    //     }).equals(req.body.zipCode);
-    //     // 왜 우편번호만 equals들어가?그리고 나머지는 왜 req의 ㄱ밧이랑 비교 안해?
-    //     req.check("password", "Password cannot be empty.").notEmpty();
-
-    //     // 유효성 결과 수집
-    //     req.getValidationResult.then((err)=>{
-    //         if(!err.isEmpty()){
-    //             let messages = err.array().map(e=>e.msg);
-    //             req.skip = true;
-    //             res.locals.redirect= "auth/signup";
-    //             next();
-    //         } else{
-    //             next();
-    //         }
-    //     });
-    // },
 }

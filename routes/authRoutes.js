@@ -14,25 +14,7 @@ router.get("/duplicateCheck", memberController.checkMemberId);
 router.get("/signup", isNotLoggedIn, memberController.showSignupPage);
 router.post("/signup", isNotLoggedIn, uploadImageToS3, memberController.createMember);
 router.get("/login", isNotLoggedIn, memberController.login);
-//로그인 리디렉션 실패 231201
-// router.post("/login", isNotLoggedIn, (
-//   passport.authenticate("local", {
-//     failureRedirect: "/auth/login"},
-//     // successRedirect: "/"//req.session.previousUrl || "/",
-//     (req,res)=>{
-//       // function savePreviousUrl(req, res, next) {
-//       //   if (!req.isAuthenticated()) {
-//       //     req.session.previousUrl = req.originalUrl;
-//       //   }
-//       //   next();
-//       // }
-//       console.log(`hihi`);
-//       res.redirect(`/`); //${previousUrl}
-//       // const redirectTo = req.session.previousUrl || "/";
-//       // delete req.session.previousUrl;
-//       // res.redirect(decodeURIComponent(req.pre));
-//   })
-// ));
+router.get("/delete", isLoggedIn, memberController.deleteMember);
 router.post("/login", isNotLoggedIn, (req, res) => {
   // req.session.previousUrl 
   // console.log('query value', req.query.prevUrl);
